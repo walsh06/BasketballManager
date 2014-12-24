@@ -8,11 +8,13 @@ SOURCES += main.cpp \
     Player.cpp \
     Match.cpp \
     Team.cpp \
-    Ball.cpp
+    Ball.cpp \
+    ProbabilityVector.cpp
 
 HEADERS += \
     Player.h \
     Match.h \
     Team.h \
-    Ball.h
+    Ball.h \
+    ProbabilityVector.h
 
