@@ -21,6 +21,8 @@ public:
     int getCloseShot();
     int getDunk();
     int getLayup();
+    void setTeam(int team);
+    int getTeam();
 
     int getRange();
 

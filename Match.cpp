@@ -240,7 +240,45 @@ void Match::pass(Player* p, Player* teamMate)
     ball.setPlayerNumber(teamMate->getNumber());
 }
 
+void Match::rebound()
+{
+    map<int, int> players;
+    int total;
+    //int randY = (rand() % 4) + 2;
+    //int randX = rand() % 3;
 
+    for(int i =1; i < 6; i++)
+    {
+        Player p = *teamOne->getPlayer(i);
+        int posX = p.getPosX, posY = p.getPosY();
+        if(posX() > 1 && posX() < 6 && posY() >= 0 && posY < 3)
+        {
+            if(p.getTeam() == ball->getTeam())
+            {
+                total+= p.getOffRebound()
+                players[p.getNumber()] = total;
+
+            }
+            else
+            {
+                players[p.getNumber()] = p.getDefRebound();
+            }
+        }
+    }
+
+    if(players.size() == 0)
+    {
+
+    }
+    else if(players.size() == 1)
+    {
+        ball.setPlayerNumber(players[0].getNumber());
+    }
+    else
+    {
+
+    }
+}
 
 //==============================
 

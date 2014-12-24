@@ -27,3 +27,15 @@ vector<Player*> Team::getOtherPlayers(int number)
 
     return otherPlayers;
 }
+
+void Team::setTeam(int team)
+{
+    if(team == 1 || team == 2)
+    {
+        this->team = team;
+        for(auto &player: players)
+        {
+            player.second->setTeam(team);
+        }
+    }
+}
