@@ -280,5 +280,15 @@ int Player::getTeam()
     return team;
 }
 
+int Player::getOffRebound()
+{
+    return offRebound;
+}
+
+int Player::getDefRebound()
+{
+    return defRebound;
+}
+
 //======================================
 

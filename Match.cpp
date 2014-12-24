@@ -36,11 +36,8 @@ void Match::sim()
 
 void Match::move(Player* p)
 {
+    ProbabilityVector probs(9);
     int x = p->getPosX(), y = p->getPosY();
-    p->getPosValue(x, y);
-
-    int map[9];
-    int count = 0, total = 0;
 
     for(int i = y - 1; i <= y + 1; i++)
     {
@@ -48,24 +45,20 @@ void Match::move(Player* p)
         {
             if(i < 0 || i >= 7)
             {
-                map[count] = 0;
+                probs.addProbability(0);
             }
             else if(j < 0 || j >= 8)
             {
-                map[count] = 0;
+                probs.addProbability(0);
             }
             else
             {
-                int posValue = p->getPosValue(i, j);
-                total += posValue;
-                map[count] = posValue;
+                probs.addProbability(p->getPosValue(i, j));
             }
-            count++;
         }
     }
 
-
-    p->movePlayer(getRandomAction(map, 9, total));
+    p->movePlayer(probs.getRandomResult());
 }
 
 void Match::withBall(Player* p, int shotClock)
@@ -77,10 +70,9 @@ void Match::withBall(Player* p, int shotClock)
     else
     {
         int x = p->getPosX(), y = p->getPosY();
-        p->getPosValue(x, y);
         //move 0-8, shoot 9, pass 10-13
-        int map[14];
-        int count = 0, total = 0;
+        ProbabilityVector probs(9);
+
 
         for(int i = y - 1; i <= y + 1; i++)
         {
@@ -88,39 +80,32 @@ void Match::withBall(Player* p, int shotClock)
             {
                 if(i < 0 || i >= 7)
                 {
-                    map[count] = 0;
+                    probs.addProbability(0);
                 }
                 else if(j < 0 || j >= 8)
                 {
-                    map[count] = 0;
+                   probs.addProbability(0);
                 }
                 else
                 {
-                    int posValue = p->getPosValue(i, j);
-                    total += posValue;
-                    map[count] = posValue;
+                    probs.addProbability(p->getPosValue(i, j));
                 }
-                count++;
             }
         }
 
         int posValue = p->getPosValue() + (24 - shotClock) ;
-        total += posValue;
-        map[count] = posValue;
-        count++;
+        probs.addProbability(posValue);
 
         vector<Player*> otherPlayers = teamOne->getOtherPlayers(p->getNumber());
 
         for(auto &player: otherPlayers)
         {
             int posValue = player->getPosValue();
-            total += posValue;
-            map[count] = posValue;
-            count++;
+            probs.addProbability(posValue);
         }
 
-        int action  = getRandomAction(map, 14, total);
-        cout << "Shot Chance: " << map[9] << endl;
+        int action  = probs.getRandomResult();
+
         if(action < 9)
         {
             cout << "Move: " << action << endl;
@@ -250,12 +235,12 @@ void Match::rebound()
     for(int i =1; i < 6; i++)
     {
         Player p = *teamOne->getPlayer(i);
-        int posX = p.getPosX, posY = p.getPosY();
-        if(posX() > 1 && posX() < 6 && posY() >= 0 && posY < 3)
+        int posX = p.getPosX(), posY = p.getPosY();
+        if(posX > 1 && posX < 6 && posY >= 0 && posY < 3)
         {
-            if(p.getTeam() == ball->getTeam())
+            if(p.getTeam() == ball.getTeam())
             {
-                total+= p.getOffRebound()
+                total+= p.getOffRebound();
                 players[p.getNumber()] = total;
 
             }
@@ -272,7 +257,7 @@ void Match::rebound()
     }
     else if(players.size() == 1)
     {
-        ball.setPlayerNumber(players[0].getNumber());
+        ball.setPlayerNumber(players.begin()->first);
     }
     else
     {
