@@ -6,36 +6,78 @@ Match::Match()
     teamOne->setTeam(1);
     teamTwo = new Team();
     teamTwo->setTeam(2);
+
+    teams[0] = *teamOne;
+    teams[1] = *teamTwo;
 }
 
 void Match::sim()
 {
-    int shotClock = 0;
     ball.setPlayerPosition(1);
-    for(shotClock =24; shotClock >= 0; shotClock--)
+    ball.setTeam(1);
+    for(shotClock = 24; shotClock >= 0; shotClock--)
     {
+        setOrderOfPlay();
         cout << "TIME: " << shotClock << endl;
         cout << "Ball: " << ball.getPlayerPosition() << endl;
-        for(int j =1; j < 6; j++)
+        for(auto &player : orderOfPlay)
         {
-            Player *p = teamOne->getPlayer(j);
-            if(p->getNumber() == ball.getPlayerPosition())
+            if(player->getTeam() == ball.getTeam())
             {
-                withBall(p, shotClock);
+                if(teams[player->getTeam() - 1].getPlayerPosition(player->getNumber()) == ball.getPlayerPosition())
+                {
+                    withBall(player, shotClock);
+                }
+                else
+                {
+                    move(player);
+                }
             }
             else
             {
-                move(p);
+                moveDefence(player);
             }
         }
-        for(int j = 1; j < 6; j++)
-        {
-            Player *p = teamTwo->getPlayer(j);
-            moveDefence(p);
-        }
+
         printCourt();
     }
 
+}
+
+void Match::setOrderOfPlay()
+{
+    orderOfPlay.clear();
+    vector<Player *> players;
+    map<int, Player*> playersWithSpeed;
+    int speedOne, speedTwo;
+    for(int j =1; j < 6; j++)
+    {
+        Player *p1 = teamOne->getPlayer(j);
+        Player *p2 = teamTwo->getPlayer(j);
+        do
+        {
+            speedOne = 30 - (p1->getSpeed() + (rand() % 10));
+        }while(playersWithSpeed.find(speedOne) != playersWithSpeed.end());
+        playersWithSpeed[speedOne] = p1;
+        do
+        {
+            speedTwo = 30 - (p2->getSpeed() + (rand() % 10));
+        }while(playersWithSpeed.find(speedTwo) != playersWithSpeed.end());
+        playersWithSpeed[speedTwo] = p2;
+    }
+/*
+   std::map<int, Player*>::iterator it;
+   for (it = playersWithSpeed.end(); it != playersWithSpeed.begin(); ++it)
+   {
+       Player *p = it->second;
+       orderOfPlay.push_back(p);
+   }*/
+
+    std::vector<Player*>::iterator it = orderOfPlay.begin();
+    for(auto &player: playersWithSpeed)
+    {
+        orderOfPlay.push_back(player.second);
+    }
 }
 
 //================================
@@ -183,6 +225,7 @@ void Match::shootClose(Player* p)
     if(shotRand < shot)
     {
        cout << "SCORE Close" << endl;
+       shotClock = 0;
     }
     else
     {
@@ -213,6 +256,8 @@ void Match::shootMedium(Player* p)
     if(shotRand < shot)
     {
        cout << "SCORE Mid" << endl;
+       shotClock = 0;
+
     }
     else
     {
@@ -240,7 +285,7 @@ void Match::shootThree(Player *p)
     int shot;
     if(p->getPosX() == 6)
     {
-        shot = p->getThreeShot() / 2;
+        shot = p->getThreeShot() / 4;
     }
     else
     {
@@ -250,6 +295,7 @@ void Match::shootThree(Player *p)
     if(shotRand < shot)
     {
        cout << "SCORE 3" << endl;
+       shotClock = 0;
     }
     else
     {
@@ -280,26 +326,26 @@ void Match::pass(Player* p, Player* teamMate)
 void Match::rebound()
 {
     ProbabilityVector probs(10);
-    int playerNumbers[10];
+    vector<Player *> players;
     int count = 0, reboundRange = 2;
 
     do{
-        for(int i =1; i < 6; i++)
+        for(auto &player: orderOfPlay)
         {
-            Player p = *teamOne->getPlayer(i);
+            Player p = *player;
             int range = p.getRange();
             if(range <= reboundRange)
             {
                 if(p.getTeam() == ball.getTeam())
                 {
                     probs.addProbability(p.getOffRebound());
-                    playerNumbers[count] = p.getNumber();
+                    players.push_back(&p);
                     count++;
                 }
                 else
                 {
                     probs.addProbability(p.getDefRebound() * 3);
-                    playerNumbers[count] = p.getNumber();
+                    players.push_back(&p);
                     count++;
                 }
             }
@@ -307,15 +353,43 @@ void Match::rebound()
 
         if(count == 1)
         {
-             ball.setPlayerPosition(playerNumbers[0]);
-             cout << "Rebound: " << playerNumbers[0] << endl;
+             ball.setPlayerPosition(players[0]->getNumber());
+             if(ball.getTeam() == players[0]->getTeam())
+             {
+                 cout << "Offensive Rebound: " << players[0]->getNumber() << endl;
+                shotClock = 24;
+             }
+             else
+             {
+                 cout << "Defensive Rebound: " << players[0]->getNumber() << endl;
+                 shotClock = 0;
+                 ball.changeTeam();
+             }
         }
         else if(count > 1)
         {
              int result = probs.getRandomResult();
-
-             ball.setPlayerPosition(playerNumbers[result]);
-             cout << "Rebound: " << playerNumbers[result] << endl;
+             Player *p = players[result];
+             if(p->getTeam() == 1)
+             {
+                int pos = teamOne->getPlayerPosition(p->getNumber());
+             }
+             else
+             {
+                 int pos = teamOne->getPlayerPosition(p->getNumber());
+             }
+             ball.setPlayerPosition(players[0]->getNumber());
+             if(ball.getTeam() == players[0]->getTeam())
+             {
+                 cout << "Offensive Rebound: " << p->getNumber() << endl;
+                 shotClock = 24;
+             }
+             else
+             {
+                 cout << "Defensive Rebound: " << p->getNumber() << endl;
+                 shotClock = 0;
+                 ball.changeTeam();
+             }
         }
         else
         {

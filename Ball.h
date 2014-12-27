@@ -9,6 +9,8 @@ public:
     int getTeam();
     void setPlayerPosition(int num);
     void setTeam(int team);
+    void changeTeam();
+    void changeTeam(int team);
 
 private:
     int player, team;

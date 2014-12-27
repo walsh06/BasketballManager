@@ -27,3 +27,16 @@ void Ball::setTeam(int team)
         this->team = team;
     }
 }
+
+void Ball::changeTeam()
+{
+    if(team == 1) team = 2;
+    else if(team == 2) team = 1;
+}
+
+void Ball::changeTeam(int playerTeam)
+{
+    if(playerTeam == 1) team = 2;
+    else if(playerTeam == 2) team = 1;
+}
+

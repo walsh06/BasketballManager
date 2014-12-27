@@ -12,9 +12,10 @@ Player::Player(int number)
     offRebound = 10;
     defRebound = 10;
     block = 15;
+    speed = rand() % 21;
 
     calcHeatMap();
-    printHeatMap();
+    //printHeatMap();
     posX = rand() % 7;
     posY = rand() % 8;
 }
@@ -298,6 +299,11 @@ int Player::getDefRebound()
 int Player::getBlock()
 {
     return block;
+}
+
+int Player::getSpeed()
+{
+    return speed;
 }
 
 //======================================

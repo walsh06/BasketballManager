@@ -20,7 +20,11 @@ public:
     void sim();
 private:
     Team * teamOne, *teamTwo;
+    Team teams[2];
+    int shotClock, time;
     Ball ball;
+    vector<Player*> orderOfPlay;
+
 
     void move(Player* p);
     void withBall(Player* p, int shotClock);
@@ -37,6 +41,7 @@ private:
     void moveDefenceTight(Player* p, Player opposition);
 
     void printCourt();
+    void setOrderOfPlay();
     int getRandomAction(int arr[], int size, int total);
 };
 
