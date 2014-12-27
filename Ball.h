@@ -5,13 +5,13 @@ class Ball
 {
 public:
     Ball();
-    int getPlayerNumber();
+    int getPlayerPosition();
     int getTeam();
-    void setPlayerNumber(int num);
+    void setPlayerPosition(int num);
     void setTeam(int team);
 
 private:
-    int playerNumber, team;
+    int player, team;
 };
 
 #endif // BALL_H

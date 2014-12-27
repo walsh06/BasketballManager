@@ -23,6 +23,7 @@ public:
     int getLayup();
     int getOffRebound();
     int getDefRebound();
+    int getBlock();
     void setTeam(int team);
     int getTeam();
 

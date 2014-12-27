@@ -3,21 +3,21 @@
 Ball::Ball()
 {
     team = 0;
-    playerNumber = 0;
+    player = 0;
 }
 
-int Ball::getPlayerNumber()
+int Ball::getPlayerPosition()
 {
-    return playerNumber;
+    return player;
 }
 int Ball::getTeam()
 {
     return team;
 }
 
-void Ball::setPlayerNumber(int num)
+void Ball::setPlayerPosition(int num)
 {
-    playerNumber = num;
+    player = num;
 }
 
 void Ball::setTeam(int team)
