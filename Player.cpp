@@ -9,6 +9,7 @@ Player::Player(int number)
     dunk = 4;
     layup = 12;
     calcHeatMap();
+    printHeatMap();
     posX = 3;
     posY = 0;
 }
@@ -88,34 +89,43 @@ void Player::calcHeatMap()
     //Medium shot mapping
     for(int i = 0; i < 5; i++)
     {
-        heatMap[1][i] = (mediumShot/heatFactor + 1);
-        heatMap[6][i] = (mediumShot/heatFactor + 1);
+        heatMap[1][i] = (mediumShot/heatFactor) + 1;
+        heatMap[6][i] = (mediumShot/heatFactor) + 1;
         if( i == 4 || i == 3)
         {
-            heatMap[2][i] =  (mediumShot/heatFactor + 1);
-            heatMap[3][i] =  (mediumShot/heatFactor + 1);
-            heatMap[4][i] =  (mediumShot/heatFactor + 1);
-            heatMap[5][i] =  (mediumShot/heatFactor + 1);
+            heatMap[2][i] =  (mediumShot/heatFactor) + 1;
+            heatMap[3][i] =  (mediumShot/heatFactor) + 1;
+            heatMap[4][i] =  (mediumShot/heatFactor) + 1;
+            heatMap[5][i] =  (mediumShot/heatFactor) + 1;
         }
     }
     //=================================
-    //Medium/close shot mapping
+    //close shot mapping
     for(int i = 0; i < 3; i++)
     {
-        heatMap[2][i] = (mediumShot + closeShot)/(heatFactor*2) + 1;
-        heatMap[5][i] = ((mediumShot + closeShot)/(heatFactor*2) + 1);
+        heatMap[2][i] = (closeShot/heatFactor) + 1;
+        heatMap[5][i] = (closeShot/heatFactor) + 1;
         if( i == 2)
         {
-            heatMap[4][i] =  ((mediumShot + closeShot)/(heatFactor*2) + 1);
-            heatMap[3][i] =  ((mediumShot + closeShot)/(heatFactor*2) + 1);
+            heatMap[4][i] =  (closeShot/heatFactor) + 1;
+            heatMap[3][i] =  (closeShot/heatFactor) + 1;
         }
     }
     //=================================
     //Close shot mapping
+    int rating;
+    if(dunk > layup)
+    {
+        rating = dunk;
+    }
+    else
+    {
+        rating = layup;
+    }
     for(int i = 0; i < 2; i++)
     {
-        heatMap[3][i] = (closeShot/heatFactor + 1);
-        heatMap[4][i] = (closeShot/heatFactor + 1);
+        heatMap[3][i] = (rating/heatFactor) + 1;
+        heatMap[4][i] = (rating/heatFactor) + 1;
     }
 }
 
@@ -257,6 +267,28 @@ int Player::getRange()
     return range;
 }
 
+void Player::setTeam(int team)
+{
+    if(team == 1 || team == 2)
+    {
+        this->team = team;
+    }
+}
+
+int Player::getTeam()
+{
+    return team;
+}
+
+int Player::getOffRebound()
+{
+    return offRebound;
+}
+
+int Player::getDefRebound()
+{
+    return defRebound;
+}
 
 //======================================
 

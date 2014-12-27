@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Team.h"
 #include "Ball.h"
+#include "ProbabilityVector.h"
 
 #include <iostream>
 
@@ -25,6 +26,8 @@ private:
     void shootThree(Player* p);
     void shootMedium(Player* p);
     void shootClose(Player* p);
+
+    void rebound();
 
     void pass(Player* p, Player* teamMate);
 

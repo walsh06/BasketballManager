@@ -13,8 +13,11 @@ public:
     Team();
     Player* getPlayer(int numbers);
     vector<Player*> getOtherPlayers(int number);
+
+    void setTeam(int team);
 private:
     map<int, Player*> players;
+    int team;
 };
 
 #endif // TEAM_H

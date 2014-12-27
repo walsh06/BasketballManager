@@ -21,6 +21,10 @@ public:
     int getCloseShot();
     int getDunk();
     int getLayup();
+    int getOffRebound();
+    int getDefRebound();
+    void setTeam(int team);
+    int getTeam();
 
     int getRange();
 
@@ -31,6 +35,7 @@ private:
 
     int posX, posY;
     int number;
+    int team;
 
     //shooting ratings
     int threeShot, mediumShot, closeShot, dunk, layup;
