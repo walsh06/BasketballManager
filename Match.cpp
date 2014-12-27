@@ -71,7 +71,7 @@ void Match::withBall(Player* p, int shotClock)
     {
         int x = p->getPosX(), y = p->getPosY();
         //move 0-8, shoot 9, pass 10-13
-        ProbabilityVector probs(9);
+        ProbabilityVector probs(14);
 
 
         for(int i = y - 1; i <= y + 1; i++)
@@ -103,7 +103,7 @@ void Match::withBall(Player* p, int shotClock)
             int posValue = player->getPosValue();
             probs.addProbability(posValue);
         }
-
+        probs.printVector();
         int action  = probs.getRandomResult();
 
         if(action < 9)
@@ -120,6 +120,7 @@ void Match::withBall(Player* p, int shotClock)
             pass(p, otherPlayers[action - 10]);
         }
     }
+
 }
 
 int Match::getRandomAction(int arr[], int size, int total)
@@ -178,6 +179,7 @@ void Match::shootClose(Player* p)
     else
     {
         cout << "MISS Close" << endl;
+        rebound();
     }
 }
 
@@ -193,6 +195,7 @@ void Match::shootMedium(Player* p)
     else
     {
         cout << "MISS Mid" << endl;
+        rebound();
     }
 }
 
@@ -216,6 +219,7 @@ void Match::shootThree(Player *p)
     else
     {
         cout << "MISS 3" << endl;
+        rebound();
     }
 }
 
@@ -227,42 +231,50 @@ void Match::pass(Player* p, Player* teamMate)
 
 void Match::rebound()
 {
-    map<int, int> players;
-    int total;
-    //int randY = (rand() % 4) + 2;
-    //int randX = rand() % 3;
+    ProbabilityVector probs(10);
+    int playerNumbers[10];
+    int count = 0, reboundRange = 2;
 
-    for(int i =1; i < 6; i++)
-    {
-        Player p = *teamOne->getPlayer(i);
-        int posX = p.getPosX(), posY = p.getPosY();
-        if(posX > 1 && posX < 6 && posY >= 0 && posY < 3)
+    do{
+        for(int i =1; i < 6; i++)
         {
-            if(p.getTeam() == ball.getTeam())
+            Player p = *teamOne->getPlayer(i);
+            int range = p.getRange();
+            if(range <= reboundRange)
             {
-                total+= p.getOffRebound();
-                players[p.getNumber()] = total;
-
-            }
-            else
-            {
-                players[p.getNumber()] = p.getDefRebound();
+                if(p.getTeam() == ball.getTeam())
+                {
+                    probs.addProbability(p.getOffRebound());
+                    playerNumbers[count] = p.getNumber();
+                    count++;
+                }
+                else
+                {
+                    probs.addProbability(p.getDefRebound() * 3);
+                    playerNumbers[count] = p.getNumber();
+                    count++;
+                }
             }
         }
-    }
 
-    if(players.size() == 0)
-    {
+        if(count == 1)
+        {
+             ball.setPlayerNumber(playerNumbers[0]);
+             cout << "Rebound: " << playerNumbers[0] << endl;
+        }
+        else if(count > 1)
+        {
+             int result = probs.getRandomResult();
 
-    }
-    else if(players.size() == 1)
-    {
-        ball.setPlayerNumber(players.begin()->first);
-    }
-    else
-    {
+             ball.setPlayerNumber(playerNumbers[result]);
+             cout << "Rebound: " << playerNumbers[result] << endl;
+        }
+        else
+        {
+            reboundRange++;
+        }
 
-    }
+    }while(count == 0);
 }
 
 //==============================

@@ -20,7 +20,7 @@ void ProbabilityVector::addProbability(int amount)
 int ProbabilityVector::getRandomResult()
 {
     int randomNum = rand() % total, currentTotal = 0, result = -1;
-    for(int i =0; i < size; i++)
+    for(int i =0; i < count; i++)
     {
         currentTotal += probabilities[i];
         if(currentTotal > randomNum)
@@ -31,4 +31,13 @@ int ProbabilityVector::getRandomResult()
     }
 
     return result;
+}
+
+void ProbabilityVector::printVector()
+{
+    for(int i =0; i < count; i++)
+    {
+        cout << probabilities[i] << " ";
+    }
+    cout << endl;
 }
