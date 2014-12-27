@@ -3,6 +3,7 @@
 Player::Player(int number)
 {
     this->number = number;
+
     threeShot = 13;
     mediumShot = 18;
     closeShot = 9;
@@ -10,6 +11,8 @@ Player::Player(int number)
     layup = 12;
     offRebound = 10;
     defRebound = 10;
+    block = 15;
+
     calcHeatMap();
     printHeatMap();
     posX = rand() % 7;
@@ -290,6 +293,11 @@ int Player::getOffRebound()
 int Player::getDefRebound()
 {
     return defRebound;
+}
+
+int Player::getBlock()
+{
+    return block;
 }
 
 //======================================

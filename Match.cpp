@@ -187,6 +187,20 @@ void Match::shootClose(Player* p)
     else
     {
         cout << "MISS Close" << endl;
+        for(int i = 1; i < 6; i++)
+        {
+            Player opp = *teamTwo->getPlayer(i);
+            if(opp.getPosX() == p->getPosX() && opp.getPosY() == p->getPosY())
+            {
+                int block = rand() % 200;
+
+                if(block < opp.getBlock())
+                {
+                    cout << "Block: " << opp.getNumber() << endl;
+                }
+            }
+        }
+
         rebound();
     }
 }
@@ -203,13 +217,26 @@ void Match::shootMedium(Player* p)
     else
     {
         cout << "MISS Mid" << endl;
+        for(int i = 1; i < 6; i++)
+        {
+            Player opp = *teamTwo->getPlayer(i);
+            if(opp.getPosX() == p->getPosX() && opp.getPosY() == p->getPosY())
+            {
+                int block = rand() % 200;
+
+                if(block < opp.getBlock())
+                {
+                    cout << "Block: " << opp.getNumber() << endl;
+                }
+            }
+        }
         rebound();
     }
 }
 
 void Match::shootThree(Player *p)
 {
-    int shotRand = rand() % 40;
+    int shotRand = rand() % 43;
     int shot;
     if(p->getPosX() == 6)
     {
@@ -227,6 +254,19 @@ void Match::shootThree(Player *p)
     else
     {
         cout << "MISS 3" << endl;
+        for(int i = 1; i < 6; i++)
+        {
+            Player opp = *teamTwo->getPlayer(i);
+            if(opp.getPosX() == p->getPosX() && opp.getPosY() == p->getPosY())
+            {
+                int block = rand() % 200;
+
+                if(block < opp.getBlock())
+                {
+                    cout << "Block: " << opp.getNumber() << endl;
+                }
+            }
+        }
         rebound();
     }
 }
