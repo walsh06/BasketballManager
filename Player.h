@@ -23,6 +23,7 @@ public:
     int getLayup();
     int getOffRebound();
     int getDefRebound();
+    int getFreethrow();
     void setTeam(int team);
     int getTeam();
 
@@ -44,7 +45,7 @@ private:
     //defence
     int block, steal;
     //offence
-    int pass, hands;
+    int pass, hands, freethrow;
 
     void printHeatMap();
     void calcHeatMap();

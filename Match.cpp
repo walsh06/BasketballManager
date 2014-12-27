@@ -223,6 +223,21 @@ void Match::shootThree(Player *p)
     }
 }
 
+void Match::freethrow(Player *p, int numOfFreeThrows)
+{
+    int ft = p->getFreethrow();
+
+    do
+    {
+        int ftProb = rand() % 21;
+        if(ft < ftProb)
+        {
+            cout << "Free Throw: " << p->getNumber() << endl;
+        }
+        numOfFreeThrows--;
+    }while(numOfFreeThrows > 0);
+}
+
 void Match::pass(Player* p, Player* teamMate)
 {
     cout << "Pass: " << teamMate->getNumber() << endl;

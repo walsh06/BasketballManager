@@ -10,6 +10,7 @@ Player::Player(int number)
     layup = 12;
     offRebound = 10;
     defRebound = 10;
+    freethrow = 15;
     calcHeatMap();
     printHeatMap();
     posX = 3;
@@ -290,6 +291,11 @@ int Player::getOffRebound()
 int Player::getDefRebound()
 {
     return defRebound;
+}
+
+int Player::getFreethrow()
+{
+    return freethrow;
 }
 
 //======================================

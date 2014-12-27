@@ -26,6 +26,7 @@ private:
     void shootThree(Player* p);
     void shootMedium(Player* p);
     void shootClose(Player* p);
+    void freethrow(Player* p, int numOfFreethrows);
 
     void rebound();
 
