@@ -3,20 +3,23 @@
 Match::Match()
 {
     teamOne = new Team();
+    teamOne->setTeam(1);
+    teamTwo = new Team();
+    teamTwo->setTeam(2);
 }
 
 void Match::sim()
 {
     int shotClock = 0;
-    ball.setPlayerNumber(1);
+    ball.setPlayerPosition(1);
     for(shotClock =24; shotClock >= 0; shotClock--)
     {
         cout << "TIME: " << shotClock << endl;
-        cout << "Ball: " << ball.getPlayerNumber() << endl;
+        cout << "Ball: " << ball.getPlayerPosition() << endl;
         for(int j =1; j < 6; j++)
         {
             Player *p = teamOne->getPlayer(j);
-            if(p->getNumber() == ball.getPlayerNumber())
+            if(p->getNumber() == ball.getPlayerPosition())
             {
                 withBall(p, shotClock);
             }
@@ -25,13 +28,18 @@ void Match::sim()
                 move(p);
             }
         }
+        for(int j = 1; j < 6; j++)
+        {
+            Player *p = teamTwo->getPlayer(j);
+            moveDefence(p);
+        }
         printCourt();
     }
 
 }
 
 //================================
-// Player Actions
+// Player Offense Actions
 //================================
 
 void Match::move(Player* p)
@@ -143,7 +151,7 @@ int Match::getRandomAction(int arr[], int size, int total)
 
 
 //================================
-// Player Actions Results
+// Player Offense Actions Results
 //================================
 
 void Match::shoot(Player* p)
@@ -226,7 +234,7 @@ void Match::shootThree(Player *p)
 void Match::pass(Player* p, Player* teamMate)
 {
     cout << "Pass: " << teamMate->getNumber() << endl;
-    ball.setPlayerNumber(teamMate->getNumber());
+    ball.setPlayerPosition(teamMate->getNumber());
 }
 
 void Match::rebound()
@@ -259,14 +267,14 @@ void Match::rebound()
 
         if(count == 1)
         {
-             ball.setPlayerNumber(playerNumbers[0]);
+             ball.setPlayerPosition(playerNumbers[0]);
              cout << "Rebound: " << playerNumbers[0] << endl;
         }
         else if(count > 1)
         {
              int result = probs.getRandomResult();
 
-             ball.setPlayerNumber(playerNumbers[result]);
+             ball.setPlayerPosition(playerNumbers[result]);
              cout << "Rebound: " << playerNumbers[result] << endl;
         }
         else
@@ -276,6 +284,171 @@ void Match::rebound()
 
     }while(count == 0);
 }
+
+//==============================
+
+//================================
+// Player Defense Actions
+//================================
+
+void Match::moveDefence(Player *p)
+{
+    //get the defensive matchup of the player
+    int matchup = teamTwo->getMatchup(*p);
+    Player opposition = *teamOne->getPlayer(matchup);
+
+    //play tight if their matchup has the ball
+    //play tight if their matchup is close to the basket
+    //play loose if farther out
+    if(ball.getPlayerPosition() == matchup)
+    {
+        moveDefenceTight(p, opposition);
+    }
+    else if(opposition.getRange() == 1 || opposition.getRange() == 2)
+    {
+        moveDefenceTight(p, opposition);
+    }
+    else
+    {
+        moveDefenceLoose(p, opposition);
+    }
+}
+
+void Match::moveDefenceLoose(Player *p, Player opposition)
+{
+    //get player and opposition positions
+    int posX = p->getPosX(), posY = p->getPosY(), oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
+
+    if(oppPosX < 3)
+    {
+        if(oppPosY < 2)
+        {
+            oppPosY++;
+        }
+        else
+        {
+            oppPosY--;
+        }
+    }
+    else
+    {
+        if(oppPosY < 2)
+        {
+            oppPosY++;
+            oppPosX--;
+        }
+        else if(oppPosY > 5)
+        {
+            oppPosY--;
+            oppPosX--;
+        }
+        else
+        {
+            oppPosX--;
+        }
+    }
+
+    int moveDirection;
+    if(posY < oppPosY)
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 8;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 6;
+        }
+        else
+        {
+            moveDirection = 7;
+        }
+    }
+    else if(posY > oppPosY)
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 2;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 0;
+        }
+        else
+        {
+            moveDirection = 1;
+        }
+    }
+    else
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 5;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 3;
+        }
+        else
+        {
+            moveDirection = 4;
+        }
+    }
+    p->movePlayer(moveDirection);
+}
+
+void Match::moveDefenceTight(Player* p, Player opposition)
+{
+    int posX = p->getPosX(), posY = p->getPosY(), oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
+    int moveDirection;
+    if(posY < oppPosY)
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 8;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 6;
+        }
+        else
+        {
+            moveDirection = 7;
+        }
+    }
+    else if(posY > oppPosY)
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 2;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 0;
+        }
+        else
+        {
+            moveDirection = 1;
+        }
+    }
+    else
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 5;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 3;
+        }
+        else
+        {
+            moveDirection = 4;
+        }
+    }
+    p->movePlayer(moveDirection);
+}
+
 
 //==============================
 
@@ -294,14 +467,22 @@ void Match::printCourt()
     {
         Player *p = teamOne->getPlayer(j);
         cout << j << " " << p->getPosY() << " " << p->getPosX() << endl;
-        halfCourt[p->getPosY()][p->getPosX()] = j;//(char)(p->getNumber());
+        halfCourt[p->getPosY()][p->getPosX()] = j+10;//(char)(p->getNumber());
+    }
+
+    for(int j =1; j < 6; j++)
+    {
+        Player *p = teamTwo->getPlayer(j);
+        cout << j << " " << p->getPosY() << " " << p->getPosX() << endl;
+        halfCourt[p->getPosY()][p->getPosX()] = j+20;//(char)(p->getNumber());
     }
 
     for(int i = 0; i < 8; i++)
         {
             for(int j = 0; j < 7; j++)
             {
-               cout << halfCourt[i][j] << " ";
+               //cout << halfCourt[i][j] << "  ";
+               printf("%02i ", halfCourt[i][j]);
             }
             cout << endl;
         }

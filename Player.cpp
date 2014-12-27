@@ -12,8 +12,8 @@ Player::Player(int number)
     defRebound = 10;
     calcHeatMap();
     printHeatMap();
-    posX = 3;
-    posY = 0;
+    posX = rand() % 7;
+    posY = rand() % 8;
 }
 
 //=================================

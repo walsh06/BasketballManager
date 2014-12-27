@@ -19,20 +19,24 @@ public:
     Match();
     void sim();
 private:
-    Team * teamOne;
+    Team * teamOne, *teamTwo;
     Ball ball;
+
     void move(Player* p);
+    void withBall(Player* p, int shotClock);
+
     void shoot(Player* p);
     void shootThree(Player* p);
     void shootMedium(Player* p);
     void shootClose(Player* p);
-
+    void pass(Player* p, Player* teamMate);
     void rebound();
 
-    void pass(Player* p, Player* teamMate);
+    void moveDefence(Player* p);
+    void moveDefenceLoose(Player *p, Player opposition);
+    void moveDefenceTight(Player* p, Player opposition);
 
     void printCourt();
-    void withBall(Player* p, int shotClock);
     int getRandomAction(int arr[], int size, int total);
 };
 
