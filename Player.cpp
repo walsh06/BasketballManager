@@ -8,6 +8,8 @@ Player::Player(int number)
     closeShot = 9;
     dunk = 4;
     layup = 12;
+    offRebound = 10;
+    defRebound = 10;
     calcHeatMap();
     printHeatMap();
     posX = 3;
@@ -219,7 +221,7 @@ int Player::getRange()
     }
     else if(posX == 4)
     {
-        if(posY >= 2 && posY <= 5)
+        if(posY > 0 && posY < 7)
         {
             range = 3;
         }

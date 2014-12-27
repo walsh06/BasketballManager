@@ -51,7 +51,7 @@ private:
 
 
 
-    const int heatFactor = 2;
+    const int heatFactor = 3;
 };
 
 #endif // PLAYER_H
