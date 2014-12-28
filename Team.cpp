@@ -26,11 +26,12 @@ int Team::getPlayerPosition(int number)
 {
     std::map<int, Player*>::const_iterator it;
     int pos;
-    for (it = players.begin(); it != players.end(); ++it)
+
+    for(auto &player: players)
     {
-        if (it->second->getNumber() == number)
+        if(player.second->getNumber() == number)
         {
-            pos = it->first;
+            pos = player.first;
             break;
         }
     }
@@ -79,5 +80,25 @@ void Team::swapSides()
     {
         Player *p = player.second;
         p->setPos((p->getPosX() *-1) - 1, p->getPosY());
+    }
+}
+
+void Team::restartInbound(int ballTeam)
+{
+    if(team == ballTeam)
+    {
+        getPlayer(1)->setPos(-5, 4);
+        getPlayer(2)->setRandomPos();
+        getPlayer(3)->setPos(-7, 4);
+        getPlayer(4)->setRandomPos();
+        getPlayer(5)->setRandomPos();
+
+    }
+    else
+    {
+        for(auto &player: players)
+        {
+            player.second->setRandomPos();
+        }
     }
 }

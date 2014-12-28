@@ -14,7 +14,9 @@ public:
     int getPosValue();
     int getPosX();
     int getPosY();
-    int setPos(int x, int y);
+    void setPos(int x, int y);
+    void setRandomPos();
+
     int getNumber();
     int getThreeShot();
     int getMediumShot();

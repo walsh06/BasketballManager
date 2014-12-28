@@ -16,8 +16,7 @@ Player::Player(int number)
 
     calcHeatMap();
     //printHeatMap();
-    posX = rand() % 7;
-    posY = rand() % 8;
+    setRandomPos();
 }
 
 //=================================
@@ -168,7 +167,7 @@ int Player::getPosY()
     return posY;
 }
 
-int Player::setPos(int x, int y)
+void Player::setPos(int x, int y)
 {
     if(x >= -7 && x < 7)
     {
@@ -178,6 +177,11 @@ int Player::setPos(int x, int y)
     {
         posY = y;
     }
+}
+
+void Player::setRandomPos()
+{
+    setPos(rand() % 7, rand() % 8);
 }
 
 int Player::getNumber()

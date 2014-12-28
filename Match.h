@@ -19,6 +19,8 @@ public:
     Match();
     void sim();
 private:
+    int gameState;
+    const int INPLAY = 0, INBOUND = 1;
     Team * teamOne, *teamTwo;
     Team *teams[2];
     int shotClock, time;
@@ -35,6 +37,7 @@ private:
     void shootMedium(Player* p);
     void shootClose(Player* p);
     void pass(Player* p, Player* teamMate);
+    void passInbound(Player* p);
     void rebound();
 
     void moveDefence(Player* p);
@@ -45,7 +48,8 @@ private:
     void setOrderOfPlay();
     int getOtherTeam(int team);
     void swapSides();
-    int getRandomAction(int arr[], int size, int total);
+    void setUpRestartInbound();
+
 };
 
 #endif // MATCH_H
