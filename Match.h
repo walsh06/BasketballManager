@@ -44,6 +44,8 @@ private:
     void moveDefenceLoose(Player *p, Player opposition);
     void moveDefenceTight(Player* p, Player opposition);
 
+    void block(Player *p);
+
     void printCourt();
     void setOrderOfPlay();
     int getOtherTeam(int team);

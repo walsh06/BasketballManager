@@ -81,7 +81,7 @@ void Player::calcHeatMap()
 
     for(int i = 0; i < 8; i++)
     {
-        heatMap[i][0] = (threeShot/2)/heatFactor + 1;
+        heatMap[i][0] = (threeShot/4)/heatFactor + 1;
         heatMap[i][1] = threeShot/heatFactor + 1;
 
     }
