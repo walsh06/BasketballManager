@@ -72,3 +72,12 @@ void Team::setTeam(int team)
         }
     }
 }
+
+void Team::swapSides()
+{
+    for(auto &player: players)
+    {
+        Player *p = player.second;
+        p->setPos((p->getPosX() *-1) - 1, p->getPosY());
+    }
+}

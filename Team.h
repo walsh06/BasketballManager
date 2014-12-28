@@ -17,6 +17,8 @@ public:
     int getMatchup(int position);
     int getMatchup(Player p);
     void setTeam(int team);
+    void swapSides();
+
 
     static const int PG = 1, SG = 2, SF = 3, PF = 4, C = 5;
 private:

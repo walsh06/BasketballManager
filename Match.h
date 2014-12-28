@@ -20,7 +20,7 @@ public:
     void sim();
 private:
     Team * teamOne, *teamTwo;
-    Team teams[2];
+    Team *teams[2];
     int shotClock, time;
     Ball ball;
     vector<Player*> orderOfPlay;
@@ -30,6 +30,7 @@ private:
     void withBall(Player* p, int shotClock);
 
     void shoot(Player* p);
+    void shootUnderBasket(Player *p);
     void shootThree(Player* p);
     void shootMedium(Player* p);
     void shootClose(Player* p);
@@ -42,6 +43,8 @@ private:
 
     void printCourt();
     void setOrderOfPlay();
+    int getOtherTeam(int team);
+    void swapSides();
     int getRandomAction(int arr[], int size, int total);
 };
 

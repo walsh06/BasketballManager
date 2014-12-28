@@ -21,6 +21,7 @@ public:
     int getCloseShot();
     int getDunk();
     int getLayup();
+    int getUnderBasketShot();
     int getOffRebound();
     int getDefRebound();
     int getBlock();
