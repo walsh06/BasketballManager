@@ -14,16 +14,21 @@ public:
     int getPosValue();
     int getPosX();
     int getPosY();
-    int setPos(int x, int y);
+    void setPos(int x, int y);
+    void setRandomPos();
+
     int getNumber();
     int getThreeShot();
     int getMediumShot();
     int getCloseShot();
     int getDunk();
     int getLayup();
+    int getUnderBasketShot();
     int getOffRebound();
     int getDefRebound();
     int getBlock();
+    int getSpeed();
+
     void setTeam(int team);
     int getTeam();
 
@@ -45,7 +50,7 @@ private:
     //defence
     int block, steal;
     //offence
-    int pass, hands;
+    int pass, hands, speed;
 
     void printHeatMap();
     void calcHeatMap();

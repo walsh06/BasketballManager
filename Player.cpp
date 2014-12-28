@@ -12,11 +12,11 @@ Player::Player(int number)
     offRebound = 10;
     defRebound = 10;
     block = 15;
+    speed = rand() % 21;
 
     calcHeatMap();
-    printHeatMap();
-    posX = rand() % 7;
-    posY = rand() % 8;
+    //printHeatMap();
+    setRandomPos();
 }
 
 //=================================
@@ -73,30 +73,25 @@ void Player::calcHeatMap()
     }
     //===============================
     //three shot heat mapping
-    for(int i = 0; i < 5; i++)
+    for(int i = 2; i < 7; i++)
     {
         heatMap[0][i] = (threeShot/heatFactor + 1);
         heatMap[7][i] = (threeShot/heatFactor + 1);
-        if( i == 4)
-        {
-            heatMap[1][i] =  (threeShot/heatFactor + 1);
-            heatMap[6][i] =  (threeShot/heatFactor + 1);
-        }
     }
 
     for(int i = 0; i < 8; i++)
     {
-        heatMap[i][6] = (threeShot/2)/heatFactor + 1;
-        heatMap[i][5] = threeShot/heatFactor + 1;
+        heatMap[i][0] = (threeShot/2)/heatFactor + 1;
+        heatMap[i][1] = threeShot/heatFactor + 1;
 
     }
     //=================================
     //Medium shot mapping
-    for(int i = 0; i < 5; i++)
+    for(int i = 2; i < 7; i++)
     {
         heatMap[1][i] = (mediumShot/heatFactor) + 1;
         heatMap[6][i] = (mediumShot/heatFactor) + 1;
-        if( i == 4 || i == 3)
+        if( i == 2 || i == 3)
         {
             heatMap[2][i] =  (mediumShot/heatFactor) + 1;
             heatMap[3][i] =  (mediumShot/heatFactor) + 1;
@@ -106,18 +101,18 @@ void Player::calcHeatMap()
     }
     //=================================
     //close shot mapping
-    for(int i = 0; i < 3; i++)
+    for(int i = 4; i < 7; i++)
     {
         heatMap[2][i] = (closeShot/heatFactor) + 1;
         heatMap[5][i] = (closeShot/heatFactor) + 1;
-        if( i == 2)
+        if( i == 4)
         {
             heatMap[4][i] =  (closeShot/heatFactor) + 1;
             heatMap[3][i] =  (closeShot/heatFactor) + 1;
         }
     }
     //=================================
-    //Close shot mapping
+    //Dunk/layup shot mapping
     int rating;
     if(dunk > layup)
     {
@@ -127,7 +122,7 @@ void Player::calcHeatMap()
     {
         rating = layup;
     }
-    for(int i = 0; i < 2; i++)
+    for(int i = 5; i < 7; i++)
     {
         heatMap[3][i] = (rating/heatFactor) + 1;
         heatMap[4][i] = (rating/heatFactor) + 1;
@@ -172,9 +167,9 @@ int Player::getPosY()
     return posY;
 }
 
-int Player::setPos(int x, int y)
+void Player::setPos(int x, int y)
 {
-    if(x >= 0 && x < 7)
+    if(x >= -7 && x < 7)
     {
         posX = x;
     }
@@ -182,6 +177,11 @@ int Player::setPos(int x, int y)
     {
         posY = y;
     }
+}
+
+void Player::setRandomPos()
+{
+    setPos(rand() % 7, rand() % 8);
 }
 
 int Player::getNumber()
@@ -218,11 +218,11 @@ int Player::getRange()
 {
     int range = -1;
 
-    if(posX == 5 || posX == 6)
+    if(posX == 0 || posX == 1)
     {
         range = 4;
     }
-    else if(posX == 4)
+    else if(posX == 2 || posX == 3)
     {
         if(posY > 0 && posY < 7)
         {
@@ -233,18 +233,7 @@ int Player::getRange()
             range = 4;
         }
     }
-    else if(posX == 3)
-    {
-        if(posY >= 1 && posY <= 6)
-        {
-            range = 3;
-        }
-        else
-        {
-            range = 4;
-        }
-    }
-    else if(posX == 2)
+    else if(posX == 4)
     {
         if(posY >= 2 && posY <= 5)
         {
@@ -259,7 +248,7 @@ int Player::getRange()
             range = 4;
         }
     }
-    else if(posX == 0 || posX == 1)
+    else if(posX == 5 || posX == 6)
     {
         switch(posY)
         {
@@ -298,6 +287,16 @@ int Player::getDefRebound()
 int Player::getBlock()
 {
     return block;
+}
+
+int Player::getSpeed()
+{
+    return speed;
+}
+
+int Player::getUnderBasketShot()
+{
+    return layup > dunk ? layup : dunk;
 }
 
 //======================================
