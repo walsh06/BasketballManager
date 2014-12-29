@@ -3,21 +3,21 @@
 Ball::Ball()
 {
     team = 0;
-    playerNumber = 0;
+    player = 0;
 }
 
-int Ball::getPlayerNumber()
+int Ball::getPlayerPosition()
 {
-    return playerNumber;
+    return player;
 }
 int Ball::getTeam()
 {
     return team;
 }
 
-void Ball::setPlayerNumber(int num)
+void Ball::setPlayerPosition(int num)
 {
-    playerNumber = num;
+    player = num;
 }
 
 void Ball::setTeam(int team)
@@ -27,3 +27,16 @@ void Ball::setTeam(int team)
         this->team = team;
     }
 }
+
+void Ball::changeTeam()
+{
+    if(team == 1) team = 2;
+    else if(team == 2) team = 1;
+}
+
+void Ball::changeTeam(int playerTeam)
+{
+    if(playerTeam == 1) team = 2;
+    else if(playerTeam == 2) team = 1;
+}
+

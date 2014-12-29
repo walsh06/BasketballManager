@@ -3,62 +3,160 @@
 Match::Match()
 {
     teamOne = new Team();
+    teamOne->setTeam(1);
+    teamTwo = new Team();
+    teamTwo->setTeam(2);
+
+    teams[0] = teamOne;
+    teams[1] = teamTwo;
+
+    ball.setTeam(2);
+    setUpRestartInbound();
+    score[0] = 0;
+    score[1] = 0;
 }
 
 void Match::sim()
 {
-    int shotClock = 0;
-    ball.setPlayerNumber(1);
-    for(shotClock =24; shotClock >= 0; shotClock--)
+    for(int time = 180; time > 0;)
     {
-        cout << "TIME: " << shotClock << endl;
-        cout << "Ball: " << ball.getPlayerNumber() << endl;
-        for(int j =1; j < 6; j++)
+        cout << "Score: " << score[0] << "-" << score[1] << endl;
+        for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
         {
-            Player *p = teamOne->getPlayer(j);
-            if(p->getNumber() == ball.getPlayerNumber())
+            if(time < 24)
             {
-                withBall(p, shotClock);
+                shotClock = time;
             }
-            else
+            setOrderOfPlay();
+            cout << "TIME: " << time << " Shotclock: " << shotClock << endl;
+            cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
+            for(auto &player : orderOfPlay)
             {
-                move(p);
+                if(player->getTeam() == ball.getTeam())
+                {
+                    if(teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()) == ball.getPlayerPosition())
+                    {
+                        if(gameState == INPLAY)
+                            withBall(player, shotClock);
+                        else if(gameState == INBOUND)
+                            passInbound(player);
+
+                        if(shotClock == 0)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        move(player);
+                    }
+                }
+                else
+                {
+                    moveDefence(player);
+                }
             }
+
+            printCourt();
         }
-        printCourt();
     }
+    cout << "Score: " << score[0] << "-" << score[1] << endl;
 
 }
 
+void Match::setOrderOfPlay()
+{
+    orderOfPlay.clear();
+    vector<Player *> players;
+    map<int, Player*> playersWithSpeed;
+    int speedOne, speedTwo;
+    for(int j =1; j < 6; j++)
+    {
+        Player *p1 = teamOne->getPlayer(j);
+        Player *p2 = teamTwo->getPlayer(j);
+        do
+        {
+            speedOne = 30 - (p1->getSpeed() + (rand() % 10));
+        }while(playersWithSpeed.find(speedOne) != playersWithSpeed.end());
+        playersWithSpeed[speedOne] = p1;
+        do
+        {
+            speedTwo = 30 - (p2->getSpeed() + (rand() % 10));
+        }while(playersWithSpeed.find(speedTwo) != playersWithSpeed.end());
+        playersWithSpeed[speedTwo] = p2;
+    }
+
+    std::vector<Player*>::iterator it = orderOfPlay.begin();
+    for(auto &player: playersWithSpeed)
+    {
+        orderOfPlay.push_back(player.second);
+    }
+}
+
+int Match::getOtherTeam(int team)
+{
+    if(team == 1) return 1;
+    else return 0;
+}
+
+void Match::swapSides()
+{
+    teams[0]->swapSides();
+    teams[1]->swapSides();
+    ball.changeTeam();
+    ball.setPlayerPosition(1);
+    shotClock = 0;
+}
+
+void Match::setUpRestartInbound()
+{
+    teams[0]->swapSides();
+    teams[1]->swapSides();
+    ball.changeTeam();
+    ball.setPlayerPosition(3);
+
+    int team = ball.getTeam();
+    teamOne->restartInbound(team);
+    teamTwo->restartInbound(team);
+    gameState = INBOUND;
+}
+
 //================================
-// Player Actions
+// Player Offense Actions
 //================================
 
 void Match::move(Player* p)
 {
-    ProbabilityVector probs(9);
-    int x = p->getPosX(), y = p->getPosY();
-
-    for(int i = y - 1; i <= y + 1; i++)
+    if(p->getPosX() < 0)
     {
-        for(int j = x - 1; j <= x + 1; j++)
+        p->movePlayer(5);
+    }
+    else
+    {
+        ProbabilityVector probs(9);
+        int x = p->getPosX(), y = p->getPosY();
+
+        for(int i = y - 1; i <= y + 1; i++)
         {
-            if(i < 0 || i >= 7)
+            for(int j = x - 1; j <= x + 1; j++)
             {
-                probs.addProbability(0);
-            }
-            else if(j < 0 || j >= 8)
-            {
-                probs.addProbability(0);
-            }
-            else
-            {
-                probs.addProbability(p->getPosValue(i, j));
+                if(i < 0 || i >= 7)
+                {
+                    probs.addProbability(0);
+                }
+                else if(j < 0 || j >= 8)
+                {
+                    probs.addProbability(0);
+                }
+                else
+                {
+                    probs.addProbability(p->getPosValue(i, j));
+                }
             }
         }
-    }
 
-    p->movePlayer(probs.getRandomResult());
+        p->movePlayer(probs.getRandomResult());
+    }
 }
 
 void Match::withBall(Player* p, int shotClock)
@@ -66,6 +164,10 @@ void Match::withBall(Player* p, int shotClock)
     if(shotClock == 0)
     {
         shoot(p);
+    }
+    else if(p->getPosX() < 0)
+    {
+        p->movePlayer(5);
     }
     else
     {
@@ -78,11 +180,11 @@ void Match::withBall(Player* p, int shotClock)
         {
             for(int j = x - 1; j <= x + 1; j++)
             {
-                if(i < 0 || i >= 7)
+                if(i < 0 || i > 7)
                 {
                     probs.addProbability(0);
                 }
-                else if(j < 0 || j >= 8)
+                else if(j < 0 || j > 8)
                 {
                    probs.addProbability(0);
                 }
@@ -96,14 +198,14 @@ void Match::withBall(Player* p, int shotClock)
         int posValue = p->getPosValue() + (24 - shotClock) ;
         probs.addProbability(posValue);
 
-        vector<Player*> otherPlayers = teamOne->getOtherPlayers(p->getNumber());
+        vector<Player*> otherPlayers = teams[p->getTeam() - 1]->getOtherPlayers(p->getNumber());
 
         for(auto &player: otherPlayers)
         {
             int posValue = player->getPosValue();
             probs.addProbability(posValue);
         }
-        probs.printVector();
+
         int action  = probs.getRandomResult();
 
         if(action < 9)
@@ -123,27 +225,35 @@ void Match::withBall(Player* p, int shotClock)
 
 }
 
-int Match::getRandomAction(int arr[], int size, int total)
+void Match::passInbound(Player *p)
 {
-    int randomNum = rand() % total, currentTotal = 0, result = -1;
-    for(int i =0; i < size; i++)
+    ProbabilityVector probs(14);
+
+    vector<Player*> otherPlayers = teams[p->getTeam() - 1]->getOtherPlayers(p->getNumber());
+
+    for(auto &player: otherPlayers)
     {
-        currentTotal += arr[i];
-        if(currentTotal > randomNum)
+        if(player->getPosX() < 0)
         {
-            result = i;
-            break;
+            probs.addProbability(10);
+        }
+        else
+        {
+            probs.addProbability(0);
         }
     }
 
-    return result;
+    int action  = probs.getRandomResult();
+    pass(p, otherPlayers[action]);
+    gameState = INPLAY;
 }
+
 //==============================
 
 
 
 //================================
-// Player Actions Results
+// Player Offense Actions Results
 //================================
 
 void Match::shoot(Player* p)
@@ -151,7 +261,7 @@ void Match::shoot(Player* p)
     int range = p->getRange();
     if(range == 1)
     {
-
+        shootUnderBasket(p);
     }
     else if(range == 2)
     {
@@ -167,6 +277,47 @@ void Match::shoot(Player* p)
     }
 }
 
+void Match::shootUnderBasket(Player *p)
+{
+    int shotRand = rand() % 35;
+    int shot = p->getUnderBasketShot(), freeThrows = 0;
+
+    int foulRand = rand() % 5;
+
+    if(foulRand == 0)
+    {
+        freeThrows = 2;
+    }
+
+    if(shotRand < shot)
+    {
+       cout << "SCORE Under Basket" << endl;
+       shotClock = 0;
+       score[p->getTeam() - 1]+=2;
+       if(freeThrows == 0)
+       {
+            setUpRestartInbound();
+       }
+       else
+       {
+           freeThrows = 1;
+       }
+    }
+    else
+    {
+        cout << "MISS Under Basket" << endl;
+        if(freeThrows == 0)
+        {
+            block(p);
+            rebound();
+        }
+    }
+
+    if(freeThrows > 0)
+    {
+        freethrow(p, freeThrows);
+    }
+}
 void Match::shootClose(Player* p)
 {
     int shotRand = rand() % 43;
@@ -175,10 +326,14 @@ void Match::shootClose(Player* p)
     if(shotRand < shot)
     {
        cout << "SCORE Close" << endl;
+       shotClock = 0;
+       score[p->getTeam() - 1]+=2;
+       setUpRestartInbound();
     }
     else
     {
         cout << "MISS Close" << endl;
+        block(p);
         rebound();
     }
 }
@@ -191,21 +346,25 @@ void Match::shootMedium(Player* p)
     if(shotRand < shot)
     {
        cout << "SCORE Mid" << endl;
+       shotClock = 0;
+       score[p->getTeam() - 1]+=2;
+       setUpRestartInbound();
     }
     else
     {
         cout << "MISS Mid" << endl;
+        block(p);
         rebound();
     }
 }
 
 void Match::shootThree(Player *p)
 {
-    int shotRand = rand() % 40;
+    int shotRand = rand() % 43;
     int shot;
-    if(p->getPosX() == 6)
+    if(p->getPosX() == 0)
     {
-        shot = p->getThreeShot() / 2;
+        shot = p->getThreeShot() / 4;
     }
     else
     {
@@ -215,24 +374,29 @@ void Match::shootThree(Player *p)
     if(shotRand < shot)
     {
        cout << "SCORE 3" << endl;
+       shotClock = 0;
+       score[p->getTeam() - 1]+=3;
+       setUpRestartInbound();
     }
     else
     {
         cout << "MISS 3" << endl;
+        block(p);
         rebound();
     }
 }
 
-void Match::freethrow(Player *p, int numOfFreeThrows)
+void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
     int ft = p->getFreethrow();
 
     do
     {
-        int ftProb = rand() % 21;
+        int ftProb = rand() % 22;
         if(ft < ftProb)
         {
             cout << "Free Throw: " << p->getNumber() << endl;
+            score[p->getTeam() - 1]++;
         }
         numOfFreeThrows--;
     }while(numOfFreeThrows > 0);
@@ -241,48 +405,62 @@ void Match::freethrow(Player *p, int numOfFreeThrows)
 void Match::pass(Player* p, Player* teamMate)
 {
     cout << "Pass: " << teamMate->getNumber() << endl;
-    ball.setPlayerNumber(teamMate->getNumber());
+    ball.setPlayerPosition(teamMate->getNumber());
 }
 
 void Match::rebound()
 {
     ProbabilityVector probs(10);
-    int playerNumbers[10];
+    vector<Player *> players;
     int count = 0, reboundRange = 2;
 
     do{
-        for(int i =1; i < 6; i++)
+        for(auto &player: orderOfPlay)
         {
-            Player p = *teamOne->getPlayer(i);
+            Player p = *player;
             int range = p.getRange();
             if(range <= reboundRange)
             {
                 if(p.getTeam() == ball.getTeam())
                 {
                     probs.addProbability(p.getOffRebound());
-                    playerNumbers[count] = p.getNumber();
-                    count++;
                 }
                 else
                 {
                     probs.addProbability(p.getDefRebound() * 3);
-                    playerNumbers[count] = p.getNumber();
-                    count++;
                 }
+                players.push_back(player);
+                count++;
             }
         }
 
-        if(count == 1)
+        if(count > 1)
         {
-             ball.setPlayerNumber(playerNumbers[0]);
-             cout << "Rebound: " << playerNumbers[0] << endl;
-        }
-        else if(count > 1)
-        {
-             int result = probs.getRandomResult();
+            Player *p;
+            int pos;
+            if( count == 1)
+            {
+                p = players[0];
+            }
+            else
+            {
+                int result = probs.getRandomResult();
+                p = players[result];
+            }
+            pos = teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber());
 
-             ball.setPlayerNumber(playerNumbers[result]);
-             cout << "Rebound: " << playerNumbers[result] << endl;
+             ball.setPlayerPosition(pos);
+             if(ball.getTeam() == p->getTeam())
+             {
+                 cout << "Offensive Rebound: " << p->getNumber() << endl;
+                shotClock = 0;
+             }
+             else
+             {
+                 cout << "Defensive Rebound: " << p->getNumber() << endl;
+                 shotClock = 0;
+                 swapSides();
+             }
         }
         else
         {
@@ -294,12 +472,200 @@ void Match::rebound()
 
 //==============================
 
+//================================
+// Player Defense Actions
+//================================
+
+void Match::moveDefence(Player *p)
+{
+    int matchup, team = getOtherTeam(p->getTeam());
+    //get the defensive matchup of the player
+
+    matchup = teams[p->getTeam() - 1]->getMatchup(*p);
+    Player opposition = *teams[team]->getPlayer(matchup);
+
+
+    //play tight if their matchup has the ball
+    //play tight if their matchup is close to the basket
+    //play loose if farther out
+    if(p->getPosX() < 0)
+    {
+        p->movePlayer(5);
+    }
+    else if(ball.getPlayerPosition() == matchup)
+    {
+        moveDefenceTight(p, opposition);
+    }
+    else if(opposition.getRange() == 1 || opposition.getRange() == 2)
+    {
+        moveDefenceTight(p, opposition);
+    }
+    else
+    {
+        moveDefenceLoose(p, opposition);
+    }
+}
+
+void Match::moveDefenceLoose(Player *p, Player opposition)
+{
+    //get player and opposition positions
+    int posX = p->getPosX(), posY = p->getPosY(), oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
+
+    if(oppPosX > 3)
+    {
+        if(oppPosY < 2)
+        {
+            oppPosY++;
+        }
+        else if(oppPosY > 5)
+        {
+            oppPosY--;
+        }
+    }
+    else
+    {
+        if(oppPosY < 2)
+        {
+            oppPosY++;
+        }
+        else if(oppPosY > 5)
+        {
+            oppPosY--;
+        }
+        oppPosX++;
+    }
+
+    int moveDirection;
+    if(posY < oppPosY)
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 8;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 6;
+        }
+        else
+        {
+            moveDirection = 7;
+        }
+    }
+    else if(posY > oppPosY)
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 2;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 0;
+        }
+        else
+        {
+            moveDirection = 1;
+        }
+    }
+    else
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 5;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 3;
+        }
+        else
+        {
+            moveDirection = 4;
+        }
+    }
+    p->movePlayer(moveDirection);
+}
+
+void Match::moveDefenceTight(Player* p, Player opposition)
+{
+    int posX = p->getPosX(), posY = p->getPosY(), oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
+    int moveDirection;
+    if(posY < oppPosY)
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 8;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 6;
+        }
+        else
+        {
+            moveDirection = 7;
+        }
+    }
+    else if(posY > oppPosY)
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 2;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 0;
+        }
+        else
+        {
+            moveDirection = 1;
+        }
+    }
+    else
+    {
+        if(posX < oppPosX)
+        {
+            moveDirection = 5;
+        }
+        else if(posX > oppPosX)
+        {
+            moveDirection = 3;
+        }
+        else
+        {
+            moveDirection = 4;
+        }
+    }
+    p->movePlayer(moveDirection);
+}
+
+
+//================================
+// Player Defense Actions Results
+//================================
+
+void Match::block(Player *p)
+{
+    for(int i = 1; i < 6; i++)
+    {
+        Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
+        if(opp.getPosX() == p->getPosX() && opp.getPosY() == p->getPosY())
+        {
+            int block = rand() % 200;
+
+            if(block < opp.getBlock())
+            {
+                cout << "Block: " << opp.getNumber() << endl;
+            }
+        }
+    }
+}
+
+//==============================
+
 void Match::printCourt()
 {
-    int halfCourt[8][7];
+    int halfCourt[8][14];
     for(int i = 0; i < 8; i++)
     {
-        for(int j = 0; j < 7; j++)
+        for(int j = 0; j < 14; j++)
         {
             halfCourt[i][j] = 0;
         }
@@ -309,14 +675,22 @@ void Match::printCourt()
     {
         Player *p = teamOne->getPlayer(j);
         cout << j << " " << p->getPosY() << " " << p->getPosX() << endl;
-        halfCourt[p->getPosY()][p->getPosX()] = j;//(char)(p->getNumber());
+        halfCourt[p->getPosY()][p->getPosX() + 7] = j+10;//(char)(p->getNumber());
+    }
+
+    for(int j =1; j < 6; j++)
+    {
+        Player *p = teamTwo->getPlayer(j);
+        cout << j << " " << p->getPosY() << " " << p->getPosX() << endl;
+        halfCourt[p->getPosY()][p->getPosX() + 7] = j+20;//(char)(p->getNumber());
     }
 
     for(int i = 0; i < 8; i++)
         {
-            for(int j = 0; j < 7; j++)
+            for(int j = 0; j < 14; j++)
             {
-               cout << halfCourt[i][j] << " ";
+               //cout << halfCourt[i][j] << "  ";
+               printf("%02i ", halfCourt[i][j]);
             }
             cout << endl;
         }
