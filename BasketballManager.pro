@@ -9,12 +9,14 @@ SOURCES += main.cpp \
     Match.cpp \
     Team.cpp \
     Ball.cpp \
-    ProbabilityVector.cpp
+    ProbabilityVector.cpp \
+    Heatmap.cpp
 
 HEADERS += \
     Player.h \
     Match.h \
     Team.h \
     Ball.h \
-    ProbabilityVector.h
+    ProbabilityVector.h \
+    Heatmap.h
 
