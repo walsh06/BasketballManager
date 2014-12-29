@@ -512,7 +512,7 @@ void Match::rebound()
             }
         }
 
-        if(count > 1)
+        if(count > 0)
         {
             Player *p;
             int pos;
