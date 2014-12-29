@@ -18,7 +18,7 @@ Match::Match()
 
 void Match::sim()
 {
-    for(int time = 2880; time > 0;)
+    for(int time = 180; time > 0;)
     {
         cout << "Score: " << score[0] << "-" << score[1] << endl;
         for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
