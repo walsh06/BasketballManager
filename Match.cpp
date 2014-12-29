@@ -315,53 +315,103 @@ void Match::shootUnderBasket(Player *p)
 
     if(freeThrows > 0)
     {
-        freethrow(p, freeThrows);
+        shootFreeThrow(p, freeThrows);
     }
 }
 void Match::shootClose(Player* p)
 {
     int shotRand = rand() % 43;
-    int shot = p->getCloseShot();
+    int shot = p->getCloseShot(), freeThrows = 0;
+
+    int foulRand = rand() % 5;
+
+    if(foulRand == 0)
+    {
+        freeThrows = 2;
+    }
 
     if(shotRand < shot)
     {
        cout << "SCORE Close" << endl;
        shotClock = 0;
        score[p->getTeam() - 1]+=2;
-       setUpRestartInbound();
+       if(freeThrows == 0)
+       {
+            setUpRestartInbound();
+       }
+       else
+       {
+           freeThrows=1;
+       }
     }
     else
     {
         cout << "MISS Close" << endl;
-        block(p);
-        rebound();
+        if(freeThrows == 0)
+        {
+            block(p);
+            rebound();
+        }
+    }
+
+    if(freeThrows > 0)
+    {
+        shootFreeThrow(p, freeThrows);
     }
 }
 
 void Match::shootMedium(Player* p)
 {
     int shotRand = rand() % 45;
-    int shot = p->getMediumShot();
+    int shot = p->getMediumShot(), freeThrows = 0;
+
+    int foulRand = rand() % 5;
+
+    if(foulRand == 0)
+    {
+        freeThrows = 2;
+    }
 
     if(shotRand < shot)
     {
        cout << "SCORE Mid" << endl;
        shotClock = 0;
        score[p->getTeam() - 1]+=2;
-       setUpRestartInbound();
+       if(freeThrows == 0)
+       {
+            setUpRestartInbound();
+       }
+       else
+       {
+           freeThrows=1;
+       }
     }
     else
     {
         cout << "MISS Mid" << endl;
-        block(p);
-        rebound();
+        if(freeThrows == 0)
+        {
+            block(p);
+            rebound();
+        }
+    }
+    if(freeThrows > 0)
+    {
+        shootFreeThrow(p, freeThrows);
     }
 }
 
 void Match::shootThree(Player *p)
 {
     int shotRand = rand() % 43;
-    int shot;
+    int shot, freeThrows = 0;
+
+    int foulRand = rand() % 5;
+
+    if(foulRand == 0)
+    {
+        freeThrows = 2;
+    }
     if(p->getPosX() == 0)
     {
         shot = p->getThreeShot() / 4;
@@ -376,13 +426,27 @@ void Match::shootThree(Player *p)
        cout << "SCORE 3" << endl;
        shotClock = 0;
        score[p->getTeam() - 1]+=3;
-       setUpRestartInbound();
+       if(freeThrows == 0)
+       {
+        setUpRestartInbound();
+       }
+       else
+       {
+           freeThrows=1;
+       }
     }
     else
     {
         cout << "MISS 3" << endl;
-        block(p);
-        rebound();
+        if(freeThrows == 0)
+        {
+            block(p);
+            rebound();
+        }
+    }
+    if(freeThrows > 0)
+    {
+        shootFreeThrow(p, freeThrows);
     }
 }
 
@@ -397,9 +461,22 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
         {
             cout << "Free Throw: " << p->getNumber() << endl;
             score[p->getTeam() - 1]++;
+            if(numOfFreeThrows == 1)
+            {
+                setUpRestartInbound();
+            }
+        }
+        else
+        {
+            cout << "Missed Free Throw: " << p->getNumber() << endl;
+            if(numOfFreeThrows == 1)
+            {
+                rebound();
+            }
         }
         numOfFreeThrows--;
     }while(numOfFreeThrows > 0);
+
 }
 
 void Match::pass(Player* p, Player* teamMate)
