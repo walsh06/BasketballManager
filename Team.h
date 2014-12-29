@@ -2,6 +2,12 @@
 #define TEAM_H
 
 #include "Player.h"
+#include "PositionCentre.h"
+#include "PositionPointGuard.h"
+#include "PositionPowerForward.h"
+#include "PositionShootingGuard.h"
+#include "PositionSmallForward.h"
+
 #include <vector>
 #include <map>
 

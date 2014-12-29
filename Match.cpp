@@ -410,7 +410,7 @@ void Match::shootThree(Player *p)
 
     if(foulRand == 0)
     {
-        freeThrows = 2;
+        freeThrows = 3;
     }
     if(p->getPosX() == 0)
     {

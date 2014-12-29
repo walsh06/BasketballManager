@@ -17,8 +17,6 @@ Player::Player(int number)
 
     calcHeatMap();
     setRandomPos();
-    position = new PositionSmallForward();
-    finalMap = posValueMap + position->getMap();
 }
 
 //=================================
@@ -145,6 +143,13 @@ int Player::getPosValue()
 {
     //posValueMap.getValue(posX, posY);
     finalMap.getValue(posX, posY);
+}
+
+void Player::setPlayingPosition(PlayerPosition *pos)
+{
+    position = pos;
+    finalMap = posValueMap + position->getMap();
+    finalMap.printHeatMap();
 }
 
 //======================================

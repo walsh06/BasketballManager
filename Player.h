@@ -17,6 +17,7 @@ public:
     int getPosY();
     void setPos(int x, int y);
     void setRandomPos();
+    void setPlayingPosition(PlayerPosition *pos);
 
     int getNumber();
     int getThreeShot();
@@ -55,7 +56,6 @@ private:
     //offence
     int pass, hands, speed, freethrow;
 
-    void printHeatMap();
     void calcHeatMap();
 
 
