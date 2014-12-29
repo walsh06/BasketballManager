@@ -1,6 +1,8 @@
 #ifndef HEATMAP_H
 #define HEATMAP_H
 
+#include <iostream>
+
 class Heatmap
 {
 public:
@@ -8,6 +10,8 @@ public:
     int getValue(int x, int y);
     int setValue(int value, int x, int y);
     int setMap(int newMap[8][7]);
+
+    void printHeatMap();
 
     Heatmap operator+(const Heatmap& map);
 private:

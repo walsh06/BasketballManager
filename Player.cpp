@@ -65,6 +65,8 @@ void Player::movePlayer(int direction)
 
 void Player::calcHeatMap()
 {
+    int heatMap[8][7];
+
     for(int i = 0; i < 8; i++)
     {
         for(int j = 0; j < 7; j++)
@@ -128,30 +130,20 @@ void Player::calcHeatMap()
         heatMap[3][i] = (rating/heatFactor) + 1;
         heatMap[4][i] = (rating/heatFactor) + 1;
     }
+
+    posValueMap.setMap(heatMap);
 }
 
 int Player::getPosValue(int x, int y)
 {
-    return heatMap[y][x];
+    posValueMap.getValue(x, y);
 }
 
 int Player::getPosValue()
 {
-    return heatMap[posY][posX];
+    posValueMap.getValue(posX, posY);
 }
 
-void Player::printHeatMap()
-{
-    for(int i = 0; i < 8; i++)
-    {
-        cout << i << " > ";
-        for(int j = 0; j < 7; j++)
-        {
-            cout << heatMap[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
 //======================================
 
 

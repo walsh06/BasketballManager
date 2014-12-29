@@ -44,3 +44,16 @@ Heatmap Heatmap::operator+(const Heatmap& map)
     }
     return newMap;
 }
+
+void Heatmap::printHeatMap()
+{
+    for(int i = 0; i < 8; i++)
+    {
+        std::cout << i << " > ";
+        for(int j = 0; j < 7; j++)
+        {
+            std::cout << heatMap[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}

@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <iostream>
+#include "Heatmap.h"
 
 using namespace std;
 
@@ -38,7 +38,7 @@ public:
     void movePlayer(int direction);
 
 private:
-    int heatMap[8][7];
+    Heatmap posValueMap;
 
     int posX, posY;
     int number;
