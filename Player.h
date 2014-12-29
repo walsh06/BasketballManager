@@ -26,6 +26,7 @@ public:
     int getUnderBasketShot();
     int getOffRebound();
     int getDefRebound();
+    int getFreethrow();
     int getBlock();
     int getSpeed();
 
@@ -50,7 +51,7 @@ private:
     //defence
     int block, steal;
     //offence
-    int pass, hands, speed;
+    int pass, hands, speed, freethrow;
 
     void printHeatMap();
     void calcHeatMap();

@@ -11,6 +11,7 @@ Player::Player(int number)
     layup = 12;
     offRebound = 10;
     defRebound = 10;
+    freethrow = 15;
     block = 15;
     speed = rand() % 21;
 
@@ -282,6 +283,11 @@ int Player::getOffRebound()
 int Player::getDefRebound()
 {
     return defRebound;
+}
+
+int Player::getFreethrow()
+{
+    return freethrow;
 }
 
 int Player::getBlock()

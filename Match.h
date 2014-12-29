@@ -26,6 +26,7 @@ private:
     int shotClock, time;
     Ball ball;
     vector<Player*> orderOfPlay;
+    int score[2];
 
 
     void move(Player* p);
@@ -36,6 +37,8 @@ private:
     void shootThree(Player* p);
     void shootMedium(Player* p);
     void shootClose(Player* p);
+    void shootFreeThrow(Player* p, int numOfFreethrows);
+
     void pass(Player* p, Player* teamMate);
     void passInbound(Player* p);
     void rebound();
