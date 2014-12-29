@@ -26,6 +26,7 @@ private:
     int shotClock, time;
     Ball ball;
     vector<Player*> orderOfPlay;
+    int score[2];
 
 
     void move(Player* p);

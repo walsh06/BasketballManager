@@ -12,12 +12,15 @@ Match::Match()
 
     ball.setTeam(2);
     setUpRestartInbound();
+    score[0] = 0;
+    score[1] = 0;
 }
 
 void Match::sim()
 {
-    for(int time = 180; time > 0;)
+    for(int time = 2880; time > 0;)
     {
+        cout << "Score: " << score[0] << "-" << score[1] << endl;
         for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
         {
             if(time < 24)
@@ -57,6 +60,7 @@ void Match::sim()
             printCourt();
         }
     }
+    cout << "Score: " << score[0] << "-" << score[1] << endl;
 
 }
 
@@ -282,6 +286,7 @@ void Match::shootUnderBasket(Player *p)
     {
        cout << "SCORE Under Basket" << endl;
        shotClock = 0;
+       score[p->getTeam() - 1]+=2;
        setUpRestartInbound();
     }
     else
@@ -300,6 +305,7 @@ void Match::shootClose(Player* p)
     {
        cout << "SCORE Close" << endl;
        shotClock = 0;
+       score[p->getTeam() - 1]+=2;
        setUpRestartInbound();
     }
     else
@@ -319,6 +325,7 @@ void Match::shootMedium(Player* p)
     {
        cout << "SCORE Mid" << endl;
        shotClock = 0;
+       score[p->getTeam() - 1]+=2;
        setUpRestartInbound();
     }
     else
@@ -346,6 +353,7 @@ void Match::shootThree(Player *p)
     {
        cout << "SCORE 3" << endl;
        shotClock = 0;
+       score[p->getTeam() - 1]+=3;
        setUpRestartInbound();
     }
     else
