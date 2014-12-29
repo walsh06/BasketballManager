@@ -110,6 +110,7 @@ void Match::swapSides()
 
 void Match::setUpRestartInbound()
 {
+    shotClock = 0;
     teams[0]->swapSides();
     teams[1]->swapSides();
     ball.changeTeam();

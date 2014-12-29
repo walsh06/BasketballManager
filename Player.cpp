@@ -217,7 +217,7 @@ int Player::getLayup()
 
 int Player::getRange()
 {
-    int range = -1;
+    int range = 5;
 
     if(posX == 0 || posX == 1)
     {
