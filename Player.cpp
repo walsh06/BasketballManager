@@ -16,7 +16,6 @@ Player::Player(int number)
     speed = rand() % 21;
 
     calcHeatMap();
-    //printHeatMap();
     setRandomPos();
 }
 
@@ -136,12 +135,21 @@ void Player::calcHeatMap()
 
 int Player::getPosValue(int x, int y)
 {
-    posValueMap.getValue(x, y);
+    //posValueMap.getValue(x, y);
+    finalMap.getValue(x, y);
 }
 
 int Player::getPosValue()
 {
-    posValueMap.getValue(posX, posY);
+    //posValueMap.getValue(posX, posY);
+    finalMap.getValue(posX, posY);
+}
+
+void Player::setPlayingPosition(PlayerPosition *pos)
+{
+    position = pos;
+    finalMap = posValueMap + position->getMap();
+    finalMap.printHeatMap();
 }
 
 //======================================

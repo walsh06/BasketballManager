@@ -10,7 +10,12 @@ SOURCES += main.cpp \
     Team.cpp \
     Ball.cpp \
     ProbabilityVector.cpp \
-    Heatmap.cpp
+    Heatmap.cpp \
+    PositionPointGuard.cpp \
+    PositionShootingGuard.cpp \
+    PositionSmallForward.cpp \
+    PositionPowerForward.cpp \
+    PositionCentre.cpp
 
 HEADERS += \
     Player.h \
@@ -18,5 +23,11 @@ HEADERS += \
     Team.h \
     Ball.h \
     ProbabilityVector.h \
-    Heatmap.h
+    Heatmap.h \
+    PlayerPosition.h \
+    PositionPointGuard.h \
+    PositionShootingGuard.h \
+    PositionSmallForward.h \
+    PositionPowerForward.h \
+    PositionCentre.h
 

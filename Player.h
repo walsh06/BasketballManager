@@ -2,7 +2,8 @@
 #define PLAYER_H
 
 #include "Heatmap.h"
-
+#include "PlayerPosition.h"
+#include "PositionSmallForward.h"
 using namespace std;
 
 class Player
@@ -16,6 +17,7 @@ public:
     int getPosY();
     void setPos(int x, int y);
     void setRandomPos();
+    void setPlayingPosition(PlayerPosition *pos);
 
     int getNumber();
     int getThreeShot();
@@ -38,7 +40,8 @@ public:
     void movePlayer(int direction);
 
 private:
-    Heatmap posValueMap;
+    Heatmap posValueMap, finalMap;
+    PlayerPosition *position;
 
     int posX, posY;
     int number;
@@ -53,7 +56,6 @@ private:
     //offence
     int pass, hands, speed, freethrow;
 
-    void printHeatMap();
     void calcHeatMap();
 
 

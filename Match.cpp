@@ -205,7 +205,7 @@ void Match::withBall(Player* p, int shotClock)
             int posValue = player->getPosValue();
             probs.addProbability(posValue);
         }
-
+        probs.printVector();
         int action  = probs.getRandomResult();
 
         if(action < 9)
@@ -410,7 +410,7 @@ void Match::shootThree(Player *p)
 
     if(foulRand == 0)
     {
-        freeThrows = 2;
+        freeThrows = 3;
     }
     if(p->getPosX() == 0)
     {

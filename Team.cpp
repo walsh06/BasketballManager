@@ -15,6 +15,11 @@ Team::Team()
     defenceMatchups[pf] = PF;
     defenceMatchups[c] = C;
 
+    players[pg]->setPlayingPosition(new PositionPointGuard());
+    players[sg]->setPlayingPosition(new PositionShootingGuard());
+    players[sf]->setPlayingPosition(new PositionSmallForward());
+    players[pf]->setPlayingPosition(new PositionPowerForward());
+    players[c]->setPlayingPosition(new PositionCentre());
 }
 
 Player* Team::getPlayer(int position)
