@@ -205,7 +205,7 @@ void Match::withBall(Player* p, int shotClock)
             int posValue = player->getPosValue();
             probs.addProbability(posValue);
         }
-
+        probs.printVector();
         int action  = probs.getRandomResult();
 
         if(action < 9)

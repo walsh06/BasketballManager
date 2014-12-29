@@ -39,7 +39,7 @@ Heatmap Heatmap::operator+(const Heatmap& map)
     {
         for(int j = 0; j < 7; j++)
         {
-            newMap.setValue(this->heatMap[i][j] + map.heatMap[i][j], i , j);
+            newMap.setValue(this->heatMap[i][j] + map.heatMap[i][j], j , i);
         }
     }
     return newMap;

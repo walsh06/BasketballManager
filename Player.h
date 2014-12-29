@@ -2,7 +2,8 @@
 #define PLAYER_H
 
 #include "Heatmap.h"
-
+#include "PlayerPosition.h"
+#include "PositionSmallForward.h"
 using namespace std;
 
 class Player
@@ -38,7 +39,8 @@ public:
     void movePlayer(int direction);
 
 private:
-    Heatmap posValueMap;
+    Heatmap posValueMap, finalMap;
+    PlayerPosition *position;
 
     int posX, posY;
     int number;
