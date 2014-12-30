@@ -31,6 +31,7 @@ public:
     int getFreethrow();
     int getBlock();
     int getSpeed();
+    int getSteal();
 
     void setTeam(int team);
     int getTeam();
