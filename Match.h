@@ -48,11 +48,12 @@ private:
     void moveDefenceTight(Player* p, Player opposition);
 
     void block(Player *p);
+    void steal(Player *p, Player opposition);
 
     void printCourt();
     void setOrderOfPlay();
     int getOtherTeam(int team);
-    void swapSides();
+    void swapSides(int playerNum);
     void setUpRestartInbound();
 
 };

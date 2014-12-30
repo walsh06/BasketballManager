@@ -99,12 +99,12 @@ int Match::getOtherTeam(int team)
     else return 0;
 }
 
-void Match::swapSides()
+void Match::swapSides(int playerNum)
 {
     teams[0]->swapSides();
     teams[1]->swapSides();
     ball.changeTeam();
-    ball.setPlayerPosition(1);
+    ball.setPlayerPosition(playerNum);
     shotClock = 0;
 }
 
@@ -537,7 +537,7 @@ void Match::rebound()
              {
                  cout << "Defensive Rebound: " << p->getNumber() << endl;
                  shotClock = 0;
-                 swapSides();
+                 swapSides(1);
              }
         }
         else
@@ -708,7 +708,7 @@ void Match::moveDefenceTight(Player* p, Player opposition)
         }
         else
         {
-            moveDirection = 4;
+            steal(p, opposition);
         }
     }
     p->movePlayer(moveDirection);
@@ -733,6 +733,17 @@ void Match::block(Player *p)
                 cout << "Block: " << opp.getNumber() << endl;
             }
         }
+    }
+}
+
+void Match::steal(Player *p, Player opposition)
+{
+    int stealRand = rand() % 400, steal = p->getSteal();
+
+    if(stealRand < steal)
+    {
+        cout << "Steal: " << p->getNumber() << endl;
+        swapSides(p->getNumber());
     }
 }
 

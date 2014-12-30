@@ -4,17 +4,17 @@ Player::Player(int number)
 {
     this->number = number;
 
-    threeShot = 13;
-    mediumShot = 18;
-    closeShot = 9;
-    dunk = 4;
-    layup = 12;
+    threeShot = 10;
+    mediumShot = 10;
+    closeShot = 10;
+    dunk = 10;
+    layup = 10;
     offRebound = 10;
     defRebound = 10;
-    freethrow = 15;
-    block = 15;
+    freethrow = 10;
+    block = 10;
     speed = rand() % 21;
-
+    steal = 10;
     calcHeatMap();
     setRandomPos();
 }
@@ -213,6 +213,11 @@ int Player::getDunk()
 int Player::getLayup()
 {
     return layup;
+}
+
+int Player::getSteal()
+{
+    return steal;
 }
 
 int Player::getRange()
