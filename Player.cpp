@@ -165,7 +165,6 @@ void Player::setPlayingPosition(PlayerPosition *pos)
 {
     position = pos;
     finalMap = posValueMap + position->getMap();
-    finalMap.printHeatMap();
 }
 
 //======================================

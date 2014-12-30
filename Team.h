@@ -23,6 +23,7 @@ public:
     int getMatchup(int position);
     int getMatchup(Player p);
     int getPressure(int posX, int posY);
+    int getPlayersUnderBasket();
 
     void setTeam(int team);
     void swapSides();
