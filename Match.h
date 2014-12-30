@@ -7,7 +7,7 @@
 #include "ProbabilityVector.h"
 
 #include <iostream>
-
+#include <cmath>
 #include <time.h>
 #include <stdlib.h>
 
@@ -32,11 +32,11 @@ private:
     void move(Player* p);
     void withBall(Player* p, int shotClock);
 
-    void shoot(Player* p);
-    void shootUnderBasket(Player *p);
-    void shootThree(Player* p);
-    void shootMedium(Player* p);
-    void shootClose(Player* p);
+    void shoot(Player* p, int pressure);
+    void shootUnderBasket(Player *p, int pressure);
+    void shootThree(Player* p, int pressure);
+    void shootMedium(Player* p, int pressure);
+    void shootClose(Player* p, int pressure);
     void shootFreeThrow(Player* p, int numOfFreethrows);
 
     void pass(Player* p, Player* teamMate);

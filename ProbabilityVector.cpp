@@ -11,6 +11,10 @@ void ProbabilityVector::addProbability(int amount)
 {
     if(count < size)
     {
+        if(amount < 0)
+        {
+            amount = 0;
+        }
         total += amount;
         probabilities.push_back(amount);
         count++;

@@ -107,3 +107,83 @@ void Team::restartInbound(int ballTeam)
         }
     }
 }
+
+void Team::setUpFreeThrowOffence(int number)
+{
+    int pos = getPlayerPosition(number);
+
+    getPlayer(pos)->setPos(3,4);
+
+    if(pos < 4)
+    {
+        getPlayer(4)->setPos(5, 5);
+        getPlayer(5)->setPos(5, 2);
+
+        if(pos == 1)
+        {
+            getPlayer(2)->setPos(2, 6);
+            getPlayer(3)->setPos(2, 1);
+        }
+        else if(pos == 2)
+        {
+            getPlayer(1)->setPos(2, 1);
+            getPlayer(3)->setPos(2, 6);
+        }
+        else
+        {
+            getPlayer(1)->setPos(2, 1);
+            getPlayer(2)->setPos(2, 6);
+        }
+    }
+    else
+    {
+        getPlayer(1)->setPos(2, 1);
+        getPlayer(2)->setPos(2, 6);
+        if(pos == 4)
+        {
+            getPlayer(3)->setPos(5, 5);
+            getPlayer(5)->setPos(5, 2);
+        }
+        else
+        {
+            getPlayer(3)->setPos(5, 2);
+            getPlayer(4)->setPos(5, 5);
+        }
+    }
+}
+
+int Team::getPressure(int posX, int posY)
+{
+   int count = 0;
+
+   for(int i = posY - 1; i <= posY + 1; i++)
+   {
+       for(int j = posX - 1; j <= posX + 1; j++)
+       {
+           for(auto &player: players)
+           {
+               if(player.second->getPosX() == i && player.second->getPosY() == j)
+               {
+                   count++;
+               }
+           }
+       }
+   }
+   for(auto &player: players)
+   {
+       if(player.second->getPosX() == posX && player.second->getPosY() == posY)
+       {
+           count += 2;
+       }
+   }
+   return count;
+}
+
+void Team::setUpFreeThrowDefence()
+{
+    getPlayer(1)->setPos(2, 2);
+    getPlayer(2)->setPos(2, 5);
+    getPlayer(3)->setPos(4, 2);
+    getPlayer(4)->setPos(6, 5);
+    getPlayer(5)->setPos(6, 2);
+}

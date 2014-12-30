@@ -22,9 +22,14 @@ public:
     int getPlayerPosition(int number);
     int getMatchup(int position);
     int getMatchup(Player p);
+    int getPressure(int posX, int posY);
+
     void setTeam(int team);
     void swapSides();
+
     void restartInbound(int team);
+    void setUpFreeThrowOffence(int number);
+    void setUpFreeThrowDefence();
 
 
     static const int PG = 1, SG = 2, SF = 3, PF = 4, C = 5;

@@ -3,18 +3,34 @@
 Player::Player(int number)
 {
     this->number = number;
-
-    threeShot = 10;
-    mediumShot = 10;
-    closeShot = 10;
-    dunk = 10;
-    layup = 10;
-    offRebound = 10;
-    defRebound = 10;
-    freethrow = 10;
-    block = 10;
-    speed = rand() % 21;
-    steal = 10;
+    if(number > 3)
+    {
+        threeShot = 4;
+        mediumShot = 4;
+        closeShot = 18;
+        dunk = 19;
+        layup = 15;
+        offRebound = 16;
+        defRebound = 19;
+        freethrow = 13;
+        block = 15;
+        speed = rand() % 21;
+        steal = 6;
+    }
+    else
+    {
+        threeShot = 16;
+        mediumShot = 19;
+        closeShot = 9;
+        dunk = 3;
+        layup = 13;
+        offRebound = 5;
+        defRebound = 10;
+        freethrow = 16;
+        block = 12;
+        speed = rand() % 21;
+        steal = 15;
+    }
     calcHeatMap();
     setRandomPos();
 }
