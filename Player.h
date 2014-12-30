@@ -40,8 +40,9 @@ public:
 
     void movePlayer(int direction);
 
+    Heatmap moveTrackerMap;
 private:
-    Heatmap posValueMap, finalMap;
+    Heatmap posValueMap, finalMap ;
     PlayerPosition *position;
 
     int posX, posY;
@@ -58,6 +59,7 @@ private:
     int pass, hands, speed, freethrow;
 
     void calcHeatMap();
+
 
 
 

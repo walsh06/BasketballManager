@@ -18,7 +18,7 @@ Match::Match()
 
 void Match::sim()
 {
-    for(int time = 180; time > 0;)
+    for(int time = 2880; time > 0;)
     {
         cout << "Score: " << score[0] << "-" << score[1] << endl;
         for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
@@ -62,6 +62,11 @@ void Match::sim()
     }
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
+    for(auto &player: orderOfPlay)
+    {
+        cout << player->getNumber() << endl;
+        player->moveTrackerMap.printHeatMap();
+    }
 }
 
 void Match::setOrderOfPlay()
@@ -101,7 +106,7 @@ int Match::getOtherTeam(int team)
 
 void Match::swapSides(int playerNum)
 {
-    teams[0]->swapSides();
+    teams[0]->swapSides();https://www.youtube.com/watch?v=gI5fj8vmc44#t=30
     teams[1]->swapSides();
     ball.changeTeam();
     ball.setPlayerPosition(playerNum);
@@ -151,7 +156,7 @@ void Match::move(Player* p)
                 }
                 else
                 {
-                    probs.addProbability(p->getPosValue(i, j));
+                    probs.addProbability(p->getPosValue(j, i));
                 }
             }
         }
@@ -205,11 +210,11 @@ void Match::withBall(Player* p, int shotClock)
 
         if(p->getRange() == 1 && defendersUnderBasket == 0)
         {
-            posValue = p->getPosValue() + 50;
+            posValue = p->getPosValue() + 100;
         }
         else if(pressure == 0)
         {
-            posValue = p->getPosValue() + 25;
+            posValue = p->getPosValue() + 50;
         }
         else
         {
@@ -225,7 +230,7 @@ void Match::withBall(Player* p, int shotClock)
 
         for(auto &player: otherPlayers)
         {
-            int posValue = 0;
+            int posValue = 0, pressure;
             if(player->getPosX() >= 0)
             {
                 posValue = player->getPosValue() - abs((p->getPosX() - player->getPosX()) + (p->getPosY() - player->getPosY()));
@@ -347,7 +352,7 @@ void Match::shootUnderBasket(Player *p, int pressure)
 }
 void Match::shootClose(Player* p, int pressure)
 {
-    int shotRand = rand() % 38;
+    int shotRand = rand() % 35;
     int shot = p->getCloseShot() - pressure, freeThrows = 0;
 
     int foulRand = rand() % 5;
@@ -389,7 +394,7 @@ void Match::shootClose(Player* p, int pressure)
 
 void Match::shootMedium(Player* p, int pressure)
 {
-    int shotRand = rand() % 45;
+    int shotRand = rand() % 40;
     int shot = p->getMediumShot() - pressure, freeThrows = 0;
 
     int foulRand = rand() % 5;
