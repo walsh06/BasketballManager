@@ -164,7 +164,7 @@ void Match::withBall(Player* p, int shotClock)
 {
     if(shotClock == 0)
     {
-        shoot(p);
+        shoot(p, teams[getOtherTeam(p->getTeam())]->getPressure(p->getPosX(), p->getPosY()));
     }
     else if(p->getPosX() < 0)
     {
@@ -191,19 +191,23 @@ void Match::withBall(Player* p, int shotClock)
                 }
                 else
                 {
-                    probs.addProbability(p->getPosValue(i, j));
+                    probs.addProbability(p->getPosValue(j, i));
                 }
             }
         }
-
-        int posValue = p->getPosValue() + (24 - shotClock) ;
+        int pressure = teams[getOtherTeam(p->getTeam())]->getPressure(p->getPosX(), p->getPosY());
+        int posValue = p->getPosValue() + (24 - shotClock) - pressure;
         probs.addProbability(posValue);
 
         vector<Player*> otherPlayers = teams[p->getTeam() - 1]->getOtherPlayers(p->getNumber());
 
         for(auto &player: otherPlayers)
         {
-            int posValue = player->getPosValue();
+            int posValue = 0;
+            if(player->getPosX() >= 0)
+            {
+                posValue = player->getPosValue() - abs((p->getPosX() - player->getPosX()) + (p->getPosY() - player->getPosY()));
+            }
             probs.addProbability(posValue);
         }
         probs.printVector();
@@ -216,7 +220,7 @@ void Match::withBall(Player* p, int shotClock)
         }
         else if(action == 9)
         {
-            shoot(p);
+            shoot(p, pressure);
         }
         else
         {
@@ -257,31 +261,31 @@ void Match::passInbound(Player *p)
 // Player Offense Actions Results
 //================================
 
-void Match::shoot(Player* p)
+void Match::shoot(Player* p, int pressure)
 {
     int range = p->getRange();
     if(range == 1)
     {
-        shootUnderBasket(p);
+        shootUnderBasket(p, pressure);
     }
     else if(range == 2)
     {
-        shootClose(p);
+        shootClose(p, pressure);
     }
     else if(range == 3)
     {
-        shootMedium(p);
+        shootMedium(p, pressure);
     }
     else if(range == 4)
     {
-        shootThree(p);
+        shootThree(p, pressure);
     }
 }
 
-void Match::shootUnderBasket(Player *p)
+void Match::shootUnderBasket(Player *p, int pressure)
 {
     int shotRand = rand() % 35;
-    int shot = p->getUnderBasketShot(), freeThrows = 0;
+    int shot = p->getUnderBasketShot() - pressure, freeThrows = 0;
 
     int foulRand = rand() % 5;
 
@@ -319,10 +323,10 @@ void Match::shootUnderBasket(Player *p)
         shootFreeThrow(p, freeThrows);
     }
 }
-void Match::shootClose(Player* p)
+void Match::shootClose(Player* p, int pressure)
 {
     int shotRand = rand() % 43;
-    int shot = p->getCloseShot(), freeThrows = 0;
+    int shot = p->getCloseShot() - pressure, freeThrows = 0;
 
     int foulRand = rand() % 5;
 
@@ -361,10 +365,10 @@ void Match::shootClose(Player* p)
     }
 }
 
-void Match::shootMedium(Player* p)
+void Match::shootMedium(Player* p, int pressure)
 {
     int shotRand = rand() % 45;
-    int shot = p->getMediumShot(), freeThrows = 0;
+    int shot = p->getMediumShot() - pressure, freeThrows = 0;
 
     int foulRand = rand() % 5;
 
@@ -402,7 +406,7 @@ void Match::shootMedium(Player* p)
     }
 }
 
-void Match::shootThree(Player *p)
+void Match::shootThree(Player *p, int pressure)
 {
     int shotRand = rand() % 43;
     int shot, freeThrows = 0;
@@ -415,11 +419,11 @@ void Match::shootThree(Player *p)
     }
     if(p->getPosX() == 0)
     {
-        shot = p->getThreeShot() / 4;
+        shot = (p->getThreeShot() / 4) - pressure;
     }
     else
     {
-        shot = p->getThreeShot();
+        shot = p->getThreeShot() - pressure;
     }
 
     if(shotRand < shot)
@@ -453,6 +457,9 @@ void Match::shootThree(Player *p)
 
 void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
+    teams[p->getTeam() - 1]->setUpFreeThrowOffence(p->getNumber());
+    teams[getOtherTeam(p->getTeam())]->setUpFreeThrowDefence();
+
     int ft = p->getFreethrow();
 
     do
@@ -659,13 +666,33 @@ void Match::moveDefenceLoose(Player *p, Player opposition)
             moveDirection = 4;
         }
     }
+
+    if(moveDirection != 4)
+    {
+        for(int i = 1; i < 6; i++)
+        {
+            Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
+            if(opp.getPosX() == posX && opp.getPosY() == posY)
+            {
+                int screenRand = rand() % 5;
+
+                if(screenRand == 0)
+                {
+                    cout << "BUMP: " << p->getNumber() << " " << opp.getNumber() << endl;
+                    moveDirection = 4;
+                    break;
+                }
+            }
+        }
+
+    }
     p->movePlayer(moveDirection);
 }
 
 void Match::moveDefenceTight(Player* p, Player opposition)
 {
     int posX = p->getPosX(), posY = p->getPosY(), oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
-    int moveDirection;
+    int moveDirection = 4;
     if(posY < oppPosY)
     {
         if(posX < oppPosX)
@@ -706,13 +733,34 @@ void Match::moveDefenceTight(Player* p, Player opposition)
         {
             moveDirection = 3;
         }
-        else
+        else if(ball.getPlayerPosition() == teams[opposition.getTeam() - 1]->getPlayerPosition(opposition.getNumber()))
         {
             steal(p, opposition);
         }
     }
+
+    if(moveDirection != 4)
+    {
+        for(int i = 1; i < 6; i++)
+        {
+            Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
+            if(opp.getPosX() == posX && opp.getPosY() == posY)
+            {
+                int screenRand = rand() % 5;
+
+                if(screenRand == 0)
+                {
+                    cout << "BUMP: " << p->getNumber() << " " << opp.getNumber() << endl;
+                    moveDirection = 4;
+                    break;
+                }
+            }
+        }
+
+    }
     p->movePlayer(moveDirection);
 }
+
 
 
 //================================
@@ -746,6 +794,7 @@ void Match::steal(Player *p, Player opposition)
         swapSides(p->getNumber());
     }
 }
+
 
 //==============================
 
