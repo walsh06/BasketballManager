@@ -8,8 +8,9 @@ class Heatmap
 public:
     Heatmap();
     int getValue(int x, int y);
-    int setValue(int value, int x, int y);
-    int setMap(int newMap[8][7]);
+    void setValue(int value, int x, int y);
+    void setMap(int newMap[8][7]);
+    void incrementValue(int x, int y);
 
     void printHeatMap();
 

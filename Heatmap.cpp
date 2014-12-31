@@ -16,12 +16,12 @@ int Heatmap::getValue(int x, int y)
     return heatMap[y][x];
 }
 
-int Heatmap::setValue(int value, int x, int y)
+void Heatmap::setValue(int value, int x, int y)
 {
     heatMap[y][x] = value;
 }
 
-int Heatmap::setMap(int newMap[8][7])
+void Heatmap::setMap(int newMap[8][7])
 {
     for(int i = 0; i < 8; i++)
     {
@@ -30,6 +30,11 @@ int Heatmap::setMap(int newMap[8][7])
             heatMap[i][j] = newMap[i][j];
         }
     }
+}
+
+void Heatmap::incrementValue(int x, int y)
+{
+    heatMap[y][x]++;
 }
 
 Heatmap Heatmap::operator+(const Heatmap& map)

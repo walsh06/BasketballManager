@@ -18,7 +18,7 @@ Match::Match()
 
 void Match::sim()
 {
-    for(int time = 180; time > 0;)
+    for(int time = 2880; time > 0;)
     {
         cout << "Score: " << score[0] << "-" << score[1] << endl;
         for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
@@ -61,7 +61,12 @@ void Match::sim()
         }
     }
     cout << "Score: " << score[0] << "-" << score[1] << endl;
-
+/*
+    for(auto &player: orderOfPlay)
+    {
+        cout << player->getNumber() << endl;
+        player->moveTrackerMap.printHeatMap();
+    }*/
 }
 
 void Match::setOrderOfPlay()
@@ -101,7 +106,7 @@ int Match::getOtherTeam(int team)
 
 void Match::swapSides(int playerNum)
 {
-    teams[0]->swapSides();
+    teams[0]->swapSides();https://www.youtube.com/watch?v=gI5fj8vmc44#t=30
     teams[1]->swapSides();
     ball.changeTeam();
     ball.setPlayerPosition(playerNum);
@@ -151,7 +156,7 @@ void Match::move(Player* p)
                 }
                 else
                 {
-                    probs.addProbability(p->getPosValue(i, j));
+                    probs.addProbability(p->getPosValue(j, i));
                 }
             }
         }
@@ -175,8 +180,9 @@ void Match::withBall(Player* p, int shotClock)
         int x = p->getPosX(), y = p->getPosY();
         //move 0-8, shoot 9, pass 10-13
         ProbabilityVector probs(14);
-
-
+        //=================
+        //MOVEMENT
+        //=================
         for(int i = y - 1; i <= y + 1; i++)
         {
             for(int j = x - 1; j <= x + 1; j++)
@@ -195,15 +201,36 @@ void Match::withBall(Player* p, int shotClock)
                 }
             }
         }
+        //=================
+        //SHOOTING
+        //=================
         int pressure = teams[getOtherTeam(p->getTeam())]->getPressure(p->getPosX(), p->getPosY());
-        int posValue = p->getPosValue() + (24 - shotClock) - pressure;
+        int defendersUnderBasket = teams[getOtherTeam(p->getTeam())]->getPlayersUnderBasket();
+        int posValue = 0;
+
+        if(p->getRange() == 1 && defendersUnderBasket == 0)
+        {
+            posValue = p->getPosValue() + 100;
+        }
+        else if(pressure == 0)
+        {
+            posValue = p->getPosValue() + 50;
+        }
+        else
+        {
+            posValue = p->getPosValue() + (24 - shotClock) - pressure;
+        }
         probs.addProbability(posValue);
 
+
+        //=================
+        //PASSING
+        //=================
         vector<Player*> otherPlayers = teams[p->getTeam() - 1]->getOtherPlayers(p->getNumber());
 
         for(auto &player: otherPlayers)
         {
-            int posValue = 0;
+            int posValue = 0, pressure;
             if(player->getPosX() >= 0)
             {
                 posValue = player->getPosValue() - abs((p->getPosX() - player->getPosX()) + (p->getPosY() - player->getPosY()));
@@ -284,7 +311,7 @@ void Match::shoot(Player* p, int pressure)
 
 void Match::shootUnderBasket(Player *p, int pressure)
 {
-    int shotRand = rand() % 35;
+    int shotRand = rand() % 30;
     int shot = p->getUnderBasketShot() - pressure, freeThrows = 0;
 
     int foulRand = rand() % 5;
@@ -325,7 +352,7 @@ void Match::shootUnderBasket(Player *p, int pressure)
 }
 void Match::shootClose(Player* p, int pressure)
 {
-    int shotRand = rand() % 43;
+    int shotRand = rand() % 35;
     int shot = p->getCloseShot() - pressure, freeThrows = 0;
 
     int foulRand = rand() % 5;
@@ -367,10 +394,10 @@ void Match::shootClose(Player* p, int pressure)
 
 void Match::shootMedium(Player* p, int pressure)
 {
-    int shotRand = rand() % 45;
+    int shotRand = rand() % 40;
     int shot = p->getMediumShot() - pressure, freeThrows = 0;
 
-    int foulRand = rand() % 5;
+    int foulRand = rand() % 50;
 
     if(foulRand == 0)
     {
@@ -408,10 +435,10 @@ void Match::shootMedium(Player* p, int pressure)
 
 void Match::shootThree(Player *p, int pressure)
 {
-    int shotRand = rand() % 43;
+    int shotRand = rand() % 45;
     int shot, freeThrows = 0;
 
-    int foulRand = rand() % 5;
+    int foulRand = rand() % 100;
 
     if(foulRand == 0)
     {

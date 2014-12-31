@@ -152,6 +152,15 @@ void Team::setUpFreeThrowOffence(int number)
     }
 }
 
+void Team::setUpFreeThrowDefence()
+{
+    getPlayer(1)->setPos(2, 2);
+    getPlayer(2)->setPos(2, 5);
+    getPlayer(3)->setPos(4, 2);
+    getPlayer(4)->setPos(6, 5);
+    getPlayer(5)->setPos(6, 2);
+}
+
 int Team::getPressure(int posX, int posY)
 {
    int count = 0;
@@ -179,11 +188,16 @@ int Team::getPressure(int posX, int posY)
    return count;
 }
 
-void Team::setUpFreeThrowDefence()
+int Team::getPlayersUnderBasket()
 {
-    getPlayer(1)->setPos(2, 2);
-    getPlayer(2)->setPos(2, 5);
-    getPlayer(3)->setPos(4, 2);
-    getPlayer(4)->setPos(6, 5);
-    getPlayer(5)->setPos(6, 2);
+    int count = 0;
+    for(auto &player: players)
+    {
+        if(player.second->getRange() == 1)
+        {
+            count++;
+        }
+    }
+    return count;
 }
+
