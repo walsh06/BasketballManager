@@ -36,6 +36,7 @@ public:
     int getBlock();
     int getSpeed();
     int getSteal();
+    int getPass();
 
     void setTeam(int team);
     int getTeam();

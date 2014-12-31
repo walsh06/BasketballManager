@@ -18,7 +18,7 @@ Match::Match()
 
 void Match::sim()
 {
-    for(int time = 180; time > 0;)
+    for(int time = 2880; time > 0;)
     {
         cout << "Score: " << score[0] << "-" << score[1] << endl;
         for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
@@ -516,8 +516,36 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 
 void Match::pass(Player* p, Player* teamMate)
 {
-    cout << "Pass: " << teamMate->getNumber() << endl;
-    ball.setPlayerPosition(teamMate->getNumber());
+    int stealRand, stealRating, passRand, pass = p->getPass(), posX = teamMate->getPosX(), posY = teamMate->getPosY(), stolenNumber = 0;
+    bool steal = false;
+    Team team = *teams[getOtherTeam(p->getTeam())];
+    Player *defender;
+    for(int i = 1; i < 6; i++)
+    {
+        defender = team.getPlayer(i);
+        if(defender->getPosX() == posX && defender->getPosY() == posY)
+        {
+            stealRating = defender->getSteal();
+            stealRand = rand() % stealRating;
+            passRand = rand() % (pass * 5);
+            if(stealRand > passRand)
+            {
+                steal = true;
+                stolenNumber = team.getPlayerPosition(defender->getNumber());
+            }
+        }
+    }
+
+    if(steal)
+    {
+        cout << "Steal Pass: " << stolenNumber << endl;
+        swapSides(stolenNumber);
+    }
+    else
+    {
+        cout << "Pass: " << teamMate->getNumber() << endl;
+        ball.setPlayerPosition(teamMate->getNumber());
+    }
 }
 
 void Match::rebound()

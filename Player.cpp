@@ -16,6 +16,7 @@ Player::Player(int number)
         block = 15;
         speed = rand() % 21;
         steal = 6;
+        pass = 18;
     }
     else
     {
@@ -30,6 +31,7 @@ Player::Player(int number)
         block = 12;
         speed = rand() % 21;
         steal = 15;
+        pass = 12;
     }
     calcHeatMap();
     setRandomPos();
@@ -348,6 +350,11 @@ int Player::getSpeed()
 int Player::getUnderBasketShot()
 {
     return layup > dunk ? layup : dunk;
+}
+
+int Player::getPass()
+{
+    return pass;
 }
 
 //======================================
