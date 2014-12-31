@@ -168,7 +168,28 @@ int Player::getPosValue()
 void Player::setPlayingPosition(PlayerPosition *pos)
 {
     position = pos;
-    finalMap = posValueMap + position->getMap();
+    updateMap();
+}
+
+void Player::setStrategy(PlayerStrategy *strategy)
+{
+    this->strategy = strategy;
+    updateMap();
+}
+
+void Player::updateMap()
+{
+    finalMap = posValueMap;
+    if(position != NULL)
+    {
+        finalMap = finalMap + position->getMap();
+    }
+    if(strategy != NULL)
+    {
+        finalMap = finalMap + strategy->getMap();
+        finalMap.printHeatMap();
+    }
+
 }
 
 //======================================

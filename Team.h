@@ -7,7 +7,8 @@
 #include "PositionPowerForward.h"
 #include "PositionShootingGuard.h"
 #include "PositionSmallForward.h"
-
+#include "PlayerStrategyCrashBoards.h"
+#include "PlayerStrategyShootThree.h"
 #include <vector>
 #include <map>
 
