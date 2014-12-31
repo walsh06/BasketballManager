@@ -3,7 +3,8 @@
 
 #include "Heatmap.h"
 #include "PlayerPosition.h"
-#include "PositionSmallForward.h"
+#include "PlayerStrategy.h"
+
 using namespace std;
 
 class Player
@@ -18,6 +19,9 @@ public:
     void setPos(int x, int y);
     void setRandomPos();
     void setPlayingPosition(PlayerPosition *pos);
+    void setStrategy(PlayerStrategy *strategy);
+    void updateMap();
+
 
     int getNumber();
     int getThreeShot();
@@ -44,6 +48,7 @@ public:
 private:
     Heatmap posValueMap, finalMap ;
     PlayerPosition *position;
+    PlayerStrategy *strategy;
 
     int posX, posY;
     int number;

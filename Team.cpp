@@ -20,6 +20,9 @@ Team::Team()
     players[sf]->setPlayingPosition(new PositionSmallForward());
     players[pf]->setPlayingPosition(new PositionPowerForward());
     players[c]->setPlayingPosition(new PositionCentre());
+
+    players[c]->setStrategy(new PlayerStrategyCrashBoards());
+    players[pg]->setStrategy(new PlayerStrategyShootThree());
 }
 
 Player* Team::getPlayer(int position)

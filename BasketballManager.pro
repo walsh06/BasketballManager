@@ -15,7 +15,9 @@ SOURCES += main.cpp \
     PositionShootingGuard.cpp \
     PositionSmallForward.cpp \
     PositionPowerForward.cpp \
-    PositionCentre.cpp
+    PositionCentre.cpp \
+    PlayerStrategyShootThree.cpp \
+    PlayerStrategyCrashBoards.cpp
 
 HEADERS += \
     Player.h \
@@ -29,5 +31,8 @@ HEADERS += \
     PositionShootingGuard.h \
     PositionSmallForward.h \
     PositionPowerForward.h \
-    PositionCentre.h
+    PositionCentre.h \
+    PlayerStrategy.h \
+    PlayerStrategyShootThree.h \
+    PlayerStrategyCrashBoards.h
 
