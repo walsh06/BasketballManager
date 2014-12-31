@@ -73,7 +73,7 @@ void Player::movePlayer(int direction)
     }
     if(posX >= 0)
     {
-        moveTrackerMap.incrementValue(posX, posY);
+        //moveTrackerMap.incrementValue(posX, posY);
     }
 }
 

@@ -61,12 +61,12 @@ void Match::sim()
         }
     }
     cout << "Score: " << score[0] << "-" << score[1] << endl;
-
+/*
     for(auto &player: orderOfPlay)
     {
         cout << player->getNumber() << endl;
         player->moveTrackerMap.printHeatMap();
-    }
+    }*/
 }
 
 void Match::setOrderOfPlay()
@@ -397,7 +397,7 @@ void Match::shootMedium(Player* p, int pressure)
     int shotRand = rand() % 40;
     int shot = p->getMediumShot() - pressure, freeThrows = 0;
 
-    int foulRand = rand() % 5;
+    int foulRand = rand() % 50;
 
     if(foulRand == 0)
     {
@@ -438,7 +438,7 @@ void Match::shootThree(Player *p, int pressure)
     int shotRand = rand() % 45;
     int shot, freeThrows = 0;
 
-    int foulRand = rand() % 5;
+    int foulRand = rand() % 100;
 
     if(foulRand == 0)
     {
