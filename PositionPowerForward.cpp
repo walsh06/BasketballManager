@@ -20,5 +20,5 @@ Heatmap PositionPowerForward::getMap()
 
 int PositionPowerForward::getValue(int x, int y)
 {
-    map.getValue(x, y);
+    return map.getValue(x, y);
 }

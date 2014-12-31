@@ -21,5 +21,5 @@ Heatmap PositionPointGuard::getMap()
 
 int PositionPointGuard::getValue(int x, int y)
 {
-    map.getValue(x, y);
+    return map.getValue(x, y);
 }

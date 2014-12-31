@@ -22,5 +22,5 @@ Heatmap PositionCentre::getMap()
 
 int PositionCentre::getValue(int x, int y)
 {
-    map.getValue(x, y);
+    return map.getValue(x, y);
 }

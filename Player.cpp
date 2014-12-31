@@ -158,13 +158,13 @@ void Player::calcHeatMap()
 int Player::getPosValue(int x, int y)
 {
     //posValueMap.getValue(x, y);
-    finalMap.getValue(x, y);
+    return finalMap.getValue(x, y);
 }
 
 int Player::getPosValue()
 {
     //posValueMap.getValue(posX, posY);
-    finalMap.getValue(posX, posY);
+    return finalMap.getValue(posX, posY);
 }
 
 void Player::setPlayingPosition(PlayerPosition *pos)

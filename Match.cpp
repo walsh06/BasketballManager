@@ -106,7 +106,7 @@ int Match::getOtherTeam(int team)
 
 void Match::swapSides(int playerNum)
 {
-    teams[0]->swapSides();https://www.youtube.com/watch?v=gI5fj8vmc44#t=30
+    teams[0]->swapSides();
     teams[1]->swapSides();
     ball.changeTeam();
     ball.setPlayerPosition(playerNum);
