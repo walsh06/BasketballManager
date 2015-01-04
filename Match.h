@@ -5,6 +5,7 @@
 #include "Team.h"
 #include "Ball.h"
 #include "ProbabilityVector.h"
+#include "ConsoleGameView.h"
 
 #include <iostream>
 #include <cmath>
@@ -19,6 +20,7 @@ public:
     Match();
     void sim();
 private:
+    GameView *view;
     int gameState;
     const int INPLAY = 0, INBOUND = 1;
     Team * teamOne, *teamTwo;

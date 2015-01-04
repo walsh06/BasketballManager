@@ -18,7 +18,8 @@ Match::Match()
 
 void Match::sim()
 {
-    for(int time = 2880; time > 0;)
+    view = new ConsoleGameView();
+    for(int time = 180; time > 0;)
     {
         cout << "Score: " << score[0] << "-" << score[1] << endl;
         for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
@@ -28,7 +29,7 @@ void Match::sim()
                 shotClock = time;
             }
             setOrderOfPlay();
-            cout << "TIME: " << time << " Shotclock: " << shotClock << endl;
+            cout << "TIME: " << time/60 <<":"<< time%60 << " Shotclock: " << shotClock << endl;
             cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
             for(auto &player : orderOfPlay)
             {
@@ -455,7 +456,8 @@ void Match::shootThree(Player *p, int pressure)
 
     if(shotRand < shot)
     {
-       cout << "SCORE 3" << endl;
+       //cout << "SCORE 3" << endl;
+        view->updateCommentary(1, p->getName());
        shotClock = 0;
        score[p->getTeam() - 1]+=3;
        if(freeThrows == 0)

@@ -17,7 +17,9 @@ SOURCES += main.cpp \
     PositionPowerForward.cpp \
     PositionCentre.cpp \
     PlayerStrategyShootThree.cpp \
-    PlayerStrategyCrashBoards.cpp
+    PlayerStrategyCrashBoards.cpp \
+    pugixml.cpp \
+    ConsoleGameView.cpp
 
 HEADERS += \
     Player.h \
@@ -34,5 +36,9 @@ HEADERS += \
     PositionCentre.h \
     PlayerStrategy.h \
     PlayerStrategyShootThree.h \
-    PlayerStrategyCrashBoards.h
+    PlayerStrategyCrashBoards.h \
+    pugiconfig.hpp \
+    pugixml.hpp \
+    ConsoleGameView.h \
+    GameView.h
 
