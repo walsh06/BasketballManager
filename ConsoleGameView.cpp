@@ -15,6 +15,16 @@ void ConsoleGameView::updateCommentary(int type, std::string nameOne)
     std::cout << createCommentary(comments[type][randPos], nameOne) << std::endl;
 }
 
+void ConsoleGameView::updateTime(int time, int shotClock)
+{
+    std::cout << "TIME: " << time/60 <<":"<< time%60 << " Shotclock: " << shotClock << std::endl;
+}
+
+void ConsoleGameView::printValue(std::string valueName, int value)
+{
+    std::cout << valueName << ": " << value << std::endl;
+}
+
 std::string ConsoleGameView::createCommentary(std::string comment, const std::string name) {
     std::string newComment = comment;
     newComment.replace(newComment.find("<player>"), 8, name);

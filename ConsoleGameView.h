@@ -15,6 +15,8 @@ public:
     ConsoleGameView();
 
     void updateCommentary(int type, std::string nameOne);
+    void printValue(std::string valueName, int value);
+    void updateTime(int time, int shotClock);
 
 private:
     std::map<int, std::vector<std::string> > comments;
