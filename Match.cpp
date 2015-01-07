@@ -209,19 +209,18 @@ void Match::withBall(Player* p, int shotClock)
         int pressure = teams[getOtherTeam(p->getTeam())]->getPressure(p->getPosX(), p->getPosY());
         int defendersUnderBasket = teams[getOtherTeam(p->getTeam())]->getPlayersUnderBasket();
         int posValue = 0;
-        cout << "Pressure: " << pressure << endl;
+
         if(p->getRange() == 1 && defendersUnderBasket == 0)
         {
             posValue = p->getPosValue() + 100;
         }
         else if(pressure == 0)
         {
-            posValue = p->getPosValue() + (24 - shotClock) + 50;
-            cout << "???????????????????????????????????????????" << endl;
+            posValue = p->getPosValue() + (24 - shotClock) + 100;
         }
         else
         {
-            posValue = p->getPosValue() + (24 - shotClock) - pressure;
+            posValue = p->getPosValue() + (24 - shotClock) - pressure - (p->getRange() * 1);
         }
         probs.addProbability(posValue);
 
