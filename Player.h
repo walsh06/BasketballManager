@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "StatList.h"
 #include "Heatmap.h"
 #include "PlayerPosition.h"
 #include "PlayerStrategy.h"
@@ -45,11 +46,13 @@ public:
 
     void movePlayer(int direction);
 
+    StatList* getStatList();
     Heatmap moveTrackerMap;
 private:
     Heatmap posValueMap, finalMap ;
     PlayerPosition *position;
     PlayerStrategy *strategy;
+    StatList playerStats;
 
     int posX, posY;
     int number;

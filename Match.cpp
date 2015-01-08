@@ -61,12 +61,14 @@ void Match::sim()
         }
     }
     cout << "Score: " << score[0] << "-" << score[1] << endl;
-/*
+
+    shotMap.printHeatMap();
+
     for(auto &player: orderOfPlay)
     {
-        cout << player->getNumber() << endl;
-        player->moveTrackerMap.printHeatMap();
-    }*/
+        cout << "Player: " << player->getNumber() << endl;
+        player->getStatList()->printShootingStats();
+    }
 }
 
 void Match::setOrderOfPlay()
@@ -214,11 +216,11 @@ void Match::withBall(Player* p, int shotClock)
         }
         else if(pressure == 0)
         {
-            posValue = p->getPosValue() + 50;
+            posValue = p->getPosValue() + (24 - shotClock) + 100;
         }
         else
         {
-            posValue = p->getPosValue() + (24 - shotClock) - pressure;
+            posValue = p->getPosValue() + (24 - shotClock) - pressure - (p->getRange() * 1);
         }
         probs.addProbability(posValue);
 
@@ -307,6 +309,7 @@ void Match::shoot(Player* p, int pressure)
     {
         shootThree(p, pressure);
     }
+    shotMap.incrementValue(p->getPosX(), p->getPosY());
 }
 
 void Match::shootUnderBasket(Player *p, int pressure)
@@ -324,8 +327,9 @@ void Match::shootUnderBasket(Player *p, int pressure)
     if(shotRand < shot)
     {
        cout << "SCORE Under Basket" << endl;
-       shotClock = 0;
        score[p->getTeam() - 1]+=2;
+       p->getStatList()->addTwoPoints();
+
        if(freeThrows == 0)
        {
             setUpRestartInbound();
@@ -338,6 +342,8 @@ void Match::shootUnderBasket(Player *p, int pressure)
     else
     {
         cout << "MISS Under Basket" << endl;
+        p->getStatList()->addMiss();
+
         if(freeThrows == 0)
         {
             block(p);
@@ -365,8 +371,9 @@ void Match::shootClose(Player* p, int pressure)
     if(shotRand < shot)
     {
        cout << "SCORE Close" << endl;
-       shotClock = 0;
        score[p->getTeam() - 1]+=2;
+       p->getStatList()->addTwoPoints();
+
        if(freeThrows == 0)
        {
             setUpRestartInbound();
@@ -379,6 +386,8 @@ void Match::shootClose(Player* p, int pressure)
     else
     {
         cout << "MISS Close" << endl;
+        p->getStatList()->addMiss();
+
         if(freeThrows == 0)
         {
             block(p);
@@ -407,8 +416,9 @@ void Match::shootMedium(Player* p, int pressure)
     if(shotRand < shot)
     {
        cout << "SCORE Mid" << endl;
-       shotClock = 0;
        score[p->getTeam() - 1]+=2;
+       p->getStatList()->addTwoPoints();
+
        if(freeThrows == 0)
        {
             setUpRestartInbound();
@@ -421,6 +431,8 @@ void Match::shootMedium(Player* p, int pressure)
     else
     {
         cout << "MISS Mid" << endl;
+        p->getStatList()->addMiss();
+
         if(freeThrows == 0)
         {
             block(p);
@@ -435,7 +447,7 @@ void Match::shootMedium(Player* p, int pressure)
 
 void Match::shootThree(Player *p, int pressure)
 {
-    int shotRand = rand() % 45;
+    int shotRand = rand() % 40;
     int shot, freeThrows = 0;
 
     int foulRand = rand() % 100;
@@ -456,8 +468,10 @@ void Match::shootThree(Player *p, int pressure)
     if(shotRand < shot)
     {
        cout << "SCORE 3" << endl;
-       shotClock = 0;
+
        score[p->getTeam() - 1]+=3;
+       p->getStatList()->addThreePoints();
+
        if(freeThrows == 0)
        {
         setUpRestartInbound();
@@ -470,6 +484,8 @@ void Match::shootThree(Player *p, int pressure)
     else
     {
         cout << "MISS 3" << endl;
+        p->getStatList()->addThreeMiss();
+
         if(freeThrows == 0)
         {
             block(p);
@@ -496,6 +512,8 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
         {
             cout << "Free Throw: " << p->getNumber() << endl;
             score[p->getTeam() - 1]++;
+            p->getStatList()->addPoint();
+
             if(numOfFreeThrows == 1)
             {
                 setUpRestartInbound();
@@ -599,7 +617,7 @@ void Match::rebound()
              {
                  cout << "Defensive Rebound: " << p->getNumber() << endl;
                  shotClock = 0;
-                 swapSides(1);
+                 swapSides(p->getNumber());
              }
         }
         else
