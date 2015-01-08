@@ -363,4 +363,14 @@ StatList* Player::getStatList()
 }
 
 //======================================
+// Drive Basket
+//======================================
+bool Player::isDribbleDrive()
+{
+    return dribbleDrive;
+}
 
+void Player::setDribbleDrive(bool drive)
+{
+    dribbleDrive = drive;
+}

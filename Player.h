@@ -46,7 +46,12 @@ public:
 
     void movePlayer(int direction);
 
+    bool isDribbleDrive();
+    void setDribbleDrive(bool drive);
+
+
     StatList* getStatList();
+
     Heatmap moveTrackerMap;
 private:
     Heatmap posValueMap, finalMap ;
@@ -67,10 +72,9 @@ private:
     //offence
     int pass, hands, speed, freethrow;
 
+    bool dribbleDrive;
+
     void calcHeatMap();
-
-
-
 
     const int heatFactor = 3;
 };
