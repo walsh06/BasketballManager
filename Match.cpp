@@ -372,6 +372,8 @@ void Match::driveBasket(Player *p)
 
 void Match::shoot(Player* p, int pressure)
 {
+    shotMap.incrementValue(p->getPosX(), p->getPosY());
+
     int range = p->getRange();
     if(range == 1)
     {
@@ -389,7 +391,6 @@ void Match::shoot(Player* p, int pressure)
     {
         shootThree(p, pressure);
     }
-    shotMap.incrementValue(p->getPosX(), p->getPosY());
 }
 
 void Match::shootUnderBasket(Player *p, int pressure)
@@ -438,7 +439,7 @@ void Match::shootUnderBasket(Player *p, int pressure)
 }
 void Match::shootClose(Player* p, int pressure)
 {
-    int shotRand = rand() % 35;
+    int shotRand = rand() % 30;
     int shot = p->getCloseShot() - pressure, freeThrows = 0;
 
     int foulRand = rand() % 5;
@@ -536,7 +537,7 @@ void Match::shootThree(Player *p, int pressure)
     {
         freeThrows = 3;
     }
-    if(p->getPosX() == 0)
+    if(p->getPosY() == 0)
     {
         shot = (p->getThreeShot() / 4) - pressure;
     }
