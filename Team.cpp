@@ -22,7 +22,7 @@ Team::Team()
     players[c]->setPlayingPosition(new PositionCentre());
 
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
-    players[pg]->setStrategy(new PlayerStrategyShootThree());
+    //players[pg]->setStrategy(new PlayerStrategyShootThree());
 }
 
 Player* Team::getPlayer(int position)
@@ -174,7 +174,7 @@ int Team::getPressure(int posX, int posY)
        {
            for(auto &player: players)
            {
-               if(player.second->getPosX() == i && player.second->getPosY() == j)
+               if(player.second->getPosX() == j && player.second->getPosY() == i)
                {
                    count++;
                }

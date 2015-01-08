@@ -357,6 +357,11 @@ int Player::getPass()
     return pass;
 }
 
+StatList* Player::getStatList()
+{
+    return &playerStats;
+}
+
 //======================================
 // Drive Basket
 //======================================

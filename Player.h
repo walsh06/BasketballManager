@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "StatList.h"
 #include "Heatmap.h"
 #include "PlayerPosition.h"
 #include "PlayerStrategy.h"
@@ -48,11 +49,15 @@ public:
     bool isDribbleDrive();
     void setDribbleDrive(bool drive);
 
+
+    StatList* getStatList();
+
     Heatmap moveTrackerMap;
 private:
     Heatmap posValueMap, finalMap ;
     PlayerPosition *position;
     PlayerStrategy *strategy;
+    StatList playerStats;
 
     int posX, posY;
     int number;
@@ -70,9 +75,6 @@ private:
     bool dribbleDrive;
 
     void calcHeatMap();
-
-
-
 
     const int heatFactor = 3;
 };
