@@ -320,7 +320,7 @@ void Match::driveBasket(Player *p)
         {
             if((3 - posY) < 0)
             {
-                move = 0;
+                move = 1;
             }
             else
             {
