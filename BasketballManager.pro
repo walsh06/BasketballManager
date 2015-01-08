@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     PlayerStrategyShootThree.cpp \
     PlayerStrategyCrashBoards.cpp \
     pugixml.cpp \
-    ConsoleGameView.cpp
+    ConsoleGameView.cpp \
+    TestGameView.cpp
 
 HEADERS += \
     Player.h \
@@ -40,5 +41,6 @@ HEADERS += \
     pugiconfig.hpp \
     pugixml.hpp \
     ConsoleGameView.h \
-    GameView.h
+    GameView.h \
+    TestGameView.h
 

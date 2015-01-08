@@ -14,7 +14,7 @@ class ConsoleGameView : public GameView
 public:
     ConsoleGameView();
 
-    void updateCommentary(int type, std::string nameOne);
+    void updateCommentary(int type, Player *p);
     void printValue(std::string valueName, int value);
     void updateTime(int time, int shotClock);
 

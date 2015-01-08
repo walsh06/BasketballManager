@@ -326,7 +326,7 @@ void Match::shootUnderBasket(Player *p, int pressure)
     if(shotRand < shot)
     {
        //cout << "SCORE Under Basket" << endl;
-       view->updateCommentary(5, p->getName());
+       view->updateCommentary(5, p);
 
        score[p->getTeam() - 1]+=2;
        if(freeThrows == 0)
@@ -341,7 +341,7 @@ void Match::shootUnderBasket(Player *p, int pressure)
     else
     {
         //cout << "MISS Under Basket" << endl;
-        view->updateCommentary(12, p->getName());
+        view->updateCommentary(12, p);
 
         if(freeThrows == 0)
         {
@@ -370,7 +370,7 @@ void Match::shootClose(Player* p, int pressure)
     if(shotRand < shot)
     {
        //cout << "SCORE Close" << endl;
-       view->updateCommentary(3, p->getName());
+       view->updateCommentary(3, p);
 
        score[p->getTeam() - 1]+=2;
        if(freeThrows == 0)
@@ -385,7 +385,7 @@ void Match::shootClose(Player* p, int pressure)
     else
     {
         //cout << "MISS Close" << endl;
-        view->updateCommentary(12, p->getName());
+        view->updateCommentary(12, p);
 
         if(freeThrows == 0)
         {
@@ -415,7 +415,7 @@ void Match::shootMedium(Player* p, int pressure)
     if(shotRand < shot)
     {
        //cout << "SCORE Mid" << endl;
-        view->updateCommentary(2, p->getName());
+        view->updateCommentary(2, p);
        score[p->getTeam() - 1]+=2;
        if(freeThrows == 0)
        {
@@ -429,7 +429,7 @@ void Match::shootMedium(Player* p, int pressure)
     else
     {
         //cout << "MISS Mid" << endl;
-        view->updateCommentary(12, p->getName());
+        view->updateCommentary(12, p);
 
         if(freeThrows == 0)
         {
@@ -466,7 +466,7 @@ void Match::shootThree(Player *p, int pressure)
     if(shotRand < shot)
     {
        //cout << "SCORE 3" << endl;
-       view->updateCommentary(1, p->getName());
+       view->updateCommentary(1, p);
        score[p->getTeam() - 1]+=3;
        if(freeThrows == 0)
        {
@@ -480,7 +480,7 @@ void Match::shootThree(Player *p, int pressure)
     else
     {
         //cout << "MISS 3" << endl;
-        view->updateCommentary(12, p->getName());
+        view->updateCommentary(12, p);
 
         if(freeThrows == 0)
         {
@@ -507,7 +507,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
         if(ft < ftProb)
         {
            // cout << "Free Throw: " << p->getNumber() << endl;
-            view->updateCommentary(10, p->getName());
+            view->updateCommentary(10, p);
 
             score[p->getTeam() - 1]++;
             if(numOfFreeThrows == 1)
@@ -518,7 +518,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
         else
         {
            // cout << "Missed Free Throw: " << p->getNumber() << endl;
-            view->updateCommentary(11, p->getName());
+            view->updateCommentary(11, p);
 
             if(numOfFreeThrows == 1)
             {

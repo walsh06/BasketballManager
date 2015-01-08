@@ -6,6 +6,7 @@
 #include "Ball.h"
 #include "ProbabilityVector.h"
 #include "ConsoleGameView.h"
+#include "TestGameView.h"
 
 #include <iostream>
 #include <cmath>

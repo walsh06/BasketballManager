@@ -5,14 +5,14 @@ ConsoleGameView::ConsoleGameView()
     readXML();
 }
 
-void ConsoleGameView::updateCommentary(int type, std::string nameOne)
+void ConsoleGameView::updateCommentary(int type, Player *p)
 {
     //std::vector<std::string> eventComments = comments[type];
     int randPos = rand() % comments[type].size();
 
     //std::cout << type << " " << nameOne << " " << comments[type][randPos] << std::endl;
 
-    std::cout << createCommentary(comments[type][randPos], nameOne) << std::endl;
+    std::cout << createCommentary(comments[type][randPos], p->getName()) << std::endl;
 }
 
 void ConsoleGameView::updateTime(int time, int shotClock)
