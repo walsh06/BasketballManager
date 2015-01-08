@@ -4,7 +4,7 @@
 #include "Heatmap.h"
 #include "PlayerPosition.h"
 #include "PlayerStrategy.h"
-
+#include <string>
 using namespace std;
 
 class Player
@@ -37,6 +37,7 @@ public:
     int getSpeed();
     int getSteal();
     int getPass();
+    string getName();
 
     void setTeam(int team);
     int getTeam();
@@ -54,6 +55,7 @@ private:
     int posX, posY;
     int number;
     int team;
+    string name;
 
     //shooting ratings
     int threeShot, mediumShot, closeShot, dunk, layup;

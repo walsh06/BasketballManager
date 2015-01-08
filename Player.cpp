@@ -33,6 +33,8 @@ Player::Player(int number)
         steal = 15;
         pass = 12;
     }
+
+    name = "Liam";
     calcHeatMap();
     setRandomPos();
 }
@@ -189,7 +191,6 @@ void Player::updateMap()
     if(strategy != NULL)
     {
         finalMap = finalMap + strategy->getMap();
-        finalMap.printHeatMap();
     }
 
 }
@@ -355,6 +356,11 @@ int Player::getUnderBasketShot()
 int Player::getPass()
 {
     return pass;
+}
+
+string Player::getName()
+{
+    return name;
 }
 
 //======================================
