@@ -31,6 +31,7 @@ private:
 
     void move(Player* p);
     void withBall(Player* p, int shotClock);
+    void driveBasket(Player *p);
 
     void shoot(Player* p, int pressure);
     void shootUnderBasket(Player *p, int pressure);

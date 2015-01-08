@@ -45,6 +45,9 @@ public:
 
     void movePlayer(int direction);
 
+    bool isDribbleDrive();
+    void setDribbleDrive(bool drive);
+
     Heatmap moveTrackerMap;
 private:
     Heatmap posValueMap, finalMap ;
@@ -63,6 +66,8 @@ private:
     int block, steal;
     //offence
     int pass, hands, speed, freethrow;
+
+    bool dribbleDrive;
 
     void calcHeatMap();
 

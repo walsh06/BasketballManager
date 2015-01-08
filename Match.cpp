@@ -146,11 +146,11 @@ void Match::move(Player* p)
         {
             for(int j = x - 1; j <= x + 1; j++)
             {
-                if(i < 0 || i >= 7)
+                if(i < 0 || i >= 8)
                 {
                     probs.addProbability(0);
                 }
-                else if(j < 0 || j >= 8)
+                else if(j < 0 || j >= 7)
                 {
                     probs.addProbability(0);
                 }
@@ -175,11 +175,15 @@ void Match::withBall(Player* p, int shotClock)
     {
         p->movePlayer(5);
     }
+    else if(p->isDribbleDrive())
+    {
+        driveBasket(p);
+    }
     else
     {
         int x = p->getPosX(), y = p->getPosY();
-        //move 0-8, shoot 9, pass 10-13
-        ProbabilityVector probs(14);
+        //move 0-8, shoot 9, pass 10-13, drive 14
+        ProbabilityVector probs(15);
         //=================
         //MOVEMENT
         //=================
@@ -187,11 +191,11 @@ void Match::withBall(Player* p, int shotClock)
         {
             for(int j = x - 1; j <= x + 1; j++)
             {
-                if(i < 0 || i > 7)
+                if(i < 0 || i >= 8)
                 {
                     probs.addProbability(0);
                 }
-                else if(j < 0 || j > 8)
+                else if(j < 0 || j >= 7)
                 {
                    probs.addProbability(0);
                 }
@@ -237,6 +241,19 @@ void Match::withBall(Player* p, int shotClock)
             }
             probs.addProbability(posValue);
         }
+
+        //=================
+        //Drive Basket
+        //=================
+        int value = p->getUnderBasketShot(), underBasket = teams[p->getTeam() - 1]->getPlayersUnderBasket();
+
+        if(underBasket == 0)
+        {
+            value += 40;
+        }
+
+        probs.addProbability(value);
+        //=================
         probs.printVector();
         int action  = probs.getRandomResult();
 
@@ -248,6 +265,11 @@ void Match::withBall(Player* p, int shotClock)
         else if(action == 9)
         {
             shoot(p, pressure);
+        }
+        else if(action == 14)
+        {
+            p->setDribbleDrive(true);
+            driveBasket(p);
         }
         else
         {
@@ -290,13 +312,13 @@ void Match::driveBasket(Player *p)
     else
     {
         int move;
-        if(posX == 3 || posX == 4)
+        if(posY == 3 || posY == 4)
         {
             move = 5;
         }
-        else if(posY == 6 || posY == 7)
+        else if(posX == 6 || posX == 5)
         {
-            if((3 - posX) < 0)
+            if((3 - posY) < 0)
             {
                 move = 0;
             }
@@ -307,7 +329,7 @@ void Match::driveBasket(Player *p)
         }
         else
         {
-            if((3 - posX) < 0)
+            if((3 - posY) < 0)
             {
                 move = 2;
             }
@@ -316,6 +338,24 @@ void Match::driveBasket(Player *p)
                 move = 8;
             }
         }
+
+        for(int i = 1; i < 6; i++)
+        {
+            Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
+            if(opp.getPosX() == posX && opp.getPosY() == posY)
+            {
+                int screenRand = rand() % 2;
+
+                if(screenRand == 0)
+                {
+                    cout << "Drive Stopped: " << p->getNumber() << " " << opp.getNumber() << endl;
+                    move = 4;
+                    p->setDribbleDrive(false);
+                    break;
+                }
+            }
+        }
+        cout << "Drive: " << move << endl;
         p->movePlayer(move);
     }
 }
