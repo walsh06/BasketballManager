@@ -280,6 +280,46 @@ void Match::passInbound(Player *p)
     gameState = INPLAY;
 }
 
+void Match::driveBasket(Player *p)
+{
+    int posX = p->getPosX(), posY = p->getPosY();
+    if(p->getRange() == 1)
+    {
+        shoot(p, teams[getOtherTeam(p->getTeam())]->getPressure(posX, posY));
+    }
+    else
+    {
+        int move;
+        if(posX == 3 || posX == 4)
+        {
+            move = 5;
+        }
+        else if(posY == 6 || posY == 7)
+        {
+            if((3 - posX) < 0)
+            {
+                move = 0;
+            }
+            else
+            {
+                move = 7;
+            }
+        }
+        else
+        {
+            if((3 - posX) < 0)
+            {
+                move = 2;
+            }
+            else
+            {
+                move = 8;
+            }
+        }
+        p->movePlayer(move);
+    }
+}
+
 //==============================
 
 
