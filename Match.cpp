@@ -251,7 +251,7 @@ void Match::withBall(Player* p, int shotClock)
 
         if(underBasket == 0)
         {
-            value += 40;
+            value += 20;
         }
 
         probs.addProbability(value);

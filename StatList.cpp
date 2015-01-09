@@ -83,8 +83,8 @@ float StatList::getThreeShootingPercentage()
 
 void StatList::printShootingStats()
 {
-    std::cout << "Points: " << points << " Shots: " << getShots() << " PC%: " << getShootingPercentage() << std::endl;
-    std::cout << "3 Shots: " << getThreeShots() <<  " 3% : " << getThreeShootingPercentage() << std::endl;
+    std::cout << "Points: " << points << " FGA: " << getShots() << " FG%: " << getShootingPercentage() << std::endl;
+    std::cout << "3PA: " << getThreeShots() <<  " 3P% : " << getThreeShootingPercentage() << std::endl;
 }
 
 //===========================

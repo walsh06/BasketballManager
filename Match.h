@@ -58,7 +58,6 @@ private:
     int getOtherTeam(int team);
     void swapSides(int playerNum);
     void setUpRestartInbound();
-
 };
 
 #endif // MATCH_H
