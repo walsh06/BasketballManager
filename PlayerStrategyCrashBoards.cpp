@@ -1,7 +1,7 @@
 #include "PlayerStrategyCrashBoards.h"
 
 
-PlayerStrategyCrashBoards::PlayerStrategyCrashBoards()
+PlayerStrategyCrashBoards::PlayerStrategyCrashBoards():withBallVector({0,0,3,0,0,3,0,0,3,0,0,0,0,0,0})
 {
     int strategyMap[8][7] = {{1,1,1,1,1,1,1},
                              {1,1,3,5,5,5,5},
@@ -23,4 +23,9 @@ Heatmap PlayerStrategyCrashBoards::getMap()
 int PlayerStrategyCrashBoards::getValue(int x, int y)
 {
     return map.getValue(x, y);
+}
+
+ProbabilityVector PlayerStrategyCrashBoards::getWithBallVector()
+{
+    return withBallVector;
 }

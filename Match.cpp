@@ -18,12 +18,12 @@ Match::Match()
 
 void Match::sim()
 {
-    for(int time = 2880; time > 0;)
+    for(int time = 180; time > 0;)
     {
         cout << "Score: " << score[0] << "-" << score[1] << endl;
         for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
         {
-            if(time < 24)
+            if(time < 24 && shotClock == 24)
             {
                 shotClock = time;
             }
@@ -256,8 +256,10 @@ void Match::withBall(Player* p, int shotClock)
 
         probs.addProbability(value);
         //=================
-        probs.printVector();
-        int action  = probs.getRandomResult();
+        ProbabilityVector finalProbabilities = probs + p->getStrategyVector();
+        finalProbabilities.printVector();
+
+        int action  = finalProbabilities.getRandomResult();
 
         if(action < 9)
         {

@@ -22,7 +22,10 @@ Team::Team()
     players[c]->setPlayingPosition(new PositionCentre());
 
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
-    //players[pg]->setStrategy(new PlayerStrategyShootThree());
+    players[pf]->setStrategy(new PlayerStrategyCrashBoards());
+    players[sf]->setStrategy(new PlayerStrategyInsideOutside());
+    players[sg]->setStrategy(new PlayerStrategyInsidePlaymaker());
+    players[pg]->setStrategy(new PlayerStrategyOutsidePlaymaker());
 }
 
 Player* Team::getPlayer(int position)

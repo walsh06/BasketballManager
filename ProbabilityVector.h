@@ -10,9 +10,13 @@ class ProbabilityVector
 {
 public:
     ProbabilityVector(int size);
+    ProbabilityVector(vector<int> newVector);
     void addProbability(int amount);
     int getRandomResult();
     void printVector();
+    int getProbability(int position);
+
+    ProbabilityVector operator+(const ProbabilityVector &vector);
 
 private:
     int total, count, size;

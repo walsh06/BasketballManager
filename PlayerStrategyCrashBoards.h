@@ -7,6 +7,8 @@ public:
     PlayerStrategyCrashBoards();
     Heatmap getMap();
     int getValue(int x, int y);
+    ProbabilityVector getWithBallVector();
+    ProbabilityVector withBallVector;
 
 private:
     Heatmap map;
