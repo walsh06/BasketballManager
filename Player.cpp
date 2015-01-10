@@ -175,8 +175,14 @@ void Player::setPlayingPosition(PlayerPosition *pos)
 
 void Player::setStrategy(PlayerStrategy *strategy)
 {
+    delete this->strategy;
     this->strategy = strategy;
     updateMap();
+}
+
+ProbabilityVector Player::getStrategyVector()
+{
+    return strategy->getWithBallVector();
 }
 
 void Player::updateMap()
@@ -189,6 +195,7 @@ void Player::updateMap()
     if(strategy != NULL)
     {
         finalMap = finalMap + strategy->getMap();
+        finalMap.printHeatMap();
     }
 }
 

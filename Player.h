@@ -21,6 +21,7 @@ public:
     void setRandomPos();
     void setPlayingPosition(PlayerPosition *pos);
     void setStrategy(PlayerStrategy *strategy);
+    ProbabilityVector getStrategyVector();
     void updateMap();
 
 

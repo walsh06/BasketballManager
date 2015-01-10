@@ -18,7 +18,10 @@ SOURCES += main.cpp \
     PositionCentre.cpp \
     PlayerStrategyShootThree.cpp \
     PlayerStrategyCrashBoards.cpp \
-    StatList.cpp
+    StatList.cpp \
+    PlayerStrategyInsideOutside.cpp \
+    PlayerStrategyOutsidePlaymaker.cpp \
+    PlayerStrategyInsidePlaymaker.cpp
 
 HEADERS += \
     Player.h \
@@ -36,5 +39,8 @@ HEADERS += \
     PlayerStrategy.h \
     PlayerStrategyShootThree.h \
     PlayerStrategyCrashBoards.h \
-    StatList.h
+    StatList.h \
+    PlayerStrategyInsideOutside.h \
+    PlayerStrategyOutsidePlaymaker.h \
+    PlayerStrategyInsidePlaymaker.h
 

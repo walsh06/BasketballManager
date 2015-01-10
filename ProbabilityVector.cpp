@@ -7,6 +7,22 @@ ProbabilityVector::ProbabilityVector(int size)
     total = 0;
 }
 
+ProbabilityVector::ProbabilityVector(vector<int> newVector)
+{
+    size = newVector.size();
+    count = size;
+    for(int i = 0; i < count; i++)
+    {
+        int amount = newVector[i];
+        if(amount < 0)
+        {
+            amount = 0;
+        }
+        total += amount;
+        probabilities.push_back(amount);
+    }
+}
+
 void ProbabilityVector::addProbability(int amount)
 {
     if(count < size)
@@ -35,6 +51,25 @@ int ProbabilityVector::getRandomResult()
     }
 
     return result;
+}
+
+
+int ProbabilityVector::getProbability(int position)
+{
+    return probabilities[position];
+}
+
+ProbabilityVector ProbabilityVector::operator+(const ProbabilityVector &vector)
+{
+    ProbabilityVector addedVector(this->size);
+    if(this->count == vector.count)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            addedVector.addProbability(this->probabilities[i] + vector.probabilities[i]);
+        }
+    }
+    return addedVector;
 }
 
 void ProbabilityVector::printVector()

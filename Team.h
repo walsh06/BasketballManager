@@ -9,6 +9,10 @@
 #include "PositionSmallForward.h"
 #include "PlayerStrategyCrashBoards.h"
 #include "PlayerStrategyShootThree.h"
+#include "PlayerStrategyInsideOutside.h"
+#include "PlayerStrategyOutsidePlaymaker.h"
+#include "PlayerStrategyInsidePlaymaker.h"
+
 #include <vector>
 #include <map>
 
