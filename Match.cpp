@@ -53,7 +53,7 @@ void Match::sim()
                     shotClock = time;
                 }
                 setOrderOfPlay();
-                cout << "Q" << i+1 << "TIME: " << time << " Shotclock: " << shotClock << endl;
+                cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
                 cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
                 for(auto &player : orderOfPlay)
                 {
@@ -445,7 +445,7 @@ void Match::shoot(Player* p, int pressure)
     {
         shootMedium(p, pressure);
     }
-    else if(range == 4)
+    else
     {
         shootThree(p, pressure);
     }
@@ -453,8 +453,8 @@ void Match::shoot(Player* p, int pressure)
 
 void Match::shootUnderBasket(Player *p, int pressure)
 {
-    int shotRand = rand() % 30;
-    int shot = p->getUnderBasketShot() - pressure, freeThrows = 0;
+    int shotRand = rand() % (25 + pressure);
+    int shot = p->getUnderBasketShot() , freeThrows = 0;
 
     int foulRand = rand() % 5;
 
@@ -497,8 +497,8 @@ void Match::shootUnderBasket(Player *p, int pressure)
 }
 void Match::shootClose(Player* p, int pressure)
 {
-    int shotRand = rand() % 30;
-    int shot = p->getCloseShot() - pressure, freeThrows = 0;
+    int shotRand = rand() % (30 + pressure);
+    int shot = p->getCloseShot(), freeThrows = 0;
 
     int foulRand = rand() % 5;
 
@@ -542,8 +542,8 @@ void Match::shootClose(Player* p, int pressure)
 
 void Match::shootMedium(Player* p, int pressure)
 {
-    int shotRand = rand() % 40;
-    int shot = p->getMediumShot() - pressure, freeThrows = 0;
+    int shotRand = rand() % (40 + pressure);
+    int shot = p->getMediumShot(), freeThrows = 0;
 
     int foulRand = rand() % 50;
 
@@ -586,7 +586,7 @@ void Match::shootMedium(Player* p, int pressure)
 
 void Match::shootThree(Player *p, int pressure)
 {
-    int shotRand = rand() % 40;
+    int shotRand = rand() % (40 + pressure);
     int shot, freeThrows = 0;
 
     int foulRand = rand() % 100;
@@ -595,13 +595,13 @@ void Match::shootThree(Player *p, int pressure)
     {
         freeThrows = 3;
     }
-    if(p->getPosY() == 0)
+    if(p->getPosY() <= 0)
     {
-        shot = (p->getThreeShot() / 4) - pressure;
+        shot = (p->getThreeShot() / 4);
     }
     else
     {
-        shot = p->getThreeShot() - pressure;
+        shot = p->getThreeShot();
     }
 
     if(shotRand < shot)
