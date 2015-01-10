@@ -185,6 +185,11 @@ void Match::jumpBall()
     }
 }
 
+int Match::getScoreDifference(int team)
+{
+    return score[team] - score[getOtherTeam(team)];
+}
+
 //================================
 // Player Offense Actions
 //================================
@@ -268,7 +273,8 @@ void Match::withBall(Player* p, int shotClock)
         //=================
         int pressure = teams[getOtherTeam(p->getTeam())]->getPressure(p->getPosX(), p->getPosY());
         int defendersUnderBasket = teams[getOtherTeam(p->getTeam())]->getPlayersUnderBasket();
-        int posValue = 0;
+        int scoreDifference = getScoreDifference(p->getTeam());
+        int posValue = (scoreDifference/4);
 
         if(p->getRange() == 1 && defendersUnderBasket == 0)
         {
@@ -453,7 +459,7 @@ void Match::shoot(Player* p, int pressure)
 
 void Match::shootUnderBasket(Player *p, int pressure)
 {
-    int shotRand = rand() % (25 + pressure);
+    int shotRand = rand() % (28 + pressure);
     int shot = p->getUnderBasketShot() , freeThrows = 0;
 
     int foulRand = rand() % 5;
@@ -542,7 +548,7 @@ void Match::shootClose(Player* p, int pressure)
 
 void Match::shootMedium(Player* p, int pressure)
 {
-    int shotRand = rand() % (40 + pressure);
+    int shotRand = rand() % (38 + pressure);
     int shot = p->getMediumShot(), freeThrows = 0;
 
     int foulRand = rand() % 50;
@@ -586,7 +592,7 @@ void Match::shootMedium(Player* p, int pressure)
 
 void Match::shootThree(Player *p, int pressure)
 {
-    int shotRand = rand() % (40 + pressure);
+    int shotRand = rand() % (38 + pressure);
     int shot, freeThrows = 0;
 
     int foulRand = rand() % 100;

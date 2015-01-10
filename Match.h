@@ -55,6 +55,8 @@ private:
     void steal(Player *p, Player opposition);
 
     void printCourt();
+
+    int getScoreDifference(int team);
     void jumpBall();
     void setOrderOfPlay();
     int getOtherTeam(int team);
