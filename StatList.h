@@ -22,10 +22,15 @@ public:
     float getThreeShootingPercentage();
     void printShootingStats();
 
-    void addRebound();
+    int getRebounds();
+    void addOffensiveRebound();
+    void addDefensiveRebound();
+    void printReboundingStats();
 
 private:
-    int points, rebounds, games, threeScores, shots, threeShots, scores;
+    int points, games;
+    int threeScores, shots, threeShots, scores;
+    int offensiveRebounds, defensiveRebounds;
 };
 
 #endif // STATLIST_H

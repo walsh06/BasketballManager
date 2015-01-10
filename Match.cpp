@@ -93,8 +93,10 @@ void Match::sim()
 
     for(auto &player: orderOfPlay)
     {
-        cout << "Player: " << player->getNumber() << endl;
+        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
         player->getStatList()->printShootingStats();
+        player->getStatList()->printReboundingStats();
+        cout << endl;
     }
 }
 
@@ -756,11 +758,15 @@ void Match::rebound()
              if(ball.getTeam() == p->getTeam())
              {
                  cout << "Offensive Rebound: " << p->getNumber() << endl;
+                 p->getStatList()->addOffensiveRebound();
+
                 shotClock = 0;
              }
              else
              {
                  cout << "Defensive Rebound: " << p->getNumber() << endl;
+                 p->getStatList()->addDefensiveRebound();
+
                  shotClock = 0;
                  swapSides(p->getNumber());
              }
