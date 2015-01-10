@@ -187,7 +187,7 @@ void Match::jumpBall()
 
 int Match::getScoreDifference(int team)
 {
-    return score[team] - score[getOtherTeam(team)];
+    return score[getOtherTeam(team)] - score[team];
 }
 
 //================================
