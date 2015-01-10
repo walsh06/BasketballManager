@@ -3,8 +3,16 @@
 StatList::StatList()
 {
     points=0;
-    rebounds=0;
     games=1;
+
+    shots = 0;
+    scores = 0;
+    threeScores = 0;
+    threeShots = 0;
+
+
+    offensiveRebounds=0;
+    defensiveRebounds=0;
 }
 
 void StatList::addGame()
@@ -90,9 +98,25 @@ void StatList::printShootingStats()
 //===========================
 // Rebounds
 //===========================
-void StatList::addRebound()
+
+void StatList::addDefensiveRebound()
 {
-    rebounds++;
+    defensiveRebounds++;
+}
+
+void StatList::addOffensiveRebound()
+{
+    offensiveRebounds++;
+}
+
+int StatList::getRebounds()
+{
+    return defensiveRebounds + offensiveRebounds;
+}
+
+void StatList::printReboundingStats()
+{
+    std::cout << "Rebounds: " << getRebounds() << " OR: " << offensiveRebounds << " DR: " << defensiveRebounds << std::endl;
 }
 
 
