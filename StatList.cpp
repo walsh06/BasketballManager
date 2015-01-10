@@ -20,6 +20,15 @@ void StatList::addGame()
     games++;
 }
 
+void StatList::writeToFile(std::string filename, int pos)
+{
+    std::ofstream outfile;
+
+      outfile.open(filename, std::ios_base::app);
+      outfile << "Pos," << pos << ",Points," << points << ",FGA," << getShots() << ",FGPC," << getShootingPercentage() << ",3PA," << getThreeShots() <<  ",3PPC," << getThreeShootingPercentage() << "\n";
+
+}
+
 //==========================
 // Points
 //==========================

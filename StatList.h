@@ -2,12 +2,14 @@
 #define STATLIST_H
 
 #include <iostream>
-
+#include <fstream>
 class StatList
 {
 public:
     StatList();
     void addGame();
+    void writeToFile(std::string filename, int pos);
+
     void addPoint();
     void addTwoPoints();
     void addThreePoints();

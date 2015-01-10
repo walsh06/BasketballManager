@@ -35,6 +35,8 @@ Player::Player(int number)
     }
     calcHeatMap();
     setRandomPos();
+    position = NULL;
+    strategy = NULL;
 }
 
 //=================================

@@ -14,6 +14,33 @@ Match::Match()
     score[1] = 0;
 }
 
+Match::~Match()
+{
+    delete teamOne;
+    delete teamTwo;
+}
+void Match::writeMatchStats(string filename)
+{
+    for(int i = 1; i < 6; i++)
+    {
+        Player *player = teamOne->getPlayer(i);
+        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
+        player->getStatList()->printShootingStats();
+        player->getStatList()->printReboundingStats();
+        cout << endl;
+        player->getStatList()->writeToFile(filename, teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()));
+    }
+
+    for(int i = 1; i < 6; i++)
+    {
+        Player *player = teamTwo->getPlayer(i);
+        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
+        player->getStatList()->printShootingStats();
+        player->getStatList()->printReboundingStats();
+        cout << endl;
+        player->getStatList()->writeToFile(filename, teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()));
+    }
+}
 void Match::sim()
 {
     for(int i = 0; i < 4; i++)
@@ -90,14 +117,6 @@ void Match::sim()
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
     shotMap.printHeatMap();
-
-    for(auto &player: orderOfPlay)
-    {
-        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
-        player->getStatList()->printShootingStats();
-        player->getStatList()->printReboundingStats();
-        cout << endl;
-    }
 }
 
 void Match::setOrderOfPlay()
@@ -550,7 +569,7 @@ void Match::shootClose(Player* p, int pressure)
 
 void Match::shootMedium(Player* p, int pressure)
 {
-    int shotRand = rand() % (38 + pressure);
+    int shotRand = rand() % (35 + pressure);
     int shot = p->getMediumShot(), freeThrows = 0;
 
     int foulRand = rand() % 50;
@@ -594,7 +613,7 @@ void Match::shootMedium(Player* p, int pressure)
 
 void Match::shootThree(Player *p, int pressure)
 {
-    int shotRand = rand() % (38 + pressure);
+    int shotRand = rand() % (35 + pressure);
     int shot, freeThrows = 0;
 
     int foulRand = rand() % 100;

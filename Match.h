@@ -18,7 +18,10 @@ class Match
 {
 public:
     Match();
+    ~Match();
+
     void sim();
+    void writeMatchStats(string filename);
 private:
     int firstPossession;
     Heatmap shotMap;
