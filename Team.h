@@ -36,6 +36,7 @@ public:
     void restartInbound(int team);
     void setUpFreeThrowOffence(int number);
     void setUpFreeThrowDefence();
+    void setUpStartGame();
 
 
     static const int PG = 1, SG = 2, SF = 3, PF = 4, C = 5;

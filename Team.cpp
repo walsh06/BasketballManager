@@ -85,6 +85,9 @@ void Team::setTeam(int team)
     }
 }
 
+//===========================================
+// Team Set up
+//===========================================
 void Team::swapSides()
 {
     for(auto &player: players)
@@ -166,6 +169,28 @@ void Team::setUpFreeThrowDefence()
     getPlayer(4)->setPos(6, 5);
     getPlayer(5)->setPos(6, 2);
 }
+
+void Team::setUpStartGame()
+{
+    if(team == 1)
+    {
+        getPlayer(1)->setPos(-3, 3);
+        getPlayer(2)->setPos(-1, 1);
+        getPlayer(3)->setPos(-1, 6);
+        getPlayer(4)->setPos(-3, 4);
+        getPlayer(5)->setPos(-1, 4);
+    }
+    else
+    {
+        getPlayer(1)->setPos(2, 3);
+        getPlayer(2)->setPos(0, 1);
+        getPlayer(3)->setPos(0, 6);
+        getPlayer(4)->setPos(2, 4);
+        getPlayer(5)->setPos(0, 3);
+    }
+}
+
+//==============================================
 
 int Team::getPressure(int posX, int posY)
 {

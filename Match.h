@@ -20,6 +20,7 @@ public:
     Match();
     void sim();
 private:
+    int firstPossession;
     Heatmap shotMap;
     int gameState;
     const int INPLAY = 0, INBOUND = 1;
@@ -54,6 +55,7 @@ private:
     void steal(Player *p, Player opposition);
 
     void printCourt();
+    void jumpBall();
     void setOrderOfPlay();
     int getOtherTeam(int team);
     void swapSides(int playerNum);

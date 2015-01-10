@@ -10,56 +10,83 @@ Match::Match()
     teams[0] = teamOne;
     teams[1] = teamTwo;
 
-    ball.setTeam(2);
-    setUpRestartInbound();
     score[0] = 0;
     score[1] = 0;
 }
 
 void Match::sim()
 {
-    for(int time = 180; time > 0;)
+    for(int i = 0; i < 4; i++)
     {
-        cout << "Score: " << score[0] << "-" << score[1] << endl;
-        for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
+        if(i==0)
         {
-            if(time < 24 && shotClock == 24)
-            {
-                shotClock = time;
-            }
-            setOrderOfPlay();
-            cout << "TIME: " << time << " Shotclock: " << shotClock << endl;
-            cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
-            for(auto &player : orderOfPlay)
-            {
-                if(player->getTeam() == ball.getTeam())
-                {
-                    if(teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()) == ball.getPlayerPosition())
-                    {
-                        if(gameState == INPLAY)
-                            withBall(player, shotClock);
-                        else if(gameState == INBOUND)
-                            passInbound(player);
+            jumpBall();
+        }
+        else if(i == 2 || i == 1)
+        {
+           int team = getOtherTeam(firstPossession);
+           ball.setTeam(team + 1);
+           ball.setPlayerPosition(3);
 
-                        if(shotClock == 0)
+           teamOne->restartInbound(team + 1);
+           teamTwo->restartInbound(team + 1);
+           gameState = INBOUND;
+        }
+        else
+        {
+            int team = firstPossession;
+            ball.setTeam(team);
+            ball.setPlayerPosition(3);
+
+            teamOne->restartInbound(team);
+            teamTwo->restartInbound(team);
+            gameState = INBOUND;
+        }
+
+        for(int time = 720; time > 0;)
+        {
+            cout << "Score: " << score[0] << "-" << score[1] << endl;
+            for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
+            {
+                if(time < 24 && shotClock == 24)
+                {
+                    shotClock = time;
+                }
+                setOrderOfPlay();
+                cout << "Q" << i+1 << "TIME: " << time << " Shotclock: " << shotClock << endl;
+                cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
+                for(auto &player : orderOfPlay)
+                {
+                    if(player->getTeam() == ball.getTeam())
+                    {
+                        if(teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()) == ball.getPlayerPosition())
                         {
-                            break;
+                            if(gameState == INPLAY)
+                                withBall(player, shotClock);
+                            else if(gameState == INBOUND)
+                                passInbound(player);
+
+                            if(shotClock == 0)
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            move(player);
                         }
                     }
                     else
                     {
-                        move(player);
+                        moveDefence(player);
                     }
                 }
-                else
-                {
-                    moveDefence(player);
-                }
-            }
 
-            printCourt();
+                printCourt();
+            }
         }
     }
+
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
     shotMap.printHeatMap();
@@ -127,6 +154,35 @@ void Match::setUpRestartInbound()
     teamOne->restartInbound(team);
     teamTwo->restartInbound(team);
     gameState = INBOUND;
+}
+
+void Match::jumpBall()
+{
+    Player* playerOne = teamOne->getPlayer(5), *playerTwo = teamTwo->getPlayer(5);
+    teamOne->setUpStartGame(); teamTwo->setUpStartGame();
+    printCourt();
+    ProbabilityVector jumpVector(2);
+
+    jumpVector.addProbability(playerOne->getDefRebound());
+    jumpVector.addProbability(playerTwo->getDefRebound());
+
+    int jumpWinner = jumpVector.getRandomResult();
+
+    ball.setPlayerPosition(1);
+    firstPossession = jumpWinner + 1;
+    if(jumpWinner == 0)
+    {
+        ball.setTeam(2);
+        cout << "Jump Ball: Team 1" << endl;
+    }
+    else if(jumpWinner == 1)
+    {
+        cout << "Jump Ball: Team 2" << endl;
+
+        teams[0]->swapSides();
+        teams[1]->swapSides();
+        ball.setTeam(2);
+    }
 }
 
 //================================
