@@ -193,7 +193,7 @@ void Match::jumpBall()
     firstPossession = jumpWinner + 1;
     if(jumpWinner == 0)
     {
-        ball.setTeam(2);
+        ball.setTeam(1);
         cout << "Jump Ball: Team 1" << endl;
     }
     else if(jumpWinner == 1)
@@ -265,7 +265,7 @@ void Match::withBall(Player* p, int shotClock)
     }
     else
     {
-        int x = p->getPosX(), y = p->getPosY();
+        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 16;
         //move 0-8, shoot 9, pass 10-13, drive 14
         ProbabilityVector probs(15);
         //=================
@@ -303,11 +303,11 @@ void Match::withBall(Player* p, int shotClock)
         }
         else if(pressure == 0)
         {
-            posValue = p->getPosValue() + (24 - shotClock) + 100;
+            posValue = p->getPosValue() + (shotClockFactor - shotClock) + 100;
         }
         else
         {
-            posValue = p->getPosValue() + (24 - shotClock) - pressure - (p->getRange() * 1);
+            posValue = p->getPosValue() + (shotClockFactor - shotClock) - pressure - (p->getRange() * 1);
         }
         probs.addProbability(posValue);
 
@@ -480,7 +480,7 @@ void Match::shoot(Player* p, int pressure)
 
 void Match::shootUnderBasket(Player *p, int pressure)
 {
-    int shotRand = rand() % (28 + pressure);
+    int shotRand = rand() % (30 + pressure);
     int shot = p->getUnderBasketShot() , freeThrows = 0;
 
     int foulRand = rand() % 5;
@@ -613,7 +613,7 @@ void Match::shootMedium(Player* p, int pressure)
 
 void Match::shootThree(Player *p, int pressure)
 {
-    int shotRand = rand() % (35 + pressure);
+    int shotRand = rand() % (30 + pressure);
     int shot, freeThrows = 0;
 
     int foulRand = rand() % 100;
