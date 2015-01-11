@@ -6,12 +6,14 @@
 #include "PlayerPosition.h"
 #include "PlayerStrategy.h"
 
+#include <map>
 using namespace std;
 
 class Player
 {
 public:
     Player(int number);
+    Player(map<string, string> playerMap);
 
     int getPosValue(int x, int y);
     int getPosValue();
@@ -63,7 +65,7 @@ private:
     int posX, posY;
     int number;
     int team;
-
+    string name;
     //shooting ratings
     int threeShot, mediumShot, closeShot, dunk, layup;
     //rebound

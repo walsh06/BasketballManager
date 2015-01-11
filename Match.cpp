@@ -2,9 +2,9 @@
 
 Match::Match()
 {
-    teamOne = new Team();
+    teamOne = new Team("Red");
     teamOne->setTeam(1);
-    teamTwo = new Team();
+    teamTwo = new Team("Blue");
     teamTwo->setTeam(2);
 
     teams[0] = teamOne;
@@ -159,7 +159,7 @@ void Match::swapSides(int playerNum)
     teams[0]->swapSides();
     teams[1]->swapSides();
     ball.changeTeam();
-    ball.setPlayerPosition(playerNum);
+    ball.setPlayerPosition(teams[ball.getTeam() - 1]->getPlayerPosition(playerNum));
     shotClock = 0;
 }
 
@@ -728,7 +728,7 @@ void Match::pass(Player* p, Player* teamMate)
             if(stealRand > passRand)
             {
                 steal = true;
-                stolenNumber = team.getPlayerPosition(defender->getNumber());
+                stolenNumber = defender->getNumber();
             }
         }
     }
@@ -742,7 +742,7 @@ void Match::pass(Player* p, Player* teamMate)
     {
         cout << "Pass: " << teamMate->getNumber() << endl;
         assist = make_tuple(p, time);
-        ball.setPlayerPosition(teamMate->getNumber());
+        ball.setPlayerPosition(teams[teamMate->getTeam() - 1]->getPlayerPosition(teamMate->getNumber()));
     }
 }
 

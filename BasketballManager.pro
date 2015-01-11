@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     StatList.cpp \
     PlayerStrategyInsideOutside.cpp \
     PlayerStrategyOutsidePlaymaker.cpp \
-    PlayerStrategyInsidePlaymaker.cpp
+    PlayerStrategyInsidePlaymaker.cpp \
+    pugixml.cpp
 
 HEADERS += \
     Player.h \
@@ -42,5 +43,7 @@ HEADERS += \
     StatList.h \
     PlayerStrategyInsideOutside.h \
     PlayerStrategyOutsidePlaymaker.h \
-    PlayerStrategyInsidePlaymaker.h
+    PlayerStrategyInsidePlaymaker.h \
+    pugiconfig.hpp \
+    pugixml.hpp
 

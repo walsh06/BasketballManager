@@ -13,15 +13,18 @@
 #include "PlayerStrategyOutsidePlaymaker.h"
 #include "PlayerStrategyInsidePlaymaker.h"
 
+#include "pugixml.hpp"
+
 #include <vector>
 #include <map>
+#include <iostream>
 
 using namespace std;
 
 class Team
 {
 public:
-    Team();
+    Team(string teamName);
     Player* getPlayer(int position);
     vector<Player*> getOtherPlayers(int number);
     int getPlayerPosition(int number);
@@ -42,9 +45,12 @@ public:
     static const int PG = 1, SG = 2, SF = 3, PF = 4, C = 5;
 private:
 
+    void readTeam(string teamName);
+
     map<int, Player*> players;
     map<int, int> defenceMatchups;
     int team;
+    string teamName;
 };
 
 #endif // TEAM_H

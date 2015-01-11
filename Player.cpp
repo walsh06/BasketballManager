@@ -34,7 +34,27 @@ Player::Player(int number)
         pass = 12;
     }
     calcHeatMap();
-    setRandomPos();
+    position = NULL;
+    strategy = NULL;
+}
+Player::Player(map<string, string> playerMap)
+{
+    this->name = playerMap["name"];
+    this->number = stoi(playerMap["number"]);
+    threeShot = stoi(playerMap["shootThree"]);
+    mediumShot = stoi(playerMap["shootMid"]);
+    closeShot = stoi(playerMap["shootClose"]);
+    dunk = stoi(playerMap["dunk"]);
+    layup = stoi(playerMap["layup"]);
+    offRebound = stoi(playerMap["offRebound"]);
+    defRebound = stoi(playerMap["defRebound"]);
+    freethrow = stoi(playerMap["freeThrow"]);
+    block = stoi(playerMap["block"]);
+    speed = stoi(playerMap["speed"]);
+    steal = stoi(playerMap["steal"]);
+    pass = stoi(playerMap["pass"]);
+
+    calcHeatMap();
     position = NULL;
     strategy = NULL;
 }
