@@ -14,7 +14,7 @@ int main()
 
         m.sim();
         string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");
-        m.writeMatchStats(filename);
+        //m.writeMatchStats(filename);
     }
 
     /*

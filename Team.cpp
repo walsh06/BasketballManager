@@ -1,13 +1,11 @@
 #include "Team.h"
 
-Team::Team()
+Team::Team(string teamName)
 {
+    this->teamName = teamName;
+    readTeam(teamName);
+
     int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
-    players[pg] = new Player(1);
-    players[sg] = new Player(2);
-    players[sf] = new Player(3);
-    players[pf] = new Player(4);
-    players[c] = new Player(5);
 
     defenceMatchups[pg] = PG;
     defenceMatchups[sg] = SG;
@@ -26,6 +24,34 @@ Team::Team()
     players[sf]->setStrategy(new PlayerStrategyInsideOutside());
     players[sg]->setStrategy(new PlayerStrategyInsidePlaymaker());
     players[pg]->setStrategy(new PlayerStrategyOutsidePlaymaker());
+}
+
+void Team::readTeam(string teamName)
+{
+    int posCount = 1;
+    //open the document
+    pugi::xml_document doc;
+    pugi::xml_parse_result result = doc.load_file("../teams.xml");
+
+        //loop through the tree structure created of the xml
+        for (pugi::xml_node team: doc.child("teams"))
+        {
+            if(team.first_attribute().value() == teamName)
+            {
+                for(pugi::xml_node player: team.children())
+                {
+                    std::map<string, string> playerMap;
+
+                    for (pugi::xml_attribute attr: player.attributes())
+                    {
+                         playerMap[attr.name()] = attr.value();
+                    }
+                    players[posCount] = new Player(playerMap);
+                    posCount++;
+                }
+                break;
+            }
+        }
 }
 
 Player* Team::getPlayer(int position)
