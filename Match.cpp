@@ -12,6 +12,7 @@ Match::Match()
 
     score[0] = 0;
     score[1] = 0;
+    assist = make_tuple(new Player(0), 800);
 }
 
 Match::~Match()
@@ -28,7 +29,7 @@ void Match::writeMatchStats(string filename)
         player->getStatList()->printShootingStats();
         player->getStatList()->printReboundingStats();
         cout << endl;
-        player->getStatList()->writeToFile(filename, teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()));
+        player->getStatList()->writeToFile(filename, i);
     }
 
     for(int i = 1; i < 6; i++)
@@ -38,7 +39,7 @@ void Match::writeMatchStats(string filename)
         player->getStatList()->printShootingStats();
         player->getStatList()->printReboundingStats();
         cout << endl;
-        player->getStatList()->writeToFile(filename, teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()));
+        player->getStatList()->writeToFile(filename,i);
     }
 }
 void Match::sim()
@@ -109,7 +110,7 @@ void Match::sim()
                     }
                 }
 
-                printCourt();
+                //printCourt();
             }
         }
     }
@@ -265,7 +266,7 @@ void Match::withBall(Player* p, int shotClock)
     }
     else
     {
-        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 16;
+        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 12;
         //move 0-8, shoot 9, pass 10-13, drive 14
         ProbabilityVector probs(15);
         //=================
@@ -330,11 +331,11 @@ void Match::withBall(Player* p, int shotClock)
         //=================
         //Drive Basket
         //=================
-        int value = p->getUnderBasketShot(), underBasket = teams[p->getTeam() - 1]->getPlayersUnderBasket();
+        int value = p->getUnderBasketShot(), underBasket = teams[getOtherTeam(p->getTeam())]->getPlayersUnderBasket();
 
         if(underBasket == 0)
         {
-            value += 20;
+            value += 10;
         }
 
         probs.addProbability(value);
@@ -670,7 +671,7 @@ void Match::shootThree(Player *p, int pressure)
 
 void Match::checkAssist()
 {
-    if(get<1>(assist) <= time + 3)
+    if(get<1>(assist) <= time + 2)
     {
         get<0>(assist)->getStatList()->addAssist();
     }
