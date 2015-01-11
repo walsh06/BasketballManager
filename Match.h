@@ -11,6 +11,7 @@
 #include <cmath>
 #include <time.h>
 #include <stdlib.h>
+#include <tuple>
 
 using namespace std;
 
@@ -28,6 +29,7 @@ private:
     int shotClock, time;
     Ball ball;
     vector<Player*> orderOfPlay;
+    tuple<Player *, int> assist;
     int score[2];
 
 

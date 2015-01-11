@@ -27,8 +27,13 @@ public:
     void addDefensiveRebound();
     void printReboundingStats();
 
+    int getAssists();
+    void addAssist();
+    void printAssistStats();
+
 private:
     int points, games;
+    int assists;
     int threeScores, shots, threeShots, scores;
     int offensiveRebounds, defensiveRebounds;
 };
