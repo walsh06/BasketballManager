@@ -13,6 +13,8 @@ StatList::StatList()
 
     offensiveRebounds=0;
     defensiveRebounds=0;
+
+    assists = 0;
 }
 
 void StatList::addGame()
@@ -25,8 +27,10 @@ void StatList::writeToFile(std::string filename, int pos)
     std::ofstream outfile;
 
       outfile.open(filename, std::ios_base::app);
-      outfile << "Pos," << pos << ",Points," << points << ",FGA," << getShots() << ",FGPC," << getShootingPercentage() << ",3PA," << getThreeShots() <<  ",3PPC," << getThreeShootingPercentage() << "\n";
-
+      outfile << "pos," << pos << ",points," << points << ",fga," << getShots() << ",fgpc," << getShootingPercentage() ;
+      outfile << ",3pa," << getThreeShots() <<  ",3ppc," << getThreeShootingPercentage();
+      outfile << ",trb," << getRebounds() << ",drb," << defensiveRebounds << ",orb," << offensiveRebounds;
+      outfile << ",ast," << getAssists() << "\n";
 }
 
 //==========================
@@ -128,5 +132,21 @@ void StatList::printReboundingStats()
     std::cout << "Rebounds: " << getRebounds() << " OR: " << offensiveRebounds << " DR: " << defensiveRebounds << std::endl;
 }
 
+//===========================
+// Assist
+//===========================
 
+void StatList::addAssist()
+{
+    assists++;
+}
 
+int StatList::getAssists()
+{
+    return assists;
+}
+
+void StatList::printAssistStats()
+{
+    std::cout << "Assists: " << getAssists() << std::endl;
+}

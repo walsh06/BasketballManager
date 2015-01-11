@@ -70,7 +70,7 @@ void Match::sim()
             gameState = INBOUND;
         }
 
-        for(int time = 720; time > 0;)
+        for(time = 720; time > 0;)
         {
             cout << "Score: " << score[0] << "-" << score[1] << endl;
             for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
@@ -495,6 +495,7 @@ void Match::shootUnderBasket(Player *p, int pressure)
        cout << "SCORE Under Basket" << endl;
        score[p->getTeam() - 1]+=2;
        p->getStatList()->addTwoPoints();
+       checkAssist();
 
        if(freeThrows == 0)
        {
@@ -539,6 +540,7 @@ void Match::shootClose(Player* p, int pressure)
        cout << "SCORE Close" << endl;
        score[p->getTeam() - 1]+=2;
        p->getStatList()->addTwoPoints();
+       checkAssist();
 
        if(freeThrows == 0)
        {
@@ -584,6 +586,7 @@ void Match::shootMedium(Player* p, int pressure)
        cout << "SCORE Mid" << endl;
        score[p->getTeam() - 1]+=2;
        p->getStatList()->addTwoPoints();
+       checkAssist();
 
        if(freeThrows == 0)
        {
@@ -638,6 +641,7 @@ void Match::shootThree(Player *p, int pressure)
        score[p->getTeam() - 1]+=3;
        p->getStatList()->addThreePoints();
 
+       checkAssist();
        if(freeThrows == 0)
        {
         setUpRestartInbound();
@@ -664,6 +668,14 @@ void Match::shootThree(Player *p, int pressure)
     }
 }
 
+void Match::checkAssist()
+{
+    if(get<1>(assist) <= time + 3)
+    {
+        get<0>(assist)->getStatList()->addAssist();
+    }
+}
+
 void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
     teams[p->getTeam() - 1]->setUpFreeThrowOffence(p->getNumber());
@@ -677,6 +689,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
         if(ft < ftProb)
         {
             cout << "Free Throw: " << p->getNumber() << endl;
+
             score[p->getTeam() - 1]++;
             p->getStatList()->addPoint();
 
@@ -728,6 +741,7 @@ void Match::pass(Player* p, Player* teamMate)
     else
     {
         cout << "Pass: " << teamMate->getNumber() << endl;
+        assist = make_tuple(p, time);
         ball.setPlayerPosition(teamMate->getNumber());
     }
 }
