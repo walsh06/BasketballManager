@@ -13,6 +13,8 @@ StatList::StatList()
 
     offensiveRebounds=0;
     defensiveRebounds=0;
+
+    assists = 0;
 }
 
 void StatList::addGame()
@@ -119,5 +121,21 @@ void StatList::printReboundingStats()
     std::cout << "Rebounds: " << getRebounds() << " OR: " << offensiveRebounds << " DR: " << defensiveRebounds << std::endl;
 }
 
+//===========================
+// Assist
+//===========================
 
+void StatList::addAssist()
+{
+    assists++;
+}
 
+int StatList::getAssists()
+{
+    return assists;
+}
+
+void StatList::printAssistStats()
+{
+    std::cout << "Assists: " << getAssists() << std::endl;
+}
