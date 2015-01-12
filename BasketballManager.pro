@@ -1,8 +1,11 @@
 TEMPLATE = app
-CONFIG += console
-CONFIG -= app_bundle
-CONFIG -= qt
+
 CONFIG += c++11
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+QT       += sql
+QT       += core gui
 
 SOURCES += main.cpp \
     Player.cpp \
@@ -22,7 +25,9 @@ SOURCES += main.cpp \
     PlayerStrategyInsideOutside.cpp \
     PlayerStrategyOutsidePlaymaker.cpp \
     PlayerStrategyInsidePlaymaker.cpp \
-    pugixml.cpp
+    pugixml.cpp \
+    MainWindow.cpp \
+    MatchScreen.cpp
 
 HEADERS += \
     Player.h \
@@ -45,5 +50,11 @@ HEADERS += \
     PlayerStrategyOutsidePlaymaker.h \
     PlayerStrategyInsidePlaymaker.h \
     pugiconfig.hpp \
-    pugixml.hpp
+    pugixml.hpp \
+    MainWindow.h \
+    MatchScreen.h
+
+FORMS += \
+    MainWindow.ui \
+    MatchScreen.ui
 
