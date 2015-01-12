@@ -1,6 +1,6 @@
 #include "PlayerStrategyShootThree.h"
 
-PlayerStrategyShootThree::PlayerStrategyShootThree()
+PlayerStrategyShootThree::PlayerStrategyShootThree():withBallVector({0,0,0,0,0,0,0,0,0,5,0,0,0,0,0})
 {
     int strategyMap[8][7] = {{1,10,10,10,10,10,10},
                              {1,10,5,5,5,5,5},
@@ -22,4 +22,9 @@ Heatmap PlayerStrategyShootThree::getMap()
 int PlayerStrategyShootThree::getValue(int x, int y)
 {
     return map.getValue(x, y);
+}
+
+ProbabilityVector PlayerStrategyShootThree::getWithBallVector()
+{
+    return withBallVector;
 }

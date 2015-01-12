@@ -2,76 +2,122 @@
 
 Match::Match()
 {
-    teamOne = new Team();
+    teamOne = new Team("Red");
     teamOne->setTeam(1);
-    teamTwo = new Team();
+    teamTwo = new Team("Blue");
     teamTwo->setTeam(2);
 
     teams[0] = teamOne;
     teams[1] = teamTwo;
 
-    ball.setTeam(2);
-    setUpRestartInbound();
     score[0] = 0;
     score[1] = 0;
+    assist = make_tuple(new Player(0), 800);
 }
 
+Match::~Match()
+{
+    delete teamOne;
+    delete teamTwo;
+}
+void Match::writeMatchStats(string filename)
+{
+    for(int i = 1; i < 6; i++)
+    {
+        Player *player = teamOne->getPlayer(i);
+        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
+        player->getStatList()->printShootingStats();
+        player->getStatList()->printReboundingStats();
+        cout << endl;
+        player->getStatList()->writeToFile(filename, i);
+    }
+
+    for(int i = 1; i < 6; i++)
+    {
+        Player *player = teamTwo->getPlayer(i);
+        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
+        player->getStatList()->printShootingStats();
+        player->getStatList()->printReboundingStats();
+        cout << endl;
+        player->getStatList()->writeToFile(filename,i);
+    }
+}
 void Match::sim()
 {
-    for(time = 2880; time > 0;)
+    for(int i = 0; i < 4; i++)
     {
-        cout << "Score: " << score[0] << "-" << score[1] << endl;
-        for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
+        if(i==0)
         {
-            if(time < 24 && shotClock == 24)
-            {
-                shotClock = time;
-            }
-            setOrderOfPlay();
-            cout << "TIME: " << time << " Shotclock: " << shotClock << endl;
-            cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
-            for(auto &player : orderOfPlay)
-            {
-                if(player->getTeam() == ball.getTeam())
-                {
-                    if(teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()) == ball.getPlayerPosition())
-                    {
-                        if(gameState == INPLAY)
-                            withBall(player, shotClock);
-                        else if(gameState == INBOUND)
-                            passInbound(player);
+            jumpBall();
+        }
+        else if(i == 2 || i == 1)
+        {
+           int team = getOtherTeam(firstPossession);
+           ball.setTeam(team + 1);
+           ball.setPlayerPosition(3);
 
-                        if(shotClock == 0)
+           teamOne->restartInbound(team + 1);
+           teamTwo->restartInbound(team + 1);
+           gameState = INBOUND;
+        }
+        else
+        {
+            int team = firstPossession;
+            ball.setTeam(team);
+            ball.setPlayerPosition(3);
+
+            teamOne->restartInbound(team);
+            teamTwo->restartInbound(team);
+            gameState = INBOUND;
+        }
+
+        for(time = 720; time > 0;)
+        {
+            cout << "Score: " << score[0] << "-" << score[1] << endl;
+            for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
+            {
+                if(time < 24 && shotClock == 24)
+                {
+                    shotClock = time;
+                }
+                setOrderOfPlay();
+                cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
+                cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
+                for(auto &player : orderOfPlay)
+                {
+                    if(player->getTeam() == ball.getTeam())
+                    {
+                        if(teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()) == ball.getPlayerPosition())
                         {
-                            break;
+                            if(gameState == INPLAY)
+                                withBall(player, shotClock);
+                            else if(gameState == INBOUND)
+                                passInbound(player);
+
+                            if(shotClock == 0)
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            move(player);
                         }
                     }
                     else
                     {
-                        move(player);
+                        moveDefence(player);
                     }
                 }
-                else
-                {
-                    moveDefence(player);
-                }
-            }
 
-            printCourt();
+                //printCourt();
+            }
         }
     }
+
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
     shotMap.printHeatMap();
-
-    for(auto &player: orderOfPlay)
-    {
-        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
-        player->getStatList()->printShootingStats();
-        player->getStatList()->printReboundingStats();
-        player->getStatList()->printAssistStats();
-        cout << endl;
-    }
 }
 
 void Match::setOrderOfPlay()
@@ -114,7 +160,7 @@ void Match::swapSides(int playerNum)
     teams[0]->swapSides();
     teams[1]->swapSides();
     ball.changeTeam();
-    ball.setPlayerPosition(playerNum);
+    ball.setPlayerPosition(teams[ball.getTeam() - 1]->getPlayerPosition(playerNum));
     shotClock = 0;
 }
 
@@ -130,6 +176,40 @@ void Match::setUpRestartInbound()
     teamOne->restartInbound(team);
     teamTwo->restartInbound(team);
     gameState = INBOUND;
+}
+
+void Match::jumpBall()
+{
+    Player* playerOne = teamOne->getPlayer(5), *playerTwo = teamTwo->getPlayer(5);
+    teamOne->setUpStartGame(); teamTwo->setUpStartGame();
+    printCourt();
+    ProbabilityVector jumpVector(2);
+
+    jumpVector.addProbability(playerOne->getDefRebound());
+    jumpVector.addProbability(playerTwo->getDefRebound());
+
+    int jumpWinner = jumpVector.getRandomResult();
+
+    ball.setPlayerPosition(1);
+    firstPossession = jumpWinner + 1;
+    if(jumpWinner == 0)
+    {
+        ball.setTeam(1);
+        cout << "Jump Ball: Team 1" << endl;
+    }
+    else if(jumpWinner == 1)
+    {
+        cout << "Jump Ball: Team 2" << endl;
+
+        teams[0]->swapSides();
+        teams[1]->swapSides();
+        ball.setTeam(2);
+    }
+}
+
+int Match::getScoreDifference(int team)
+{
+    return score[getOtherTeam(team)] - score[team];
 }
 
 //================================
@@ -186,7 +266,7 @@ void Match::withBall(Player* p, int shotClock)
     }
     else
     {
-        int x = p->getPosX(), y = p->getPosY();
+        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 12;
         //move 0-8, shoot 9, pass 10-13, drive 14
         ProbabilityVector probs(15);
         //=================
@@ -215,7 +295,8 @@ void Match::withBall(Player* p, int shotClock)
         //=================
         int pressure = teams[getOtherTeam(p->getTeam())]->getPressure(p->getPosX(), p->getPosY());
         int defendersUnderBasket = teams[getOtherTeam(p->getTeam())]->getPlayersUnderBasket();
-        int posValue = 0;
+        int scoreDifference = getScoreDifference(p->getTeam());
+        int posValue = (scoreDifference/4);
 
         if(p->getRange() == 1 && defendersUnderBasket == 0)
         {
@@ -223,11 +304,11 @@ void Match::withBall(Player* p, int shotClock)
         }
         else if(pressure == 0)
         {
-            posValue = p->getPosValue() + (24 - shotClock) + 100;
+            posValue = p->getPosValue() + (shotClockFactor - shotClock) + 100;
         }
         else
         {
-            posValue = p->getPosValue() + (24 - shotClock) - pressure - (p->getRange() * 1);
+            posValue = p->getPosValue() + (shotClockFactor - shotClock) - pressure - (p->getRange() * 1);
         }
         probs.addProbability(posValue);
 
@@ -250,11 +331,11 @@ void Match::withBall(Player* p, int shotClock)
         //=================
         //Drive Basket
         //=================
-        int value = p->getUnderBasketShot(), underBasket = teams[p->getTeam() - 1]->getPlayersUnderBasket();
+        int value = p->getUnderBasketShot(), underBasket = teams[getOtherTeam(p->getTeam())]->getPlayersUnderBasket();
 
         if(underBasket == 0)
         {
-            value += 20;
+            value += 10;
         }
 
         probs.addProbability(value);
@@ -392,7 +473,7 @@ void Match::shoot(Player* p, int pressure)
     {
         shootMedium(p, pressure);
     }
-    else if(range == 4)
+    else
     {
         shootThree(p, pressure);
     }
@@ -400,8 +481,8 @@ void Match::shoot(Player* p, int pressure)
 
 void Match::shootUnderBasket(Player *p, int pressure)
 {
-    int shotRand = rand() % 30;
-    int shot = p->getUnderBasketShot() - pressure, freeThrows = 0;
+    int shotRand = rand() % (30 + pressure);
+    int shot = p->getUnderBasketShot() , freeThrows = 0;
 
     int foulRand = rand() % 5;
 
@@ -415,10 +496,8 @@ void Match::shootUnderBasket(Player *p, int pressure)
        cout << "SCORE Under Basket" << endl;
        score[p->getTeam() - 1]+=2;
        p->getStatList()->addTwoPoints();
-       if(get<1>(assist) <= time + 3)
-       {
-           get<0>(assist)->getStatList()->addAssist();
-       }
+       checkAssist();
+
        if(freeThrows == 0)
        {
             setUpRestartInbound();
@@ -447,8 +526,8 @@ void Match::shootUnderBasket(Player *p, int pressure)
 }
 void Match::shootClose(Player* p, int pressure)
 {
-    int shotRand = rand() % 30;
-    int shot = p->getCloseShot() - pressure, freeThrows = 0;
+    int shotRand = rand() % (30 + pressure);
+    int shot = p->getCloseShot(), freeThrows = 0;
 
     int foulRand = rand() % 5;
 
@@ -462,10 +541,8 @@ void Match::shootClose(Player* p, int pressure)
        cout << "SCORE Close" << endl;
        score[p->getTeam() - 1]+=2;
        p->getStatList()->addTwoPoints();
-       if(get<1>(assist) <= time + 3)
-       {
-           get<0>(assist)->getStatList()->addAssist();
-       }
+       checkAssist();
+
        if(freeThrows == 0)
        {
             setUpRestartInbound();
@@ -495,8 +572,8 @@ void Match::shootClose(Player* p, int pressure)
 
 void Match::shootMedium(Player* p, int pressure)
 {
-    int shotRand = rand() % 40;
-    int shot = p->getMediumShot() - pressure, freeThrows = 0;
+    int shotRand = rand() % (35 + pressure);
+    int shot = p->getMediumShot(), freeThrows = 0;
 
     int foulRand = rand() % 50;
 
@@ -510,10 +587,8 @@ void Match::shootMedium(Player* p, int pressure)
        cout << "SCORE Mid" << endl;
        score[p->getTeam() - 1]+=2;
        p->getStatList()->addTwoPoints();
-       if(get<1>(assist) <= time + 3)
-       {
-           get<0>(assist)->getStatList()->addAssist();
-       }
+       checkAssist();
+
        if(freeThrows == 0)
        {
             setUpRestartInbound();
@@ -542,7 +617,7 @@ void Match::shootMedium(Player* p, int pressure)
 
 void Match::shootThree(Player *p, int pressure)
 {
-    int shotRand = rand() % 40;
+    int shotRand = rand() % (30 + pressure);
     int shot, freeThrows = 0;
 
     int foulRand = rand() % 100;
@@ -551,13 +626,13 @@ void Match::shootThree(Player *p, int pressure)
     {
         freeThrows = 3;
     }
-    if(p->getPosY() == 0)
+    if(p->getPosY() <= 0)
     {
-        shot = (p->getThreeShot() / 4) - pressure;
+        shot = (p->getThreeShot() / 4);
     }
     else
     {
-        shot = p->getThreeShot() - pressure;
+        shot = p->getThreeShot();
     }
 
     if(shotRand < shot)
@@ -566,10 +641,8 @@ void Match::shootThree(Player *p, int pressure)
 
        score[p->getTeam() - 1]+=3;
        p->getStatList()->addThreePoints();
-       if(get<1>(assist) <= time + 3)
-       {
-           get<0>(assist)->getStatList()->addAssist();
-       }
+
+       checkAssist();
        if(freeThrows == 0)
        {
         setUpRestartInbound();
@@ -593,6 +666,14 @@ void Match::shootThree(Player *p, int pressure)
     if(freeThrows > 0)
     {
         shootFreeThrow(p, freeThrows);
+    }
+}
+
+void Match::checkAssist()
+{
+    if(get<1>(assist) <= time + 2)
+    {
+        get<0>(assist)->getStatList()->addAssist();
     }
 }
 
@@ -648,7 +729,7 @@ void Match::pass(Player* p, Player* teamMate)
             if(stealRand > passRand)
             {
                 steal = true;
-                stolenNumber = team.getPlayerPosition(defender->getNumber());
+                stolenNumber = defender->getNumber();
             }
         }
     }
@@ -662,7 +743,7 @@ void Match::pass(Player* p, Player* teamMate)
     {
         cout << "Pass: " << teamMate->getNumber() << endl;
         assist = make_tuple(p, time);
-        ball.setPlayerPosition(teamMate->getNumber());
+        ball.setPlayerPosition(teams[teamMate->getTeam() - 1]->getPlayerPosition(teamMate->getNumber()));
     }
 }
 

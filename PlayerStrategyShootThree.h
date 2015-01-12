@@ -8,9 +8,11 @@ public:
     PlayerStrategyShootThree();
     Heatmap getMap();
     int getValue(int x, int y);
+    ProbabilityVector getWithBallVector();
 
 private:
     Heatmap map;
+    ProbabilityVector withBallVector;
 
 };
 

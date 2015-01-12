@@ -1,7 +1,7 @@
 #include "PlayerStrategyOutsidePlaymaker.h"
 
 
-PlayerStrategyOutsidePlaymaker::PlayerStrategyOutsidePlaymaker():withBallVector({0,0,0,0,0,0,0,0,0,5,5,5,5,5,0})
+PlayerStrategyOutsidePlaymaker::PlayerStrategyOutsidePlaymaker():withBallVector({0,0,0,0,0,0,0,0,0,0,5,5,5,5,0})
 {
     int strategyMap[8][7] = {{1,9,9,9,9,9,9},
                              {1,9,6,6,6,6,6},
