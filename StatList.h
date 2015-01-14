@@ -2,12 +2,14 @@
 #define STATLIST_H
 
 #include <iostream>
-
+#include <fstream>
 class StatList
 {
 public:
     StatList();
     void addGame();
+    void writeToFile(std::string filename, int pos);
+
     void addPoint();
     void addTwoPoints();
     void addThreePoints();
@@ -22,10 +24,20 @@ public:
     float getThreeShootingPercentage();
     void printShootingStats();
 
-    void addRebound();
+    int getRebounds();
+    void addOffensiveRebound();
+    void addDefensiveRebound();
+    void printReboundingStats();
+
+    int getAssists();
+    void addAssist();
+    void printAssistStats();
 
 private:
-    int points, rebounds, games, threeScores, shots, threeShots, scores;
+    int points, games;
+    int assists;
+    int threeScores, shots, threeShots, scores;
+    int offensiveRebounds, defensiveRebounds;
 };
 
 #endif // STATLIST_H

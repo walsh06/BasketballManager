@@ -11,6 +11,7 @@
 #include <cmath>
 #include <time.h>
 #include <stdlib.h>
+#include <tuple>
 
 using namespace std;
 
@@ -18,8 +19,12 @@ class Match
 {
 public:
     Match();
+    ~Match();
+
     void sim();
+    void writeMatchStats(string filename);
 private:
+    int firstPossession;
     Heatmap shotMap;
     int gameState;
     const int INPLAY = 0, INBOUND = 1;
@@ -28,6 +33,7 @@ private:
     int shotClock, time;
     Ball ball;
     vector<Player*> orderOfPlay;
+    tuple<Player *, int> assist;
     int score[2];
 
 
@@ -45,6 +51,7 @@ private:
     void pass(Player* p, Player* teamMate);
     void passInbound(Player* p);
     void rebound();
+    void checkAssist();
 
     void moveDefence(Player* p);
     void moveDefenceLoose(Player *p, Player opposition);
@@ -54,6 +61,9 @@ private:
     void steal(Player *p, Player opposition);
 
     void printCourt();
+
+    int getScoreDifference(int team);
+    void jumpBall();
     void setOrderOfPlay();
     int getOtherTeam(int team);
     void swapSides(int playerNum);

@@ -1,13 +1,11 @@
 #include "Team.h"
 
-Team::Team()
+Team::Team(string teamName)
 {
+    this->teamName = teamName;
+    readTeam(teamName);
+
     int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
-    players[pg] = new Player(1);
-    players[sg] = new Player(2);
-    players[sf] = new Player(3);
-    players[pf] = new Player(4);
-    players[c] = new Player(5);
 
     defenceMatchups[pg] = PG;
     defenceMatchups[sg] = SG;
@@ -24,8 +22,36 @@ Team::Team()
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
     players[pf]->setStrategy(new PlayerStrategyCrashBoards());
     players[sf]->setStrategy(new PlayerStrategyInsideOutside());
-    players[sg]->setStrategy(new PlayerStrategyInsidePlaymaker());
+    players[sg]->setStrategy(new PlayerStrategyShootThree());
     players[pg]->setStrategy(new PlayerStrategyOutsidePlaymaker());
+}
+
+void Team::readTeam(string teamName)
+{
+    int posCount = 1;
+    //open the document
+    pugi::xml_document doc;
+    pugi::xml_parse_result result = doc.load_file("../teams.xml");
+
+        //loop through the tree structure created of the xml
+        for (pugi::xml_node team: doc.child("teams"))
+        {
+            if(team.first_attribute().value() == teamName)
+            {
+                for(pugi::xml_node player: team.children())
+                {
+                    std::map<string, string> playerMap;
+
+                    for (pugi::xml_attribute attr: player.attributes())
+                    {
+                         playerMap[attr.name()] = attr.value();
+                    }
+                    players[posCount] = new Player(playerMap);
+                    posCount++;
+                }
+                break;
+            }
+        }
 }
 
 Player* Team::getPlayer(int position)
@@ -85,6 +111,9 @@ void Team::setTeam(int team)
     }
 }
 
+//===========================================
+// Team Set up
+//===========================================
 void Team::swapSides()
 {
     for(auto &player: players)
@@ -166,6 +195,28 @@ void Team::setUpFreeThrowDefence()
     getPlayer(4)->setPos(6, 5);
     getPlayer(5)->setPos(6, 2);
 }
+
+void Team::setUpStartGame()
+{
+    if(team == 1)
+    {
+        getPlayer(1)->setPos(-3, 3);
+        getPlayer(2)->setPos(-1, 1);
+        getPlayer(3)->setPos(-1, 6);
+        getPlayer(4)->setPos(-3, 4);
+        getPlayer(5)->setPos(-1, 4);
+    }
+    else
+    {
+        getPlayer(1)->setPos(2, 3);
+        getPlayer(2)->setPos(0, 1);
+        getPlayer(3)->setPos(0, 6);
+        getPlayer(4)->setPos(2, 4);
+        getPlayer(5)->setPos(0, 3);
+    }
+}
+
+//==============================================
 
 int Team::getPressure(int posX, int posY)
 {
