@@ -111,6 +111,46 @@ void Team::setTeam(int team)
     }
 }
 
+//==========================================
+// Tactics
+//==========================================
+void Team::updatePosition(int index, int position)
+{
+    PlayerPosition *newPosition;
+
+    switch(position)
+    {
+        case PG: newPosition = new PositionPointGuard(); break;
+        case SG: newPosition = new PositionShootingGuard(); break;
+        case SF: newPosition = new PositionSmallForward(); break;
+        case PF: newPosition = new PositionPowerForward(); break;
+        case C: newPosition = new PositionCentre(); break;
+    }
+
+    players[index]->setPlayingPosition(newPosition);
+}
+
+void Team::updateStrategy(int index, int strategy)
+{
+    PlayerStrategy *newStrategy;
+
+    switch(strategy)
+    {
+        case 0: newStrategy = new PlayerStrategyOutsidePlaymaker(); break;
+        case 1: newStrategy = new PlayerStrategyInsidePlaymaker(); break;
+        case 2: newStrategy = new PlayerStrategyInsideOutside(); break;
+    }
+
+    players[index]->setStrategy(newStrategy);
+}
+
+void Team::swapPlayers(int indexOne, int indexTwo)
+{
+    Player *temp = players[indexOne];
+    players[indexOne] = players[indexTwo];
+    players[indexTwo] = temp;
+}
+
 //===========================================
 // Team Set up
 //===========================================

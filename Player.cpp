@@ -191,7 +191,8 @@ int Player::getPosValue()
 
 void Player::setPlayingPosition(PlayerPosition *pos)
 {
-    position = pos;
+    delete this->position;
+    this->position = pos;
     updateMap();
 }
 
@@ -387,6 +388,11 @@ int Player::getPass()
 StatList* Player::getStatList()
 {
     return &playerStats;
+}
+
+string Player::getName()
+{
+    return name;
 }
 
 //======================================

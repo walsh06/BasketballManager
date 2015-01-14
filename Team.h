@@ -27,6 +27,7 @@ public:
     Team(string teamName);
     Player* getPlayer(int position);
     vector<Player*> getOtherPlayers(int number);
+    void swapPlayers(int indexOne, int indexTwo);
     int getPlayerPosition(int number);
     int getMatchup(int position);
     int getMatchup(Player p);
@@ -34,6 +35,8 @@ public:
     int getPlayersUnderBasket();
 
     void setTeam(int team);
+    void updatePosition(int index, int strategy);
+    void updateStrategy(int index, int position);
     void swapSides();
 
     void restartInbound(int team);

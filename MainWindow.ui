@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>850</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,11 +19,11 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>791</width>
-      <height>361</height>
+      <width>801</width>
+      <height>581</height>
      </rect>
     </property>
-    <widget class="MatchScreen" name="page"/>
+    <widget class="MatchScreen" name="MatchWidget"/>
     <widget class="QWidget" name="page_2"/>
    </widget>
   </widget>
@@ -32,7 +32,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>850</width>
      <height>25</height>
     </rect>
    </property>

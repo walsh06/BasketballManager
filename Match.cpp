@@ -1,6 +1,6 @@
 #include "Match.h"
 
-Match::Match()
+Match::Match(MatchScreen *newScreen)
 {
     teamOne = new Team("Red");
     teamOne->setTeam(1);
@@ -13,6 +13,11 @@ Match::Match()
     score[0] = 0;
     score[1] = 0;
     assist = make_tuple(new Player(0), 800);
+
+    setOrderOfPlay();
+    screen = newScreen;
+    screen->initTacticScreen(teamOne);
+    simSpeed = 250;
 }
 
 Match::~Match()
@@ -55,6 +60,7 @@ void Match::sim()
            int team = getOtherTeam(firstPossession);
            ball.setTeam(team + 1);
            ball.setPlayerPosition(3);
+           ball.setPos(-7, 4);
 
            teamOne->restartInbound(team + 1);
            teamTwo->restartInbound(team + 1);
@@ -65,6 +71,7 @@ void Match::sim()
             int team = firstPossession;
             ball.setTeam(team);
             ball.setPlayerPosition(3);
+            ball.setPos(-7, 4);
 
             teamOne->restartInbound(team);
             teamTwo->restartInbound(team);
@@ -81,6 +88,7 @@ void Match::sim()
                     shotClock = time;
                 }
                 setOrderOfPlay();
+                screen->updateTime(time, shotClock);
                 cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
                 cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
                 for(auto &player : orderOfPlay)
@@ -110,11 +118,18 @@ void Match::sim()
                     }
                 }
 
-                //printCourt();
+                QTime dieTime= QTime::currentTime().addMSecs(simSpeed);
+                    while( QTime::currentTime() < dieTime )
+                    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+
+                 screen->updateCourt(orderOfPlay, &ball);
+
+                printCourt();
             }
         }
     }
 
+    screen->updateCourt(orderOfPlay, &ball);
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
     shotMap.printHeatMap();
@@ -161,6 +176,7 @@ void Match::swapSides(int playerNum)
     teams[1]->swapSides();
     ball.changeTeam();
     ball.setPlayerPosition(teams[ball.getTeam() - 1]->getPlayerPosition(playerNum));
+
     shotClock = 0;
 }
 
@@ -171,6 +187,7 @@ void Match::setUpRestartInbound()
     teams[1]->swapSides();
     ball.changeTeam();
     ball.setPlayerPosition(3);
+    ball.setPos(-7, 4);
 
     int team = ball.getTeam();
     teamOne->restartInbound(team);
@@ -183,6 +200,7 @@ void Match::jumpBall()
     Player* playerOne = teamOne->getPlayer(5), *playerTwo = teamTwo->getPlayer(5);
     teamOne->setUpStartGame(); teamTwo->setUpStartGame();
     printCourt();
+
     ProbabilityVector jumpVector(2);
 
     jumpVector.addProbability(playerOne->getDefRebound());
@@ -191,25 +209,38 @@ void Match::jumpBall()
     int jumpWinner = jumpVector.getRandomResult();
 
     ball.setPlayerPosition(1);
+
     firstPossession = jumpWinner + 1;
     if(jumpWinner == 0)
     {
         ball.setTeam(1);
+        ball.setPos(teamOne->getPlayer(1)->getPosX(), teamOne->getPlayer(1)->getPosY());
+
         cout << "Jump Ball: Team 1" << endl;
     }
     else if(jumpWinner == 1)
     {
         cout << "Jump Ball: Team 2" << endl;
+        ball.setPos(teamTwo->getPlayer(1)->getPosX(), teamTwo->getPlayer(1)->getPosY());
 
         teams[0]->swapSides();
         teams[1]->swapSides();
         ball.setTeam(2);
     }
+    gameState = INPLAY ;
+    screen->updateCourt(orderOfPlay, &ball);
+
 }
 
 int Match::getScoreDifference(int team)
 {
     return score[getOtherTeam(team)] - score[team];
+}
+
+void Match::updateScore(int team, int points)
+{
+    score[team]+=points;
+    screen->updateScore(score[0], score[1]);
 }
 
 //================================
@@ -364,7 +395,7 @@ void Match::withBall(Player* p, int shotClock)
             pass(p, otherPlayers[action - 10]);
         }
     }
-
+    ball.setPos(p->getPosX(), p->getPosY());
 }
 
 void Match::passInbound(Player *p)
@@ -459,7 +490,7 @@ void Match::driveBasket(Player *p)
 void Match::shoot(Player* p, int pressure)
 {
     shotMap.incrementValue(p->getPosX(), p->getPosY());
-
+    screen->updateCommentary(1, p);
     int range = p->getRange();
     if(range == 1)
     {
@@ -494,7 +525,7 @@ void Match::shootUnderBasket(Player *p, int pressure)
     if(shotRand < shot)
     {
        cout << "SCORE Under Basket" << endl;
-       score[p->getTeam() - 1]+=2;
+       updateScore(p->getTeam() - 1, 2);
        p->getStatList()->addTwoPoints();
        checkAssist();
 
@@ -539,7 +570,7 @@ void Match::shootClose(Player* p, int pressure)
     if(shotRand < shot)
     {
        cout << "SCORE Close" << endl;
-       score[p->getTeam() - 1]+=2;
+       updateScore(p->getTeam() - 1, 2);
        p->getStatList()->addTwoPoints();
        checkAssist();
 
@@ -585,7 +616,7 @@ void Match::shootMedium(Player* p, int pressure)
     if(shotRand < shot)
     {
        cout << "SCORE Mid" << endl;
-       score[p->getTeam() - 1]+=2;
+       updateScore(p->getTeam() - 1, 2);
        p->getStatList()->addTwoPoints();
        checkAssist();
 
@@ -639,7 +670,7 @@ void Match::shootThree(Player *p, int pressure)
     {
        cout << "SCORE 3" << endl;
 
-       score[p->getTeam() - 1]+=3;
+       updateScore(p->getTeam() - 1, 3);
        p->getStatList()->addThreePoints();
 
        checkAssist();
@@ -686,12 +717,12 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 
     do
     {
-        int ftProb = rand() % 22;
+        int ftProb = rand() % 20;
         if(ft < ftProb)
         {
             cout << "Free Throw: " << p->getNumber() << endl;
 
-            score[p->getTeam() - 1]++;
+            updateScore(p->getTeam() - 1, 1);
             p->getStatList()->addPoint();
 
             if(numOfFreeThrows == 1)
@@ -744,6 +775,7 @@ void Match::pass(Player* p, Player* teamMate)
         cout << "Pass: " << teamMate->getNumber() << endl;
         assist = make_tuple(p, time);
         ball.setPlayerPosition(teams[teamMate->getTeam() - 1]->getPlayerPosition(teamMate->getNumber()));
+        ball.setPos(teamMate->getPosX(), teamMate->getPosY());
     }
 }
 
@@ -789,6 +821,8 @@ void Match::rebound()
             pos = teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber());
 
              ball.setPlayerPosition(pos);
+             ball.setPos(p->getPosX(), p->getPosY());
+
              if(ball.getTeam() == p->getTeam())
              {
                  cout << "Offensive Rebound: " << p->getNumber() << endl;
