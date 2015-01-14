@@ -218,7 +218,8 @@ void Player::updateMap()
     if(strategy != NULL)
     {
         finalMap = finalMap + strategy->getMap();
-        finalMap.printHeatMap();
+        //cout << getName() << endl;
+        //finalMap.printHeatMap();
     }
 }
 

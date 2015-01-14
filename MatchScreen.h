@@ -10,6 +10,7 @@
 #include <vector>
 #include <map>
 #include <QGraphicsScene>
+#include <QGridLayout>
 
 namespace Ui {
 class MatchScreen;
@@ -44,14 +45,24 @@ private slots:
 
     void on_positionFive_currentIndexChanged(int index);
 
-    void on_swapButton_clicked();
-
-    void on_playerOne_toggled(bool checked);
-
     void on_matchSpeed_sliderMoved(int position);
 
+    void on_StartPauseButton_clicked();
+
+    void on_strategyOne_currentIndexChanged(int index);
+
+    void on_strategyTwo_currentIndexChanged(int index);
+
+    void on_strategyThree_currentIndexChanged(int index);
+
+    void on_strategyFour_currentIndexChanged(int index);
+
+    void on_strategyFive_currentIndexChanged(int index);
+
+    void on_playerWidget_currentRowChanged(int currentRow);
+
 private:
-    int checkOne, checkTwo, checkCount;
+    int swapIndex;
     Ui::MatchScreen *ui;
     QBrush * redBrush, *yellowBrush, *blueBrush;
     QPen * blackPen;
@@ -67,6 +78,7 @@ signals:
     void changeStrategy(int, int);
     void changePosition(int, int);
     void changeSimSpeed(int);
+    void startGame();
 };
 
 #endif // MATCHSCREEN_H

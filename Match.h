@@ -7,6 +7,7 @@
 #include "ProbabilityVector.h"
 #include "Heatmap.h"
 #include "MatchScreen.h"
+#include "MatchReceiver.h"
 
 #include <iostream>
 #include <cmath>
@@ -22,12 +23,13 @@ using namespace std;
 class Match
 {
 public:
-    Match(MatchScreen *newScreen);
+    Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo);
     ~Match();
 
     void sim();
     void writeMatchStats(string filename);
 private:
+    MatchReceiver *receiver;
     MatchScreen *screen;
     int simSpeed;
     int firstPossession;

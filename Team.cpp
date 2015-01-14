@@ -139,6 +139,8 @@ void Team::updateStrategy(int index, int strategy)
         case 0: newStrategy = new PlayerStrategyOutsidePlaymaker(); break;
         case 1: newStrategy = new PlayerStrategyInsidePlaymaker(); break;
         case 2: newStrategy = new PlayerStrategyInsideOutside(); break;
+        case 3: newStrategy = new PlayerStrategyCrashBoards(); break;
+        case 4: newStrategy = new PlayerStrategyShootThree(); break;
     }
 
     players[index]->setStrategy(newStrategy);

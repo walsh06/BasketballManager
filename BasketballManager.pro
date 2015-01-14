@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     PlayerStrategyInsidePlaymaker.cpp \
     pugixml.cpp \
     MainWindow.cpp \
-    MatchScreen.cpp
+    MatchScreen.cpp \
+    MatchReceiver.cpp
 
 HEADERS += \
     Player.h \
@@ -52,7 +53,8 @@ HEADERS += \
     pugiconfig.hpp \
     pugixml.hpp \
     MainWindow.h \
-    MatchScreen.h
+    MatchScreen.h \
+    MatchReceiver.h
 
 FORMS += \
     MainWindow.ui \

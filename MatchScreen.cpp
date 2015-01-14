@@ -18,7 +18,9 @@ MatchScreen::MatchScreen(QWidget *parent) :
     blackPen = new QPen(Qt::black);
 
     positions = {"Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Centre"};
-    strategies = {"Outside Playmaker", "Inside Playmaker", "Inside Outside"};
+    strategies = {"Outside Playmaker", "Inside Playmaker", "Inside Outside", "Rebounder", "Three Point"};
+
+    swapIndex = -1;
 }
 
 MatchScreen::~MatchScreen()
@@ -31,12 +33,6 @@ MatchScreen::~MatchScreen()
 
 void MatchScreen::initTacticScreen(Team *teamOne)
 {
-    ui->playerOne->setText(QString::fromStdString(teamOne->getPlayer(1)->getName()));
-    ui->playerTwo->setText(QString::fromStdString(teamOne->getPlayer(2)->getName()));
-    ui->playerThree->setText(QString::fromStdString(teamOne->getPlayer(3)->getName()));
-    ui->playerFour->setText(QString::fromStdString(teamOne->getPlayer(4)->getName()));
-    ui->playerFive->setText(QString::fromStdString(teamOne->getPlayer(5)->getName()));
-
     for(auto position: positions)
     {
         ui->positionOne->addItem(position);
@@ -45,6 +41,11 @@ void MatchScreen::initTacticScreen(Team *teamOne)
         ui->positionFour->addItem(position);
         ui->positionFive->addItem(position);
     }
+    ui->positionOne->setCurrentIndex(0);
+    ui->positionTwo->setCurrentIndex(1);
+    ui->positionThree->setCurrentIndex(2);
+    ui->positionFour->setCurrentIndex(3);
+    ui->positionFive->setCurrentIndex(4);
 
     for(auto strategy: strategies)
     {
@@ -54,6 +55,12 @@ void MatchScreen::initTacticScreen(Team *teamOne)
         ui->strategyFour->addItem(strategy);
         ui->strategyFive->addItem(strategy);
     }
+
+    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(1)->getName()));
+    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(2)->getName()));
+    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(3)->getName()));
+    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(4)->getName()));
+    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(5)->getName()));
 }
 
 
@@ -207,32 +214,52 @@ void MatchScreen::on_matchButton_clicked()
     ui->stackedWidget->setCurrentIndex(0);
 }
 
-void MatchScreen::on_swapButton_clicked()
-{
-    emit swapPlayers(checkOne, checkTwo);
-}
-
-void MatchScreen::on_playerOne_toggled(bool checked)
-{
-    if(checked == true)
-    {
-        if(checkCount < 2)
-        {
-            if(checkOne == -1)
-            {
-
-            }
-        }
-    }
-    else
-    {
-        checkCount--;
-
-    }
-}
-
-
 void MatchScreen::on_matchSpeed_sliderMoved(int position)
 {
     emit changeSimSpeed(position);
+}
+
+
+void MatchScreen::on_StartPauseButton_clicked()
+{
+    emit startGame();
+}
+
+void MatchScreen::on_strategyOne_currentIndexChanged(int index)
+{
+    emit changeStrategy(1, index);
+}
+
+void MatchScreen::on_strategyTwo_currentIndexChanged(int index)
+{
+    emit changeStrategy(2, index);
+}
+
+void MatchScreen::on_strategyThree_currentIndexChanged(int index)
+{
+    emit changeStrategy(3, index);
+}
+
+void MatchScreen::on_strategyFour_currentIndexChanged(int index)
+{
+    emit changeStrategy(4, index);
+}
+
+void MatchScreen::on_strategyFive_currentIndexChanged(int index)
+{
+    emit changeStrategy(5, index);
+}
+
+void MatchScreen::on_playerWidget_currentRowChanged(int currentRow)
+{
+    if(swapIndex == -1)
+    {
+        swapIndex = currentRow + 1;
+    }
+    else
+    {
+        //emit swapPlayers(swapIndex, currentRow + 1);
+        swapIndex = -1;
+        ui->playerWidget->setCurrentRow(-1);
+    }
 }

@@ -1,14 +1,15 @@
 #include "Match.h"
 
-Match::Match(MatchScreen *newScreen)
+Match::Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo)
 {
-    teamOne = new Team("Red");
-    teamOne->setTeam(1);
-    teamTwo = new Team("Blue");
-    teamTwo->setTeam(2);
+    this->simSpeed = 250;
+    this->teamOne = teamOne;
+    this->teamOne->setTeam(1);
+    this->teamTwo = teamTwo;
+    this->teamTwo->setTeam(2);
 
-    teams[0] = teamOne;
-    teams[1] = teamTwo;
+    teams[0] = this->teamOne;
+    teams[1] = this->teamTwo;
 
     score[0] = 0;
     score[1] = 0;
@@ -17,7 +18,7 @@ Match::Match(MatchScreen *newScreen)
     setOrderOfPlay();
     screen = newScreen;
     screen->initTacticScreen(teamOne);
-    simSpeed = 250;
+    receiver = new MatchReceiver(teamOne, screen);
 }
 
 Match::~Match()

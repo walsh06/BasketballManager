@@ -1,7 +1,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include "Match.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -16,7 +15,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::run()
 {
-    Match m(ui->MatchWidget);
+    Team *teamOne = new Team("Red");
+    Team *teamTwo = new Team("Blue");
+    MatchReceiver receiver(teamOne, ui->MatchWidget);
+    match = new Match(ui->MatchWidget, teamOne, teamTwo);
 
-    m.sim();
+    connect(ui->MatchWidget, SIGNAL(startGame()), this, SLOT(startGame()));
+
+}
+
+void MainWindow::startGame()
+{
+    match->sim();
 }

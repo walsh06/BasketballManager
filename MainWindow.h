@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "Match.h"
+#include "MatchReceiver.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +20,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    Match *match;
+private slots:
+    void startGame();
 };
 
 #endif // MAINWINDOW_H

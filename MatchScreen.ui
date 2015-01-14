@@ -265,82 +265,49 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="swapButton">
+    <widget class="QListWidget" name="playerWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>99</width>
-       <height>27</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>swap</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="playerOne">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
+       <x>10</x>
        <y>60</y>
        <width>131</width>
-       <height>22</height>
+       <height>191</height>
       </rect>
      </property>
-     <property name="text">
-      <string>CheckBox</string>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+      </font>
      </property>
-    </widget>
-    <widget class="QCheckBox" name="playerTwo">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>100</y>
-       <width>131</width>
-       <height>22</height>
-      </rect>
+     <property name="autoFillBackground">
+      <bool>true</bool>
      </property>
-     <property name="text">
-      <string>CheckBox</string>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
      </property>
-    </widget>
-    <widget class="QCheckBox" name="playerThree">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>140</y>
-       <width>131</width>
-       <height>22</height>
-      </rect>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
      </property>
-     <property name="text">
-      <string>CheckBox</string>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
-    </widget>
-    <widget class="QCheckBox" name="playerFour">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>180</y>
-       <width>131</width>
-       <height>22</height>
-      </rect>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
-     <property name="text">
-      <string>CheckBox</string>
+     <property name="alternatingRowColors">
+      <bool>false</bool>
      </property>
-    </widget>
-    <widget class="QCheckBox" name="playerFive">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>220</y>
-       <width>131</width>
-       <height>22</height>
-      </rect>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
      </property>
-     <property name="text">
-      <string>CheckBox</string>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerItem</enum>
+     </property>
+     <property name="gridSize">
+      <size>
+       <width>0</width>
+       <height>40</height>
+      </size>
      </property>
     </widget>
    </widget>
@@ -381,7 +348,7 @@
     </rect>
    </property>
    <property name="maximum">
-    <number>5</number>
+    <number>3</number>
    </property>
    <property name="singleStep">
     <number>1</number>
@@ -399,10 +366,23 @@
     <enum>Qt::Horizontal</enum>
    </property>
    <property name="tickPosition">
-    <enum>QSlider::TicksAbove</enum>
+    <enum>QSlider::TicksBelow</enum>
    </property>
    <property name="tickInterval">
     <number>1</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="StartPauseButton">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>10</y>
+     <width>91</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Start</string>
    </property>
   </widget>
  </widget>
