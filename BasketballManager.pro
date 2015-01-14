@@ -21,7 +21,10 @@ SOURCES += main.cpp \
     StatList.cpp \
     PlayerStrategyInsideOutside.cpp \
     PlayerStrategyOutsidePlaymaker.cpp \
-    PlayerStrategyInsidePlaymaker.cpp
+    PlayerStrategyInsidePlaymaker.cpp \
+    PlayerStrategyPostScorer.cpp \
+    PlayerStrategyBalancedPlaymaker.cpp \
+    PlayerStrategyBalanced.cpp
 
 HEADERS += \
     Player.h \
@@ -42,5 +45,8 @@ HEADERS += \
     StatList.h \
     PlayerStrategyInsideOutside.h \
     PlayerStrategyOutsidePlaymaker.h \
-    PlayerStrategyInsidePlaymaker.h
+    PlayerStrategyInsidePlaymaker.h \
+    PlayerStrategyPostScorer.h \
+    PlayerStrategyBalancedPlaymaker.h \
+    PlayerStrategyBalanced.h
 

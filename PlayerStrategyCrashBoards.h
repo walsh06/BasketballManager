@@ -8,10 +8,11 @@ public:
     Heatmap getMap();
     int getValue(int x, int y);
     ProbabilityVector getWithBallVector();
-    ProbabilityVector withBallVector;
 
 private:
     Heatmap map;
+    ProbabilityVector withBallVector;
+
 };
 
 #endif // PLAYERSTRATEGYCRASHBOARDS_H

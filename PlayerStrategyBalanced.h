@@ -1,11 +1,12 @@
-#ifndef PLAYERSTRATEGYSHOOTTHREE_H
-#define PLAYERSTRATEGYSHOOTTHREE_H
+#ifndef PLAYERSTRATEGYBALANCED_H
+#define PLAYERSTRATEGYBALANCED_H
+
 #include "PlayerStrategy.h"
 
-class PlayerStrategyShootThree : public PlayerStrategy
+class PlayerStrategyBalanced : public PlayerStrategy
 {
 public:
-    PlayerStrategyShootThree();
+    PlayerStrategyBalanced();
     Heatmap getMap();
     int getValue(int x, int y);
     ProbabilityVector getWithBallVector();
@@ -13,7 +14,6 @@ public:
 private:
     Heatmap map;
     ProbabilityVector withBallVector;
-
 };
 
-#endif // PLAYERSTRATEGYSHOOTTHREE_H
+#endif // PLAYERSTRATEGYBALANCED_H

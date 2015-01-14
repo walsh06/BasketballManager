@@ -1,6 +1,6 @@
 #include "PlayerStrategyInsideOutside.h"
 
-PlayerStrategyInsideOutside::PlayerStrategyInsideOutside():withBallVector({0,0,0,0,0,0,0,0,0,5,0,0,0,0,8})
+PlayerStrategyInsideOutside::PlayerStrategyInsideOutside():withBallVector({0,0,0,0,0,0,0,0,0,3,0,0,0,0,5})
 {
     int strategyMap[8][7] = {{1,8,8,8,8,8,8},
                              {1,8,2,2,2,2,2},
