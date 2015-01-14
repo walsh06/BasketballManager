@@ -22,6 +22,10 @@ SOURCES += main.cpp \
     PlayerStrategyInsideOutside.cpp \
     PlayerStrategyOutsidePlaymaker.cpp \
     PlayerStrategyInsidePlaymaker.cpp \
+    PlayerStrategyPostScorer.cpp \
+    PlayerStrategyBalancedPlaymaker.cpp \
+    PlayerStrategyBalanced.cpp \
+    pugixml.cpp
     pugixml.cpp
 
 HEADERS += \
@@ -44,6 +48,9 @@ HEADERS += \
     PlayerStrategyInsideOutside.h \
     PlayerStrategyOutsidePlaymaker.h \
     PlayerStrategyInsidePlaymaker.h \
+    PlayerStrategyPostScorer.h \
+    PlayerStrategyBalancedPlaymaker.h \
+    PlayerStrategyBalanced.h \
     pugiconfig.hpp \
     pugixml.hpp
 
