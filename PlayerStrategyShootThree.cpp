@@ -1,15 +1,15 @@
 #include "PlayerStrategyShootThree.h"
 
-PlayerStrategyShootThree::PlayerStrategyShootThree():withBallVector({0,0,0,0,0,0,0,0,0,5,0,0,0,0,0})
+PlayerStrategyShootThree::PlayerStrategyShootThree():withBallVector({0,0,0,0,0,0,0,0,0,4,0,0,0,0,0})
 {
-    int strategyMap[8][7] = {{1,10,10,10,10,10,10},
-                             {1,10,5,5,5,5,5},
-                             {1,10,5,5,1,1,1},
-                             {1,10,5,5,1,1,1},
-                             {1,10,5,5,1,1,1},
-                             {1,10,5,5,1,1,1},
-                             {1,10,5,5,5,5,5},
-                             {1,10,10,10,10,10,10}};
+    int strategyMap[8][7] = {{1,8,8,8,8,8,8},
+                             {1,8,8,4,4,4,4},
+                             {1,8,8,4,1,1,1},
+                             {1,8,4,4,1,1,1},
+                             {1,8,4,4,1,1,1},
+                             {1,8,8,4,1,1,1},
+                             {1,8,8,4,4,4,4},
+                             {1,8,8,8,8,8,8}};
 
     map.setMap(strategyMap);
 }
