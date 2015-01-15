@@ -245,6 +245,20 @@ int Team::getPressure(int posX, int posY)
    return count;
 }
 
+vector<int> Team::getPlayersInPosition(int posX, int posY)
+{
+    vector<int> playersAtPos;
+    for(int i = 1; i < 6; i++)
+    {
+        if(players[i]->getPosX() == posX && players[i]->getPosY() == posY)
+        {
+            playersAtPos.push_back(i);
+        }
+    }
+
+    return playersAtPos;
+}
+
 int Team::getPlayersUnderBasket()
 {
     int count = 0;
