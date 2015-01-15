@@ -459,8 +459,17 @@ void Match::driveBasket(Player *p)
 vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
 {
     vector<int> defenders;
-    float slope = fabs((y2 - y1)/(x2 - x1));
     Team *defendingTeam = teams[team];
+    float slope;
+    if((x2 - x1) == 0)
+    {
+        slope = 2;
+    }
+    else
+    {
+       slope = fabs((y2 - y1)/(x2 - x1));
+    }
+
     if(slope == 1)
     {
         if(x1 > x2)
