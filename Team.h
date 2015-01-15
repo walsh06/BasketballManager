@@ -32,6 +32,7 @@ public:
     int getMatchup(Player p);
     int getPressure(int posX, int posY);
     int getPlayersUnderBasket();
+    vector<int> getPlayersInPosition(int posX, int posY);
 
     void setTeam(int team);
     void swapSides();

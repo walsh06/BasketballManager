@@ -321,9 +321,15 @@ void Match::withBall(Player* p, int shotClock)
         for(auto &player: otherPlayers)
         {
             int posValue = 0, pressure;
+            vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), x, y, player->getPosX(), player->getPosY());
             if(player->getPosX() >= 0)
             {
-                posValue = player->getPosValue() - abs((p->getPosX() - player->getPosX()) + (p->getPosY() - player->getPosY()));
+                posValue = player->getPosValue() + (p->getPass() / 4) - abs((x - player->getPosX()) + (y - player->getPosY()));
+            }
+
+            if(defenders.size() > 0)
+            {
+                posValue -= (defenders.size() * 2);
             }
             probs.addProbability(posValue);
         }
@@ -450,7 +456,80 @@ void Match::driveBasket(Player *p)
 
 //==============================
 
+vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
+{
+    vector<int> defenders;
+    Team *defendingTeam = teams[team];
+    float slope;
+    if((x2 - x1) == 0)
+    {
+        slope = 2;
+    }
+    else
+    {
+       slope = fabs((y2 - y1)/(x2 - x1));
+    }
 
+    if(slope == 1)
+    {
+        if(x1 > x2)
+        {
+            swap(x1, x2);
+            swap(y1, y2);
+        }
+        for(int i = x1, j = y1; i <= x2 && j <= y2; i++, j++)
+        {
+            vector<int> defendersAtPosition = defendingTeam->getPlayersInPosition(i, j);
+
+            if(defendersAtPosition.size() > 0)
+            {
+                defenders.insert(defenders.end(), defendersAtPosition.begin(),defendersAtPosition.end());
+            }
+        }
+    }
+    else
+    {
+        if(slope > 1)
+        {
+            swap(x1, y1);
+            swap(x2, y2);
+        }
+
+        if(x1 > x2)
+        {
+            swap(x1, x2);
+            swap(y1, y2);
+        }
+
+        int dx = x2 - x1, dy = y2 - y1, j = y1;
+        float diff = dx / 2.0f;
+        int step = (y1 < y2) ? 1 : -1;
+
+        for(int i = x1; i <= x2; i++)
+        {
+            vector<int> defendersAtPosition;
+            if(slope > 1)
+            {
+                defendersAtPosition = defendingTeam->getPlayersInPosition(j, i);
+            }
+            else
+            {
+                defendersAtPosition = defendingTeam->getPlayersInPosition(i, j);
+            }
+            if(defendersAtPosition.size() > 0)
+            {
+                defenders.insert(defenders.end(), defendersAtPosition.begin(),defendersAtPosition.end());
+            }
+            diff -= dy;
+            if(diff < 0)
+            {
+                j += step;
+                diff += dx;
+            }
+        }
+    }
+    return defenders;
+}
 
 //================================
 // Player Offense Actions Results
@@ -718,11 +797,12 @@ void Match::pass(Player* p, Player* teamMate)
     bool steal = false;
     Team team = *teams[getOtherTeam(p->getTeam())];
     Player *defender;
-    for(int i = 1; i < 6; i++)
+    vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), p->getPosX(), p->getPosY(), posX, posY);
+    if(defenders.size() > 0)
     {
-        defender = team.getPlayer(i);
-        if(defender->getPosX() == posX && defender->getPosY() == posY)
+        for(auto pos: defenders)
         {
+            defender = team.getPlayer(pos);
             stealRating = defender->getSteal();
             stealRand = rand() % stealRating;
             passRand = rand() % (pass * 5);
@@ -733,6 +813,7 @@ void Match::pass(Player* p, Player* teamMate)
             }
         }
     }
+
 
     if(steal)
     {
