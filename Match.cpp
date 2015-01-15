@@ -324,7 +324,7 @@ void Match::withBall(Player* p, int shotClock)
             vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), x, y, player->getPosX(), player->getPosY());
             if(player->getPosX() >= 0)
             {
-                posValue = player->getPosValue() - abs((x - player->getPosX()) + (y - player->getPosY()));
+                posValue = player->getPosValue() + (p->getPass() / 4) - abs((x - player->getPosX()) + (y - player->getPosY()));
             }
 
             if(defenders.size() > 0)
@@ -496,7 +496,7 @@ vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
         float diff = dx / 2.0f;
         int step = (y1 < y2) ? 1 : -1;
 
-        for(int i = x1; i < x2; i++)
+        for(int i = x1; i <= x2; i++)
         {
             vector<int> defendersAtPosition;
             if(slope > 1)
