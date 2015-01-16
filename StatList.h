@@ -33,11 +33,16 @@ public:
     void addAssist();
     void printAssistStats();
 
+    float getFreeThrowPercentage();
+    void addFreeThrow();
+    void addFreeThrowScore();
+
 private:
     int points, games;
     int assists;
     int threeScores, shots, threeShots, scores;
     int offensiveRebounds, defensiveRebounds;
+    int freeThrows, freeThrowsScored;
 };
 
 #endif // STATLIST_H
