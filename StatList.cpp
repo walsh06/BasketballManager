@@ -15,6 +15,9 @@ StatList::StatList()
     defensiveRebounds=0;
 
     assists = 0;
+
+    freeThrows = 0;
+    freeThrowsScored = 0;
 }
 
 void StatList::addGame()
