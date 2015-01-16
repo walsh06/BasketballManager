@@ -15,6 +15,9 @@ StatList::StatList()
     defensiveRebounds=0;
 
     assists = 0;
+
+    freeThrows = 0;
+    freeThrowsScored = 0;
 }
 
 void StatList::addGame()
@@ -30,6 +33,7 @@ void StatList::writeToFile(std::string filename, int pos)
       outfile << "pos," << pos << ",points," << points << ",fga," << getShots() << ",fgpc," << getShootingPercentage() ;
       outfile << ",3pa," << getThreeShots() <<  ",3ppc," << getThreeShootingPercentage();
       outfile << ",trb," << getRebounds() << ",drb," << defensiveRebounds << ",orb," << offensiveRebounds;
+      outfile << ",fta," << freeThrows << ",ftpc," << getFreeThrowPercentage();
       outfile << ",ast," << getAssists() << "\n";
 }
 
@@ -149,4 +153,24 @@ int StatList::getAssists()
 void StatList::printAssistStats()
 {
     std::cout << "Assists: " << getAssists() << std::endl;
+}
+
+//=============================
+// Fouls and Free Throws
+//=============================
+
+void StatList::addFreeThrow()
+{
+    freeThrows++;
+}
+
+void StatList::addFreeThrowScore()
+{
+    freeThrows++;
+    freeThrowsScored++;
+}
+
+float StatList::getFreeThrowPercentage()
+{
+    return float(freeThrowsScored)/float(freeThrows);
 }

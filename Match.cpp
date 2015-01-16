@@ -818,9 +818,10 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
     do
     {
         int ftProb = rand() % 22;
-        if(ft < ftProb)
+        if(ftProb < ft)
         {
             cout << "Free Throw: " << p->getNumber() << endl;
+            p->getStatList()->addFreeThrowScore();
 
             score[p->getTeam() - 1]++;
             p->getStatList()->addPoint();
@@ -833,6 +834,8 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
         else
         {
             cout << "Missed Free Throw: " << p->getNumber() << endl;
+            p->getStatList()->addFreeThrow();
+
             if(numOfFreeThrows == 1)
             {
                 rebound();
