@@ -216,6 +216,44 @@ void Team::setUpStartGame()
     }
 }
 
+void Team::ownSideInbound(int team)
+{
+    if(this->team == team)
+    {
+        getPlayer(1)->setPos(-3, 2);
+        getPlayer(2)->setRandomPos();
+        getPlayer(3)->setPos(-3, 0);
+        getPlayer(4)->setRandomPos();
+        getPlayer(5)->setRandomPos();
+    }
+    else
+    {
+        for(auto &player: players)
+        {
+            player.second->setRandomPos();
+        }
+    }
+}
+
+void Team::offsensiveInbound(int team)
+{
+    if(this->team == team)
+    {
+        getPlayer(1)->setRandomPos();
+        getPlayer(2)->setRandomPos();
+        getPlayer(3)->setRandomPos();
+        getPlayer(4)->setPos(3, 0);
+        getPlayer(5)->setRandomPos();
+    }
+    else
+    {
+        for(auto &player: players)
+        {
+            player.second->setRandomPos();
+        }
+    }
+}
+
 //==============================================
 
 int Team::getPressure(int posX, int posY)

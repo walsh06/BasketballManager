@@ -38,6 +38,8 @@ public:
     void swapSides();
 
     void restartInbound(int team);
+    void offsensiveInbound(int team);
+    void ownSideInbound(int team);
     void setUpFreeThrowOffence(int number);
     void setUpFreeThrowDefence();
     void setUpStartGame();

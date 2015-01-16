@@ -20,28 +20,7 @@ Match::~Match()
     delete teamOne;
     delete teamTwo;
 }
-void Match::writeMatchStats(string filename)
-{
-    for(int i = 1; i < 6; i++)
-    {
-        Player *player = teamOne->getPlayer(i);
-        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
-        player->getStatList()->printShootingStats();
-        player->getStatList()->printReboundingStats();
-        cout << endl;
-        player->getStatList()->writeToFile(filename, i);
-    }
 
-    for(int i = 1; i < 6; i++)
-    {
-        Player *player = teamTwo->getPlayer(i);
-        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
-        player->getStatList()->printShootingStats();
-        player->getStatList()->printReboundingStats();
-        cout << endl;
-        player->getStatList()->writeToFile(filename,i);
-    }
-}
 void Match::sim()
 {
     for(int i = 0; i < 4; i++)
@@ -120,6 +99,10 @@ void Match::sim()
     shotMap.printHeatMap();
 }
 
+//===============================
+// General Functions
+//===============================
+
 void Match::setOrderOfPlay()
 {
     orderOfPlay.clear();
@@ -155,6 +138,37 @@ int Match::getOtherTeam(int team)
     else return 0;
 }
 
+int Match::getScoreDifference(int team)
+{
+    return score[getOtherTeam(team)] - score[team];
+}
+
+void Match::writeMatchStats(string filename)
+{
+    for(int i = 1; i < 6; i++)
+    {
+        Player *player = teamOne->getPlayer(i);
+        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
+        player->getStatList()->printShootingStats();
+        player->getStatList()->printReboundingStats();
+        cout << endl;
+        player->getStatList()->writeToFile(filename, i);
+    }
+
+    for(int i = 1; i < 6; i++)
+    {
+        Player *player = teamTwo->getPlayer(i);
+        cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
+        player->getStatList()->printShootingStats();
+        player->getStatList()->printReboundingStats();
+        cout << endl;
+        player->getStatList()->writeToFile(filename,i);
+    }
+}
+
+//====================================
+// Changing Game State
+//====================================
 void Match::swapSides(int playerNum)
 {
     teams[0]->swapSides();
@@ -175,6 +189,26 @@ void Match::setUpRestartInbound()
     int team = ball.getTeam();
     teamOne->restartInbound(team);
     teamTwo->restartInbound(team);
+    gameState = INBOUND;
+}
+
+void Match::setUpOffensiveInbound()
+{
+    ball.setPlayerPosition(4);
+
+    int team = ball.getTeam();
+    teamOne->offensiveInbound(team);
+    teamTwo->offensiveInbound(team);
+    gameState = INBOUND;
+}
+
+void Match::setUpOwnSideInbound()
+{
+    ball.setPlayerPosition(4);
+
+    int team = ball.getTeam();
+    teamOne->ownSideInbound(team);
+    teamTwo->ownSideInbound(team);
     gameState = INBOUND;
 }
 
@@ -206,11 +240,9 @@ void Match::jumpBall()
         ball.setTeam(2);
     }
 }
+//================================
 
-int Match::getScoreDifference(int team)
-{
-    return score[getOtherTeam(team)] - score[team];
-}
+
 
 //================================
 // Player Offense Actions
@@ -378,17 +410,36 @@ void Match::passInbound(Player *p)
     ProbabilityVector probs(14);
 
     vector<Player*> otherPlayers = teams[p->getTeam() - 1]->getOtherPlayers(p->getNumber());
-
+    bool ownSide = p->getPosX() < 0;
     for(auto &player: otherPlayers)
     {
-        if(player->getPosX() < 0)
+        int posValue = 0;
+
+        if(ownSide)
         {
-            probs.addProbability(10);
+            vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), x, y, player->getPosX(), player->getPosY());
+            if(player->getPosX() >= 0)
+            {
+                posValue = player->getPosValue() + (p->getPass() / 4) - abs((x - player->getPosX()) + (y - player->getPosY()));
+            }
+
+            if(defenders.size() > 0)
+            {
+                posValue -= (defenders.size() * 2);
+            }
         }
         else
         {
-            probs.addProbability(0);
+            if(player->getPosX() < 0)
+            {
+                posValue = 10;
+            }
+            else
+            {
+                posValue = 0;
+            }
         }
+        probs.addProbability(posValue);
     }
 
     int action  = probs.getRandomResult();
