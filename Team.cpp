@@ -235,7 +235,7 @@ void Team::ownSideInbound(int team)
     }
 }
 
-void Team::offsensiveInbound(int team)
+void Team::offensiveInbound(int team)
 {
     if(this->team == team)
     {

@@ -411,24 +411,12 @@ void Match::passInbound(Player *p)
 
     vector<Player*> otherPlayers = teams[p->getTeam() - 1]->getOtherPlayers(p->getNumber());
     bool ownSide = p->getPosX() < 0;
+    int x = p->getPosX(), y = p->getPosY(), team = getOtherTeam(p->getTeam());
     for(auto &player: otherPlayers)
     {
         int posValue = 0;
 
         if(ownSide)
-        {
-            vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), x, y, player->getPosX(), player->getPosY());
-            if(player->getPosX() >= 0)
-            {
-                posValue = player->getPosValue() + (p->getPass() / 4) - abs((x - player->getPosX()) + (y - player->getPosY()));
-            }
-
-            if(defenders.size() > 0)
-            {
-                posValue -= (defenders.size() * 2);
-            }
-        }
-        else
         {
             if(player->getPosX() < 0)
             {
@@ -437,6 +425,19 @@ void Match::passInbound(Player *p)
             else
             {
                 posValue = 0;
+            }
+        }
+        else
+        {
+            vector<int> defenders = getDefendersForPass(team, x, y, player->getPosX(), player->getPosY());
+            if(player->getPosX() >= 0)
+            {
+                posValue = player->getPosValue() + (p->getPass() / 4) - abs((x - player->getPosX()) + (y - player->getPosY()));
+            }
+
+            if(defenders.size() > 0)
+            {
+                posValue -= (defenders.size() * 2);
             }
         }
         probs.addProbability(posValue);
