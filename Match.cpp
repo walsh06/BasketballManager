@@ -818,7 +818,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
     do
     {
         int ftProb = rand() % 22;
-        if(ft < ftProb)
+        if(ftProb < ft)
         {
             cout << "Free Throw: " << p->getNumber() << endl;
             p->getStatList()->addFreeThrowScore();
