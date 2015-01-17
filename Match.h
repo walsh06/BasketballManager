@@ -6,6 +6,7 @@
 #include "Ball.h"
 #include "ProbabilityVector.h"
 #include "Heatmap.h"
+#include "Fouls.h"
 
 #include <iostream>
 #include <cmath>
@@ -24,6 +25,7 @@ public:
     void sim();
     void writeMatchStats(string filename);
 private:
+    Fouls fouls;
     int firstPossession;
     Heatmap shotMap;
     int gameState;

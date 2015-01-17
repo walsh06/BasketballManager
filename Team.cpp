@@ -222,8 +222,8 @@ void Team::ownSideInbound(int team)
     {
         getPlayer(1)->setPos(-3, 2);
         getPlayer(2)->setRandomPos();
-        getPlayer(3)->setPos(-3, 0);
-        getPlayer(4)->setRandomPos();
+        getPlayer(3)->setRandomPos();
+        getPlayer(4)->setPos(-3, 0);
         getPlayer(5)->setRandomPos();
     }
     else
