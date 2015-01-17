@@ -89,7 +89,7 @@ void Match::sim()
                     }
                 }
 
-                //printCourt();
+                printCourt();
             }
         }
     }
@@ -490,19 +490,19 @@ void Match::driveBasket(Player *p)
             Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
             if(opp.getPosX() == posX && opp.getPosY() == posY)
             {
-                int screenRand = rand() % 20;
+                int screenRand = rand() % 50;
 
-                if(screenRand < 10)
+                if(screenRand < 25)
                 {
                     cout << "Drive Stopped: " << p->getNumber() << " " << opp.getNumber() << endl;
                     move = 4;
                     p->setDribbleDrive(false);
                     break;
                 }
-                else if(screenRand == 11)
+                else if(screenRand < 30)
                 {
                     cout << "Blocking foul: " << opp.getNumber() << " on " << p->getNumber() << endl;
-                    fouls.addFoul(p->getTeam, time);
+                    fouls.addFoul(p->getTeam(), time);
                     if(fouls.getTeamBonus(p->getTeam()) == true)
                     {
                         shootFreeThrow(p, 2);
@@ -515,6 +515,13 @@ void Match::driveBasket(Player *p)
                             shotClock = 14;
                         }
                     }
+                }
+                else if(screenRand == 31)
+                {
+                    cout << "Offensive foul: " << p->getNumber() << endl;
+                    ball.changeTeam();
+                    shotClock = 0;
+                    setUpOwnSideInbound();
                 }
             }
         }
@@ -637,7 +644,7 @@ void Match::shootUnderBasket(Player *p, int pressure)
     if(foulRand == 0)
     {
         freeThrows = 2;
-        fouls.addFoul(p->getTeam, time);
+        fouls.addFoul(p->getTeam(), time);
     }
 
     if(shotRand < shot)
@@ -683,7 +690,7 @@ void Match::shootClose(Player* p, int pressure)
     if(foulRand == 0)
     {
         freeThrows = 2;
-        fouls.addFoul(p->getTeam, time);
+        fouls.addFoul(p->getTeam(), time);
     }
 
     if(shotRand < shot)
@@ -730,7 +737,7 @@ void Match::shootMedium(Player* p, int pressure)
     if(foulRand == 0)
     {
         freeThrows = 2;
-        fouls.addFoul(p->getTeam, time);
+        fouls.addFoul(p->getTeam(), time);
     }
 
     if(shotRand < shot)
@@ -776,7 +783,7 @@ void Match::shootThree(Player *p, int pressure)
     if(foulRand == 0)
     {
         freeThrows = 3;
-        fouls.addFoul(p->getTeam, time);
+        fouls.addFoul(p->getTeam(), time);
     }
     if(p->getPosY() <= 0)
     {
@@ -1211,7 +1218,7 @@ void Match::steal(Player *p, Player opposition)
     else if(stealRand <= 20)
     {
         cout << "Illegal contact: " << p->getNumber() << endl;
-        fouls.addFoul(p->getTeam, time);
+        fouls.addFoul(p->getTeam(), time);
         if(fouls.getTeamBonus(p->getTeam()) == true)
         {
             shootFreeThrow(p, 2);
