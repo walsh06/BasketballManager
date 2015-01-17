@@ -41,6 +41,7 @@ public:
     int getSpeed();
     int getSteal();
     int getPass();
+    int getDefence();
 
     void setTeam(int team);
     int getTeam();
@@ -71,7 +72,7 @@ private:
     //rebound
     int offRebound, defRebound;
     //defence
-    int block, steal;
+    int block, steal, defence;
     //offence
     int pass, hands, speed, freethrow;
 

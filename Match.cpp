@@ -985,11 +985,14 @@ void Match::rebound()
 
 void Match::moveDefence(Player *p)
 {
-    int matchup, team = getOtherTeam(p->getTeam());
+    ProbabilityVector probs(3);
+    Team *team = teams[p->getTeam() - 1];
+    int matchup, oppTeam = getOtherTeam(p->getTeam()), posValue, sag = 0, tight = 0, result;
+    int defence = p->getDefence(), stealRating = p->getSteal(), defenceSetting;
     //get the defensive matchup of the player
 
     matchup = teams[p->getTeam() - 1]->getMatchup(*p);
-    Player opposition = *teams[team]->getPlayer(matchup);
+    Player opposition = *teams[oppTeam]->getPlayer(matchup);
 
 
     //play tight if their matchup has the ball
@@ -1001,15 +1004,71 @@ void Match::moveDefence(Player *p)
     }
     else if(ball.getPlayerPosition() == matchup)
     {
-        moveDefenceTight(p, opposition);
-    }
-    else if(opposition.getRange() == 1 || opposition.getRange() == 2)
-    {
-        moveDefenceTight(p, opposition);
+        posValue = opposition.getPosValue();
+        defenceSetting = team->getDefenceSetting(matchup);
+
+        if(defenceSetting == Team::TIGHT)
+        {
+            tight = 20 + posValue + defence;
+            sag = (20 - defence)/2;
+        }
+        else
+        {
+            tight = (20 - defence)/2 + posValue;
+            sag = 20 + defence;
+        }
+
+        probs.addProbability(tight);
+        probs.addProbability(sag);
+
+        if(opposition.getPosX() == p->getPosX() && opposition.getPosY() == p->getPosY())
+        {
+            probs.addProbability(stealRating);
+        }
+
+        result = probs.getRandomResult();
+        if(result == 0)
+        {
+            moveDefenceTight(p, opposition);
+        }
+        else if(result == 1)
+        {
+            moveDefenceLoose(p, opposition);
+        }
+        else
+        {
+            steal(p, opposition);
+        }
+
     }
     else
     {
-        moveDefenceLoose(p, opposition);
+        posValue = opposition.getPosValue();
+        defenceSetting = team->getDefenceSetting(matchup);
+
+        if(defenceSetting == Team::TIGHT)
+        {
+            tight = 20 + posValue + defence;
+            sag = (20 - defence)/2;
+        }
+        else
+        {
+            tight = (20 - defence)/2 + posValue;
+            sag = 20 + defence;
+        }
+
+        probs.addProbability(tight);
+        probs.addProbability(sag);
+
+        result = probs.getRandomResult();
+        if(result == 0)
+        {
+            moveDefenceTight(p, opposition);
+        }
+        else if(result == 1)
+        {
+            moveDefenceLoose(p, opposition);
+        }
     }
 }
 
