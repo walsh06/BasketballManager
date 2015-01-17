@@ -59,6 +59,7 @@ private:
     void moveDefence(Player* p);
     void moveDefenceLoose(Player *p, Player opposition);
     void moveDefenceTight(Player* p, Player opposition);
+    void moveTowardBasket(Player* p);
 
     void block(Player *p);
     void steal(Player *p, Player opposition);
