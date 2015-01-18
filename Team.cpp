@@ -20,10 +20,16 @@ Team::Team(string teamName)
     players[c]->setPlayingPosition(new PositionCentre());
 
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
-    players[pf]->setStrategy(new PlayerStrategyCrashBoards());
+    players[pf]->setStrategy(new PlayerStrategyPostScorer());
     players[sf]->setStrategy(new PlayerStrategyInsideOutside());
     players[sg]->setStrategy(new PlayerStrategyShootThree());
-    players[pg]->setStrategy(new PlayerStrategyOutsidePlaymaker());
+    players[pg]->setStrategy(new PlayerStrategyInsidePlaymaker());
+
+    defenceSettings[pg] = TIGHT;
+    defenceSettings[sg] = TIGHT;
+    defenceSettings[sf] = TIGHT;
+    defenceSettings[pf] = TIGHT;
+    defenceSettings[c] = TIGHT;
 }
 
 void Team::readTeam(string teamName)
@@ -97,6 +103,11 @@ int Team::getMatchup(int position)
 int Team::getMatchup(Player p)
 {
     return getMatchup(getPlayerPosition(p.getNumber()));
+}
+
+int Team::getDefenceSetting(int pos)
+{
+    return defenceSettings[pos];
 }
 
 void Team::setTeam(int team)

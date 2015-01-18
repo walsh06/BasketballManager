@@ -89,7 +89,7 @@ void Match::sim()
                     }
                 }
 
-                printCourt();
+                //printCourt();
             }
         }
     }
@@ -499,7 +499,7 @@ void Match::driveBasket(Player *p)
                     p->setDribbleDrive(false);
                     break;
                 }
-                else if(screenRand < 30)
+                else if(screenRand < 28)
                 {
                     cout << "Blocking foul: " << opp.getNumber() << " on " << p->getNumber() << endl;
                     fouls.addFoul(p->getTeam(), time);
@@ -639,7 +639,7 @@ void Match::shootUnderBasket(Player *p, int pressure)
     int shotRand = rand() % (30 + pressure);
     int shot = p->getUnderBasketShot() , freeThrows = 0;
 
-    int foulRand = rand() % 5;
+    int foulRand = rand() % 6;
 
     if(foulRand == 0)
     {
@@ -685,7 +685,7 @@ void Match::shootClose(Player* p, int pressure)
     int shotRand = rand() % (30 + pressure);
     int shot = p->getCloseShot(), freeThrows = 0;
 
-    int foulRand = rand() % 5;
+    int foulRand = rand() % 6;
 
     if(foulRand == 0)
     {
@@ -821,6 +821,7 @@ void Match::shootThree(Player *p, int pressure)
             block(p);
             rebound();
         }
+
     }
     if(freeThrows > 0)
     {
@@ -985,11 +986,14 @@ void Match::rebound()
 
 void Match::moveDefence(Player *p)
 {
-    int matchup, team = getOtherTeam(p->getTeam());
+    ProbabilityVector probs(3);
+    Team *team = teams[p->getTeam() - 1];
+    int matchup, oppTeam = getOtherTeam(p->getTeam()), posValue, sag = 0, tight = 0, result;
+    int defence = p->getDefence(), stealRating = p->getSteal(), defenceSetting;
     //get the defensive matchup of the player
 
     matchup = teams[p->getTeam() - 1]->getMatchup(*p);
-    Player opposition = *teams[team]->getPlayer(matchup);
+    Player opposition = *teams[oppTeam]->getPlayer(matchup);
 
 
     //play tight if their matchup has the ball
@@ -1001,15 +1005,86 @@ void Match::moveDefence(Player *p)
     }
     else if(ball.getPlayerPosition() == matchup)
     {
-        moveDefenceTight(p, opposition);
-    }
-    else if(opposition.getRange() == 1 || opposition.getRange() == 2)
-    {
-        moveDefenceTight(p, opposition);
+        posValue = opposition.getPosValue();
+        defenceSetting = team->getDefenceSetting(matchup);
+
+        if(defenceSetting == Team::TIGHT)
+        {
+            tight = 20 + posValue + defence;
+            sag = (20 - defence)/2;
+        }
+        else
+        {
+            tight = (20 - defence)/2 + posValue;
+            sag = 20 + defence;
+        }
+
+        probs.addProbability(tight);
+        probs.addProbability(sag);
+
+        if(opposition.getPosX() == p->getPosX() && opposition.getPosY() == p->getPosY())
+        {
+            probs.addProbability(stealRating);
+        }
+
+        result = probs.getRandomResult();
+        if(result == 0)
+        {
+            moveDefenceTight(p, opposition);
+        }
+        else if(result == 1)
+        {
+            moveDefenceLoose(p, opposition);
+        }
+        else
+        {
+            steal(p, opposition);
+        }
+
     }
     else
     {
-        moveDefenceLoose(p, opposition);
+        posValue = opposition.getPosValue();
+        defenceSetting = team->getDefenceSetting(matchup);
+
+        if(defenceSetting == Team::TIGHT)
+        {
+            tight = 20 + posValue + defence;
+            sag = (20 - defence)/2;
+        }
+        else
+        {
+            tight = (20 - defence)/2 + posValue;
+            sag = 20 + defence;
+        }
+
+        probs.addProbability(tight);
+        probs.addProbability(sag);
+
+        vector<Player *> otherPlayers = teams[oppTeam]->getOtherPlayers(matchup);
+
+        for(auto &player: otherPlayers)
+        {
+            if(player->isDribbleDrive())
+            {
+                probs.addProbability(10 + defence);
+                break;
+            }
+        }
+
+        result = probs.getRandomResult();
+        if(result == 0)
+        {
+            moveDefenceTight(p, opposition);
+        }
+        else if(result == 1)
+        {
+            moveDefenceLoose(p, opposition);
+        }
+        else if(result == 2)
+        {
+            moveTowardBasket(p);
+        }
     }
 }
 
@@ -1155,9 +1230,9 @@ void Match::moveDefenceTight(Player* p, Player opposition)
         {
             moveDirection = 3;
         }
-        else if(ball.getPlayerPosition() == teams[opposition.getTeam() - 1]->getPlayerPosition(opposition.getNumber()))
+        else
         {
-            steal(p, opposition);
+            moveDirection = 4;
         }
     }
 
@@ -1183,6 +1258,67 @@ void Match::moveDefenceTight(Player* p, Player opposition)
     p->movePlayer(moveDirection);
 }
 
+void Match::moveTowardBasket(Player* p)
+{
+    int posX = p->getPosX(), posY = p->getPosY(), basketX = 6, basketY, moveDirection;
+
+    if(posX < 4)
+    {
+        basketY = 3;
+    }
+    else
+    {
+        basketY = 4;
+    }
+
+    if(posY < basketY)
+    {
+        if(posX < basketX)
+        {
+            moveDirection = 8;
+        }
+        else if(posX > basketX)
+        {
+            moveDirection = 6;
+        }
+        else
+        {
+            moveDirection = 7;
+        }
+    }
+    else if(posY > basketY)
+    {
+        if(posX < basketX)
+        {
+            moveDirection = 2;
+        }
+        else if(posX > basketX)
+        {
+            moveDirection = 0;
+        }
+        else
+        {
+            moveDirection = 1;
+        }
+    }
+    else
+    {
+        if(posX < basketX)
+        {
+            moveDirection = 5;
+        }
+        else if(posX > basketX)
+        {
+            moveDirection = 3;
+        }
+        else
+        {
+            moveDirection = 4;
+        }
+    }
+    p->movePlayer(moveDirection);
+
+}
 
 
 //================================

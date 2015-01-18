@@ -53,7 +53,7 @@ Player::Player(map<string, string> playerMap)
     speed = stoi(playerMap["speed"]);
     steal = stoi(playerMap["steal"]);
     pass = stoi(playerMap["pass"]);
-
+    defence = 15;
     calcHeatMap();
     position = NULL;
     strategy = NULL;
@@ -398,6 +398,11 @@ int Player::getUnderBasketShot()
 int Player::getPass()
 {
     return pass;
+}
+
+int Player::getDefence()
+{
+    return defence;
 }
 
 StatList* Player::getStatList()
