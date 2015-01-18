@@ -89,7 +89,7 @@ void Match::sim()
                     }
                 }
 
-                printCourt();
+                //printCourt();
             }
         }
     }
@@ -1316,6 +1316,8 @@ void Match::moveTowardBasket(Player* p)
             moveDirection = 4;
         }
     }
+    p->movePlayer(moveDirection);
+
 }
 
 

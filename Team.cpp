@@ -20,10 +20,10 @@ Team::Team(string teamName)
     players[c]->setPlayingPosition(new PositionCentre());
 
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
-    players[pf]->setStrategy(new PlayerStrategyCrashBoards());
+    players[pf]->setStrategy(new PlayerStrategyPostScorer());
     players[sf]->setStrategy(new PlayerStrategyInsideOutside());
     players[sg]->setStrategy(new PlayerStrategyShootThree());
-    players[pg]->setStrategy(new PlayerStrategyOutsidePlaymaker());
+    players[pg]->setStrategy(new PlayerStrategyInsidePlaymaker());
 
     defenceSettings[pg] = TIGHT;
     defenceSettings[sg] = TIGHT;
