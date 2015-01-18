@@ -29,7 +29,7 @@ Team::Team(string teamName)
     defenceSettings[sg] = TIGHT;
     defenceSettings[sf] = TIGHT;
     defenceSettings[pf] = TIGHT;
-    defenceSettings[c] = TIGHT;
+    defenceSettings[c] = SAG;
 }
 
 void Team::readTeam(string teamName)
