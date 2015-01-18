@@ -352,7 +352,7 @@ void Match::withBall(Player* p, int shotClock)
 
         for(auto &player: otherPlayers)
         {
-            int posValue = 0, pressure;
+            int posValue = 0;
             vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), x, y, player->getPosX(), player->getPosY());
             if(player->getPosX() >= 0)
             {
