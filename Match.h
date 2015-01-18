@@ -8,6 +8,7 @@
 #include "Heatmap.h"
 #include "MatchScreen.h"
 #include "MatchReceiver.h"
+#include "Fouls.h"
 
 #include <iostream>
 #include <cmath>
@@ -33,6 +34,8 @@ public:
 
 private:
     MatchScreen *screen;
+    Fouls fouls;
+
     int firstPossession;
     Heatmap shotMap;
     int gameState;
@@ -49,6 +52,7 @@ private:
     void move(Player* p);
     void withBall(Player* p, int shotClock);
     void driveBasket(Player *p);
+    vector<int> getDefendersForPass(int team, int x1, int y1, int x2, int y2);
 
     void shoot(Player* p, int pressure);
     void shootUnderBasket(Player *p, int pressure);
@@ -65,6 +69,7 @@ private:
     void moveDefence(Player* p);
     void moveDefenceLoose(Player *p, Player opposition);
     void moveDefenceTight(Player* p, Player opposition);
+    void moveTowardBasket(Player* p);
 
     void block(Player *p);
     void steal(Player *p, Player opposition);
@@ -78,6 +83,10 @@ private:
     void swapSides(int playerNum);
     void setUpRestartInbound();
     void updateScore(int team, int points);
+
+    void setUpOffensiveInbound();
+    void setUpOwnSideInbound();
+
 };
 
 #endif // MATCH_H

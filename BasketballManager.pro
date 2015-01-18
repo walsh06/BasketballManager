@@ -1,7 +1,7 @@
 TEMPLATE = app
 
 CONFIG += c++11
-
+CONFIG -= console
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QT       += sql
@@ -25,10 +25,14 @@ SOURCES += main.cpp \
     PlayerStrategyInsideOutside.cpp \
     PlayerStrategyOutsidePlaymaker.cpp \
     PlayerStrategyInsidePlaymaker.cpp \
-    pugixml.cpp \
     MainWindow.cpp \
     MatchScreen.cpp \
-    MatchReceiver.cpp
+    MatchReceiver.cpp \
+    PlayerStrategyPostScorer.cpp \
+    PlayerStrategyBalancedPlaymaker.cpp \
+    PlayerStrategyBalanced.cpp \
+    pugixml.cpp \
+    Fouls.cpp
 
 HEADERS += \
     Player.h \
@@ -50,13 +54,19 @@ HEADERS += \
     PlayerStrategyInsideOutside.h \
     PlayerStrategyOutsidePlaymaker.h \
     PlayerStrategyInsidePlaymaker.h \
+    PlayerStrategyPostScorer.h \
+    PlayerStrategyBalancedPlaymaker.h \
+    PlayerStrategyBalanced.h \
     pugiconfig.hpp \
     pugixml.hpp \
     MainWindow.h \
     MatchScreen.h \
-    MatchReceiver.h
+    MatchReceiver.h \
+    Fouls.h
 
 FORMS += \
     MainWindow.ui \
     MatchScreen.ui
+
+
 

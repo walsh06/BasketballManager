@@ -61,6 +61,16 @@ private slots:
 
     void on_playerWidget_currentRowChanged(int currentRow);
 
+    void on_quickStrategyOne_currentIndexChanged(int index);
+
+    void on_quickStrategyTwo_currentIndexChanged(int index);
+
+    void on_quickStrategyFour_currentIndexChanged(int index);
+
+    void on_quickStrategyFive_currentIndexChanged(int index);
+
+    void on_quickStrategyThree_currentIndexChanged(int index);
+
 private:
     int swapIndex;
     Ui::MatchScreen *ui;

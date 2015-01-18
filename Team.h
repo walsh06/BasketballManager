@@ -12,6 +12,9 @@
 #include "PlayerStrategyInsideOutside.h"
 #include "PlayerStrategyOutsidePlaymaker.h"
 #include "PlayerStrategyInsidePlaymaker.h"
+#include "PlayerStrategyPostScorer.h"
+#include "PlayerStrategyBalanced.h"
+#include "PlayerStrategyBalancedPlaymaker.h"
 
 #include "pugixml.hpp"
 
@@ -33,6 +36,9 @@ public:
     int getMatchup(Player p);
     int getPressure(int posX, int posY);
     int getPlayersUnderBasket();
+    vector<int> getPlayersInPosition(int posX, int posY);
+    int getDefenceSetting(int pos);
+
 
     void setTeam(int team);
     void updatePosition(int index, int strategy);
@@ -40,18 +46,22 @@ public:
     void swapSides();
 
     void restartInbound(int team);
+    void offensiveInbound(int team);
+    void ownSideInbound(int team);
     void setUpFreeThrowOffence(int number);
     void setUpFreeThrowDefence();
     void setUpStartGame();
 
 
     static const int PG = 1, SG = 2, SF = 3, PF = 4, C = 5;
+    static const int TIGHT = 1, SAG = 2;
 private:
 
     void readTeam(string teamName);
 
     map<int, Player*> players;
     map<int, int> defenceMatchups;
+    map<int, int> defenceSettings;
     int team;
     string teamName;
 };

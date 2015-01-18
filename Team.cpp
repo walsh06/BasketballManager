@@ -20,10 +20,16 @@ Team::Team(string teamName)
     players[c]->setPlayingPosition(new PositionCentre());
 
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
-    players[pf]->setStrategy(new PlayerStrategyCrashBoards());
+    players[pf]->setStrategy(new PlayerStrategyPostScorer());
     players[sf]->setStrategy(new PlayerStrategyInsideOutside());
     players[sg]->setStrategy(new PlayerStrategyShootThree());
-    players[pg]->setStrategy(new PlayerStrategyOutsidePlaymaker());
+    players[pg]->setStrategy(new PlayerStrategyInsidePlaymaker());
+
+    defenceSettings[pg] = TIGHT;
+    defenceSettings[sg] = TIGHT;
+    defenceSettings[sf] = TIGHT;
+    defenceSettings[pf] = TIGHT;
+    defenceSettings[c] = TIGHT;
 }
 
 void Team::readTeam(string teamName)
@@ -99,6 +105,11 @@ int Team::getMatchup(Player p)
     return getMatchup(getPlayerPosition(p.getNumber()));
 }
 
+int Team::getDefenceSetting(int pos)
+{
+    return defenceSettings[pos];
+}
+
 void Team::setTeam(int team)
 {
     if(team == 1 || team == 2)
@@ -136,11 +147,14 @@ void Team::updateStrategy(int index, int strategy)
 
     switch(strategy)
     {
-        case 0: newStrategy = new PlayerStrategyOutsidePlaymaker(); break;
-        case 1: newStrategy = new PlayerStrategyInsidePlaymaker(); break;
-        case 2: newStrategy = new PlayerStrategyInsideOutside(); break;
-        case 3: newStrategy = new PlayerStrategyCrashBoards(); break;
-        case 4: newStrategy = new PlayerStrategyShootThree(); break;
+        case 0: newStrategy = new PlayerStrategyBalanced(); break;
+        case 1: newStrategy = new PlayerStrategyBalancedPlaymaker(); break;
+        case 2: newStrategy = new PlayerStrategyOutsidePlaymaker(); break;
+        case 3: newStrategy = new PlayerStrategyInsidePlaymaker(); break;
+        case 4: newStrategy = new PlayerStrategyInsideOutside(); break;
+        case 5: newStrategy = new PlayerStrategyCrashBoards(); break;
+        case 6: newStrategy = new PlayerStrategyShootThree(); break;
+        case 7: newStrategy = new PlayerStrategyPostScorer(); break;
     }
 
     players[index]->setStrategy(newStrategy);
@@ -258,6 +272,44 @@ void Team::setUpStartGame()
     }
 }
 
+void Team::ownSideInbound(int team)
+{
+    if(this->team == team)
+    {
+        getPlayer(1)->setPos(-3, 2);
+        getPlayer(2)->setRandomPos();
+        getPlayer(3)->setRandomPos();
+        getPlayer(4)->setPos(-3, 0);
+        getPlayer(5)->setRandomPos();
+    }
+    else
+    {
+        for(auto &player: players)
+        {
+            player.second->setRandomPos();
+        }
+    }
+}
+
+void Team::offensiveInbound(int team)
+{
+    if(this->team == team)
+    {
+        getPlayer(1)->setRandomPos();
+        getPlayer(2)->setRandomPos();
+        getPlayer(3)->setRandomPos();
+        getPlayer(4)->setPos(3, 0);
+        getPlayer(5)->setRandomPos();
+    }
+    else
+    {
+        for(auto &player: players)
+        {
+            player.second->setRandomPos();
+        }
+    }
+}
+
 //==============================================
 
 int Team::getPressure(int posX, int posY)
@@ -285,6 +337,20 @@ int Team::getPressure(int posX, int posY)
        }
    }
    return count;
+}
+
+vector<int> Team::getPlayersInPosition(int posX, int posY)
+{
+    vector<int> playersAtPos;
+    for(int i = 1; i < 6; i++)
+    {
+        if(players[i]->getPosX() == posX && players[i]->getPosY() == posY)
+        {
+            playersAtPos.push_back(i);
+        }
+    }
+
+    return playersAtPos;
 }
 
 int Team::getPlayersUnderBasket()

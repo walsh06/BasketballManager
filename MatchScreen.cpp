@@ -18,7 +18,8 @@ MatchScreen::MatchScreen(QWidget *parent) :
     blackPen = new QPen(Qt::black);
 
     positions = {"Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Centre"};
-    strategies = {"Outside Playmaker", "Inside Playmaker", "Inside Outside", "Rebounder", "Three Point"};
+    strategies = {"Balanced", "Balanced Playmaker","Outside Playmaker", "Inside Playmaker",
+                  "Inside Outside", "Rebounder", "Three Point", "Post Scorer"};
 
     swapIndex = -1;
 }
@@ -54,6 +55,12 @@ void MatchScreen::initTacticScreen(Team *teamOne)
         ui->strategyThree->addItem(strategy);
         ui->strategyFour->addItem(strategy);
         ui->strategyFive->addItem(strategy);
+        ui->quickStrategyOne->addItem(strategy);
+        ui->quickStrategyTwo->addItem(strategy);
+        ui->quickStrategyThree->addItem(strategy);
+        ui->quickStrategyFour->addItem(strategy);
+        ui->quickStrategyFive->addItem(strategy);
+
     }
 
     ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(1)->getName()));
@@ -61,6 +68,51 @@ void MatchScreen::initTacticScreen(Team *teamOne)
     ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(3)->getName()));
     ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(4)->getName()));
     ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(5)->getName()));
+
+    ui->ratingsWidget->setItem(0, 0, new QTableWidgetItem("3pt"));
+    ui->ratingsWidget->setItem(0, 1, new QTableWidgetItem("Mid"));
+    ui->ratingsWidget->setItem(0, 2, new QTableWidgetItem("Cls"));
+    ui->ratingsWidget->setItem(0, 3, new QTableWidgetItem("Lay"));
+    ui->ratingsWidget->setItem(0, 4, new QTableWidgetItem("Dnk"));
+    ui->ratingsWidget->setItem(0, 5, new QTableWidgetItem("Pas"));
+    ui->ratingsWidget->setItem(0, 6, new QTableWidgetItem("Def"));
+    ui->ratingsWidget->setItem(0, 7, new QTableWidgetItem("Stl"));
+    ui->ratingsWidget->setItem(0, 8, new QTableWidgetItem("Blk"));
+    ui->ratingsWidget->setItem(0, 9, new QTableWidgetItem("ORb"));
+    ui->ratingsWidget->setItem(0, 10, new QTableWidgetItem("DRb"));
+    ui->ratingsWidget->setItem(0, 11, new QTableWidgetItem("Spd"));
+    ui->ratingsWidget->setItem(0, 12, new QTableWidgetItem("FT"));
+    for(int i = 1; i < 6; i++)
+    {
+        QTableWidgetItem *three = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getThreeShot()));
+        QTableWidgetItem *mid = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getMediumShot()));
+        QTableWidgetItem *close = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getCloseShot()));
+        QTableWidgetItem *layup = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getLayup()));
+        QTableWidgetItem *dunk = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getDunk()));
+        QTableWidgetItem *pass = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getPass()));
+        QTableWidgetItem *defence = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getDefence()));
+        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getSteal()));
+        QTableWidgetItem *block = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getBlock()));
+        QTableWidgetItem *oRebound = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getOffRebound()));
+        QTableWidgetItem *dRebound = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getDefRebound()));
+        QTableWidgetItem *speed = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getSpeed()));
+        QTableWidgetItem *freethrow = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getFreethrow()));
+
+        ui->ratingsWidget->setItem(i, 0, three);
+        ui->ratingsWidget->setItem(i, 1, mid);
+        ui->ratingsWidget->setItem(i, 2, close);
+        ui->ratingsWidget->setItem(i, 3, layup);
+        ui->ratingsWidget->setItem(i, 4, dunk);
+        ui->ratingsWidget->setItem(i, 5, pass);
+        ui->ratingsWidget->setItem(i, 6, defence);
+        ui->ratingsWidget->setItem(i, 7, steal);
+        ui->ratingsWidget->setItem(i, 8, block);
+        ui->ratingsWidget->setItem(i, 9, oRebound);
+        ui->ratingsWidget->setItem(i, 10, dRebound);
+        ui->ratingsWidget->setItem(i, 11, speed);
+        ui->ratingsWidget->setItem(i, 12, freethrow);
+    }
+
 }
 
 
@@ -228,26 +280,35 @@ void MatchScreen::on_StartPauseButton_clicked()
 void MatchScreen::on_strategyOne_currentIndexChanged(int index)
 {
     emit changeStrategy(1, index);
+    ui->quickStrategyOne->setCurrentIndex(index);
 }
 
 void MatchScreen::on_strategyTwo_currentIndexChanged(int index)
 {
     emit changeStrategy(2, index);
+    ui->quickStrategyTwo->setCurrentIndex(index);
+
 }
 
 void MatchScreen::on_strategyThree_currentIndexChanged(int index)
 {
     emit changeStrategy(3, index);
+    ui->quickStrategyThree->setCurrentIndex(index);
+
 }
 
 void MatchScreen::on_strategyFour_currentIndexChanged(int index)
 {
     emit changeStrategy(4, index);
+    ui->quickStrategyFour->setCurrentIndex(index);
+
 }
 
 void MatchScreen::on_strategyFive_currentIndexChanged(int index)
 {
     emit changeStrategy(5, index);
+    ui->quickStrategyFive->setCurrentIndex(index);
+
 }
 
 void MatchScreen::on_playerWidget_currentRowChanged(int currentRow)
@@ -263,3 +324,36 @@ void MatchScreen::on_playerWidget_currentRowChanged(int currentRow)
         ui->playerWidget->setCurrentRow(-1);
     }
 }
+
+void MatchScreen::on_quickStrategyOne_currentIndexChanged(int index)
+{
+    emit changeStrategy(1, index);
+    ui->strategyOne->setCurrentIndex(index);
+}
+
+void MatchScreen::on_quickStrategyTwo_currentIndexChanged(int index)
+{
+    emit changeStrategy(2, index);
+    ui->strategyTwo->setCurrentIndex(index);
+}
+
+void MatchScreen::on_quickStrategyThree_currentIndexChanged(int index)
+{
+    emit changeStrategy(3, index);
+    ui->strategyThree->setCurrentIndex(index);
+}
+
+void MatchScreen::on_quickStrategyFour_currentIndexChanged(int index)
+{
+    emit changeStrategy(4, index);
+    ui->strategyFour->setCurrentIndex(index);
+
+}
+
+void MatchScreen::on_quickStrategyFive_currentIndexChanged(int index)
+{
+    emit changeStrategy(5, index);
+    ui->strategyFive->setCurrentIndex(index);
+}
+
+

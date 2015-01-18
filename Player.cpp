@@ -53,7 +53,7 @@ Player::Player(map<string, string> playerMap)
     speed = stoi(playerMap["speed"]);
     steal = stoi(playerMap["steal"]);
     pass = stoi(playerMap["pass"]);
-
+    defence = stoi(playerMap["defence"]);
     calcHeatMap();
     position = NULL;
     strategy = NULL;
@@ -119,7 +119,7 @@ void Player::calcHeatMap()
     }
     //===============================
     //three shot heat mapping
-    for(int i = 2; i < 7; i++)
+    for(int i = 3; i < 7; i++)
     {
         heatMap[0][i] = (threeShot/heatFactor + 1);
         heatMap[7][i] = (threeShot/heatFactor + 1);
@@ -129,15 +129,18 @@ void Player::calcHeatMap()
     {
         heatMap[i][0] = (threeShot/4)/heatFactor + 1;
         heatMap[i][1] = threeShot/heatFactor + 1;
-
+        if(i != 4 && i != 3)
+        {
+            heatMap[i][2] = threeShot/heatFactor + 1;
+        }
     }
     //=================================
     //Medium shot mapping
-    for(int i = 2; i < 7; i++)
+    for(int i = 3; i < 7; i++)
     {
         heatMap[1][i] = (mediumShot/heatFactor) + 1;
         heatMap[6][i] = (mediumShot/heatFactor) + 1;
-        if( i == 2 || i == 3)
+        if(i == 3)
         {
             heatMap[2][i] =  (mediumShot/heatFactor) + 1;
             heatMap[3][i] =  (mediumShot/heatFactor) + 1;
@@ -145,6 +148,8 @@ void Player::calcHeatMap()
             heatMap[5][i] =  (mediumShot/heatFactor) + 1;
         }
     }
+    heatMap[3][2] = (mediumShot/heatFactor) + 1;
+    heatMap[4][2] = (mediumShot/heatFactor) + 1;
     //=================================
     //close shot mapping
     for(int i = 4; i < 7; i++)
@@ -299,7 +304,18 @@ int Player::getRange()
     {
         range = 4;
     }
-    else if(posX == 2 || posX == 3)
+    else if(posX == 2)
+    {
+        if(posY > 2 && posY < 5)
+        {
+            range = 3;
+        }
+        else
+        {
+            range = 4;
+        }
+    }
+    else if(posX == 3)
     {
         if(posY > 0 && posY < 7)
         {
@@ -384,6 +400,11 @@ int Player::getUnderBasketShot()
 int Player::getPass()
 {
     return pass;
+}
+
+int Player::getDefence()
+{
+    return defence;
 }
 
 StatList* Player::getStatList()
