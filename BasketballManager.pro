@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     PlayerStrategyBalancedPlaymaker.cpp \
     PlayerStrategyBalanced.cpp \
     pugixml.cpp \
-    Fouls.cpp
+    Fouls.cpp \
+    PlayerStrategyScoringForward.cpp
     pugixml.cpp
 
 HEADERS += \
@@ -54,5 +55,6 @@ HEADERS += \
     PlayerStrategyBalanced.h \
     pugiconfig.hpp \
     pugixml.hpp \
-    Fouls.h
+    Fouls.h \
+    PlayerStrategyScoringForward.h
 

@@ -21,7 +21,7 @@ Team::Team(string teamName)
 
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
     players[pf]->setStrategy(new PlayerStrategyPostScorer());
-    players[sf]->setStrategy(new PlayerStrategyInsideOutside());
+    players[sf]->setStrategy(new PlayerStrategyScoringForward());
     players[sg]->setStrategy(new PlayerStrategyShootThree());
     players[pg]->setStrategy(new PlayerStrategyInsidePlaymaker());
 
