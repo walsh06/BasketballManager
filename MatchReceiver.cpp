@@ -11,7 +11,6 @@ MatchReceiver::MatchReceiver(Team *team, MatchScreen *screen, QObject *parent) :
     simSpeed = 1000;
 }
 
-
 void MatchReceiver::changePlayers(int indexOne, int indexTwo)
 {
     team->swapPlayers(indexOne, indexTwo);
@@ -36,6 +35,8 @@ void MatchReceiver::changeSimSpeed(int index)
         case 2: simSpeed = 250; break;
         case 3: simSpeed = 100; break;
     }
+
+    Match::setSimSpeed(simSpeed);
 }
 
 int* MatchReceiver::getSpeed()

@@ -1,8 +1,9 @@
 #include "Match.h"
 
+int Match::simSpeed = 1000;
+
 Match::Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo)
 {
-    this->simSpeed = 250;
     this->teamOne = teamOne;
     this->teamOne->setTeam(1);
     this->teamTwo = teamTwo;
@@ -18,7 +19,6 @@ Match::Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo)
     setOrderOfPlay();
     screen = newScreen;
     screen->initTacticScreen(teamOne);
-    receiver = new MatchReceiver(teamOne, screen);
 }
 
 Match::~Match()
@@ -119,7 +119,7 @@ void Match::sim()
                     }
                 }
 
-                QTime dieTime= QTime::currentTime().addMSecs(simSpeed);
+                QTime dieTime= QTime::currentTime().addMSecs(Match::simSpeed);
                     while( QTime::currentTime() < dieTime )
                     QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 
@@ -134,6 +134,11 @@ void Match::sim()
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
     shotMap.printHeatMap();
+}
+
+void Match::setSimSpeed(int speed)
+{
+    Match::simSpeed = speed;
 }
 
 void Match::setOrderOfPlay()

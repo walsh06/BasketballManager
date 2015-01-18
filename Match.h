@@ -25,13 +25,14 @@ class Match
 public:
     Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo);
     ~Match();
-
+    static void setSimSpeed(int speed);
     void sim();
     void writeMatchStats(string filename);
+
+    static int simSpeed;
+
 private:
-    MatchReceiver *receiver;
     MatchScreen *screen;
-    int simSpeed;
     int firstPossession;
     Heatmap shotMap;
     int gameState;

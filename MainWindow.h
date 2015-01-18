@@ -21,6 +21,7 @@ public:
 private:
     Ui::MainWindow *ui;
     Match *match;
+    MatchReceiver *receiver;
 private slots:
     void startGame();
 };

@@ -4,6 +4,8 @@
 #include <QObject>
 #include "Team.h"
 #include "MatchScreen.h"
+#include "Match.h"
+
 class MatchReceiver : public QObject
 {
     Q_OBJECT
@@ -20,6 +22,7 @@ public slots:
     void changeStrategy(int index, int strategy);
     void changePosition(int index, int position);
     void changeSimSpeed(int index);
+
 
 };
 
