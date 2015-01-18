@@ -831,7 +831,7 @@ void Match::shootThree(Player *p, int pressure)
 
 void Match::checkAssist()
 {
-    if(get<1>(assist) <= time + 2)
+    if(get<1>(assist) <= time + 3)
     {
         get<0>(assist)->getStatList()->addAssist();
     }

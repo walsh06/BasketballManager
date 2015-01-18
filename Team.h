@@ -13,6 +13,7 @@
 #include "PlayerStrategyOutsidePlaymaker.h"
 #include "PlayerStrategyInsidePlaymaker.h"
 #include "PlayerStrategyPostScorer.h"
+#include "PlayerStrategyScoringForward.h"
 
 #include "pugixml.hpp"
 
