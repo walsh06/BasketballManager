@@ -8,7 +8,7 @@ int main()
 {
     srand(time(NULL));
 
-    for(int i = 1; i < 30; i++)
+    for(int i = 1; i < 31; i++)
     {
         Match m;
 

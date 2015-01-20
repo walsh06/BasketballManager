@@ -18,18 +18,23 @@ Team::Team(string teamName)
     players[sf]->setPlayingPosition(new PositionSmallForward());
     players[pf]->setPlayingPosition(new PositionPowerForward());
     players[c]->setPlayingPosition(new PositionCentre());
+    players[6]->setPlayingPosition(new PositionPointGuard());
+    players[7]->setPlayingPosition(new PositionShootingGuard());
+    players[8]->setPlayingPosition(new PositionSmallForward());
+    players[9]->setPlayingPosition(new PositionPowerForward());
+    players[10]->setPlayingPosition(new PositionCentre());
 
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
     players[pf]->setStrategy(new PlayerStrategyPostScorer());
     players[sf]->setStrategy(new PlayerStrategyInsideOutside());
     players[sg]->setStrategy(new PlayerStrategyInsideOutside());
-    players[pg]->setStrategy(new PlayerStrategyBalancedPlaymaker());
+    players[pg]->setStrategy(new PlayerStrategyOutsidePlaymaker());
 
-    players[6]->setStrategy(new PlayerStrategyCrashBoards());
-    players[7]->setStrategy(new PlayerStrategyPostScorer());
-    players[8]->setStrategy(new PlayerStrategyInsideOutside());
-    players[9]->setStrategy(new PlayerStrategyInsideOutside());
-    players[10]->setStrategy(new PlayerStrategyBalancedPlaymaker());
+    players[6]->setStrategy(new PlayerStrategyBalancedPlaymaker());
+    players[7]->setStrategy(new PlayerStrategyShootThree());
+    players[8]->setStrategy(new PlayerStrategyScoringForward());
+    players[9]->setStrategy(new PlayerStrategyPostScorer());
+    players[10]->setStrategy(new PlayerStrategyCrashBoards());
 
     defenceSettings[pg] = TIGHT;
     defenceSettings[sg] = TIGHT;
@@ -59,11 +64,17 @@ void Team::readTeam(string teamName)
                          playerMap[attr.name()] = attr.value();
                     }
                     players[posCount] = new Player(playerMap);
+                    roster.push_back(players[posCount]);
                     posCount++;
                 }
                 break;
             }
         }
+}
+
+vector<Player *> Team::getRoster()
+{
+    return roster;
 }
 
 Player* Team::getPlayer(int position)
@@ -90,11 +101,12 @@ int Team::getPlayerPosition(int number)
 vector<Player*> Team::getOtherPlayers(int number)
 {
     vector<Player*> otherPlayers;
-    for(auto &player: players)
+    for(int i = 1; i < 6; i++)
     {
-        if(player.second->getNumber() != number)
+        Player *p = players[i];
+        if(p->getNumber() != number)
         {
-            otherPlayers.push_back(player.second);
+            otherPlayers.push_back(p);
         }
     }
 
@@ -138,7 +150,21 @@ void Team::updateEnergy()
            playing = false;
        }
        players[i]->updateEnergy(playing);
+
+       if(players[i]->getEnergy() < 80 && i < 6)
+       {
+           swapPlayers(i, i+5);
+       }
    }
+}
+
+void Team::swapPlayers(int p1, int p2)
+{
+    Player *temp = players[p1];
+    players[p1] = players[p2];
+    players[p2] = temp;
+    players[p1]->setPos(players[p2]->getPosX(), players[p2]->getPosY());
+    cout << "SUB: " << p1 << " " << p2 << endl;
 }
 
 //===========================================

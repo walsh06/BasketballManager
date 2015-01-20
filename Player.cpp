@@ -53,9 +53,9 @@ Player::Player(map<string, string> playerMap)
     speed = stoi(playerMap["speed"]);
     steal = stoi(playerMap["steal"]);
     pass = stoi(playerMap["pass"]);
-    defence = 15;
+    defence = stoi(playerMap["defence"]);
     energy = 100;
-    stamina = 18;
+    stamina = stoi(playerMap["stamina"]);
     calcHeatMap();
     position = NULL;
     strategy = NULL;
@@ -248,11 +248,16 @@ void Player::updateEnergy(bool playing)
 {
     if(playing)
     {
-        energy -= (2 + (20 - (stamina/2)));
+        energy -= (2 + (20 - stamina)/2);
+        playerStats.addMinute();
     }
     else
     {
         energy += 5;
+        if(energy > 100)
+        {
+            energy = 100;
+        }
     }
 }
 

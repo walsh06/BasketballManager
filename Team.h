@@ -14,6 +14,7 @@
 #include "PlayerStrategyInsidePlaymaker.h"
 #include "PlayerStrategyBalancedPlaymaker.h"
 #include "PlayerStrategyPostScorer.h"
+#include "PlayerStrategyScoringForward.h"
 
 #include "pugixml.hpp"
 
@@ -27,6 +28,8 @@ class Team
 {
 public:
     Team(string teamName);
+    vector<Player *> getRoster();
+
     Player* getPlayer(int position);
     vector<Player*> getOtherPlayers(int number);
     int getPlayerPosition(int number);
@@ -36,6 +39,8 @@ public:
     int getPlayersUnderBasket();
     vector<int> getPlayersInPosition(int posX, int posY);
     int getDefenceSetting(int pos);
+
+    void swapPlayers(int p1, int p2);
 
     void updateEnergy();
     void setTeam(int team);
@@ -56,6 +61,7 @@ private:
     void readTeam(string teamName);
 
     map<int, Player*> players;
+    vector<Player *> roster;
     map<int, int> defenceMatchups;
     map<int, int> defenceSettings;
     int team;
