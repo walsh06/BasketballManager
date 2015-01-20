@@ -22,8 +22,14 @@ Team::Team(string teamName)
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
     players[pf]->setStrategy(new PlayerStrategyPostScorer());
     players[sf]->setStrategy(new PlayerStrategyInsideOutside());
-    players[sg]->setStrategy(new PlayerStrategyShootThree());
-    players[pg]->setStrategy(new PlayerStrategyInsidePlaymaker());
+    players[sg]->setStrategy(new PlayerStrategyInsideOutside());
+    players[pg]->setStrategy(new PlayerStrategyBalancedPlaymaker());
+
+    players[6]->setStrategy(new PlayerStrategyCrashBoards());
+    players[7]->setStrategy(new PlayerStrategyPostScorer());
+    players[8]->setStrategy(new PlayerStrategyInsideOutside());
+    players[9]->setStrategy(new PlayerStrategyInsideOutside());
+    players[10]->setStrategy(new PlayerStrategyBalancedPlaymaker());
 
     defenceSettings[pg] = TIGHT;
     defenceSettings[sg] = TIGHT;
@@ -120,6 +126,19 @@ void Team::setTeam(int team)
             player.second->setTeam(team);
         }
     }
+}
+
+void Team::updateEnergy()
+{
+   bool playing = true;
+   for(int i = 1; i <= players.size(); i++)
+   {
+       if(i > 5)
+       {
+           playing = false;
+       }
+       players[i]->updateEnergy(playing);
+   }
 }
 
 //===========================================

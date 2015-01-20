@@ -12,6 +12,7 @@
 #include "PlayerStrategyInsideOutside.h"
 #include "PlayerStrategyOutsidePlaymaker.h"
 #include "PlayerStrategyInsidePlaymaker.h"
+#include "PlayerStrategyBalancedPlaymaker.h"
 #include "PlayerStrategyPostScorer.h"
 
 #include "pugixml.hpp"
@@ -36,7 +37,7 @@ public:
     vector<int> getPlayersInPosition(int posX, int posY);
     int getDefenceSetting(int pos);
 
-
+    void updateEnergy();
     void setTeam(int team);
     void swapSides();
 

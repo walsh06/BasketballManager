@@ -2,9 +2,9 @@
 
 Match::Match()
 {
-    teamOne = new Team("Red");
+    teamOne = new Team("Pacers");
     teamOne->setTeam(1);
-    teamTwo = new Team("Blue");
+    teamTwo = new Team("Pacers");
     teamTwo->setTeam(2);
 
     teams[0] = teamOne;
@@ -58,6 +58,11 @@ void Match::sim()
                 if(time < 24 && shotClock == 24)
                 {
                     shotClock = time;
+                }
+                if(time%60 == 0)
+                {
+                    teamOne->updateEnergy();
+                    teamTwo->updateEnergy();
                 }
                 setOrderOfPlay();
                 cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
