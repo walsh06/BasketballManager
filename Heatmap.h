@@ -7,6 +7,8 @@ class Heatmap
 {
 public:
     Heatmap();
+    ~Heatmap();
+
     int getValue(int x, int y);
     void setValue(int value, int x, int y);
     void setMap(int newMap[8][7]);

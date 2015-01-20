@@ -59,6 +59,12 @@ Player::Player(map<string, string> playerMap)
     strategy = NULL;
 }
 
+Player::~Player()
+{
+    delete strategy;
+    delete position;
+}
+
 //=================================
 // Actions
 //=================================
@@ -196,6 +202,7 @@ int Player::getPosValue()
 
 void Player::setPlayingPosition(PlayerPosition *pos)
 {
+    delete this->position;
     position = pos;
     updateMap();
 }
