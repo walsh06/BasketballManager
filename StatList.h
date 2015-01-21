@@ -8,6 +8,8 @@ class StatList
 public:
     StatList();
     void addGame();
+    void addMinute();
+    int getMinutes();
     void writeToFile(std::string filename, int pos);
 
     void addPoint();
@@ -38,7 +40,7 @@ public:
     void addFreeThrowScore();
 
 private:
-    int points, games;
+    int points, games, minutes;
     int assists;
     int threeScores, shots, threeShots, scores;
     int offensiveRebounds, defensiveRebounds;

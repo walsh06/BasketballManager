@@ -43,6 +43,11 @@ public:
     int getPass();
     int getDefence();
 
+    int getStamina();
+    int getEnergy();
+    void updateEnergy(bool playing);
+    int getEnergyModifier();
+
     void setTeam(int team);
     int getTeam();
 
@@ -75,6 +80,7 @@ private:
     int block, steal, defence;
     //offence
     int pass, hands, speed, freethrow;
+    int energy, stamina;
 
     bool dribbleDrive;
 

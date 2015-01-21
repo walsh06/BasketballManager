@@ -18,11 +18,23 @@ StatList::StatList()
 
     freeThrows = 0;
     freeThrowsScored = 0;
+
+    minutes = 0;
 }
 
 void StatList::addGame()
 {
     games++;
+}
+
+void StatList::addMinute()
+{
+    minutes++;
+}
+
+int StatList::getMinutes()
+{
+    return minutes;
 }
 
 void StatList::writeToFile(std::string filename, int pos)
@@ -34,7 +46,7 @@ void StatList::writeToFile(std::string filename, int pos)
       outfile << ",3pa," << getThreeShots() <<  ",3ppc," << getThreeShootingPercentage();
       outfile << ",trb," << getRebounds() << ",drb," << defensiveRebounds << ",orb," << offensiveRebounds;
       outfile << ",fta," << freeThrows << ",ftpc," << getFreeThrowPercentage();
-      outfile << ",ast," << getAssists() << "\n";
+      outfile << ",ast," << getAssists() << ",mp," << minutes << "\n";
 }
 
 //==========================

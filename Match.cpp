@@ -2,9 +2,9 @@
 
 Match::Match()
 {
-    teamOne = new Team("Red");
+    teamOne = new Team("Pacers");
     teamOne->setTeam(1);
-    teamTwo = new Team("Blue");
+    teamTwo = new Team("Pacers");
     teamTwo->setTeam(2);
 
     teams[0] = teamOne;
@@ -59,6 +59,7 @@ void Match::sim()
                 {
                     shotClock = time;
                 }
+
                 setOrderOfPlay();
                 cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
                 cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
@@ -88,7 +89,11 @@ void Match::sim()
                         moveDefence(player);
                     }
                 }
-
+                if(time%60 == 0)
+                {
+                    teamOne->updateEnergy();
+                    teamTwo->updateEnergy();
+                }
                 //printCourt();
             }
         }
@@ -145,24 +150,25 @@ int Match::getScoreDifference(int team)
 
 void Match::writeMatchStats(string filename)
 {
-    for(int i = 1; i < 6; i++)
+    vector<Player *> rosterOne = teamOne->getRoster(), rosterTwo = teamTwo->getRoster();
+    for(int i = 0; i < 10; i++)
     {
-        Player *player = teamOne->getPlayer(i);
+        Player *player = rosterOne[i];
         cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
         player->getStatList()->printShootingStats();
         player->getStatList()->printReboundingStats();
         cout << endl;
-        player->getStatList()->writeToFile(filename, i);
+        player->getStatList()->writeToFile(filename, i + 1);
     }
 
-    for(int i = 1; i < 6; i++)
+    for(int i = 0; i < 10; i++)
     {
-        Player *player = teamTwo->getPlayer(i);
+        Player *player = rosterTwo[i];
         cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
         player->getStatList()->printShootingStats();
         player->getStatList()->printReboundingStats();
         cout << endl;
-        player->getStatList()->writeToFile(filename,i);
+        player->getStatList()->writeToFile(filename,i + 1);
     }
 }
 
@@ -239,6 +245,7 @@ void Match::jumpBall()
         teams[1]->swapSides();
         ball.setTeam(2);
     }
+    gameState = INPLAY;
 }
 //================================
 
