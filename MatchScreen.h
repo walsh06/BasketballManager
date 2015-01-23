@@ -11,6 +11,7 @@
 #include <map>
 #include <QGraphicsScene>
 #include <QGridLayout>
+#include <QComboBox>
 
 namespace Ui {
 class MatchScreen;
@@ -86,6 +87,8 @@ private:
     QGraphicsScene *scene;
     Team *teamOne;
      std::map<int, std::vector<std::string> > comments;
+
+     QComboBox *boxes[5][2];
 
      void readXML();
      void initPlayers();

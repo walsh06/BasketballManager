@@ -173,6 +173,7 @@ void Team::updateStrategy(int index, int strategy)
         case 5: newStrategy = new PlayerStrategyCrashBoards(); break;
         case 6: newStrategy = new PlayerStrategyShootThree(); break;
         case 7: newStrategy = new PlayerStrategyPostScorer(); break;
+        case 8: newStrategy = new PlayerStrategyScoringForward(); break;
     }
 
     players[index]->setStrategy(newStrategy);

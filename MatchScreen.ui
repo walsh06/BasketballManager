@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="CourtScreen">
     <widget class="QGraphicsView" name="court">
@@ -162,9 +162,9 @@
     <widget class="QTabWidget" name="quickTab">
      <property name="geometry">
       <rect>
-       <x>800</x>
+       <x>770</x>
        <y>60</y>
-       <width>261</width>
+       <width>291</width>
        <height>421</height>
       </rect>
      </property>
@@ -192,7 +192,7 @@
       <widget class="QComboBox" name="quickStrategyOne">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>115</x>
          <y>20</y>
          <width>161</width>
          <height>27</height>
@@ -202,7 +202,7 @@
       <widget class="QComboBox" name="quickStrategyTwo">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>115</x>
          <y>60</y>
          <width>161</width>
          <height>27</height>
@@ -212,7 +212,7 @@
       <widget class="QComboBox" name="quickStrategyThree">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>115</x>
          <y>100</y>
          <width>161</width>
          <height>27</height>
@@ -222,7 +222,7 @@
       <widget class="QComboBox" name="quickStrategyFour">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>115</x>
          <y>140</y>
          <width>161</width>
          <height>27</height>
@@ -232,7 +232,7 @@
       <widget class="QComboBox" name="quickStrategyFive">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>115</x>
          <y>180</y>
          <width>161</width>
          <height>27</height>
@@ -244,12 +244,36 @@
         <rect>
          <x>0</x>
          <y>220</y>
-         <width>261</width>
+         <width>291</width>
          <height>20</height>
         </rect>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="quickPlayerList">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>20</y>
+         <width>111</width>
+         <height>192</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="spacing">
+        <number>6</number>
        </property>
       </widget>
      </widget>

@@ -19,7 +19,7 @@ MatchScreen::MatchScreen(QWidget *parent) :
 
     positions = {"Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Centre"};
     strategies = {"Balanced", "Balanced Playmaker","Outside Playmaker", "Inside Playmaker",
-                  "Inside Outside", "Rebounder", "Three Point", "Post Scorer"};
+                  "Inside Outside", "Rebounder", "Three Point", "Post Scorer", "Scoring Forward"};
 
     swapIndexOne = 1;
     swapIndexTwo = 1;
@@ -35,6 +35,12 @@ MatchScreen::~MatchScreen()
 
 void MatchScreen::initTacticScreen(Team *teamOne)
 {
+    boxes[0][0] = ui->positionOne; boxes[0][1] = ui->strategyOne;
+    boxes[1][0] = ui->positionTwo; boxes[1][1] = ui->strategyTwo;
+    boxes[2][0] = ui->positionThree; boxes[2][1] = ui->strategyThree;
+    boxes[3][0] = ui->positionFour; boxes[3][1] = ui->strategyFour;
+    boxes[4][0] = ui->positionFive; boxes[4][1] = ui->strategyFive;
+
     this->teamOne = teamOne;
     for(auto position: positions)
     {
@@ -83,11 +89,16 @@ void MatchScreen::initTacticScreen(Team *teamOne)
 void MatchScreen::initPlayers()
 {
     ui->playerWidget->clear();
+    ui->quickPlayerList->clear();
     ui->swapPlayerOne->clear();
     ui->swapPlayerTwo->clear();
     for(int i = 1; i < 11; i++)
     {
         ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
+        if(i < 6)
+        {
+            ui->quickPlayerList->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
+        }
         ui->swapPlayerOne->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
         ui->swapPlayerTwo->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
         QTableWidgetItem *three = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getThreeShot()));
@@ -355,6 +366,17 @@ void MatchScreen::on_swapButton_clicked()
 {
     emit swapPlayers(swapIndexOne, swapIndexTwo);
     initPlayers();
+
+    if(swapIndexOne < 6)
+    {
+        emit changeStrategy(swapIndexOne, boxes[swapIndexOne][1]->currentIndex());
+        emit changePosition(swapIndexOne, boxes[swapIndexOne][0]->currentIndex());
+    }
+    else if(swapIndexTwo < 6)
+    {
+        emit changeStrategy(swapIndexTwo, boxes[swapIndexTwo][1]->currentIndex());
+        emit changePosition(swapIndexTwo, boxes[swapIndexTwo][0]->currentIndex());
+    }
 }
 
 void MatchScreen::on_swapPlayerOne_currentIndexChanged(int index)
