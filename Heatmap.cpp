@@ -10,6 +10,10 @@ Heatmap::Heatmap()
         }
     }
 }
+Heatmap::~Heatmap()
+{
+    delete[] heatMap;
+}
 
 int Heatmap::getValue(int x, int y)
 {
