@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="CourtScreen">
     <widget class="QGraphicsView" name="court">
@@ -314,7 +314,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>60</y>
+       <y>85</y>
        <width>145</width>
        <height>27</height>
       </rect>
@@ -324,7 +324,7 @@
      <property name="geometry">
       <rect>
        <x>300</x>
-       <y>60</y>
+       <y>85</y>
        <width>161</width>
        <height>27</height>
       </rect>
@@ -334,8 +334,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>246</y>
-       <width>981</width>
+       <y>271</y>
+       <width>1011</width>
        <height>16</height>
       </rect>
      </property>
@@ -353,7 +353,7 @@
      <property name="geometry">
       <rect>
        <x>300</x>
-       <y>100</y>
+       <y>125</y>
        <width>161</width>
        <height>27</height>
       </rect>
@@ -363,7 +363,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>100</y>
+       <y>125</y>
        <width>145</width>
        <height>27</height>
       </rect>
@@ -373,7 +373,7 @@
      <property name="geometry">
       <rect>
        <x>300</x>
-       <y>140</y>
+       <y>165</y>
        <width>161</width>
        <height>27</height>
       </rect>
@@ -383,7 +383,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>140</y>
+       <y>165</y>
        <width>145</width>
        <height>27</height>
       </rect>
@@ -393,7 +393,7 @@
      <property name="geometry">
       <rect>
        <x>300</x>
-       <y>180</y>
+       <y>205</y>
        <width>161</width>
        <height>27</height>
       </rect>
@@ -403,7 +403,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>180</y>
+       <y>205</y>
        <width>145</width>
        <height>27</height>
       </rect>
@@ -413,7 +413,7 @@
      <property name="geometry">
       <rect>
        <x>300</x>
-       <y>220</y>
+       <y>245</y>
        <width>161</width>
        <height>27</height>
       </rect>
@@ -423,7 +423,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>220</y>
+       <y>245</y>
        <width>145</width>
        <height>27</height>
       </rect>
@@ -433,7 +433,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>60</y>
+       <y>85</y>
        <width>131</width>
        <height>401</height>
       </rect>
@@ -474,88 +474,6 @@
       </size>
      </property>
     </widget>
-    <widget class="QTableWidget" name="ratingsWidget">
-     <property name="geometry">
-      <rect>
-       <x>470</x>
-       <y>10</y>
-       <width>521</width>
-       <height>441</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="autoScroll">
-      <bool>false</bool>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::NoSelection</enum>
-     </property>
-     <property name="verticalScrollMode">
-      <enum>QAbstractItemView::ScrollPerPixel</enum>
-     </property>
-     <property name="showGrid">
-      <bool>true</bool>
-     </property>
-     <property name="gridStyle">
-      <enum>Qt::SolidLine</enum>
-     </property>
-     <property name="cornerButtonEnabled">
-      <bool>true</bool>
-     </property>
-     <property name="rowCount">
-      <number>11</number>
-     </property>
-     <property name="columnCount">
-      <number>13</number>
-     </property>
-     <attribute name="horizontalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>40</number>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderDefaultSectionSize">
-      <number>40</number>
-     </attribute>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-    </widget>
     <widget class="QComboBox" name="swapPlayerOne">
      <property name="geometry">
       <rect>
@@ -589,6 +507,111 @@
       <string>Swap</string>
      </property>
     </widget>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>0</y>
+       <width>551</width>
+       <height>491</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="ratings">
+      <attribute name="title">
+       <string>Ratings</string>
+      </attribute>
+      <widget class="QTableWidget" name="ratingsWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>521</width>
+         <height>441</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="autoScroll">
+        <bool>false</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::NoSelection</enum>
+       </property>
+       <property name="verticalScrollMode">
+        <enum>QAbstractItemView::ScrollPerPixel</enum>
+       </property>
+       <property name="showGrid">
+        <bool>true</bool>
+       </property>
+       <property name="gridStyle">
+        <enum>Qt::SolidLine</enum>
+       </property>
+       <property name="cornerButtonEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="rowCount">
+        <number>11</number>
+       </property>
+       <property name="columnCount">
+        <number>13</number>
+       </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>40</number>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>40</number>
+       </attribute>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <row/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+       <column/>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="stats">
+      <attribute name="title">
+       <string>Stats</string>
+      </attribute>
+     </widget>
+    </widget>
     <zorder>positionOne</zorder>
     <zorder>strategyOne</zorder>
     <zorder>strategyTwo</zorder>
@@ -600,11 +623,11 @@
     <zorder>strategyFive</zorder>
     <zorder>positionFive</zorder>
     <zorder>playerWidget</zorder>
-    <zorder>ratingsWidget</zorder>
-    <zorder>line</zorder>
     <zorder>swapPlayerOne</zorder>
     <zorder>swapPlayerTwo</zorder>
     <zorder>swapButton</zorder>
+    <zorder>tabWidget</zorder>
+    <zorder>line</zorder>
    </widget>
   </widget>
   <widget class="QPushButton" name="matchButton">
