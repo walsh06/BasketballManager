@@ -54,6 +54,8 @@ Player::Player(map<string, string> playerMap)
     steal = stoi(playerMap["steal"]);
     pass = stoi(playerMap["pass"]);
     defence = stoi(playerMap["defence"]);
+    energy = 100;
+    stamina = stoi(playerMap["stamina"]);
     calcHeatMap();
     position = NULL;
     strategy = NULL;
@@ -230,6 +232,48 @@ void Player::updateMap()
 
 //======================================
 
+//=================================
+// Energy
+//=================================
+
+int Player::getEnergy()
+{
+    return energy;
+}
+
+int Player::getStamina()
+{
+    return stamina;
+}
+
+void Player::updateEnergy(bool playing)
+{
+    if(playing)
+    {
+        energy -= (2 + (20 - stamina)/2);
+        playerStats.addMinute();
+    }
+    else
+    {
+        energy += 5;
+        if(energy > 100)
+        {
+            energy = 100;
+        }
+    }
+}
+
+int Player::getEnergyModifier()
+{
+   if(energy < 80)
+   {
+       return 16 - (energy / 5);
+   }
+   else
+   {
+       return 0;
+   }
+}
 
 //==================================
 // GETTERS AND SETTERS

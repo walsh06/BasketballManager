@@ -12,9 +12,11 @@
 #include "PlayerStrategyInsideOutside.h"
 #include "PlayerStrategyOutsidePlaymaker.h"
 #include "PlayerStrategyInsidePlaymaker.h"
+#include "PlayerStrategyBalancedPlaymaker.h"
 #include "PlayerStrategyPostScorer.h"
 #include "PlayerStrategyBalanced.h"
 #include "PlayerStrategyBalancedPlaymaker.h"
+#include "PlayerStrategyScoringForward.h"
 
 #include "pugixml.hpp"
 
@@ -28,9 +30,10 @@ class Team
 {
 public:
     Team(string teamName);
+    vector<Player *> getRoster();
+
     Player* getPlayer(int position);
     vector<Player*> getOtherPlayers(int number);
-    void swapPlayers(int indexOne, int indexTwo);
     int getPlayerPosition(int number);
     int getMatchup(int position);
     int getMatchup(Player p);
@@ -39,7 +42,9 @@ public:
     vector<int> getPlayersInPosition(int posX, int posY);
     int getDefenceSetting(int pos);
 
+    void swapPlayers(int p1, int p2);
 
+    void updateEnergy();
     void setTeam(int team);
     void updatePosition(int index, int strategy);
     void updateStrategy(int index, int position);
@@ -60,6 +65,7 @@ private:
     void readTeam(string teamName);
 
     map<int, Player*> players;
+    vector<Player *> roster;
     map<int, int> defenceMatchups;
     map<int, int> defenceSettings;
     int team;

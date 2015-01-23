@@ -289,9 +289,9 @@
     <widget class="QComboBox" name="positionOne">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>150</x>
        <y>60</y>
-       <width>121</width>
+       <width>145</width>
        <height>27</height>
       </rect>
      </property>
@@ -310,10 +310,16 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>280</y>
+       <y>246</y>
        <width>981</width>
        <height>16</height>
       </rect>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -332,9 +338,9 @@
     <widget class="QComboBox" name="positionTwo">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>150</x>
        <y>100</y>
-       <width>121</width>
+       <width>145</width>
        <height>27</height>
       </rect>
      </property>
@@ -352,9 +358,9 @@
     <widget class="QComboBox" name="positionThree">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>150</x>
        <y>140</y>
-       <width>121</width>
+       <width>145</width>
        <height>27</height>
       </rect>
      </property>
@@ -372,9 +378,9 @@
     <widget class="QComboBox" name="positionFour">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>150</x>
        <y>180</y>
-       <width>121</width>
+       <width>145</width>
        <height>27</height>
       </rect>
      </property>
@@ -392,9 +398,9 @@
     <widget class="QComboBox" name="positionFive">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>150</x>
        <y>220</y>
-       <width>121</width>
+       <width>145</width>
        <height>27</height>
       </rect>
      </property>
@@ -450,7 +456,7 @@
        <x>470</x>
        <y>10</y>
        <width>521</width>
-       <height>251</height>
+       <height>441</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -475,7 +481,7 @@
       <enum>QAbstractItemView::ScrollPerPixel</enum>
      </property>
      <property name="showGrid">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="gridStyle">
       <enum>Qt::SolidLine</enum>
@@ -484,7 +490,7 @@
       <bool>true</bool>
      </property>
      <property name="rowCount">
-      <number>6</number>
+      <number>11</number>
      </property>
      <property name="columnCount">
       <number>13</number>
@@ -507,6 +513,11 @@
      <row/>
      <row/>
      <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
+     <row/>
      <column/>
      <column/>
      <column/>
@@ -521,6 +532,39 @@
      <column/>
      <column/>
     </widget>
+    <widget class="QComboBox" name="swapPlayerOne">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>510</y>
+       <width>160</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="swapPlayerTwo">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>510</y>
+       <width>160</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="swapButton">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>510</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Swap</string>
+     </property>
+    </widget>
     <zorder>positionOne</zorder>
     <zorder>strategyOne</zorder>
     <zorder>strategyTwo</zorder>
@@ -532,8 +576,11 @@
     <zorder>strategyFive</zorder>
     <zorder>positionFive</zorder>
     <zorder>playerWidget</zorder>
-    <zorder>line</zorder>
     <zorder>ratingsWidget</zorder>
+    <zorder>line</zorder>
+    <zorder>swapPlayerOne</zorder>
+    <zorder>swapPlayerTwo</zorder>
+    <zorder>swapButton</zorder>
    </widget>
   </widget>
   <widget class="QPushButton" name="matchButton">

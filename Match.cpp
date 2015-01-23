@@ -67,6 +67,7 @@ void Match::sim()
                 {
                     shotClock = time;
                 }
+
                 setOrderOfPlay();
                 screen->updateTime(time, shotClock);
                 cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
@@ -104,7 +105,12 @@ void Match::sim()
 
                  screen->updateCourt(orderOfPlay, &ball);
 
-                printCourt();
+                if(time%60 == 0)
+                {
+                    teamOne->updateEnergy();
+                    teamTwo->updateEnergy();
+                }
+                //printCourt();
             }
         }
     }
@@ -167,24 +173,25 @@ int Match::getScoreDifference(int team)
 
 void Match::writeMatchStats(string filename)
 {
-    for(int i = 1; i < 6; i++)
+    vector<Player *> rosterOne = teamOne->getRoster(), rosterTwo = teamTwo->getRoster();
+    for(int i = 0; i < 10; i++)
     {
-        Player *player = teamOne->getPlayer(i);
+        Player *player = rosterOne[i];
         cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
         player->getStatList()->printShootingStats();
         player->getStatList()->printReboundingStats();
         cout << endl;
-        player->getStatList()->writeToFile(filename, i);
+        player->getStatList()->writeToFile(filename, i + 1);
     }
 
-    for(int i = 1; i < 6; i++)
+    for(int i = 0; i < 10; i++)
     {
-        Player *player = teamTwo->getPlayer(i);
+        Player *player = rosterTwo[i];
         cout << "Player: " << player->getNumber() << " Team: " << player->getTeam() << endl;
         player->getStatList()->printShootingStats();
         player->getStatList()->printReboundingStats();
         cout << endl;
-        player->getStatList()->writeToFile(filename,i);
+        player->getStatList()->writeToFile(filename,i + 1);
     }
 }
 
@@ -390,7 +397,7 @@ void Match::withBall(Player* p, int shotClock)
 
         for(auto &player: otherPlayers)
         {
-            int posValue = 0, pressure;
+            int posValue = 0;
             vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), x, y, player->getPosX(), player->getPosY());
             if(player->getPosX() >= 0)
             {
@@ -869,7 +876,7 @@ void Match::shootThree(Player *p, int pressure)
 
 void Match::checkAssist()
 {
-    if(get<1>(assist) <= time + 2)
+    if(get<1>(assist) <= time + 3)
     {
         get<0>(assist)->getStatList()->addAssist();
     }
@@ -1132,7 +1139,7 @@ void Match::moveDefence(Player *p)
 void Match::moveDefenceLoose(Player *p, Player opposition)
 {
     //get player and opposition positions
-    int posX = p->getPosX(), posY = p->getPosY(), oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
+    int oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
 
     if(oppPosX > 3)
     {
@@ -1158,150 +1165,19 @@ void Match::moveDefenceLoose(Player *p, Player opposition)
         oppPosX++;
     }
 
-    int moveDirection;
-    if(posY < oppPosY)
-    {
-        if(posX < oppPosX)
-        {
-            moveDirection = 8;
-        }
-        else if(posX > oppPosX)
-        {
-            moveDirection = 6;
-        }
-        else
-        {
-            moveDirection = 7;
-        }
-    }
-    else if(posY > oppPosY)
-    {
-        if(posX < oppPosX)
-        {
-            moveDirection = 2;
-        }
-        else if(posX > oppPosX)
-        {
-            moveDirection = 0;
-        }
-        else
-        {
-            moveDirection = 1;
-        }
-    }
-    else
-    {
-        if(posX < oppPosX)
-        {
-            moveDirection = 5;
-        }
-        else if(posX > oppPosX)
-        {
-            moveDirection = 3;
-        }
-        else
-        {
-            moveDirection = 4;
-        }
-    }
-
-    if(moveDirection != 4)
-    {
-        for(int i = 1; i < 6; i++)
-        {
-            Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
-            if(opp.getPosX() == posX && opp.getPosY() == posY)
-            {
-                int screenRand = rand() % 5;
-
-                if(screenRand == 0)
-                {
-                    cout << "BUMP: " << p->getNumber() << " " << opp.getNumber() << endl;
-                    moveDirection = 4;
-                    break;
-                }
-            }
-        }
-
-    }
-    p->movePlayer(moveDirection);
+    moveDefender(p, oppPosX, oppPosY);
 }
 
 void Match::moveDefenceTight(Player* p, Player opposition)
 {
-    int posX = p->getPosX(), posY = p->getPosY(), oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
-    int moveDirection = 4;
-    if(posY < oppPosY)
-    {
-        if(posX < oppPosX)
-        {
-            moveDirection = 8;
-        }
-        else if(posX > oppPosX)
-        {
-            moveDirection = 6;
-        }
-        else
-        {
-            moveDirection = 7;
-        }
-    }
-    else if(posY > oppPosY)
-    {
-        if(posX < oppPosX)
-        {
-            moveDirection = 2;
-        }
-        else if(posX > oppPosX)
-        {
-            moveDirection = 0;
-        }
-        else
-        {
-            moveDirection = 1;
-        }
-    }
-    else
-    {
-        if(posX < oppPosX)
-        {
-            moveDirection = 5;
-        }
-        else if(posX > oppPosX)
-        {
-            moveDirection = 3;
-        }
-        else
-        {
-            moveDirection = 4;
-        }
-    }
-
-    if(moveDirection != 4)
-    {
-        for(int i = 1; i < 6; i++)
-        {
-            Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
-            if(opp.getPosX() == posX && opp.getPosY() == posY)
-            {
-                int screenRand = rand() % 5;
-
-                if(screenRand == 0)
-                {
-                    cout << "BUMP: " << p->getNumber() << " " << opp.getNumber() << endl;
-                    moveDirection = 4;
-                    break;
-                }
-            }
-        }
-
-    }
-    p->movePlayer(moveDirection);
+    int oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
+    moveDefender(p, oppPosX, oppPosY);
 }
+
 
 void Match::moveTowardBasket(Player* p)
 {
-    int posX = p->getPosX(), posY = p->getPosY(), basketX = 6, basketY, moveDirection;
+    int posX = p->getPosX(), basketX = 6, basketY, moveDirection;
 
     if(posX < 4)
     {
@@ -1312,13 +1188,19 @@ void Match::moveTowardBasket(Player* p)
         basketY = 4;
     }
 
-    if(posY < basketY)
+   moveDefender(p, basketX, basketY);
+}
+
+void Match::moveDefender(Player *p, int destPosX, int destPosY)
+{
+    int moveDirection = 4, posX = p->getPosX(), posY = p->getPosY();
+    if(posY < destPosY)
     {
-        if(posX < basketX)
+        if(posX < destPosX)
         {
             moveDirection = 8;
         }
-        else if(posX > basketX)
+        else if(posX > destPosX)
         {
             moveDirection = 6;
         }
@@ -1327,13 +1209,13 @@ void Match::moveTowardBasket(Player* p)
             moveDirection = 7;
         }
     }
-    else if(posY > basketY)
+    else if(posY > destPosY)
     {
-        if(posX < basketX)
+        if(posX < destPosX)
         {
             moveDirection = 2;
         }
-        else if(posX > basketX)
+        else if(posX > destPosX)
         {
             moveDirection = 0;
         }
@@ -1344,11 +1226,11 @@ void Match::moveTowardBasket(Player* p)
     }
     else
     {
-        if(posX < basketX)
+        if(posX < destPosX)
         {
             moveDirection = 5;
         }
-        else if(posX > basketX)
+        else if(posX > destPosX)
         {
             moveDirection = 3;
         }
@@ -1357,8 +1239,27 @@ void Match::moveTowardBasket(Player* p)
             moveDirection = 4;
         }
     }
-    p->movePlayer(moveDirection);
 
+    if(moveDirection != 4)
+    {
+        for(int i = 1; i < 6; i++)
+        {
+            Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
+            if(opp.getPosX() == posX && opp.getPosY() == posY)
+            {
+                int screenRand = rand() % 5;
+
+                if(screenRand == 0)
+                {
+                    cout << "BUMP: " << p->getNumber() << " " << opp.getNumber() << endl;
+                    moveDirection = 4;
+                    break;
+                }
+            }
+        }
+
+    }
+    p->movePlayer(moveDirection);
 }
 
 

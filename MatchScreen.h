@@ -71,17 +71,24 @@ private slots:
 
     void on_quickStrategyThree_currentIndexChanged(int index);
 
+    void on_swapButton_clicked();
+
+    void on_swapPlayerOne_currentIndexChanged(int index);
+
+    void on_swapPlayerTwo_currentIndexChanged(int index);
+
 private:
-    int swapIndex;
+    int swapIndexOne, swapIndexTwo;
     Ui::MatchScreen *ui;
     QBrush * redBrush, *yellowBrush, *blueBrush;
     QPen * blackPen;
     vector<QString> positions, strategies;
     QGraphicsScene *scene;
-
+    Team *teamOne;
      std::map<int, std::vector<std::string> > comments;
 
      void readXML();
+     void initPlayers();
 
 signals:
     void swapPlayers(int, int);

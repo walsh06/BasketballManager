@@ -15,8 +15,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::run()
 {
-    Team *teamOne = new Team("Red");
-    Team *teamTwo = new Team("Blue");
+    Team *teamOne = new Team("Spurs");
+    Team *teamTwo = new Team("Pacers");
     receiver = new MatchReceiver(teamOne, ui->MatchWidget);
     match = new Match(ui->MatchWidget, teamOne, teamTwo);
     connect(ui->MatchWidget, SIGNAL(startGame()), this, SLOT(startGame()));

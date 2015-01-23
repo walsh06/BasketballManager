@@ -21,5 +21,5 @@ Heatmap PositionSmallForward::getMap()
 
 int PositionSmallForward::getValue(int x, int y)
 {
-    map.getValue(x, y);
+    return map.getValue(x, y);
 }

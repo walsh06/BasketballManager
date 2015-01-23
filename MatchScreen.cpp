@@ -21,7 +21,8 @@ MatchScreen::MatchScreen(QWidget *parent) :
     strategies = {"Balanced", "Balanced Playmaker","Outside Playmaker", "Inside Playmaker",
                   "Inside Outside", "Rebounder", "Three Point", "Post Scorer"};
 
-    swapIndex = -1;
+    swapIndexOne = 1;
+    swapIndexTwo = 1;
 }
 
 MatchScreen::~MatchScreen()
@@ -34,6 +35,7 @@ MatchScreen::~MatchScreen()
 
 void MatchScreen::initTacticScreen(Team *teamOne)
 {
+    this->teamOne = teamOne;
     for(auto position: positions)
     {
         ui->positionOne->addItem(position);
@@ -60,14 +62,7 @@ void MatchScreen::initTacticScreen(Team *teamOne)
         ui->quickStrategyThree->addItem(strategy);
         ui->quickStrategyFour->addItem(strategy);
         ui->quickStrategyFive->addItem(strategy);
-
     }
-
-    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(1)->getName()));
-    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(2)->getName()));
-    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(3)->getName()));
-    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(4)->getName()));
-    ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(5)->getName()));
 
     ui->ratingsWidget->setItem(0, 0, new QTableWidgetItem("3pt"));
     ui->ratingsWidget->setItem(0, 1, new QTableWidgetItem("Mid"));
@@ -82,8 +77,19 @@ void MatchScreen::initTacticScreen(Team *teamOne)
     ui->ratingsWidget->setItem(0, 10, new QTableWidgetItem("DRb"));
     ui->ratingsWidget->setItem(0, 11, new QTableWidgetItem("Spd"));
     ui->ratingsWidget->setItem(0, 12, new QTableWidgetItem("FT"));
-    for(int i = 1; i < 6; i++)
+    initPlayers();
+}
+
+void MatchScreen::initPlayers()
+{
+    ui->playerWidget->clear();
+    ui->swapPlayerOne->clear();
+    ui->swapPlayerTwo->clear();
+    for(int i = 1; i < 11; i++)
     {
+        ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
+        ui->swapPlayerOne->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
+        ui->swapPlayerTwo->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
         QTableWidgetItem *three = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getThreeShot()));
         QTableWidgetItem *mid = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getMediumShot()));
         QTableWidgetItem *close = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getCloseShot()));
@@ -112,9 +118,7 @@ void MatchScreen::initTacticScreen(Team *teamOne)
         ui->ratingsWidget->setItem(i, 11, speed);
         ui->ratingsWidget->setItem(i, 12, freethrow);
     }
-
 }
-
 
 
 //=================================
@@ -313,16 +317,7 @@ void MatchScreen::on_strategyFive_currentIndexChanged(int index)
 
 void MatchScreen::on_playerWidget_currentRowChanged(int currentRow)
 {
-    if(swapIndex == -1)
-    {
-        swapIndex = currentRow + 1;
-    }
-    else
-    {
-        //emit swapPlayers(swapIndex, currentRow + 1);
-        swapIndex = -1;
-        ui->playerWidget->setCurrentRow(-1);
-    }
+
 }
 
 void MatchScreen::on_quickStrategyOne_currentIndexChanged(int index)
@@ -356,4 +351,18 @@ void MatchScreen::on_quickStrategyFive_currentIndexChanged(int index)
     ui->strategyFive->setCurrentIndex(index);
 }
 
+void MatchScreen::on_swapButton_clicked()
+{
+    emit swapPlayers(swapIndexOne, swapIndexTwo);
+    initPlayers();
+}
 
+void MatchScreen::on_swapPlayerOne_currentIndexChanged(int index)
+{
+    swapIndexOne = index + 1;
+}
+
+void MatchScreen::on_swapPlayerTwo_currentIndexChanged(int index)
+{
+    swapIndexTwo = index + 1;
+}
