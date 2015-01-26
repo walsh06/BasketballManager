@@ -78,6 +78,11 @@ int Team::getDefence()
     return defence;
 }
 
+void Team::setDefence(int defence)
+{
+    this->defence = defence;
+}
+
 vector<Player *> Team::getRoster()
 {
     return roster;
