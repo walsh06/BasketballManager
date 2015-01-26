@@ -5,7 +5,6 @@ Team::Team(string teamName)
     this->teamName = teamName;
     readTeam(teamName);
 
-    defence = MAN;
     int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
 
     defenceMatchups[pg] = PG;
@@ -40,8 +39,11 @@ Team::Team(string teamName)
     defenceSettings[pg] = TIGHT;
     defenceSettings[sg] = TIGHT;
     defenceSettings[sf] = TIGHT;
-    defenceSettings[pf] = TIGHT;
+    defenceSettings[pf] = SAG;
     defenceSettings[c] = SAG;
+
+    defence = MAN;
+
 }
 
 void Team::readTeam(string teamName)
@@ -129,9 +131,9 @@ int Team::getMatchup(int position)
     return defenceMatchups[position];
 }
 
-int Team::getMatchup(Player p)
+int Team::getMatchup(Player *p)
 {
-    return getMatchup(getPlayerPosition(p.getNumber()));
+    return getMatchup(getPlayerPosition(p->getNumber()));
 }
 
 int Team::getDefenceSetting(int pos)

@@ -1017,11 +1017,11 @@ void Match::moveManDefence(Player *p)
     int defence = p->getDefence(), stealRating = p->getSteal(), defenceSetting;
     //get the defensive matchup of the player
 
-    matchup = teams[p->getTeam() - 1]->getMatchup(*p);
-    Player opposition = *teams[oppTeam]->getPlayer(matchup);
+    matchup = teams[p->getTeam() - 1]->getMatchup(p);
+    Player *opposition = teams[oppTeam]->getPlayer(matchup);
     if(ball.getPlayerPosition() == matchup)
     {
-        posValue = opposition.getPosValue();
+        posValue = opposition->getPosValue();
         defenceSetting = team->getDefenceSetting(matchup);
 
         if(defenceSetting == Team::TIGHT)
@@ -1038,7 +1038,7 @@ void Match::moveManDefence(Player *p)
         probs.addProbability(tight);
         probs.addProbability(sag);
 
-        if(opposition.getPosX() == p->getPosX() && opposition.getPosY() == p->getPosY())
+        if(opposition->getPosX() == p->getPosX() && opposition->getPosY() == p->getPosY())
         {
             probs.addProbability(stealRating);
         }
@@ -1054,13 +1054,13 @@ void Match::moveManDefence(Player *p)
         }
         else
         {
-            steal(p, opposition);
+            steal(p);
         }
 
     }
     else
     {
-        posValue = opposition.getPosValue();
+        posValue = opposition->getPosValue();
         defenceSetting = team->getDefenceSetting(matchup);
 
         if(defenceSetting == Team::TIGHT)
@@ -1104,10 +1104,10 @@ void Match::moveManDefence(Player *p)
     }
 }
 
-void Match::moveDefenceLoose(Player *p, Player opposition)
+void Match::moveDefenceLoose(Player *p, Player *opposition)
 {
     //get player and opposition positions
-    int oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
+    int oppPosX = opposition->getPosX(), oppPosY = opposition->getPosY();
 
     if(oppPosX > 3)
     {
@@ -1136,9 +1136,9 @@ void Match::moveDefenceLoose(Player *p, Player opposition)
     moveDefender(p, oppPosX, oppPosY);
 }
 
-void Match::moveDefenceTight(Player* p, Player opposition)
+void Match::moveDefenceTight(Player* p, Player *opposition)
 {
-    int oppPosX = opposition.getPosX(), oppPosY = opposition.getPosY();
+    int oppPosX = opposition->getPosX(), oppPosY = opposition->getPosY();
     moveDefender(p, oppPosX, oppPosY);
 }
 
@@ -1212,14 +1212,14 @@ void Match::moveDefender(Player *p, int destPosX, int destPosY)
     {
         for(int i = 1; i < 6; i++)
         {
-            Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
-            if(opp.getPosX() == posX && opp.getPosY() == posY)
+            Player *opp = teams[getOtherTeam(p->getTeam())]->getPlayer(i);
+            if(opp->getPosX() == posX && opp->getPosY() == posY)
             {
                 int screenRand = rand() % 5;
 
                 if(screenRand == 0)
                 {
-                    cout << "BUMP: " << p->getNumber() << " " << opp.getNumber() << endl;
+                    cout << "BUMP: " << p->getNumber() << " " << opp->getNumber() << endl;
                     moveDirection = 4;
                     break;
                 }
@@ -1234,8 +1234,8 @@ void Match::moveZoneDefence(Player *p)
 {
     Team *team = teams[p->getTeam() - 1], *otherTeam = teams[getOtherTeam(p->getTeam())];
     int pos = team->getPlayerPosition(p->getNumber()), ballPos = ball.getPlayerPosition();
-    Player ballCarrier = *otherTeam->getPlayer(ballPos);
-    int ballX = ballCarrier.getPosX(), ballY = ballCarrier.getPosY();
+    Player *ballCarrier = otherTeam->getPlayer(ballPos);
+    int ballX = ballCarrier->getPosX(), ballY = ballCarrier->getPosY();
     int defenceSetting = team->getDefenceSetting(ballPos);
 
     int destX, destY;
@@ -1446,7 +1446,7 @@ void Match::block(Player *p)
     }
 }
 
-void Match::steal(Player *p, Player opposition)
+void Match::steal(Player *p)
 {
     int stealRand = rand() % 400, steal = p->getSteal();
 

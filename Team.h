@@ -34,7 +34,7 @@ public:
     vector<Player*> getOtherPlayers(int number);
     int getPlayerPosition(int number);
     int getMatchup(int position);
-    int getMatchup(Player p);
+    int getMatchup(Player *p);
     int getPressure(int posX, int posY);
     int getPlayersUnderBasket();
     int getDefence();

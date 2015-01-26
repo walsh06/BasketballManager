@@ -57,8 +57,8 @@ private:
     void checkAssist();
 
     void moveDefence(Player* p);
-    void moveDefenceLoose(Player *p, Player opposition);
-    void moveDefenceTight(Player* p, Player opposition);
+    void moveDefenceLoose(Player *p, Player *opposition);
+    void moveDefenceTight(Player* p, Player *opposition);
     void moveTowardBasket(Player* p);
     void moveDefender(Player *p, int destPosX, int destPosY);
     void moveZoneDefence(Player *p);
@@ -66,7 +66,7 @@ private:
     int flipY(int y);
 
     void block(Player *p);
-    void steal(Player *p, Player opposition);
+    void steal(Player *p);
 
     void printCourt();
 
