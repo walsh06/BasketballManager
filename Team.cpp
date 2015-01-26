@@ -198,17 +198,22 @@ void Team::restartInbound(int ballTeam)
     }
     else
     {
-        /*
-        for(auto &player: players)
+        if(defence == ZONE)
         {
-            player.second->setRandomPos();
+            getPlayer(1)->setPos(2, 3);
+            getPlayer(2)->setPos(3, 5);
+            getPlayer(3)->setPos(3, 2);
+            getPlayer(4)->setPos(5, 5);
+            getPlayer(5)->setPos(5, 2);
         }
-        */
-        getPlayer(1)->setPos(2, 3);
-        getPlayer(2)->setPos(3, 5);
-        getPlayer(3)->setPos(3, 2);
-        getPlayer(4)->setPos(5, 5);
-        getPlayer(5)->setPos(5, 2);
+        else
+        {
+            for(auto &player: players)
+            {
+                player.second->setRandomPos();
+            }
+        }
+
     }
 }
 
