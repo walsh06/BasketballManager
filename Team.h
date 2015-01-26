@@ -37,6 +37,7 @@ public:
     int getMatchup(Player p);
     int getPressure(int posX, int posY);
     int getPlayersUnderBasket();
+    int getDefence();
     vector<int> getPlayersInPosition(int posX, int posY);
     int getDefenceSetting(int pos);
 
@@ -56,6 +57,7 @@ public:
 
     static const int PG = 1, SG = 2, SF = 3, PF = 4, C = 5;
     static const int TIGHT = 1, SAG = 2;
+    static const int ZONE = 1, MAN = 2;
 private:
 
     void readTeam(string teamName);
@@ -66,6 +68,7 @@ private:
     map<int, int> defenceSettings;
     int team;
     string teamName;
+    int defence;
 };
 
 #endif // TEAM_H
