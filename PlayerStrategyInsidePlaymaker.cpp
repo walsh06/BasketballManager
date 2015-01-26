@@ -1,15 +1,15 @@
 #include "PlayerStrategyInsidePlaymaker.h"
 
-PlayerStrategyInsidePlaymaker::PlayerStrategyInsidePlaymaker():withBallVector({0,0,0,0,0,0,0,0,0,0,5,5,5,5,5})
+PlayerStrategyInsidePlaymaker::PlayerStrategyInsidePlaymaker():withBallVector({0,0,0,0,0,0,0,0,0,2,4,4,4,4,6})
 {
-    int strategyMap[8][7] = {{1,3,3,3,3,3,3},
-                             {1,3,3,8,8,8,8},
-                             {1,3,3,8,6,6,6},
-                             {1,3,8,8,6,4,4},
-                             {1,3,8,8,6,4,4},
-                             {1,3,3,8,6,6,6},
-                             {1,3,3,8,8,8,8},
-                             {1,3,3,3,3,3,3}};
+    int strategyMap[9][7] = {{1,2,2,2,2,2,2},
+                             {1,2,2,9,9,9,9},
+                             {1,2,2,9,7,7,7},
+                             {1,2,9,9,7,4,4},
+                             {1,2,9,9,7,4,4},
+                             {1,2,2,9,7,7,7},
+                             {1,2,2,9,9,9,9},
+                             {1,2,2,2,2,2,2}};
 
     map.setMap(strategyMap);
 }

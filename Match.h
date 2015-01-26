@@ -61,6 +61,9 @@ private:
     void moveDefenceTight(Player* p, Player opposition);
     void moveTowardBasket(Player* p);
     void moveDefender(Player *p, int destPosX, int destPosY);
+    void moveZoneDefence(Player *p);
+    void moveManDefence(Player *p);
+    int flipY(int y);
 
     void block(Player *p);
     void steal(Player *p, Player opposition);

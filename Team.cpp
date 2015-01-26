@@ -5,6 +5,7 @@ Team::Team(string teamName)
     this->teamName = teamName;
     readTeam(teamName);
 
+    defence = MAN;
     int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
 
     defenceMatchups[pg] = PG;
@@ -26,9 +27,9 @@ Team::Team(string teamName)
 
     players[c]->setStrategy(new PlayerStrategyCrashBoards());
     players[pf]->setStrategy(new PlayerStrategyPostScorer());
-    players[sf]->setStrategy(new PlayerStrategyInsideOutside());
-    players[sg]->setStrategy(new PlayerStrategyInsideOutside());
-    players[pg]->setStrategy(new PlayerStrategyOutsidePlaymaker());
+    players[sf]->setStrategy(new PlayerStrategyScoringForward());
+    players[sg]->setStrategy(new PlayerStrategyShootThree());
+    players[pg]->setStrategy(new PlayerStrategyInsidePlaymaker());
 
     players[6]->setStrategy(new PlayerStrategyBalancedPlaymaker());
     players[7]->setStrategy(new PlayerStrategyShootThree());
@@ -70,6 +71,11 @@ void Team::readTeam(string teamName)
                 break;
             }
         }
+}
+
+int Team::getDefence()
+{
+    return defence;
 }
 
 vector<Player *> Team::getRoster()
@@ -192,10 +198,17 @@ void Team::restartInbound(int ballTeam)
     }
     else
     {
+        /*
         for(auto &player: players)
         {
             player.second->setRandomPos();
         }
+        */
+        getPlayer(1)->setPos(2, 3);
+        getPlayer(2)->setPos(3, 5);
+        getPlayer(3)->setPos(3, 2);
+        getPlayer(4)->setPos(5, 5);
+        getPlayer(5)->setPos(5, 2);
     }
 }
 
