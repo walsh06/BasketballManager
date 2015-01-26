@@ -38,6 +38,7 @@ public:
     int getPressure(int posX, int posY);
     int getPlayersUnderBasket();
     int getDefence();
+    void setDefence(int defence);
     vector<int> getPlayersInPosition(int posX, int posY);
     int getDefenceSetting(int pos);
 
