@@ -464,76 +464,115 @@ void Match::driveBasket(Player *p)
     }
     else
     {
-        int move;
-        if(posY == 3 || posY == 4)
+        ProbabilityVector probs(5);
+        // Pass out of drive
+        vector<Player*> otherPlayers = teams[p->getTeam() - 1]->getOtherPlayers(p->getNumber());
+
+        for(auto &player: otherPlayers)
         {
-            move = 5;
+            int posValue = 0;
+            vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), posX, posY, player->getPosX(), player->getPosY());
+            if(player->getPosX() >= 0)
+            {
+                posValue = player->getPosValue() + (p->getPass() / 4) - abs((posX - player->getPosX()) + (posY - player->getPosY()));
+            }
+
+            if(defenders.size() > 0)
+            {
+                posValue -= (defenders.size() * 4);
+            }
+            probs.addProbability(posValue);
         }
-        else if(posX == 6 || posX == 5)
+
+        //drive
+
+        probs.addProbability(100 - teams[getOtherTeam(p->getTeam())]->getPressure(posX, posY));
+
+        probs.printVector();
+
+        int action  = probs.getRandomResult();
+
+        if(action < 4)
         {
-            if((3 - posY) < 0)
-            {
-                move = 1;
-            }
-            else
-            {
-                move = 7;
-            }
+            cout << "Pass from drive" << endl;
+            p->setDribbleDrive(false);
+
+            pass(p, otherPlayers[action]);
         }
         else
         {
-            if((3 - posY) < 0)
+            int move;
+            if(posY == 3 || posY == 4)
             {
-                move = 2;
+                move = 5;
+            }
+            else if(posX == 6 || posX == 5)
+            {
+                if((3 - posY) < 0)
+                {
+                    move = 1;
+                }
+                else
+                {
+                    move = 7;
+                }
             }
             else
             {
-                move = 8;
-            }
-        }
-
-        for(int i = 1; i < 6; i++)
-        {
-            Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
-            if(opp.getPosX() == posX && opp.getPosY() == posY)
-            {
-                int screenRand = rand() % 50;
-
-                if(screenRand < 25)
+                if((3 - posY) < 0)
                 {
-                    cout << "Drive Stopped: " << p->getNumber() << " " << opp.getNumber() << endl;
-                    move = 4;
-                    p->setDribbleDrive(false);
-                    break;
+                    move = 2;
                 }
-                else if(screenRand < 28)
+                else
                 {
-                    cout << "Blocking foul: " << opp.getNumber() << " on " << p->getNumber() << endl;
-                    fouls.addFoul(p->getTeam(), time);
-                    if(fouls.getTeamBonus(p->getTeam()) == true)
+                    move = 8;
+                }
+            }
+
+            for(int i = 1; i < 6; i++)
+            {
+                Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
+                if(opp.getPosX() == posX && opp.getPosY() == posY)
+                {
+                    int screenRand = rand() % 50;
+
+                    if(screenRand < 25)
                     {
-                        shootFreeThrow(p, 2);
+                        cout << "Drive Stopped: " << p->getNumber() << " " << opp.getNumber() << endl;
+                        move = 4;
+                        p->setDribbleDrive(false);
+                        break;
                     }
-                    else
+                    else if(screenRand < 28)
                     {
-                        setUpOffensiveInbound();
-                        if(shotClock < 14)
+                        cout << "Blocking foul: " << opp.getNumber() << " on " << p->getNumber() << endl;
+                        fouls.addFoul(p->getTeam(), time);
+                        if(fouls.getTeamBonus(p->getTeam()) == true)
                         {
-                            shotClock = 14;
+                            shootFreeThrow(p, 2);
+                        }
+                        else
+                        {
+                            setUpOffensiveInbound();
+                            if(shotClock < 14)
+                            {
+                                shotClock = 14;
+                            }
                         }
                     }
-                }
-                else if(screenRand == 31)
-                {
-                    cout << "Offensive foul: " << p->getNumber() << endl;
-                    ball.changeTeam();
-                    shotClock = 0;
-                    setUpOwnSideInbound();
+                    else if(screenRand == 31)
+                    {
+                        cout << "Offensive foul: " << p->getNumber() << endl;
+                        ball.changeTeam();
+                        shotClock = 0;
+                        setUpOwnSideInbound();
+                    }
                 }
             }
+            cout << "Drive: " << move << endl;
+            p->movePlayer(move);
         }
-        cout << "Drive: " << move << endl;
-        p->movePlayer(move);
+
     }
 }
 
