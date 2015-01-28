@@ -45,10 +45,11 @@ private:
     vector<int> getDefendersForPass(int team, int x1, int y1, int x2, int y2);
 
     void shoot(Player* p, int pressure);
-    void shootUnderBasket(Player *p, int pressure);
+    void shootTwo(Player *p, int pressure, int shot, int shootRand, int foulRand, string type);
+    //void shootUnderBasket(Player *p, int pressure);
     void shootThree(Player* p, int pressure);
-    void shootMedium(Player* p, int pressure);
-    void shootClose(Player* p, int pressure);
+    //void shootMedium(Player* p, int pressure);
+    //void shootClose(Player* p, int pressure);
     void shootFreeThrow(Player* p, int numOfFreethrows);
 
     void pass(Player* p, Player* teamMate);
@@ -65,7 +66,8 @@ private:
     void moveManDefence(Player *p);
     int flipY(int y);
 
-    void block(Player *p);
+    bool block(Player *p);
+    void blockedShot(int posX, int posY);
     void steal(Player *p);
 
     void printCourt();

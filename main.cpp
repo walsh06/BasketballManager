@@ -8,13 +8,13 @@ int main()
 {
     srand(time(NULL));
 
-    for(int i = 1; i < 31; i++)
+    for(int i = 1; i < 2; i++)
     {
         Match m;
 
         m.sim();
-        string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");
-        m.writeMatchStats(filename);
+        //string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");
+        //m.writeMatchStats(filename);
     }
 
     /*
