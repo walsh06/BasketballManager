@@ -935,11 +935,12 @@ void Match::pass(Player* p, Player* teamMate)
             defender = team.getPlayer(pos);
             stealRating = defender->getSteal();
             stealRand = rand() % stealRating;
-            passRand = rand() % (pass * 5);
+            passRand = rand() % (pass * 25);
             if(stealRand > passRand)
             {
                 steal = true;
                 stolenNumber = defender->getNumber();
+                defender->getStatList()->addSteal();
             }
         }
     }
@@ -1472,14 +1473,16 @@ void Match::block(Player *p)
 {
     for(int i = 1; i < 6; i++)
     {
-        Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
-        if(opp.getPosX() == p->getPosX() && opp.getPosY() == p->getPosY())
+        Player *opp = teams[getOtherTeam(p->getTeam())]->getPlayer(i);
+        if(opp->getPosX() == p->getPosX() && opp->getPosY() == p->getPosY())
         {
-            int block = rand() % 200;
+            int block = rand() % 175;
 
-            if(block < opp.getBlock())
+            if(block < (opp->getBlock() * (opp->getBlock() / 4)))
             {
-                cout << "Block: " << opp.getNumber() << endl;
+                cout << "Block: " << opp->getNumber() << endl;
+                opp->getStatList()->addBlock();
+                break;
             }
         }
     }
@@ -1492,6 +1495,7 @@ void Match::steal(Player *p)
     if(stealRand < steal)
     {
         cout << "Steal: " << p->getNumber() << endl;
+        p->getStatList()->addSteal();
         swapSides(p->getNumber());
     }
     else if(stealRand <= 20)
