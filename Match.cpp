@@ -1406,7 +1406,7 @@ bool Match::block(Player *p)
             {
                 cout << "Block: " << opp->getNumber() << endl;
                 opp->getStatList()->addBlock();
-                break;
+                return true;
             }
         }
     }
