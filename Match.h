@@ -19,7 +19,7 @@ using namespace std;
 class Match
 {
 public:
-    Match();
+    Match(Team *teamOne, Team *teamTwo);
     ~Match();
 
     void sim();

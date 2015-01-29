@@ -1,14 +1,14 @@
 #include "Match.h"
 
-Match::Match()
+Match::Match(Team *teamOne, Team *teamTwo)
 {
-    teamOne = new Team("Spurs");
+    this->teamOne = teamOne;
     teamOne->setTeam(1);
-    teamTwo = new Team("Spurs");
+    this->teamTwo = teamTwo;
     teamTwo->setTeam(2);
 
-    teams[0] = teamOne;
-    teams[1] = teamTwo;
+    teams[0] = this->teamOne;
+    teams[1] = this->teamTwo;
 
     score[0] = 0;
     score[1] = 0;

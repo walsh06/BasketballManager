@@ -28,7 +28,8 @@ SOURCES += main.cpp \
     pugixml.cpp \
     Fouls.cpp \
     PlayerStrategyScoringForward.cpp \
-    Tournament.cpp
+    Tournament.cpp \
+    League.cpp
     pugixml.cpp
 
 HEADERS += \
@@ -58,5 +59,6 @@ HEADERS += \
     pugixml.hpp \
     Fouls.h \
     PlayerStrategyScoringForward.h \
-    Tournament.h
+    Tournament.h \
+    League.h
 

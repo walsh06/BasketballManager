@@ -2,12 +2,15 @@
 #include "Match.h"
 #include <time.h>
 #include <stdlib.h>
+
+#include "League.h"
 using namespace std;
 
 int main()
 {
     srand(time(NULL));
-
+    League l;
+    /*
     for(int i = 1; i < 2; i++)
     {
         Match m;
@@ -16,7 +19,7 @@ int main()
         //string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");
         //m.writeMatchStats(filename);
     }
-
+*/
     /*
     Match m;
 

@@ -6,7 +6,7 @@ Tournament::Tournament(int numTeams)
     vector<int> startTeams;
     for(int i = 1; i <= numTeams; i++)
     {
-        teams[i] = "spurs";
+        teams[i] = new Team("spurs");
         startTeams.push_back(i);
     }
     createMatches(startTeams);
@@ -19,7 +19,7 @@ void Tournament::simRound()
     {
         Team *teamOne = teams[get<0>(match)];
         Team *teamTwo = teams[get<1>(match)];
-        Match m;
+        Match m(teamOne, teamTwo);
         int* score = m.getScore();
         if(score[0] > score[1])
         {
@@ -38,8 +38,8 @@ void Tournament::simRound()
 void Tournament::createMatches(vector<int> teams)
 {
     matches.clear();
-    for(int i = 0; i < teams.size; i+=2)
+    for(int i = 0; i < teams.size(); i+=2)
     {
-        matches.push_back(make_tuple(teams[i], teams[i+1]));        .
+        matches.push_back(make_tuple(teams[i], teams[i+1]));
     }
 }
