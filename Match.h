@@ -39,6 +39,7 @@ private:
     vector<Player*> orderOfPlay;
     tuple<Player *, int> assist;
     int score[2];
+    const bool printing = false;
 
 
     void move(Player* p);
@@ -73,6 +74,10 @@ private:
     void steal(Player *p);
 
     void printCourt();
+    void printValue(string valueName, int value);
+    void printValue(string valueName, int value, int valueTwo);
+    void printValue(string valueName);
+
 
     int getScoreDifference(int team);
     void jumpBall();
