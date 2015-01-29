@@ -104,6 +104,11 @@ void Match::sim()
     shotMap.printHeatMap();
 }
 
+int* Match::getScore()
+{
+    return score;
+}
+
 //===============================
 // General Functions
 //===============================

@@ -24,6 +24,8 @@ public:
 
     void sim();
     void writeMatchStats(string filename);
+
+    int* getScore();
 private:
     Fouls fouls;
     int firstPossession;
