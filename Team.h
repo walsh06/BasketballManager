@@ -15,6 +15,7 @@
 #include "PlayerStrategyBalancedPlaymaker.h"
 #include "PlayerStrategyPostScorer.h"
 #include "PlayerStrategyScoringForward.h"
+#include "Manager.h"
 
 #include "pugixml.hpp"
 

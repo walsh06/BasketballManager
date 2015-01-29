@@ -94,7 +94,7 @@ void Match::sim()
                     teamOne->updateEnergy();
                     teamTwo->updateEnergy();
                 }
-                printCourt();
+                //printCourt();
             }
         }
     }

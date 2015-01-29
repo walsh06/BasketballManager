@@ -43,7 +43,9 @@ Team::Team(string teamName)
     defenceSettings[c] = SAG;
 
     defence = MAN;
-
+    Manager m;
+    m.evaluatePlayers(players);
+    m.printRatings();
 }
 
 void Team::readTeam(string teamName)
