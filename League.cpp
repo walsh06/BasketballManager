@@ -1,8 +1,13 @@
 #include "League.h"
 
+#include <sstream>
 League::League()
 {
     createSchedule("../schedule.xml");
+    teams[1] = new LeagueTeam("Spurs");
+    teams[2] = new LeagueTeam("Pacers");
+    teams[3] = new LeagueTeam("Spurs");
+    teams[4] = new LeagueTeam("Pacers");
 }
 
 void League::simRound(int round)
@@ -11,9 +16,23 @@ void League::simRound(int round)
 
     for(auto &match: matches)
     {
-        Team *homeTeam = teams[get<0>(match)];
-        Team *awayTeam = teams[get<1>(match)];
+        Team *homeTeam = teams[get<0>(match)]->getTeam();
+        Team *awayTeam = teams[get<1>(match)]->getTeam();
         Match m(homeTeam, awayTeam);
+        m.sim();
+        int scoreHome = m.getScore()[0], scoreAway = m.getScore()[1];
+        if(scoreHome > scoreAway)
+        {
+            teams[get<0>(match)]->addWin();
+            teams[get<1>(match)]->addGame();
+        }
+        else
+        {
+            teams[get<1>(match)]->addWin();
+            teams[get<0>(match)]->addGame();
+        }
+        results.push_back(to_string(get<0>(match)) + " " + to_string(scoreHome) + "-" +
+                                    to_string(scoreAway) +" "+to_string(get<1>(match)));
     }
 }
 
@@ -45,6 +64,23 @@ void League::createSchedule(const char* file)
         {
             schedule[round].push_back(matchup);
         }
+    }
+}
+
+void League::printResults()
+{
+    for(auto &result: results)
+    {
+        cout << result << endl;
+    }
+}
+
+void League::printTable()
+{
+    cout << "T|G|W|L" << endl;
+    for(auto &team: teams)
+    {
+        cout << team.first << " " << team.second->getGames() << " " << team.second->getWins() << " " << team.second->getLosses() << endl;
     }
 }
 

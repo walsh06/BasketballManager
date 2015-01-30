@@ -10,6 +10,12 @@ int main()
 {
     srand(time(NULL));
     League l;
+    l.simRound(1);
+    //l.printResults();
+    l.simRound(2);
+    l.simRound(3);
+    l.printResults();
+    l.printTable();
     /*
     for(int i = 1; i < 2; i++)
     {

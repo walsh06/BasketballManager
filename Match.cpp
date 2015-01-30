@@ -17,8 +17,7 @@ Match::Match(Team *teamOne, Team *teamTwo)
 
 Match::~Match()
 {
-    delete teamOne;
-    delete teamTwo;
+
 }
 
 void Match::sim()
