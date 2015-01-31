@@ -5,47 +5,7 @@ Team::Team(string teamName)
     this->teamName = teamName;
     readTeam(teamName);
 
-    int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
-
-    defenceMatchups[pg] = PG;
-    defenceMatchups[sg] = SG;
-    defenceMatchups[sf] = SF;
-    defenceMatchups[pf] = PF;
-    defenceMatchups[c] = C;
-
-    players[pg]->setPlayingPosition(new PositionPointGuard());
-    players[sg]->setPlayingPosition(new PositionShootingGuard());
-    players[sf]->setPlayingPosition(new PositionSmallForward());
-    players[pf]->setPlayingPosition(new PositionPowerForward());
-    players[c]->setPlayingPosition(new PositionCentre());
-    players[6]->setPlayingPosition(new PositionPointGuard());
-    players[7]->setPlayingPosition(new PositionShootingGuard());
-    players[8]->setPlayingPosition(new PositionSmallForward());
-    players[9]->setPlayingPosition(new PositionPowerForward());
-    players[10]->setPlayingPosition(new PositionCentre());
-
-    players[c]->setStrategy(new PlayerStrategyCrashBoards());
-    players[pf]->setStrategy(new PlayerStrategyPostScorer());
-    players[sf]->setStrategy(new PlayerStrategyScoringForward());
-    players[sg]->setStrategy(new PlayerStrategyShootThree());
-    players[pg]->setStrategy(new PlayerStrategyInsidePlaymaker());
-
-    players[6]->setStrategy(new PlayerStrategyBalancedPlaymaker());
-    players[7]->setStrategy(new PlayerStrategyShootThree());
-    players[8]->setStrategy(new PlayerStrategyScoringForward());
-    players[9]->setStrategy(new PlayerStrategyPostScorer());
-    players[10]->setStrategy(new PlayerStrategyCrashBoards());
-
-    defenceSettings[pg] = TIGHT;
-    defenceSettings[sg] = TIGHT;
-    defenceSettings[sf] = TIGHT;
-    defenceSettings[pf] = SAG;
-    defenceSettings[c] = SAG;
-
-    defence = MAN;
-    Manager m;
-    m.evaluatePlayers(players);
-    m.printRatings();
+    setupTeamTactics();
 }
 
 void Team::readTeam(string teamName)
@@ -77,6 +37,68 @@ void Team::readTeam(string teamName)
         }
 }
 
+//==========================
+// Tactics
+//==========================
+
+void Team::setupTeamTactics()
+{
+    manager.evaluatePlayers(players);
+    for(int i = 1; i <= players.size(); i++)
+    {
+        int strategy = manager.getBestStrategyForPlayer(i);
+        changeStrategy(i, strategy);
+    }
+
+    int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
+
+    defenceMatchups[pg] = PG;
+    defenceMatchups[sg] = SG;
+    defenceMatchups[sf] = SF;
+    defenceMatchups[pf] = PF;
+    defenceMatchups[c] = C;
+
+    players[pg]->setPlayingPosition(new PositionPointGuard());
+    players[sg]->setPlayingPosition(new PositionShootingGuard());
+    players[sf]->setPlayingPosition(new PositionSmallForward());
+    players[pf]->setPlayingPosition(new PositionPowerForward());
+    players[c]->setPlayingPosition(new PositionCentre());
+    players[6]->setPlayingPosition(new PositionPointGuard());
+    players[7]->setPlayingPosition(new PositionShootingGuard());
+    players[8]->setPlayingPosition(new PositionSmallForward());
+    players[9]->setPlayingPosition(new PositionPowerForward());
+    players[10]->setPlayingPosition(new PositionCentre());
+
+    defenceSettings[pg] = TIGHT;
+    defenceSettings[sg] = TIGHT;
+    defenceSettings[sf] = TIGHT;
+    defenceSettings[pf] = SAG;
+    defenceSettings[c] = SAG;
+
+    defence = MAN;
+}
+
+void Team::changeStrategy(int index, int strategy)
+{
+    PlayerStrategy *newStrategy;
+
+    switch(strategy)
+    {
+        case 0: newStrategy = new PlayerStrategyBalanced(); break;
+        case 1: newStrategy = new PlayerStrategyOutsidePlaymaker(); break;
+        case 2: newStrategy = new PlayerStrategyInsidePlaymaker(); break;
+        case 3: newStrategy = new PlayerStrategyBalancedPlaymaker(); break;
+        case 4: newStrategy = new PlayerStrategyShootThree(); break;
+        case 5: newStrategy = new PlayerStrategyInsideOutside(); break;
+        case 6: newStrategy = new PlayerStrategyScoringForward(); break;
+        case 7: newStrategy = new PlayerStrategyPostScorer(); break;
+        case 8: newStrategy = new PlayerStrategyCrashBoards(); break;
+    }
+
+    players[index]->setStrategy(newStrategy);
+}
+
+//===============================
 int Team::getDefence()
 {
     return defence;

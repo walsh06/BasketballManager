@@ -2,28 +2,67 @@
 
 Manager::Manager()
 {
-
+    energyThresholdSubIn = 90;
+    energyThresholdSubOut = 80;
 }
 
 void Manager::evaluatePlayers(map<int, Player *> players)
 {
+    playerRatings.clear();
     playerCount = players.size();
 
     for(int i = 1; i <= playerCount; i++)
     {
         Player *p = players[i];
         vector<float> player;
-        player.push_back((p->getThreeShot() + p->getMediumShot() + p->getUnderBasketShot() + p->getOffRebound())/4); //balanced
-        player.push_back((p->getThreeShot() + p->getMediumShot() + p->getSteal() + p->getPass())/4); //outside playmaker
-        player.push_back((p->getDunk() + p->getBlock() + p->getDefRebound() + p->getOffRebound())/4); //rebound
-        player.push_back((p->getCloseShot() + p->getDunk() + p->getLayup() + p->getOffRebound())/4); //post scorer
-        player.push_back((p->getLayup() + p->getMediumShot() + p->getCloseShot() + p->getPass())/4); //inside playmaker
-        player.push_back((p->getThreeShot() + p->getMediumShot() + p->getLayup() + p->getPass())/4); //balanced playmaker
-        player.push_back((p->getThreeShot() + p->getCloseShot() + p->getLayup() + p->getDunk())/4); //inside outside
-        player.push_back((p->getLayup() + p->getMediumShot() + p->getCloseShot() + p->getDunk())/4); //scoring forward
-        player.push_back((p->getThreeShot() + p->getMediumShot() + p->getSteal())/3); //three point
+        player.push_back(((float)p->getThreeShot() + (float)p->getMediumShot() + (float)p->getUnderBasketShot() + (float)p->getOffRebound())/4.0); //balanced
+        player.push_back(((float)p->getThreeShot() + (float)p->getMediumShot() + (float)p->getSteal() + (float)p->getPass())/4.0); //outside playmaker
+        player.push_back(((float)p->getLayup() + (float)p->getMediumShot() + (float)p->getCloseShot() + (float)p->getPass())/4.0); //inside playmaker
+        player.push_back(((float)p->getThreeShot() + (float)p->getMediumShot() + (float)p->getLayup() + (float)p->getPass())/4.0); //balanced playmaker
+        player.push_back(((float)p->getThreeShot() + (float)p->getMediumShot() + (float)p->getSteal())/3.0); //three point
+        player.push_back(((float)p->getThreeShot() + (float)p->getCloseShot() + (float)p->getLayup() + (float)p->getDunk())/4.0); //inside outside
+        player.push_back(((float)p->getLayup() + (float)p->getMediumShot() + (float)p->getCloseShot() + (float)p->getDunk())/4.0); //scoring forward
+        player.push_back(((float)p->getCloseShot() + (float)p->getDunk() + (float)p->getLayup() + (float)p->getOffRebound())/4.0); //post scorer
+        player.push_back(((float)p->getDunk() + (float)p->getBlock() + (float)p->getDefRebound() + (float)p->getOffRebound())/4.0); //rebound
         playerRatings.push_back(player);
     }
+}
+
+void Manager::subPlayer(int pos, map<int, Player *> players)
+{
+    if(players[pos]->getEnergy() < energyThresholdSubOut)
+    {
+        map<int, Player *> possibleSubs;
+        int bestPos = 0, bestPlayer = 0;
+        for(int i=1; i < players.size(); i++)
+        {
+            if(players[i]->getPlayingPosition() == pos && players[i]->getEnergy() > energyThresholdSubIn)
+            {
+                possibleSubs[i] = players[i];
+            }
+        }
+
+        for(auto &player: possibleSubs)
+        {
+            for(int i = 0; i < 9; i++)
+            {
+                if(playerRatings[player.first][i] > bestPos)
+                {
+                    bestPos = playerRatings[player.first][i];
+                    bestPlayer = player.first;
+                }
+            }
+        }
+
+        Player *temp = players[pos];
+        players[pos] = players[bestPlayer];
+        players[bestPlayer] = temp;
+        players[pos]->setPos(players[bestPlayer]->getPosX(), players[bestPlayer]->getPosY());
+        swap(playerRatings[pos], playerRatings[bestPlayer]);
+    }
+
+
+
 }
 
 int Manager::getBestStrategyForPlayer(int playerPos)

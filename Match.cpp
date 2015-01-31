@@ -2,7 +2,7 @@
 
 Match::Match()
 {
-    teamOne = new Team("Spurs");
+    teamOne = new Team("Pacers");
     teamOne->setTeam(1);
     teamTwo = new Team("Spurs");
     teamTwo->setTeam(2);

@@ -7,6 +7,7 @@
 #include "PositionPowerForward.h"
 #include "PositionShootingGuard.h"
 #include "PositionSmallForward.h"
+#include "PlayerStrategyBalanced.h"
 #include "PlayerStrategyCrashBoards.h"
 #include "PlayerStrategyShootThree.h"
 #include "PlayerStrategyInsideOutside.h"
@@ -45,6 +46,8 @@ public:
 
     void swapPlayers(int p1, int p2);
 
+    void setupTeamTactics();
+    void changeStrategy(int index, int strategy);
     void updateEnergy();
     void setTeam(int team);
     void swapSides();
@@ -71,6 +74,7 @@ private:
     int team;
     string teamName;
     int defence;
+    Manager manager;
 };
 
 #endif // TEAM_H
