@@ -225,6 +225,9 @@ void Match::setUpRestartInbound()
 
 void Match::setUpOffensiveInbound()
 {
+    shotClock = 0;
+    teamOne->swapPlayers();
+    teamTwo->swapPlayers();
     ball.setPlayerPosition(4);
 
     int team = ball.getTeam();
@@ -235,6 +238,9 @@ void Match::setUpOffensiveInbound()
 
 void Match::setUpOwnSideInbound()
 {
+    shotClock = 0;
+    teamOne->swapPlayers();
+    teamTwo->swapPlayers();
     ball.setPlayerPosition(4);
 
     int team = ball.getTeam();
@@ -588,10 +594,12 @@ void Match::driveBasket(Player *p)
                         else
                         {
                             setUpOffensiveInbound();
+                            /*
                             if(shotClock < 14)
                             {
                                 shotClock = 14;
                             }
+                            */
                         }
                     }
                     else if(screenRand == 31)
@@ -848,6 +856,9 @@ void Match::checkAssist()
 
 void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
+    teamOne->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()));
+    teamTwo->swapPlayers();
+
     teams[p->getTeam() - 1]->setUpFreeThrowOffence(p->getNumber());
     teams[getOtherTeam(p->getTeam())]->setUpFreeThrowDefence();
 
@@ -890,14 +901,14 @@ void Match::pass(Player* p, Player* teamMate)
 {
     int stealRand, stealRating, passRand, pass = p->getPass(), posX = teamMate->getPosX(), posY = teamMate->getPosY(), stolenNumber = 0;
     bool steal = false;
-    Team team = *teams[getOtherTeam(p->getTeam())];
+    Team *team = teams[getOtherTeam(p->getTeam())];
     Player *defender;
     vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), p->getPosX(), p->getPosY(), posX, posY);
     if(defenders.size() > 0)
     {
         for(auto pos: defenders)
         {
-            defender = team.getPlayer(pos);
+            defender = team->getPlayer(pos);
             stealRating = defender->getSteal();
             stealRand = rand() % stealRating;
             passRand = rand() % (pass * 25);
@@ -1026,7 +1037,7 @@ void Match::moveManDefence(Player *p)
     int defence = p->getDefence(), stealRating = p->getSteal(), defenceSetting;
     //get the defensive matchup of the player
 
-    matchup = teams[p->getTeam() - 1]->getMatchup(p);
+    matchup = team->getMatchup(p);
     Player *opposition = teams[oppTeam]->getPlayer(matchup);
     if(ball.getPlayerPosition() == matchup)
     {
@@ -1541,10 +1552,12 @@ void Match::steal(Player *p)
         else
         {
             setUpOffensiveInbound();
+            /*
             if(shotClock < 14)
             {
                 shotClock = 14;
             }
+            */
         }
     }
 }

@@ -187,21 +187,32 @@ void Team::updateEnergy()
            playing = false;
        }
        players[i]->updateEnergy(playing);
-
+        /*
        if(players[i]->getEnergy() < 80 && i < 6)
        {
            swapPlayers(i, i+5);
-       }
+       }*/
+
    }
 }
 
-void Team::swapPlayers(int p1, int p2)
+void Team::swapPlayers()
 {
-    Player *temp = players[p1];
-    players[p1] = players[p2];
-    players[p2] = temp;
-    players[p1]->setPos(players[p2]->getPosX(), players[p2]->getPosY());
-    cout << "SUB: " << p1 << " " << p2 << endl;
+    for(int i = 1; i < 6; i++)
+    {
+        manager.subPlayer(i, players);
+    }
+}
+
+void Team::swapPlayers(int ftShooter)
+{
+    for(int i = 1; i < 6; i++)
+    {
+        if(i != ftShooter)
+        {
+            manager.subPlayer(i, players);
+        }
+    }
 }
 
 //===========================================

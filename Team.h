@@ -44,7 +44,8 @@ public:
     vector<int> getPlayersInPosition(int posX, int posY);
     int getDefenceSetting(int pos);
 
-    void swapPlayers(int p1, int p2);
+    void swapPlayers();
+    void swapPlayers(int ftShooter);
 
     void setupTeamTactics();
     void changeStrategy(int index, int strategy);
