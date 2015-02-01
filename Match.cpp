@@ -13,6 +13,8 @@ Match::Match()
     score[0] = 0;
     score[1] = 0;
     assist = make_tuple(new Player(0), 800);
+    teamOne->pickStartingTeam();
+    teamTwo->pickStartingTeam();
 }
 
 Match::~Match()
@@ -61,6 +63,7 @@ void Match::sim()
                 }
 
                 setOrderOfPlay();
+                endOfPossession = false;
                 cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
                 cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
                 for(auto &player : orderOfPlay)
@@ -73,11 +76,6 @@ void Match::sim()
                                 withBall(player, shotClock);
                             else if(gameState == INBOUND)
                                 passInbound(player);
-
-                            if(shotClock == 0)
-                            {
-                                break;
-                            }
                         }
                         else
                         {
@@ -87,6 +85,12 @@ void Match::sim()
                     else
                     {
                         moveDefence(player);
+                    }
+
+                    if(endOfPossession)
+                    {
+                        shotClock = 0;
+                        break;
                     }
                 }
                 if(time%60 == 0)
@@ -206,12 +210,12 @@ void Match::swapSides(int playerNum)
     teams[1]->swapSides();
     ball.changeTeam();
     ball.setPlayerPosition(teams[ball.getTeam() - 1]->getPlayerPosition(playerNum));
-    shotClock = 0;
+    endOfPossession = true;
 }
 
 void Match::setUpRestartInbound()
 {
-    shotClock = 0;
+    endOfPossession = true;
     teams[0]->swapSides();
     teams[1]->swapSides();
     ball.changeTeam();
@@ -225,22 +229,30 @@ void Match::setUpRestartInbound()
 
 void Match::setUpOffensiveInbound()
 {
+    endOfPossession = true;
+    teamOne->swapPlayers();
+    teamTwo->swapPlayers();
     ball.setPlayerPosition(4);
 
     int team = ball.getTeam();
     teamOne->offensiveInbound(team);
     teamTwo->offensiveInbound(team);
     gameState = INBOUND;
+    setOrderOfPlay();
 }
 
 void Match::setUpOwnSideInbound()
 {
+    endOfPossession = true;
+    teamOne->swapPlayers();
+    teamTwo->swapPlayers();
     ball.setPlayerPosition(4);
 
     int team = ball.getTeam();
     teamOne->ownSideInbound(team);
     teamTwo->ownSideInbound(team);
     gameState = INBOUND;
+    setOrderOfPlay();
 }
 
 void Match::jumpBall()
@@ -588,10 +600,12 @@ void Match::driveBasket(Player *p)
                         else
                         {
                             setUpOffensiveInbound();
+                            /*
                             if(shotClock < 14)
                             {
                                 shotClock = 14;
                             }
+                            */
                         }
                     }
                     else if(screenRand == 31)
@@ -848,6 +862,9 @@ void Match::checkAssist()
 
 void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
+    teamOne->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()));
+    teamTwo->swapPlayers();
+
     teams[p->getTeam() - 1]->setUpFreeThrowOffence(p->getNumber());
     teams[getOtherTeam(p->getTeam())]->setUpFreeThrowDefence();
 
@@ -890,14 +907,14 @@ void Match::pass(Player* p, Player* teamMate)
 {
     int stealRand, stealRating, passRand, pass = p->getPass(), posX = teamMate->getPosX(), posY = teamMate->getPosY(), stolenNumber = 0;
     bool steal = false;
-    Team team = *teams[getOtherTeam(p->getTeam())];
+    Team *team = teams[getOtherTeam(p->getTeam())];
     Player *defender;
     vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), p->getPosX(), p->getPosY(), posX, posY);
     if(defenders.size() > 0)
     {
         for(auto pos: defenders)
         {
-            defender = team.getPlayer(pos);
+            defender = team->getPlayer(pos);
             stealRating = defender->getSteal();
             stealRand = rand() % stealRating;
             passRand = rand() % (pass * 25);
@@ -973,8 +990,7 @@ void Match::rebound()
                  //cout << "Offensive Rebound: " << p->getNumber() << endl;
                  printValue("Offensive Rebound", p->getNumber());
                  p->getStatList()->addOffensiveRebound();
-
-                shotClock = 0;
+                 endOfPossession = true;
              }
              else
              {
@@ -982,7 +998,6 @@ void Match::rebound()
                  printValue("Defensive Rebound", p->getNumber());
                  p->getStatList()->addDefensiveRebound();
 
-                 shotClock = 0;
                  swapSides(p->getNumber());
              }
         }
@@ -1026,7 +1041,7 @@ void Match::moveManDefence(Player *p)
     int defence = p->getDefence(), stealRating = p->getSteal(), defenceSetting;
     //get the defensive matchup of the player
 
-    matchup = teams[p->getTeam() - 1]->getMatchup(p);
+    matchup = team->getMatchup(p);
     Player *opposition = teams[oppTeam]->getPlayer(matchup);
     if(ball.getPlayerPosition() == matchup)
     {
@@ -1541,10 +1556,12 @@ void Match::steal(Player *p)
         else
         {
             setUpOffensiveInbound();
+            /*
             if(shotClock < 14)
             {
                 shotClock = 14;
             }
+            */
         }
     }
 }
