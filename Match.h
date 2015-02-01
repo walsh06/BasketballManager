@@ -39,7 +39,8 @@ private:
     vector<Player*> orderOfPlay;
     tuple<Player *, int> assist;
     int score[2];
-    const bool printing = false;
+    const bool printing = true;
+    bool endOfPossession;
 
 
     void move(Player* p);

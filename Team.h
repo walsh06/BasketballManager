@@ -7,6 +7,7 @@
 #include "PositionPowerForward.h"
 #include "PositionShootingGuard.h"
 #include "PositionSmallForward.h"
+#include "PlayerStrategyBalanced.h"
 #include "PlayerStrategyCrashBoards.h"
 #include "PlayerStrategyShootThree.h"
 #include "PlayerStrategyInsideOutside.h"
@@ -15,6 +16,7 @@
 #include "PlayerStrategyBalancedPlaymaker.h"
 #include "PlayerStrategyPostScorer.h"
 #include "PlayerStrategyScoringForward.h"
+#include "Manager.h"
 
 #include "pugixml.hpp"
 
@@ -42,8 +44,12 @@ public:
     vector<int> getPlayersInPosition(int posX, int posY);
     int getDefenceSetting(int pos);
 
-    void swapPlayers(int p1, int p2);
+    void swapPlayers();
+    void swapPlayers(int ftShooter);
 
+    void pickStartingTeam();
+    void setupTeamTactics();
+    void changeStrategy(int index, int strategy);
     void updateEnergy();
     void setTeam(int team);
     void swapSides();
@@ -70,6 +76,7 @@ private:
     int team;
     string teamName;
     int defence;
+    Manager manager;
 };
 
 #endif // TEAM_H
