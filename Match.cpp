@@ -13,6 +13,8 @@ Match::Match()
     score[0] = 0;
     score[1] = 0;
     assist = make_tuple(new Player(0), 800);
+    teamOne->pickStartingTeam();
+    teamTwo->pickStartingTeam();
 }
 
 Match::~Match()

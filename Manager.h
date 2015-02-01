@@ -12,6 +12,7 @@ public:
     void evaluatePlayers(map<int, Player*> players);
     int getBestStrategyForPlayer(int playerPos);
     int getBestPlayerForStrategy(int strategy);
+    void pickStartingPosition(int pos, map<int, Player *> &players);
     void subPlayer(int pos, map<int, Player*> &players);
 
     void printRatings();

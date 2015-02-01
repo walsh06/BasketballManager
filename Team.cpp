@@ -78,6 +78,14 @@ void Team::setupTeamTactics()
     defence = MAN;
 }
 
+void Team::pickStartingTeam()
+{
+    for(int i = 0; i < 6; i++)
+    {
+        manager.pickStartingPosition(i, players);
+    }
+}
+
 void Team::changeStrategy(int index, int strategy)
 {
     PlayerStrategy *newStrategy;

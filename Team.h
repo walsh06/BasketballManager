@@ -47,6 +47,7 @@ public:
     void swapPlayers();
     void swapPlayers(int ftShooter);
 
+    void pickStartingTeam();
     void setupTeamTactics();
     void changeStrategy(int index, int strategy);
     void updateEnergy();
