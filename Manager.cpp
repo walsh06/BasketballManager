@@ -104,12 +104,14 @@ void Manager::subPlayer(int pos, map<int, Player *> &players)
 
 int Manager::getBestStrategyForPlayer(int playerPos)
 {
-    int best = playerRatings[playerPos - 1][0], bestIndex = 0;
+    float best = playerRatings[playerPos - 1][0];
+    int bestIndex = 0;
     for(int i = 1; i < 9; i++)
     {
         if(playerRatings[playerPos - 1][i] > best)
         {
             bestIndex = i;
+            best = playerRatings[playerPos - 1][i];
         }
     }
     return bestIndex;
@@ -117,12 +119,14 @@ int Manager::getBestStrategyForPlayer(int playerPos)
 
 int Manager::getBestPlayerForStrategy(int strategy)
 {
-    int best = playerRatings[0][strategy], bestIndex = 0;
+    float best = playerRatings[0][strategy];
+    int bestIndex = 0;
     for(int i = 1; i < playerCount; i++)
     {
         if(playerRatings[i][strategy] > best)
         {
             bestIndex = i;
+            best = playerRatings[i][strategy];
         }
     }
     return bestIndex;

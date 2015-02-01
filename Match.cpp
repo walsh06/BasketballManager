@@ -2,7 +2,7 @@
 
 Match::Match()
 {
-    teamOne = new Team("Pacers");
+    teamOne = new Team("Spurs");
     teamOne->setTeam(1);
     teamTwo = new Team("Spurs");
     teamTwo->setTeam(2);
@@ -63,6 +63,7 @@ void Match::sim()
                 }
 
                 setOrderOfPlay();
+                endOfPossession = false;
                 cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
                 cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
                 for(auto &player : orderOfPlay)
@@ -75,11 +76,6 @@ void Match::sim()
                                 withBall(player, shotClock);
                             else if(gameState == INBOUND)
                                 passInbound(player);
-
-                            if(shotClock == 0)
-                            {
-                                break;
-                            }
                         }
                         else
                         {
@@ -89,6 +85,12 @@ void Match::sim()
                     else
                     {
                         moveDefence(player);
+                    }
+
+                    if(endOfPossession)
+                    {
+                        shotClock = 0;
+                        break;
                     }
                 }
                 if(time%60 == 0)
@@ -208,12 +210,12 @@ void Match::swapSides(int playerNum)
     teams[1]->swapSides();
     ball.changeTeam();
     ball.setPlayerPosition(teams[ball.getTeam() - 1]->getPlayerPosition(playerNum));
-    shotClock = 0;
+    endOfPossession = true;
 }
 
 void Match::setUpRestartInbound()
 {
-    shotClock = 0;
+    endOfPossession = true;
     teams[0]->swapSides();
     teams[1]->swapSides();
     ball.changeTeam();
@@ -227,7 +229,7 @@ void Match::setUpRestartInbound()
 
 void Match::setUpOffensiveInbound()
 {
-    shotClock = 0;
+    endOfPossession = true;
     teamOne->swapPlayers();
     teamTwo->swapPlayers();
     ball.setPlayerPosition(4);
@@ -236,11 +238,12 @@ void Match::setUpOffensiveInbound()
     teamOne->offensiveInbound(team);
     teamTwo->offensiveInbound(team);
     gameState = INBOUND;
+    setOrderOfPlay();
 }
 
 void Match::setUpOwnSideInbound()
 {
-    shotClock = 0;
+    endOfPossession = true;
     teamOne->swapPlayers();
     teamTwo->swapPlayers();
     ball.setPlayerPosition(4);
@@ -249,6 +252,7 @@ void Match::setUpOwnSideInbound()
     teamOne->ownSideInbound(team);
     teamTwo->ownSideInbound(team);
     gameState = INBOUND;
+    setOrderOfPlay();
 }
 
 void Match::jumpBall()
@@ -986,8 +990,7 @@ void Match::rebound()
                  //cout << "Offensive Rebound: " << p->getNumber() << endl;
                  printValue("Offensive Rebound", p->getNumber());
                  p->getStatList()->addOffensiveRebound();
-
-                shotClock = 0;
+                 endOfPossession = true;
              }
              else
              {
@@ -995,7 +998,6 @@ void Match::rebound()
                  printValue("Defensive Rebound", p->getNumber());
                  p->getStatList()->addDefensiveRebound();
 
-                 shotClock = 0;
                  swapSides(p->getNumber());
              }
         }

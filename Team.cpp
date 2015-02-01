@@ -47,6 +47,7 @@ void Team::setupTeamTactics()
     for(int i = 1; i <= players.size(); i++)
     {
         int strategy = manager.getBestStrategyForPlayer(i);
+        cout << i << " " << strategy << endl;
         changeStrategy(i, strategy);
     }
 
@@ -80,7 +81,7 @@ void Team::setupTeamTactics()
 
 void Team::pickStartingTeam()
 {
-    for(int i = 0; i < 6; i++)
+    for(int i = 1; i < 6; i++)
     {
         manager.pickStartingPosition(i, players);
     }
