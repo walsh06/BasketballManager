@@ -9,12 +9,14 @@ public:
     int getWinsOne();
     void addWinTwo();
     int getWinsTwo();
-
+    bool isMatchOver();
+    void setMatchOver(bool over);
     Team* getTeamOne();
     Team* getTeamTwo();
 private:
     Team *teamOne, *teamTwo;
     int winsOne, winsTwo;
+    bool matchOver;
 };
 
 #endif // TOURNAMENTMATCHUP_H

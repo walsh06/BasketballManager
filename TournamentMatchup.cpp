@@ -2,6 +2,7 @@
 
 TournamentMatchup::TournamentMatchup(Team *teamOne, Team *teamTwo)
 {
+    matchOver = false;
     this->teamOne = teamOne;
     this->teamTwo = teamTwo;
 }
@@ -34,4 +35,14 @@ Team* TournamentMatchup::getTeamOne()
 Team* TournamentMatchup::getTeamTwo()
 {
     return teamTwo;
+}
+
+bool TournamentMatchup::isMatchOver()
+{
+    return matchOver;
+}
+
+void TournamentMatchup::setMatchOver(bool over)
+{
+    matchOver = over;
 }
