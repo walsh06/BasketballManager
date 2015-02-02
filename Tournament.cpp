@@ -3,43 +3,63 @@
 Tournament::Tournament(int numTeams)
 {
     round = 1;
+    winsToProgress = 4;
     vector<int> startTeams;
-    for(int i = 1; i <= numTeams; i++)
-    {
-        teams[i] = new Team("spurs");
-        startTeams.push_back(i);
-    }
-    createMatches(startTeams);
+    addTeam(new Team("Spurs"));
+    addTeam(new Team("Heat"));
+    addTeam(new Team("Pacers"));
+    addTeam(new Team("Spurs"));
 }
 
 void Tournament::simRound()
 {
-    vector<int> winners;
-    for(auto &match: matches)
+    int numMatches = matches.size();
+    for(int i = 0; i < numMatches; i++)
     {
-        Team *teamOne = teams[get<0>(match)];
-        Team *teamTwo = teams[get<1>(match)];
+        TournamentMatchup *match = matches[i];
+        Team *teamOne = match->getTeamOne();
+        Team *teamTwo = match->getTeamTwo();
         Match m(teamOne, teamTwo);
         int* score = m.getScore();
+
         if(score[0] > score[1])
         {
-            winners.push_back(get<0>(match));
+            match->addWinOne();
         }
         else
         {
-            winners.push_back(get<1>(match));
+            match->addWinTwo();
+        }
+
+        if(match->getWinsOne() == winsToProgress)
+        {
+            matches.erase(matches.begin() + i);
+            winners.push_back(teamOne);
+        }
+        else if(match->getWinsTwo() == winsToProgress)
+        {
+            matches.erase(matches.begin() + i);
+            winners.push_back(teamTwo);
         }
     }
 
-    createMatches(winners);
-    round++;
+    if(matches.size() == 0)
+    {
+        createMatches(winners);
+        round++;
+    }
 }
 
-void Tournament::createMatches(vector<int> teams)
+void Tournament::addTeam(Team *team)
+{
+    winners.push_back(team);
+}
+
+void Tournament::createMatches(vector<Team *> teams)
 {
     matches.clear();
     for(int i = 0; i < teams.size(); i+=2)
     {
-        matches.push_back(make_tuple(teams[i], teams[i+1]));
+        matches.push_back(new TournamentMatchup(teams[i], teams[i + 1]));
     }
 }

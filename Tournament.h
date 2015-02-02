@@ -3,6 +3,7 @@
 
 #include "Team.h"
 #include "Match.h"
+#include "TournamentMatchup.h"
 
 #include <map>
 #include <vector>
@@ -14,14 +15,16 @@ class Tournament
 public:
     Tournament(int numTeams);
     void simRound();
+    void addTeam(Team *team);
 
 
 private:
     map<int, Team*> teams;
-    vector<tuple<int, int>> matches;
-    int round;
+    vector<Team *> winners;
+    vector<TournamentMatchup *> matches;
+    int round, winsToProgress;
 
-    void createMatches(vector<int> teams);
+    void createMatches(vector<Team *> teams);
 
 };
 
