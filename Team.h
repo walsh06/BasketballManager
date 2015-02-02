@@ -31,7 +31,7 @@ class Team
 public:
     Team(string teamName);
     vector<Player *> getRoster();
-
+    string getName();
     Player* getPlayer(int position);
     vector<Player*> getOtherPlayers(int number);
     int getPlayerPosition(int number);

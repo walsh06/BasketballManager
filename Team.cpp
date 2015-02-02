@@ -108,6 +108,12 @@ void Team::changeStrategy(int index, int strategy)
 }
 
 //===============================
+
+string Team::getName()
+{
+    return teamName;
+}
+
 int Team::getDefence()
 {
     return defence;

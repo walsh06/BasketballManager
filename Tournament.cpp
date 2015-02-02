@@ -9,6 +9,8 @@ Tournament::Tournament(int numTeams)
     addTeam(new Team("Pacers"));
     addTeam(new Team("Spurs"));
     createMatches(winners);
+    winners.clear();
+
 }
 
 void Tournament::simRound()
@@ -16,13 +18,14 @@ void Tournament::simRound()
     int numMatches = matches.size();
     for(int i = 0; i < numMatches; i++)
     {
-
         TournamentMatchup *match = matches[i];
         if(match->isMatchOver() == false)
         {
             Team *teamOne = match->getTeamOne();
             Team *teamTwo = match->getTeamTwo();
             Match m(teamOne, teamTwo);
+
+            m.sim();
             int* score = m.getScore();
 
             if(score[0] > score[1])
@@ -49,10 +52,16 @@ void Tournament::simRound()
     int i;
     for(i = 0; i < numMatches && matches[i]->isMatchOver() == true; i++);
 
-    if(i == numMatches)
+    if(matches.size() == 1 && matches[0]->isMatchOver() == true)
+    {
+        cout << "TOURNAMENT OVER " << endl;
+        cout << "WINNER " << winners[0]->getName() << endl;
+    }
+    else if(i == numMatches)
     {
         createMatches(winners);
         round++;
+        winners.clear();
     }
 }
 
@@ -63,9 +72,15 @@ void Tournament::addTeam(Team *team)
 
 void Tournament::createMatches(vector<Team *> teams)
 {
-    matches.clear();
+    for(auto &match: matches)
+    {
+        matches.pop_back();
+    }
+
+
     for(int i = 0; i < teams.size(); i+=2)
     {
         matches.push_back(new TournamentMatchup(teams[i], teams[i + 1]));
     }
+
 }

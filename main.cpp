@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Match.h"
+#include "Tournament.h"
 #include <time.h>
 #include <stdlib.h>
 
@@ -9,13 +10,13 @@ using namespace std;
 int main()
 {
     srand(time(NULL));
-    League l;
-    l.simRound(1);
     //l.printResults();
-    l.simRound(2);
-    l.simRound(3);
-    l.printResults();
-    l.printTable();
+
+    Tournament t(4);
+    for(int i = 0; i < 14; i++)
+    {
+        t.simRound();
+    }
     /*
     for(int i = 1; i < 2; i++)
 

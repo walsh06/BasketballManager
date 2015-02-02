@@ -3,6 +3,8 @@
 TournamentMatchup::TournamentMatchup(Team *teamOne, Team *teamTwo)
 {
     matchOver = false;
+    winsOne = 0;
+    winsTwo = 0;
     this->teamOne = teamOne;
     this->teamTwo = teamTwo;
 }
