@@ -17,13 +17,13 @@ int main()
     {
         t.simRound();
     }
-    /*
-    for(int i = 1; i < 2; i++)
 
-
+/*
     for(int i = 1; i < 31; i++)
     {
-        Match m;
+        Team teamOne("Heat"), teamTwo("Heat");
+
+        Match m(&teamOne, &teamTwo);
 
         m.sim();
         string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");
@@ -31,11 +31,11 @@ int main()
     }
 */
     /*
-    Match m;
+    Team teamOne("Spurs"), teamTwo("Heat");
+    Match m(&teamOne, &teamTwo);
 
     m.sim();
-    //m.writeMatchStats("Game.csv");
-    */
+*/
     return 0;
 
 }

@@ -7,7 +7,7 @@ Tournament::Tournament(int numTeams)
     addTeam(new Team("Spurs"));
     addTeam(new Team("Heat"));
     addTeam(new Team("Pacers"));
-    addTeam(new Team("Spurs"));
+    addTeam(new Team("Bobcats"));
     createMatches(winners);
     winners.clear();
 
