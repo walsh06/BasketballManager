@@ -67,6 +67,25 @@ void League::createSchedule(const char* file)
     }
 }
 
+int League::findWinner()
+{
+    int winner = 0;
+    int wins = 0;
+    for(auto &team: teams)
+    {
+        if(team.second->getWins() > wins)
+        {
+            winner = team.first;
+            wins = team.second->getWins();
+        }
+    }
+    return winner;
+}
+
+//==================================
+// Printing
+//==================================
+
 void League::printResults()
 {
     for(auto &result: results)

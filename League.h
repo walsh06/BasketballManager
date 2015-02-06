@@ -13,6 +13,7 @@ public:
     League();
 
     void createSchedule(const char* file);
+    int findWinner();
 
     void printSchedule();
     void printSchedule(int team);
