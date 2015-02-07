@@ -1,14 +1,14 @@
 #include "Match.h"
 
-Match::Match()
+Match::Match(Team *teamOne, Team *teamTwo)
 {
-    teamOne = new Team("Spurs");
+    this->teamOne = teamOne;
     teamOne->setTeam(1);
-    teamTwo = new Team("Spurs");
+    this->teamTwo = teamTwo;
     teamTwo->setTeam(2);
 
-    teams[0] = teamOne;
-    teams[1] = teamTwo;
+    teams[0] = this->teamOne;
+    teams[1] = this->teamTwo;
 
     score[0] = 0;
     score[1] = 0;
@@ -19,8 +19,7 @@ Match::Match()
 
 Match::~Match()
 {
-    delete teamOne;
-    delete teamTwo;
+
 }
 
 void Match::sim()
@@ -102,10 +101,15 @@ void Match::sim()
             }
         }
     }
-
+    cout << "Game Over" << endl;
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
-    shotMap.printHeatMap();
+    //shotMap.printHeatMap();
+}
+
+int* Match::getScore()
+{
+    return score;
 }
 
 //===============================
@@ -587,7 +591,7 @@ void Match::driveBasket(Player *p)
                         p->setDribbleDrive(false);
                         break;
                     }
-                    else if(screenRand < 28)
+                    else if(screenRand < 29)
                     {
                         //cout << "Blocking foul: " << opp.getNumber() << " on " << p->getNumber() << endl;
                         printValue("Blocking foul", opp.getNumber(), p->getNumber());
@@ -715,12 +719,12 @@ void Match::shoot(Player* p, int pressure)
     if(range == 1)
     {
         //shootUnderBasket(p, pressure);
-        shootTwo(p, pressure, p->getUnderBasketShot(), 30, 6, "Under Basket" );
+        shootTwo(p, pressure, p->getUnderBasketShot(), 30, 5, "Under Basket" );
     }
     else if(range == 2)
     {
         //shootClose(p, pressure);
-        shootTwo(p, pressure, p->getCloseShot(), 30, 6, " Close" );
+        shootTwo(p, pressure, p->getCloseShot(), 30, 5, "Close" );
 
     }
     else if(range == 3)
@@ -749,8 +753,8 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
 
     if(shotRand < shot)
     {
-       cout << "SCORE " << type << endl;
-       printValue("SCORE" + type);
+       //cout << "SCORE " << type << endl;
+       printValue("SCORE " + type);
        score[p->getTeam() - 1]+=2;
        p->getStatList()->addTwoPoints();
        checkAssist();
@@ -872,7 +876,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 
     do
     {
-        int ftProb = rand() % 22;
+        int ftProb = rand() % 21;
         if(ftProb < ft)
         {
             //cout << "Free Throw: " << p->getNumber() << endl;
@@ -1544,7 +1548,7 @@ void Match::steal(Player *p)
         p->getStatList()->addSteal();
         swapSides(p->getNumber());
     }
-    else if(stealRand <= 20)
+    else if(stealRand <= 25)
     {
         //cout << "Illegal contact: " << p->getNumber() << endl;
         printValue("Illegal Contact", p->getNumber());

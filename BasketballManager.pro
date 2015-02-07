@@ -25,11 +25,14 @@ SOURCES += main.cpp \
     PlayerStrategyPostScorer.cpp \
     PlayerStrategyBalancedPlaymaker.cpp \
     PlayerStrategyBalanced.cpp \
-    pugixml.cpp \
     Fouls.cpp \
     PlayerStrategyScoringForward.cpp \
-    Manager.cpp
-    pugixml.cpp
+    Tournament.cpp \
+    League.cpp \
+    LeagueTeam.cpp \
+    Manager.cpp \
+    pugixml.cpp \
+    TournamentMatchup.cpp
 
 HEADERS += \
     Player.h \
@@ -58,5 +61,9 @@ HEADERS += \
     pugixml.hpp \
     Fouls.h \
     PlayerStrategyScoringForward.h \
-    Manager.h
+    Tournament.h \
+    League.h \
+    LeagueTeam.h \
+    Manager.h \
+    TournamentMatchup.h
 

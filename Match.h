@@ -19,11 +19,13 @@ using namespace std;
 class Match
 {
 public:
-    Match();
+    Match(Team *teamOne, Team *teamTwo);
     ~Match();
 
     void sim();
     void writeMatchStats(string filename);
+
+    int* getScore();
 private:
     Fouls fouls;
     int firstPossession;
@@ -37,7 +39,7 @@ private:
     vector<Player*> orderOfPlay;
     tuple<Player *, int> assist;
     int score[2];
-    const bool printing = true;
+    const bool printing = false;
     bool endOfPossession;
 
 
