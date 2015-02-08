@@ -57,8 +57,23 @@ Player::Player(map<string, string> playerMap)
     energy = 100;
     stamina = stoi(playerMap["stamina"]);
     calcHeatMap();
+
+    string pos = playerMap["pos"];
+
+    if(pos == "PG") playingPosition = 1;
+    else if(pos == "SG") playingPosition = 2;
+    else if(pos == "SF") playingPosition = 3;
+    else if(pos == "PF") playingPosition = 4;
+    else if(pos == "C") playingPosition = 5;
+
     position = NULL;
     strategy = NULL;
+}
+
+Player::~Player()
+{
+    //delete strategy;
+    //delete position;
 }
 
 //=================================
@@ -200,6 +215,7 @@ void Player::setPlayingPosition(PlayerPosition *pos)
 {
     delete this->position;
     this->position = pos;
+
     updateMap();
 }
 
@@ -235,6 +251,11 @@ void Player::updateMap()
 //=================================
 // Energy
 //=================================
+
+int Player::getPlayingPosition()
+{
+    return playingPosition;
+}
 
 int Player::getEnergy()
 {

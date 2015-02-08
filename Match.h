@@ -25,6 +25,7 @@ class Match
 {
 public:
     Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo);
+
     ~Match();
     static void setSimSpeed(int speed);
     void sim();
@@ -32,6 +33,7 @@ public:
 
     static int simSpeed;
 
+    int* getScore();
 private:
     MatchScreen *screen;
     Fouls fouls;
@@ -47,6 +49,8 @@ private:
     vector<Player*> orderOfPlay;
     tuple<Player *, int> assist;
     int score[2];
+    const bool printing = false;
+    bool endOfPossession;
 
 
     void move(Player* p);
@@ -55,10 +59,11 @@ private:
     vector<int> getDefendersForPass(int team, int x1, int y1, int x2, int y2);
 
     void shoot(Player* p, int pressure);
-    void shootUnderBasket(Player *p, int pressure);
+    void shootTwo(Player *p, int pressure, int shot, int shootRand, int foulRand, string type);
+    //void shootUnderBasket(Player *p, int pressure);
     void shootThree(Player* p, int pressure);
-    void shootMedium(Player* p, int pressure);
-    void shootClose(Player* p, int pressure);
+    //void shootMedium(Player* p, int pressure);
+    //void shootClose(Player* p, int pressure);
     void shootFreeThrow(Player* p, int numOfFreethrows);
 
     void pass(Player* p, Player* teamMate);
@@ -67,15 +72,23 @@ private:
     void checkAssist();
 
     void moveDefence(Player* p);
-    void moveDefenceLoose(Player *p, Player opposition);
-    void moveDefenceTight(Player* p, Player opposition);
+    void moveDefenceLoose(Player *p, Player *opposition);
+    void moveDefenceTight(Player* p, Player *opposition);
     void moveTowardBasket(Player* p);
     void moveDefender(Player *p, int destPosX, int destPosY);
+    void moveZoneDefence(Player *p);
+    void moveManDefence(Player *p);
+    int flipY(int y);
 
-    void block(Player *p);
-    void steal(Player *p, Player opposition);
+    bool block(Player *p);
+    void blockedShot(int posX, int posY);
+    void steal(Player *p);
 
     void printCourt();
+    void printValue(string valueName, int value);
+    void printValue(string valueName, int value, int valueTwo);
+    void printValue(string valueName);
+
 
     int getScoreDifference(int team);
     void jumpBall();

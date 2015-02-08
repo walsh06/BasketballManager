@@ -39,12 +39,18 @@ public:
     void addFreeThrow();
     void addFreeThrowScore();
 
+    void addBlock();
+    void addSteal();
+    int getBlocks();
+    int getSteals();
+
 private:
     int points, games, minutes;
     int assists;
     int threeScores, shots, threeShots, scores;
     int offensiveRebounds, defensiveRebounds;
     int freeThrows, freeThrowsScored;
+    int blocks, steals;
 };
 
 #endif // STATLIST_H

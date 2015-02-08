@@ -33,7 +33,12 @@ SOURCES += main.cpp \
     PlayerStrategyBalanced.cpp \
     Fouls.cpp \
     PlayerStrategyScoringForward.cpp \
-    pugixml.cpp
+    Tournament.cpp \
+    League.cpp \
+    LeagueTeam.cpp \
+    Manager.cpp \
+    pugixml.cpp \
+    TournamentMatchup.cpp
 
 HEADERS += \
     Player.h \
@@ -64,7 +69,12 @@ HEADERS += \
     MatchScreen.h \
     MatchReceiver.h \
     Fouls.h \
-    PlayerStrategyScoringForward.h
+    PlayerStrategyScoringForward.h \
+    Tournament.h \
+    League.h \
+    LeagueTeam.h \
+    Manager.h \
+    TournamentMatchup.h
 
 FORMS += \
     MainWindow.ui \

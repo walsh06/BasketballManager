@@ -22,7 +22,9 @@ public slots:
     void changeStrategy(int index, int strategy);
     void changePosition(int index, int position);
     void changeSimSpeed(int index);
-
+    void changeDefenceType(int defenceType);
+    void changeDefenceMatchup(int opp, int pos);
+    void changeDefenceSetting(int opp, int defence);
 
 };
 

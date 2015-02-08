@@ -8,6 +8,10 @@ MatchReceiver::MatchReceiver(Team *team, MatchScreen *screen, QObject *parent) :
     connect(screen, SIGNAL(changePosition(int, int)), this, SLOT(changePosition(int, int)));
     connect(screen, SIGNAL(changeStrategy(int, int)), this, SLOT(changeStrategy(int, int)));
     connect(screen, SIGNAL(changeSimSpeed(int)), this, SLOT(changeSimSpeed(int)));
+    connect(screen, SIGNAL(changeDefenceType(int)), this, SLOT(changeDefenceType(int)));
+    connect(screen, SIGNAL(changeDefenceMatchup(int, int)), this, SLOT(changeDefenceMatchup(int, int)));
+    connect(screen, SIGNAL(changeDefenceSetting(int, int)), this, SLOT(changeDefenceSetting(int, int)));
+
     simSpeed = 1000;
 }
 
@@ -26,6 +30,11 @@ void MatchReceiver::changePosition(int index, int position)
     team->updatePosition(index, position);
 }
 
+void MatchReceiver::changeDefenceType(int defenceType)
+{
+    team->setDefence(defenceType);
+}
+
 void MatchReceiver::changeSimSpeed(int index)
 {
     switch(index)
@@ -42,4 +51,14 @@ void MatchReceiver::changeSimSpeed(int index)
 int* MatchReceiver::getSpeed()
 {
     return &simSpeed;
+}
+
+void MatchReceiver::changeDefenceMatchup(int opp, int pos)
+{
+    team->changeDefenceMatchup(opp, pos);
+}
+
+void MatchReceiver::changeDefenceSetting(int opp, int defence)
+{
+    team->setDefenceSetting(opp, defence);
 }

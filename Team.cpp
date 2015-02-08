@@ -5,42 +5,7 @@ Team::Team(string teamName)
     this->teamName = teamName;
     readTeam(teamName);
 
-    int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
-
-    defenceMatchups[pg] = PG;
-    defenceMatchups[sg] = SG;
-    defenceMatchups[sf] = SF;
-    defenceMatchups[pf] = PF;
-    defenceMatchups[c] = C;
-
-    players[pg]->setPlayingPosition(new PositionPointGuard());
-    players[sg]->setPlayingPosition(new PositionShootingGuard());
-    players[sf]->setPlayingPosition(new PositionSmallForward());
-    players[pf]->setPlayingPosition(new PositionPowerForward());
-    players[c]->setPlayingPosition(new PositionCentre());
-    players[6]->setPlayingPosition(new PositionPointGuard());
-    players[7]->setPlayingPosition(new PositionShootingGuard());
-    players[8]->setPlayingPosition(new PositionSmallForward());
-    players[9]->setPlayingPosition(new PositionPowerForward());
-    players[10]->setPlayingPosition(new PositionCentre());
-
-    players[c]->setStrategy(new PlayerStrategyCrashBoards());
-    players[pf]->setStrategy(new PlayerStrategyPostScorer());
-    players[sf]->setStrategy(new PlayerStrategyInsideOutside());
-    players[sg]->setStrategy(new PlayerStrategyInsideOutside());
-    players[pg]->setStrategy(new PlayerStrategyOutsidePlaymaker());
-
-    players[6]->setStrategy(new PlayerStrategyBalancedPlaymaker());
-    players[7]->setStrategy(new PlayerStrategyShootThree());
-    players[8]->setStrategy(new PlayerStrategyScoringForward());
-    players[9]->setStrategy(new PlayerStrategyPostScorer());
-    players[10]->setStrategy(new PlayerStrategyCrashBoards());
-
-    defenceSettings[pg] = TIGHT;
-    defenceSettings[sg] = TIGHT;
-    defenceSettings[sf] = TIGHT;
-    defenceSettings[pf] = TIGHT;
-    defenceSettings[c] = SAG;
+    setupTeamTactics();
 }
 
 void Team::readTeam(string teamName)
@@ -71,6 +36,133 @@ void Team::readTeam(string teamName)
             }
         }
 }
+
+//==========================
+// Tactics
+//==========================
+
+void Team::setupTeamTactics()
+{
+    manager.evaluatePlayers(players);
+    for(int i = 1; i <= players.size(); i++)
+    {
+        int strategy = manager.getBestStrategyForPlayer(i);
+        cout << i << " " << strategy << endl;
+        changeStrategy(i, strategy);
+    }
+
+    int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
+
+    defenceMatchups[pg] = PG;
+    defenceMatchups[sg] = SG;
+    defenceMatchups[sf] = SF;
+    defenceMatchups[pf] = PF;
+    defenceMatchups[c] = C;
+
+    players[pg]->setPlayingPosition(new PositionPointGuard());
+    players[sg]->setPlayingPosition(new PositionShootingGuard());
+    players[sf]->setPlayingPosition(new PositionSmallForward());
+    players[pf]->setPlayingPosition(new PositionPowerForward());
+    players[c]->setPlayingPosition(new PositionCentre());
+    players[6]->setPlayingPosition(new PositionPointGuard());
+    players[7]->setPlayingPosition(new PositionShootingGuard());
+    players[8]->setPlayingPosition(new PositionSmallForward());
+    players[9]->setPlayingPosition(new PositionPowerForward());
+    players[10]->setPlayingPosition(new PositionCentre());
+
+    defenceSettings[pg] = TIGHT;
+    defenceSettings[sg] = TIGHT;
+    defenceSettings[sf] = TIGHT;
+    defenceSettings[pf] = SAG;
+    defenceSettings[c] = SAG;
+
+    defence = MAN;
+}
+
+void Team::pickStartingTeam()
+{
+    for(int i = 1; i < 6; i++)
+    {
+        manager.pickStartingPosition(i, players);
+    }
+}
+
+void Team::changeStrategy(int index, int strategy)
+{
+    PlayerStrategy *newStrategy;
+
+    switch(strategy)
+    {
+        case 0: newStrategy = new PlayerStrategyBalanced(); break;
+        case 1: newStrategy = new PlayerStrategyOutsidePlaymaker(); break;
+        case 2: newStrategy = new PlayerStrategyInsidePlaymaker(); break;
+        case 3: newStrategy = new PlayerStrategyBalancedPlaymaker(); break;
+        case 4: newStrategy = new PlayerStrategyShootThree(); break;
+        case 5: newStrategy = new PlayerStrategyInsideOutside(); break;
+        case 6: newStrategy = new PlayerStrategyScoringForward(); break;
+        case 7: newStrategy = new PlayerStrategyPostScorer(); break;
+        case 8: newStrategy = new PlayerStrategyCrashBoards(); break;
+    }
+
+    players[index]->setStrategy(newStrategy);
+}
+//================================
+// Defence
+//================================
+
+int Team::getDefence()
+{
+    return defence;
+}
+
+void Team::setDefence(int defence)
+{
+    this->defence = defence;
+}
+
+void Team::changeDefenceMatchup(int opp, int pos)
+{
+    int i;
+    for(i = 1; i < 6; i++)
+    {
+        if(defenceMatchups[i] == opp)
+        {
+            break;
+        }
+    }
+    int temp = defenceMatchups[pos];
+    defenceMatchups[pos] = opp;
+    defenceMatchups[i] = temp;
+}
+
+int Team::getMatchup(int position)
+{
+    return defenceMatchups[position];
+}
+
+int Team::getMatchup(Player *p)
+{
+    return getMatchup(getPlayerPosition(p->getNumber()));
+}
+
+int Team::getDefenceSetting(int pos)
+{
+    return defenceSettings[pos];
+}
+
+int Team::setDefenceSetting(int pos, int defence)
+{
+    defenceSettings[pos] = defence;
+}
+
+//===============================
+
+string Team::getName()
+{
+    return teamName;
+}
+
+
 
 vector<Player *> Team::getRoster()
 {
@@ -113,20 +205,7 @@ vector<Player*> Team::getOtherPlayers(int number)
     return otherPlayers;
 }
 
-int Team::getMatchup(int position)
-{
-    return defenceMatchups[position];
-}
 
-int Team::getMatchup(Player p)
-{
-    return getMatchup(getPlayerPosition(p.getNumber()));
-}
-
-int Team::getDefenceSetting(int pos)
-{
-    return defenceSettings[pos];
-}
 
 void Team::setTeam(int team)
 {
@@ -189,22 +268,41 @@ void Team::updateEnergy()
            playing = false;
        }
        players[i]->updateEnergy(playing);
-
+        /*
        if(players[i]->getEnergy() < 80 && i < 6)
        {
            swapPlayers(i, i+5);
-       }
+       }*/
+
    }
 }
 
-void Team::swapPlayers(int p1, int p2)
+void Team::swapPlayers(int posOne, int posTwo)
 {
-    Player *temp = players[p1];
-    players[p1] = players[p2];
-    players[p2] = temp;
-    players[p1]->setPos(players[p2]->getPosX(), players[p2]->getPosY());
-    cout << "SUB: " << p1 << " " << p2 << endl;
+    Player *tempPlayer = players[posOne];
+    players[posOne] = players[posTwo];
+    players[posTwo] = tempPlayer;
 }
+
+void Team::swapPlayers()
+{
+    for(int i = 1; i < 6; i++)
+    {
+        manager.subPlayer(i, players);
+    }
+}
+
+void Team::swapPlayers(int ftShooter)
+{
+    for(int i = 1; i < 6; i++)
+    {
+        if(i != ftShooter)
+        {
+            manager.subPlayer(i, players);
+        }
+    }
+}
+
 
 //===========================================
 // Team Set up
@@ -231,10 +329,22 @@ void Team::restartInbound(int ballTeam)
     }
     else
     {
-        for(auto &player: players)
+        if(defence == ZONE)
         {
-            player.second->setRandomPos();
+            getPlayer(1)->setPos(2, 3);
+            getPlayer(2)->setPos(3, 5);
+            getPlayer(3)->setPos(3, 2);
+            getPlayer(4)->setPos(5, 5);
+            getPlayer(5)->setPos(5, 2);
         }
+        else
+        {
+            for(auto &player: players)
+            {
+                player.second->setRandomPos();
+            }
+        }
+
     }
 }
 

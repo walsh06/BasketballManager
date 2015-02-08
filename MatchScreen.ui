@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="CourtScreen">
     <widget class="QGraphicsView" name="court">
@@ -274,6 +274,39 @@
        </property>
        <property name="spacing">
         <number>6</number>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="defenceType">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>290</y>
+         <width>151</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Man-to-man</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>3-2 Zone</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>290</y>
+         <width>67</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Defence</string>
        </property>
       </widget>
      </widget>
@@ -629,6 +662,128 @@
     <zorder>tabWidget</zorder>
     <zorder>line</zorder>
    </widget>
+   <widget class="QWidget" name="DefenceScreen">
+    <widget class="QComboBox" name="matchupOne">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>50</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="defenceSettingOne">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>50</y>
+       <width>131</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="defenceSettingTwo">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>90</y>
+       <width>131</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="matchupTwo">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>90</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="defenceSettingThree">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>130</y>
+       <width>131</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="matchupThree">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>130</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="defenceSettingFour">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>170</y>
+       <width>131</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="matchupFour">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>170</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="defenceSettingFive">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>210</y>
+       <width>131</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="matchupFive">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>210</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="defenceType_2">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>290</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Man-to-man</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>3-2 Zone</string>
+      </property>
+     </item>
+    </widget>
+   </widget>
   </widget>
   <widget class="QPushButton" name="matchButton">
    <property name="geometry">
@@ -648,18 +803,18 @@
     <rect>
      <x>170</x>
      <y>20</y>
-     <width>99</width>
+     <width>131</width>
      <height>27</height>
     </rect>
    </property>
    <property name="text">
-    <string>Tactics</string>
+    <string>Offensive Tactics</string>
    </property>
   </widget>
   <widget class="QSlider" name="matchSpeed">
    <property name="geometry">
     <rect>
-     <x>500</x>
+     <x>830</x>
      <y>10</y>
      <width>201</width>
      <height>29</height>
@@ -693,7 +848,7 @@
   <widget class="QPushButton" name="StartPauseButton">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>700</x>
      <y>10</y>
      <width>91</width>
      <height>27</height>
@@ -701,6 +856,19 @@
    </property>
    <property name="text">
     <string>Start</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="defenceButton">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>20</y>
+     <width>141</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Defensive Tactics</string>
    </property>
   </widget>
  </widget>

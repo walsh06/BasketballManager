@@ -78,6 +78,32 @@ private slots:
 
     void on_swapPlayerTwo_currentIndexChanged(int index);
 
+    void on_defenceType_currentIndexChanged(int index);
+
+    void on_defenceType_2_currentIndexChanged(int index);
+
+    void on_matchupOne_currentIndexChanged(int index);
+
+    void on_matchupTwo_currentIndexChanged(int index);
+
+    void on_matchupThree_currentIndexChanged(int index);
+
+    void on_matchupFour_currentIndexChanged(int index);
+
+    void on_matchupFive_currentIndexChanged(int index);
+
+    void on_defenceButton_clicked();
+
+    void on_defenceSettingOne_currentIndexChanged(int index);
+
+    void on_defenceSettingTwo_currentIndexChanged(int index);
+
+    void on_defenceSettingThree_currentIndexChanged(int index);
+
+    void on_defenceSettingFour_currentIndexChanged(int index);
+
+    void on_defenceSettingFive_currentIndexChanged(int index);
+
 private:
     int swapIndexOne, swapIndexTwo;
     Ui::MatchScreen *ui;
@@ -88,7 +114,7 @@ private:
     Team *teamOne;
      std::map<int, std::vector<std::string> > comments;
 
-     QComboBox *boxes[5][2];
+     QComboBox *boxes[5][2], *defenceBoxes[5][2];
 
      void readXML();
      void initPlayers();
@@ -99,6 +125,9 @@ signals:
     void changePosition(int, int);
     void changeSimSpeed(int);
     void startGame();
+    void changeDefenceType(int);
+    void changeDefenceMatchup(int, int);
+    void changeDefenceSetting(int, int);
 };
 
 #endif // MATCHSCREEN_H

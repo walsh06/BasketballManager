@@ -13,6 +13,8 @@ class Player
 {
 public:
     Player(int number);
+    ~Player();
+
     Player(map<string, string> playerMap);
 
     int getPosValue(int x, int y);
@@ -26,7 +28,7 @@ public:
     ProbabilityVector getStrategyVector();
     void updateMap();
 
-
+    int getPlayingPosition();
     int getNumber();
     int getThreeShot();
     int getMediumShot();
@@ -64,13 +66,14 @@ public:
 
     Heatmap moveTrackerMap;
 private:
+
     Heatmap posValueMap, finalMap ;
     PlayerPosition *position;
     PlayerStrategy *strategy;
     StatList playerStats;
 
     int posX, posY;
-    int number;
+    int number, playingPosition;
     int team;
     string name;
     //shooting ratings

@@ -18,8 +18,8 @@ MatchScreen::MatchScreen(QWidget *parent) :
     blackPen = new QPen(Qt::black);
 
     positions = {"Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Centre"};
-    strategies = {"Balanced", "Balanced Playmaker","Outside Playmaker", "Inside Playmaker",
-                  "Inside Outside", "Rebounder", "Three Point", "Post Scorer", "Scoring Forward"};
+    strategies = {"Balanced", "Inside Playmaker","Outside Playmaker", "Balanced Playmaker",
+                  "Three Point","Inside Outside","Scoring Forward",  "Post Scorer", "Rebounder"};
 
     swapIndexOne = 1;
     swapIndexTwo = 1;
@@ -84,6 +84,31 @@ void MatchScreen::initTacticScreen(Team *teamOne)
     ui->ratingsWidget->setItem(0, 11, new QTableWidgetItem("Spd"));
     ui->ratingsWidget->setItem(0, 12, new QTableWidgetItem("FT"));
     initPlayers();
+
+    defenceBoxes[0][0] = ui->matchupOne;
+    defenceBoxes[0][1] = ui->defenceSettingOne;
+    defenceBoxes[1][0] = ui->matchupTwo;
+    defenceBoxes[1][1] = ui->defenceSettingTwo;
+    defenceBoxes[2][0] = ui->matchupThree;
+    defenceBoxes[2][1] = ui->defenceSettingThree;
+    defenceBoxes[3][0] = ui->matchupFour;
+    defenceBoxes[3][1] = ui->defenceSettingFour;
+    defenceBoxes[4][0] = ui->matchupFive;
+    defenceBoxes[4][1] = ui->defenceSettingFive;
+
+    for(int i = 0; i < 5; i++)
+    {
+        defenceBoxes[i][1]->addItem("Tight");
+        defenceBoxes[i][1]->addItem("Sag");
+        defenceBoxes[i][0]->addItem("PG");
+        defenceBoxes[i][0]->addItem("SG");
+        defenceBoxes[i][0]->addItem("SF");
+        defenceBoxes[i][0]->addItem("PF");
+        defenceBoxes[i][0]->addItem("C");
+
+        defenceBoxes[i][0]->setCurrentIndex(i);
+    }
+
 }
 
 void MatchScreen::initPlayers()
@@ -387,4 +412,72 @@ void MatchScreen::on_swapPlayerOne_currentIndexChanged(int index)
 void MatchScreen::on_swapPlayerTwo_currentIndexChanged(int index)
 {
     swapIndexTwo = index + 1;
+}
+
+void MatchScreen::on_defenceType_currentIndexChanged(int index)
+{
+    emit changeDefenceType(index);
+    ui->defenceType_2->setCurrentIndex(index);
+}
+
+void MatchScreen::on_defenceType_2_currentIndexChanged(int index)
+{
+    emit changeDefenceType(index);
+    ui->defenceType->setCurrentIndex(index);
+}
+
+
+void MatchScreen::on_matchupOne_currentIndexChanged(int index)
+{
+    emit changeDefenceMatchup(1, index + 1);
+}
+
+void MatchScreen::on_matchupTwo_currentIndexChanged(int index)
+{
+    emit changeDefenceMatchup(2, index + 1);
+}
+
+void MatchScreen::on_matchupThree_currentIndexChanged(int index)
+{
+    emit changeDefenceMatchup(3, index + 1);
+}
+
+void MatchScreen::on_matchupFour_currentIndexChanged(int index)
+{
+    emit changeDefenceMatchup(4, index + 1);
+}
+
+void MatchScreen::on_matchupFive_currentIndexChanged(int index)
+{
+    emit changeDefenceMatchup(5, index + 1);
+}
+
+void MatchScreen::on_defenceButton_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MatchScreen::on_defenceSettingOne_currentIndexChanged(int index)
+{
+    emit changeDefenceSetting(1, index + 1);
+}
+
+void MatchScreen::on_defenceSettingTwo_currentIndexChanged(int index)
+{
+    emit changeDefenceSetting(2, index + 1);
+}
+
+void MatchScreen::on_defenceSettingThree_currentIndexChanged(int index)
+{
+    emit changeDefenceSetting(3, index + 1);
+}
+
+void MatchScreen::on_defenceSettingFour_currentIndexChanged(int index)
+{
+    emit changeDefenceSetting(4, index + 1);
+}
+
+void MatchScreen::on_defenceSettingFive_currentIndexChanged(int index)
+{
+    emit changeDefenceSetting(5, index + 1);
 }
