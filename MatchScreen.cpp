@@ -269,6 +269,10 @@ void MatchScreen::updateCourt(std::vector<Player *> players, Ball *ball)
         {
             scene->addEllipse(drawX, drawY, 30, 30, *blackPen, *blueBrush);
         }
+        QGraphicsTextItem *number = new QGraphicsTextItem(QString::number(players[i]->getNumber()));
+        number->setDefaultTextColor(Qt::white);
+        number->setPos(drawX + 8, drawY + 3);
+        scene->addItem(number);
     }
 
     if(ball->getTeam() == 2)

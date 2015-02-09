@@ -310,12 +310,14 @@ void Match::jumpBall()
 
         //cout << "Jump Ball: Team 1" << endl;
         printValue("Jump Ball Team", 1);
+        screen->updateCommentary(16, playerOne);
     }
     else if(jumpWinner == 1)
     {
         ball.setPos(teamTwo->getPlayer(1)->getPosX(), teamTwo->getPlayer(1)->getPosY());
         //cout << "Jump Ball: Team 2" << endl;
         printValue("Jump Ball Team", 2);
+        screen->updateCommentary(16, playerTwo);
 
         teams[0]->swapSides();
         teams[1]->swapSides();

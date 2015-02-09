@@ -12,6 +12,7 @@
 #include <QGraphicsScene>
 #include <QGridLayout>
 #include <QComboBox>
+#include <QGraphicsTextItem>
 
 namespace Ui {
 class MatchScreen;
