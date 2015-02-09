@@ -33,15 +33,16 @@ MatchScreen::~MatchScreen()
 // Tactics Screen
 //======================================
 
-void MatchScreen::initTacticScreen(Team *teamOne)
+void MatchScreen::initTacticScreen(Team *team)
 {
+    this->ownTeam = team;
+
     boxes[0][0] = ui->positionOne; boxes[0][1] = ui->strategyOne;
     boxes[1][0] = ui->positionTwo; boxes[1][1] = ui->strategyTwo;
     boxes[2][0] = ui->positionThree; boxes[2][1] = ui->strategyThree;
     boxes[3][0] = ui->positionFour; boxes[3][1] = ui->strategyFour;
     boxes[4][0] = ui->positionFive; boxes[4][1] = ui->strategyFive;
 
-    this->teamOne = teamOne;
     for(auto position: positions)
     {
         ui->positionOne->addItem(position);
@@ -119,26 +120,26 @@ void MatchScreen::initPlayers()
     ui->swapPlayerTwo->clear();
     for(int i = 1; i < 11; i++)
     {
-        ui->playerWidget->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
+        ui->playerWidget->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
         if(i < 6)
         {
-            ui->quickPlayerList->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
+            ui->quickPlayerList->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
         }
-        ui->swapPlayerOne->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
-        ui->swapPlayerTwo->addItem(QString::fromStdString(teamOne->getPlayer(i)->getName()));
-        QTableWidgetItem *three = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getThreeShot()));
-        QTableWidgetItem *mid = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getMediumShot()));
-        QTableWidgetItem *close = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getCloseShot()));
-        QTableWidgetItem *layup = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getLayup()));
-        QTableWidgetItem *dunk = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getDunk()));
-        QTableWidgetItem *pass = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getPass()));
-        QTableWidgetItem *defence = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getDefence()));
-        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getSteal()));
-        QTableWidgetItem *block = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getBlock()));
-        QTableWidgetItem *oRebound = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getOffRebound()));
-        QTableWidgetItem *dRebound = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getDefRebound()));
-        QTableWidgetItem *speed = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getSpeed()));
-        QTableWidgetItem *freethrow = new QTableWidgetItem(QString::number(teamOne->getPlayer(i)->getFreethrow()));
+        ui->swapPlayerOne->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
+        ui->swapPlayerTwo->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
+        QTableWidgetItem *three = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getThreeShot()));
+        QTableWidgetItem *mid = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getMediumShot()));
+        QTableWidgetItem *close = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getCloseShot()));
+        QTableWidgetItem *layup = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getLayup()));
+        QTableWidgetItem *dunk = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getDunk()));
+        QTableWidgetItem *pass = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getPass()));
+        QTableWidgetItem *defence = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getDefence()));
+        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getSteal()));
+        QTableWidgetItem *block = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getBlock()));
+        QTableWidgetItem *oRebound = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getOffRebound()));
+        QTableWidgetItem *dRebound = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getDefRebound()));
+        QTableWidgetItem *speed = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getSpeed()));
+        QTableWidgetItem *freethrow = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getFreethrow()));
 
         ui->ratingsWidget->setItem(i, 0, three);
         ui->ratingsWidget->setItem(i, 1, mid);
@@ -156,6 +157,55 @@ void MatchScreen::initPlayers()
     }
 }
 
+void MatchScreen::initOppositionPlayers(Team *team)
+{
+    ui->oppPlayerRatings->setItem(0, 0, new QTableWidgetItem("3pt"));
+    ui->oppPlayerRatings->setItem(0, 1, new QTableWidgetItem("Mid"));
+    ui->oppPlayerRatings->setItem(0, 2, new QTableWidgetItem("Cls"));
+    ui->oppPlayerRatings->setItem(0, 3, new QTableWidgetItem("Lay"));
+    ui->oppPlayerRatings->setItem(0, 4, new QTableWidgetItem("Dnk"));
+    ui->oppPlayerRatings->setItem(0, 5, new QTableWidgetItem("Pas"));
+    ui->oppPlayerRatings->setItem(0, 6, new QTableWidgetItem("Def"));
+    ui->oppPlayerRatings->setItem(0, 7, new QTableWidgetItem("Stl"));
+    ui->oppPlayerRatings->setItem(0, 8, new QTableWidgetItem("Blk"));
+    ui->oppPlayerRatings->setItem(0, 9, new QTableWidgetItem("ORb"));
+    ui->oppPlayerRatings->setItem(0, 10, new QTableWidgetItem("DRb"));
+    ui->oppPlayerRatings->setItem(0, 11, new QTableWidgetItem("Spd"));
+    ui->oppPlayerRatings->setItem(0, 12, new QTableWidgetItem("FT"));
+
+    this->oppositionTeam = team;
+    for(int i = 1; i < 6; i++)
+    {
+        ui->oppPlayerNames->addItem(QString::fromStdString(oppositionTeam->getPlayer(i)->getName()));
+        QTableWidgetItem *three = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getThreeShot()));
+        QTableWidgetItem *mid = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getMediumShot()));
+        QTableWidgetItem *close = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getCloseShot()));
+        QTableWidgetItem *layup = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getLayup()));
+        QTableWidgetItem *dunk = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getDunk()));
+        QTableWidgetItem *pass = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getPass()));
+        QTableWidgetItem *defence = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getDefence()));
+        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getSteal()));
+        QTableWidgetItem *block = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getBlock()));
+        QTableWidgetItem *oRebound = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getOffRebound()));
+        QTableWidgetItem *dRebound = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getDefRebound()));
+        QTableWidgetItem *speed = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getSpeed()));
+        QTableWidgetItem *freethrow = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getFreethrow()));
+
+        ui->oppPlayerRatings->setItem(i, 0, three);
+        ui->oppPlayerRatings->setItem(i, 1, mid);
+        ui->oppPlayerRatings->setItem(i, 2, close);
+        ui->oppPlayerRatings->setItem(i, 3, layup);
+        ui->oppPlayerRatings->setItem(i, 4, dunk);
+        ui->oppPlayerRatings->setItem(i, 5, pass);
+        ui->oppPlayerRatings->setItem(i, 6, defence);
+        ui->oppPlayerRatings->setItem(i, 7, steal);
+        ui->oppPlayerRatings->setItem(i, 8, block);
+        ui->oppPlayerRatings->setItem(i, 9, oRebound);
+        ui->oppPlayerRatings->setItem(i, 10, dRebound);
+        ui->oppPlayerRatings->setItem(i, 11, speed);
+        ui->oppPlayerRatings->setItem(i, 12, freethrow);
+    }
+}
 
 //=================================
 // Match Updates
@@ -258,13 +308,17 @@ void MatchScreen::readXML()
     }
 }
 
-void MatchScreen::updateCommentary(int eventType, Player *p)
+void MatchScreen::updateCommentary(int eventType, Player *p, Player *p2)
 {
     int randPos = rand() % comments[eventType].size();
     string commentary = comments[eventType][randPos];
 
     commentary.replace(commentary.find("<player>"), 8, p->getName());
 
+    if(p2 != NULL)
+    {
+        commentary.replace(commentary.find("<second_player>"), 15, p2->getName());
+    }
     ui->commentary->setText(QString::fromStdString(commentary));
 }
 

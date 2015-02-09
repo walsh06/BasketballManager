@@ -17,6 +17,7 @@ Match::Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo)
     assist = make_tuple(new Player(0), 800);
     screen = newScreen;
     screen->initTacticScreen(teamOne);
+    screen->initOppositionPlayers(teamTwo);
     teamOne->pickStartingTeam();
     teamTwo->pickStartingTeam();
 
@@ -754,7 +755,6 @@ vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
 void Match::shoot(Player* p, int pressure)
 {
     shotMap.incrementValue(p->getPosX(), p->getPosY());
-    screen->updateCommentary(1, p);
     int range = p->getRange();
     if(range == 1)
     {
@@ -797,6 +797,18 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
 
        //cout << "SCORE " << type << endl;
        printValue("SCORE " + type);
+       if(type == "Mid Range")
+       {
+           screen->updateCommentary(2, p);
+       }
+       else if(type == "Close")
+       {
+           screen->updateCommentary(3, p);
+       }
+       else
+       {
+           screen->updateCommentary(4, p);
+       }
 
        p->getStatList()->addTwoPoints();
        checkAssist();
@@ -814,6 +826,8 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
     {
         //cout << "MISS " << type << endl;
         printValue("Miss" + type);
+        screen->updateCommentary(12, p);
+
         p->getStatList()->addMiss();
 
         if(freeThrows == 0)
@@ -860,6 +874,8 @@ void Match::shootThree(Player *p, int pressure)
     {
        //cout << "SCORE 3" << endl;
         printValue("Score 3");
+        screen->updateCommentary(1, p);
+        updateScore(p->getTeam() - 1, 3);
 
        p->getStatList()->addThreePoints();
 
@@ -984,6 +1000,7 @@ void Match::pass(Player* p, Player* teamMate)
     {
         //cout << "Pass: " << teamMate->getNumber() << endl;
         printValue("Pass", teamMate->getNumber());
+        screen->updateCommentary(15, p, teamMate);
         assist = make_tuple(p, time);
         ball.setPlayerPosition(teams[teamMate->getTeam() - 1]->getPlayerPosition(teamMate->getNumber()));
         ball.setPos(teamMate->getPosX(), teamMate->getPosY());
@@ -1038,6 +1055,7 @@ void Match::rebound()
              {
                  //cout << "Offensive Rebound: " << p->getNumber() << endl;
                  printValue("Offensive Rebound", p->getNumber());
+                 screen->updateCommentary(8, p);
                  p->getStatList()->addOffensiveRebound();
                  endOfPossession = true;
              }
@@ -1045,6 +1063,7 @@ void Match::rebound()
              {
                  //cout << "Defensive Rebound: " << p->getNumber() << endl;
                  printValue("Defensive Rebound", p->getNumber());
+                 screen->updateCommentary(9, p);
                  p->getStatList()->addDefensiveRebound();
 
                  swapSides(p->getNumber());
@@ -1516,6 +1535,7 @@ bool Match::block(Player *p)
             {
                 //cout << "Block: " << opp->getNumber() << endl;
                 printValue("Block", opp->getNumber());
+                screen->updateCommentary(14,opp, p);
                 opp->getStatList()->addBlock();
                 return true;
             }

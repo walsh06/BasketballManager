@@ -27,9 +27,11 @@ public:
     void updateCourt(std::vector<Player *> players, Ball *ball);
     void updateScore(int scoreOne, int scoreTwo);
     void updateTime(int time, int shotClock);
-    void updateCommentary(int eventType, Player *p);
+    void updateCommentary(int eventType, Player *p, Player *p2 = NULL);
 
     void initTacticScreen(Team *teamOne);
+    void initOppositionPlayers(Team *teamTwo);
+
 
 private slots:
     void on_positionOne_currentIndexChanged(int index);
@@ -111,7 +113,7 @@ private:
     QPen * blackPen;
     vector<QString> positions, strategies;
     QGraphicsScene *scene;
-    Team *teamOne;
+    Team *ownTeam, *oppositionTeam;
      std::map<int, std::vector<std::string> > comments;
 
      QComboBox *boxes[5][2], *defenceBoxes[5][2];
