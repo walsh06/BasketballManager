@@ -23,6 +23,7 @@ MatchScreen::MatchScreen(QWidget *parent) :
 
     swapIndexOne = 1;
     swapIndexTwo = 1;
+    initCourt();
 }
 
 MatchScreen::~MatchScreen()
@@ -225,13 +226,11 @@ void MatchScreen::updateScore(int scoreOne, int scoreTwo)
     ui->scoreTwo->display(scoreTwo);
 }
 
-void MatchScreen::updateCourt(std::vector<Player *> players, Ball *ball)
+void MatchScreen::initCourt()
 {
     scene->clear();
     QPixmap courtImage("../court.png");
     scene->addPixmap(courtImage.scaled(700,400, Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
-
-    int x, y, drawX, drawY, posModX, posModY, ballPos;
 
     for(int i =0; i < 14; i++)
     {
@@ -244,6 +243,84 @@ void MatchScreen::updateCourt(std::vector<Player *> players, Ball *ball)
         scene->addLine(0, x, 700, x, *blackPen);
     }
 
+    for(int i = 0; i < 10; i++)
+    {
+        players.push_back(new QGraphicsEllipseItem(0, 0, 30, 30));
+        scene->addItem(players[i]);
+        players[i]->setPen(*blackPen);
+        numbers.push_back(new QGraphicsTextItem());
+        numbers[i]->setDefaultTextColor(Qt::black);
+        scene->addItem(numbers[i]);
+    }
+
+    ballCircle = new QGraphicsEllipseItem(0, 0, 10, 10);
+    ballCircle->setBrush(*yellowBrush);
+    ballCircle->setPen(*blackPen);
+    scene->addItem(ballCircle);
+}
+
+void MatchScreen::updateCourt(Ball *ball)
+{
+    int x, y, drawX, drawY, posModX, posModY;
+    int ballTeam = ball->getTeam(), ballPos = ball->getPlayerPosition();
+    for(int i = 0; i < 5; i++)
+    {
+        QGraphicsEllipseItem *playerCircle = players[i];
+        Player *player = ownTeam->getPlayer(i + 1);
+        if(ball->getTeam() == 2)
+        {
+            x = 6 - player->getPosX();
+        }
+        else
+        {
+            x = player->getPosX() + 7;
+        }
+        y = player->getPosY();
+
+        posModX = rand()%20;
+        posModY = rand()%20;
+        drawX = (x * 50) + posModX;
+        drawY = (y * 50) + posModY;
+
+        playerCircle->setPos(drawX, drawY);
+        playerCircle->setBrush(*redBrush);
+        if(ballTeam == 1 && ballPos == i + 1)
+        {
+            ballCircle->setPos(drawX + 20, drawY + 10);
+        }
+        numbers[i]->setPlainText(QString::number(player->getNumber()));
+        numbers[i]->setPos(drawX + 8, drawY + 3);
+    }
+
+    for(int i = 1; i < 6; i++)
+    {
+        QGraphicsEllipseItem *playerCircle = players[i + 4];
+        Player *player = oppositionTeam->getPlayer(i);
+        if(ball->getTeam() == 2)
+        {
+            x = 6 - player->getPosX();
+        }
+        else
+        {
+            x = player->getPosX() + 7;
+        }
+        y = player->getPosY();
+
+        posModX = rand()%20;
+        posModY = rand()%20;
+        drawX = (x * 50) + posModX;
+        drawY = (y * 50) + posModY;
+
+        playerCircle->setPos(drawX, drawY);
+        playerCircle->setBrush(*blueBrush);
+        if(ballTeam == 2 && ballPos == i)
+        {
+            ballCircle->setPos(drawX, drawY + 10);
+        }
+        numbers[i + 4]->setPlainText(QString::number(player->getNumber()));
+        numbers[i + 4]->setPos(drawX + 8, drawY + 3);
+    }
+    /*
     for(int i = 0; i < 10; i++)
     {
         if(ball->getTeam() == 2)
@@ -284,6 +361,7 @@ void MatchScreen::updateCourt(std::vector<Player *> players, Ball *ball)
         ballPos = (ball->getPosX() + 7) * 50;
     }
     scene->addEllipse(ballPos, ball->getPosY() * 50, 10, 10, *blackPen, *yellowBrush);
+    */
 }
 
 void MatchScreen::readXML()

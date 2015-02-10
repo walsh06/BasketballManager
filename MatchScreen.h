@@ -25,7 +25,7 @@ class MatchScreen : public QWidget
 public:
     explicit MatchScreen(QWidget *parent = 0);
     ~MatchScreen();
-    void updateCourt(std::vector<Player *> players, Ball *ball);
+    void updateCourt(Ball *ball);
     void updateScore(int scoreOne, int scoreTwo);
     void updateTime(int time, int shotClock);
     void updateCommentary(int eventType, Player *p, Player *p2 = NULL);
@@ -114,6 +114,9 @@ private:
     QPen * blackPen;
     vector<QString> positions, strategies;
     QGraphicsScene *scene;
+    vector<QGraphicsEllipseItem *> players;
+    vector<QGraphicsTextItem *> numbers;
+    QGraphicsEllipseItem *ballCircle;
     Team *ownTeam, *oppositionTeam;
      std::map<int, std::vector<std::string> > comments;
 
@@ -121,6 +124,7 @@ private:
 
      void readXML();
      void initPlayers();
+     void initCourt();
 
 signals:
     void swapPlayers(int, int);

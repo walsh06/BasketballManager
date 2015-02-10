@@ -2,8 +2,8 @@
 
 Ball::Ball()
 {
-    team = 0;
-    player = 0;
+    team = 1;
+    player = 5;
     posX = 0;
     posY = 4;
 }

@@ -109,7 +109,7 @@ void Match::sim()
                     while( QTime::currentTime() < dieTime )
                     QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 
-                 screen->updateCourt(orderOfPlay, &ball);
+                 screen->updateCourt(&ball);
 
                 if(time%60 == 0)
                 {
@@ -121,7 +121,7 @@ void Match::sim()
         }
     }
 
-    screen->updateCourt(orderOfPlay, &ball);
+    screen->updateCourt(&ball);
     cout << "Game Over" << endl;
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
@@ -324,7 +324,7 @@ void Match::jumpBall()
         ball.setTeam(2);
     }
     gameState = INPLAY ;
-    screen->updateCourt(orderOfPlay, &ball);
+    screen->updateCourt(&ball);
 
 }
 //================================
