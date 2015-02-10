@@ -120,10 +120,10 @@ void MatchScreen::initPlayers()
     ui->swapPlayerTwo->clear();
     for(int i = 1; i < 11; i++)
     {
-        ui->playerWidget->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
+        ui->playerWidget->addItem(QString::number(ownTeam->getPlayer(i)->getNumber()) + QString::fromStdString(" " +ownTeam->getPlayer(i)->getName()));
         if(i < 6)
         {
-            ui->quickPlayerList->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
+            ui->quickPlayerList->addItem(QString::number(ownTeam->getPlayer(i)->getNumber()) + QString::fromStdString(" " + ownTeam->getPlayer(i)->getName()));
         }
         ui->swapPlayerOne->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
         ui->swapPlayerTwo->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
@@ -176,7 +176,7 @@ void MatchScreen::initOppositionPlayers(Team *team)
     this->oppositionTeam = team;
     for(int i = 1; i < 6; i++)
     {
-        ui->oppPlayerNames->addItem(QString::fromStdString(oppositionTeam->getPlayer(i)->getName()));
+        ui->oppPlayerNames->addItem(QString::number(oppositionTeam->getPlayer(i)->getNumber()) + QString::fromStdString(" " + oppositionTeam->getPlayer(i)->getName()));
         QTableWidgetItem *three = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getThreeShot()));
         QTableWidgetItem *mid = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getMediumShot()));
         QTableWidgetItem *close = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getCloseShot()));

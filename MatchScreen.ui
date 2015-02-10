@@ -173,9 +173,9 @@
     <widget class="QTabWidget" name="quickTab">
      <property name="geometry">
       <rect>
-       <x>770</x>
+       <x>760</x>
        <y>60</y>
-       <width>291</width>
+       <width>311</width>
        <height>421</height>
       </rect>
      </property>
@@ -203,7 +203,7 @@
       <widget class="QComboBox" name="quickStrategyOne">
        <property name="geometry">
         <rect>
-         <x>115</x>
+         <x>140</x>
          <y>20</y>
          <width>161</width>
          <height>27</height>
@@ -213,7 +213,7 @@
       <widget class="QComboBox" name="quickStrategyTwo">
        <property name="geometry">
         <rect>
-         <x>115</x>
+         <x>140</x>
          <y>60</y>
          <width>161</width>
          <height>27</height>
@@ -223,7 +223,7 @@
       <widget class="QComboBox" name="quickStrategyThree">
        <property name="geometry">
         <rect>
-         <x>115</x>
+         <x>140</x>
          <y>100</y>
          <width>161</width>
          <height>27</height>
@@ -233,7 +233,7 @@
       <widget class="QComboBox" name="quickStrategyFour">
        <property name="geometry">
         <rect>
-         <x>115</x>
+         <x>140</x>
          <y>140</y>
          <width>161</width>
          <height>27</height>
@@ -243,7 +243,7 @@
       <widget class="QComboBox" name="quickStrategyFive">
        <property name="geometry">
         <rect>
-         <x>115</x>
+         <x>140</x>
          <y>180</y>
          <width>161</width>
          <height>27</height>
@@ -268,7 +268,7 @@
         <rect>
          <x>0</x>
          <y>20</y>
-         <width>111</width>
+         <width>141</width>
          <height>192</height>
         </rect>
        </property>
