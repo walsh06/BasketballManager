@@ -6,7 +6,7 @@
 #include "Ball.h"
 #include "Team.h"
 #include "pugixml.hpp"
-
+#include "PlayerGraphic.h"
 #include <vector>
 #include <map>
 #include <QGraphicsScene>
@@ -114,8 +114,7 @@ private:
     QPen * blackPen;
     vector<QString> positions, strategies;
     QGraphicsScene *scene;
-    vector<QGraphicsEllipseItem *> players;
-    vector<QGraphicsTextItem *> numbers;
+    vector<PlayerGraphic*> players;
     QGraphicsEllipseItem *ballCircle;
     Team *ownTeam, *oppositionTeam;
      std::map<int, std::vector<std::string> > comments;

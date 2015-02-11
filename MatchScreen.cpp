@@ -160,6 +160,7 @@ void MatchScreen::initPlayers()
 
 void MatchScreen::initOppositionPlayers(Team *team)
 {
+    ui->oppPlayerNames->clear();
     ui->oppPlayerRatings->setItem(0, 0, new QTableWidgetItem("3pt"));
     ui->oppPlayerRatings->setItem(0, 1, new QTableWidgetItem("Mid"));
     ui->oppPlayerRatings->setItem(0, 2, new QTableWidgetItem("Cls"));
@@ -177,20 +178,21 @@ void MatchScreen::initOppositionPlayers(Team *team)
     this->oppositionTeam = team;
     for(int i = 1; i < 6; i++)
     {
-        ui->oppPlayerNames->addItem(QString::number(oppositionTeam->getPlayer(i)->getNumber()) + QString::fromStdString(" " + oppositionTeam->getPlayer(i)->getName()));
-        QTableWidgetItem *three = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getThreeShot()));
-        QTableWidgetItem *mid = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getMediumShot()));
-        QTableWidgetItem *close = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getCloseShot()));
-        QTableWidgetItem *layup = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getLayup()));
-        QTableWidgetItem *dunk = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getDunk()));
-        QTableWidgetItem *pass = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getPass()));
-        QTableWidgetItem *defence = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getDefence()));
-        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getSteal()));
-        QTableWidgetItem *block = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getBlock()));
-        QTableWidgetItem *oRebound = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getOffRebound()));
-        QTableWidgetItem *dRebound = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getDefRebound()));
-        QTableWidgetItem *speed = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getSpeed()));
-        QTableWidgetItem *freethrow = new QTableWidgetItem(QString::number(oppositionTeam->getPlayer(i)->getFreethrow()));
+        Player *player = oppositionTeam->getPlayer(i);
+        ui->oppPlayerNames->addItem(QString::number(player->getNumber()) + QString::fromStdString(" " + player->getName()));
+        QTableWidgetItem *three = new QTableWidgetItem(QString::number(player->getThreeShot()));
+        QTableWidgetItem *mid = new QTableWidgetItem(QString::number(player->getMediumShot()));
+        QTableWidgetItem *close = new QTableWidgetItem(QString::number(player->getCloseShot()));
+        QTableWidgetItem *layup = new QTableWidgetItem(QString::number(player->getLayup()));
+        QTableWidgetItem *dunk = new QTableWidgetItem(QString::number(player->getDunk()));
+        QTableWidgetItem *pass = new QTableWidgetItem(QString::number(player->getPass()));
+        QTableWidgetItem *defence = new QTableWidgetItem(QString::number(player->getDefence()));
+        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(player->getSteal()));
+        QTableWidgetItem *block = new QTableWidgetItem(QString::number(player->getBlock()));
+        QTableWidgetItem *oRebound = new QTableWidgetItem(QString::number(player->getOffRebound()));
+        QTableWidgetItem *dRebound = new QTableWidgetItem(QString::number(player->getDefRebound()));
+        QTableWidgetItem *speed = new QTableWidgetItem(QString::number(player->getSpeed()));
+        QTableWidgetItem *freethrow = new QTableWidgetItem(QString::number(player->getFreethrow()));
 
         ui->oppPlayerRatings->setItem(i, 0, three);
         ui->oppPlayerRatings->setItem(i, 1, mid);
@@ -245,12 +247,10 @@ void MatchScreen::initCourt()
 
     for(int i = 0; i < 10; i++)
     {
-        players.push_back(new QGraphicsEllipseItem(0, 0, 30, 30));
-        scene->addItem(players[i]);
-        players[i]->setPen(*blackPen);
-        numbers.push_back(new QGraphicsTextItem());
-        numbers[i]->setDefaultTextColor(Qt::black);
-        scene->addItem(numbers[i]);
+        players.push_back(new PlayerGraphic());
+        players[i]->setColour(redBrush);
+        scene->addItem(players[i]->getPlayer());
+        scene->addItem(players[i]->getNumber());
     }
 
     ballCircle = new QGraphicsEllipseItem(0, 0, 10, 10);
@@ -265,7 +265,7 @@ void MatchScreen::updateCourt(Ball *ball)
     int ballTeam = ball->getTeam(), ballPos = ball->getPlayerPosition();
     for(int i = 0; i < 5; i++)
     {
-        QGraphicsEllipseItem *playerCircle = players[i];
+        PlayerGraphic *playerGraphic= players[i];
         Player *player = ownTeam->getPlayer(i + 1);
         if(ball->getTeam() == 2)
         {
@@ -282,19 +282,18 @@ void MatchScreen::updateCourt(Ball *ball)
         drawX = (x * 50) + posModX;
         drawY = (y * 50) + posModY;
 
-        playerCircle->setPos(drawX, drawY);
-        playerCircle->setBrush(*redBrush);
+        playerGraphic->setNumber(player->getNumber());
+        playerGraphic->setPos(drawX, drawY);
+        playerGraphic->setColour(redBrush);
         if(ballTeam == 1 && ballPos == i + 1)
         {
             ballCircle->setPos(drawX + 20, drawY + 10);
         }
-        numbers[i]->setPlainText(QString::number(player->getNumber()));
-        numbers[i]->setPos(drawX + 8, drawY + 3);
     }
 
     for(int i = 1; i < 6; i++)
     {
-        QGraphicsEllipseItem *playerCircle = players[i + 4];
+        PlayerGraphic *playerGraphic= players[i + 4];
         Player *player = oppositionTeam->getPlayer(i);
         if(ball->getTeam() == 2)
         {
@@ -311,14 +310,13 @@ void MatchScreen::updateCourt(Ball *ball)
         drawX = (x * 50) + posModX;
         drawY = (y * 50) + posModY;
 
-        playerCircle->setPos(drawX, drawY);
-        playerCircle->setBrush(*blueBrush);
+        playerGraphic->setNumber(player->getNumber());
+        playerGraphic->setPos(drawX, drawY);
+        playerGraphic->setColour(blueBrush);
         if(ballTeam == 2 && ballPos == i)
         {
             ballCircle->setPos(drawX, drawY + 10);
         }
-        numbers[i + 4]->setPlainText(QString::number(player->getNumber()));
-        numbers[i + 4]->setPos(drawX + 8, drawY + 3);
     }
     /*
     for(int i = 0; i < 10; i++)
@@ -590,6 +588,7 @@ void MatchScreen::on_matchupFive_currentIndexChanged(int index)
 
 void MatchScreen::on_defenceButton_clicked()
 {
+    initOppositionPlayers(oppositionTeam);
     ui->stackedWidget->setCurrentIndex(2);
 }
 

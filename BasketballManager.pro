@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     LeagueTeam.cpp \
     Manager.cpp \
     pugixml.cpp \
-    TournamentMatchup.cpp
+    TournamentMatchup.cpp \
+    PlayerGraphic.cpp
 
 HEADERS += \
     Player.h \
@@ -74,7 +75,8 @@ HEADERS += \
     League.h \
     LeagueTeam.h \
     Manager.h \
-    TournamentMatchup.h
+    TournamentMatchup.h \
+    PlayerGraphic.h
 
 FORMS += \
     MainWindow.ui \
