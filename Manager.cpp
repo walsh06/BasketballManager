@@ -70,7 +70,7 @@ void Manager::subPlayer(int pos, map<int, Player *> &players)
         map<int, Player *> possibleSubs;
         float bestPos = 0.0;
         int bestPlayer = 0;
-        for(int i=1; i <= players.size(); i++)
+        for(int i=6; i <= players.size(); i++)
         {
             if(players[i]->getPlayingPosition() == pos && players[i]->getEnergy() > energyThresholdSubIn)
             {
@@ -82,22 +82,21 @@ void Manager::subPlayer(int pos, map<int, Player *> &players)
         {
             for(auto &player: possibleSubs)
             {
-                for(int i = 0; i < 9; i++)
+                if(playerRatings[player.first - 1][getBestStrategyForPlayer(player.first)] > bestPos)
                 {
-                    if(playerRatings[player.first - 1][i] > bestPos)
-                    {
-                        bestPos = playerRatings[player.first - 1][i];
-                        bestPlayer = player.first;
-                    }
+                    bestPos = playerRatings[player.first - 1][getBestStrategyForPlayer(player.first)];
+                    bestPlayer = player.first;
                 }
             }
-
-            Player *temp = players[pos];
-            players[pos] = players[bestPlayer];
-            players[bestPlayer] = temp;
-            players[pos]->setPos(players[bestPlayer]->getPosX(), players[bestPlayer]->getPosY());
-            swap(playerRatings[pos], playerRatings[bestPlayer - 1]);
-            cout << "SUB " << pos << " " << bestPlayer << endl;
+            if(bestPlayer != pos)
+            {
+                Player *temp = players[pos];
+                players[pos] = players[bestPlayer];
+                players[bestPlayer] = temp;
+                players[pos]->setPos(players[bestPlayer]->getPosX(), players[bestPlayer]->getPosY());
+                swap(playerRatings[pos - 1], playerRatings[bestPlayer - 1]);
+                cout << "SUB " << pos << " " << bestPlayer << endl;
+            }
         }
     }
 }
