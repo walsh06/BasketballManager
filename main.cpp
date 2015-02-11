@@ -11,13 +11,13 @@ int main()
 {
     srand(time(NULL));
     //l.printResults();
-
+/*
     Tournament t(4);
     for(int i = 0; i < 14; i++)
     {
         t.simRound();
     }
-
+*/
 /*
     for(int i = 1; i < 31; i++)
     {
@@ -30,12 +30,12 @@ int main()
         m.writeMatchStats(filename);
     }
 */
-    /*
-    Team teamOne("Spurs"), teamTwo("Heat");
+
+    Team teamOne("Pacers"), teamTwo("Pacers");
     Match m(&teamOne, &teamTwo);
 
     m.sim();
-*/
+
     return 0;
 
 }
