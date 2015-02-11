@@ -26,16 +26,17 @@ void Manager::evaluatePlayers(map<int, Player *> players)
         player.push_back(((float)p->getDunk() + (float)p->getBlock() + (float)p->getDefRebound() + (float)p->getOffRebound())/4.0); //rebound
         playerRatings.push_back(player);
     }
+    printRatings();
 }
 
 void Manager::pickStartingPosition(int pos, map<int, Player *> &players)
 {
     map<int, Player *> possibleSubs;
-    float bestPos = playerRatings[pos][getBestStrategyForPlayer(pos)];
+    float bestPos = playerRatings[pos - 1][getBestStrategyForPlayer(pos)];
     int bestPlayer = pos;
     for(int i=1; i <= players.size(); i++)
     {
-        if(players[i]->getPlayingPosition() == pos && players[i]->getEnergy() > energyThresholdSubIn)
+        if(players[i]->getPlayingPosition() == pos)
         {
             possibleSubs[i] = players[i];
         }
@@ -45,21 +46,20 @@ void Manager::pickStartingPosition(int pos, map<int, Player *> &players)
     {
         for(auto &player: possibleSubs)
         {
-            for(int i = 0; i < 9; i++)
+            if(playerRatings[player.first - 1][getBestStrategyForPlayer(player.first)] > bestPos)
             {
-                if(playerRatings[player.first - 1][i] > bestPos)
-                {
-                    bestPos = playerRatings[player.first - 1][i];
-                    bestPlayer = player.first;
-                }
+                bestPos = playerRatings[player.first - 1][getBestStrategyForPlayer(player.first)];
+                bestPlayer = player.first;
             }
         }
-
-        Player *temp = players[pos];
-        players[pos] = players[bestPlayer];
-        players[bestPlayer] = temp;
-        players[pos]->setPos(players[bestPlayer]->getPosX(), players[bestPlayer]->getPosY());
-        swap(playerRatings[pos], playerRatings[bestPlayer - 1]);
+        if(bestPlayer != pos)
+        {
+            Player *temp = players[pos];
+            players[pos] = players[bestPlayer];
+            players[bestPlayer] = temp;
+            players[pos]->setPos(players[bestPlayer]->getPosX(), players[bestPlayer]->getPosY());
+            swap(playerRatings[pos - 1], playerRatings[bestPlayer - 1]);
+        }
     }
 }
 
