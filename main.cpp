@@ -26,13 +26,13 @@ int main(int argc, char *argv[])
     w.run();
     srand(time(NULL));
     //l.printResults();
-
+/*
     Tournament t(4);
     for(int i = 0; i < 14; i++)
     {
         t.simRound();
     }
-
+*/
 /*
     for(int i = 1; i < 31; i++)
     {
@@ -46,13 +46,15 @@ int main(int argc, char *argv[])
        // m.writeMatchStats(filename);
     }
 */
-    /*
-    Team teamOne("Spurs"), teamTwo("Heat");
+/*
+    Team teamOne("Pacers"), teamTwo("Pacers");
     Match m(&teamOne, &teamTwo);
 
     m.sim();
+
     //m.writeMatchStats("Game.csv");
     */
     return a.exec();
+
 }
 
