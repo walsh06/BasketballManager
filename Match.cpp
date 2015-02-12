@@ -813,6 +813,7 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
        }
 
        p->getStatList()->addTwoPoints();
+       screen->updateStat();
        checkAssist();
 
        if(freeThrows == 0)
@@ -831,6 +832,7 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
         screen->updateCommentary(12, p);
 
         p->getStatList()->addMiss();
+        screen->updateStat();
 
         if(freeThrows == 0)
         {
@@ -880,6 +882,7 @@ void Match::shootThree(Player *p, int pressure)
         updateScore(p->getTeam() - 1, 3);
 
        p->getStatList()->addThreePoints();
+       screen->updateStat();
 
        checkAssist();
        if(freeThrows == 0)
@@ -896,6 +899,7 @@ void Match::shootThree(Player *p, int pressure)
         //cout << "MISS 3" << endl;
         printValue("Miss 3");
         p->getStatList()->addThreeMiss();
+        screen->updateStat();
 
         if(freeThrows == 0)
         {
@@ -921,6 +925,7 @@ void Match::checkAssist()
     if(get<1>(assist) <= time + 3)
     {
         get<0>(assist)->getStatList()->addAssist();
+        screen->updateStat();
     }
 }
 
@@ -942,9 +947,10 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
             //cout << "Free Throw: " << p->getNumber() << endl;
             printValue("Free Throw", p->getNumber());
             p->getStatList()->addFreeThrowScore();
+            screen->updateStat();
 
             updateScore(p->getTeam() - 1, 1);
-            p->getStatList()->addPoint();
+            screen->updateStat();
 
             if(numOfFreeThrows == 1)
             {
@@ -956,6 +962,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
             //cout << "Missed Free Throw: " << p->getNumber() << endl;
             printValue("Missed Free Throw", p->getNumber());
             p->getStatList()->addFreeThrow();
+            screen->updateStat();
 
             if(numOfFreeThrows == 1)
             {
@@ -987,6 +994,8 @@ void Match::pass(Player* p, Player* teamMate)
                 steal = true;
                 stolenNumber = defender->getNumber();
                 defender->getStatList()->addSteal();
+                screen->updateStat();
+
             }
         }
     }
@@ -1059,6 +1068,8 @@ void Match::rebound()
                  printValue("Offensive Rebound", p->getNumber());
                  screen->updateCommentary(8, p);
                  p->getStatList()->addOffensiveRebound();
+                 screen->updateStat();
+
                  endOfPossession = true;
              }
              else
@@ -1067,6 +1078,7 @@ void Match::rebound()
                  printValue("Defensive Rebound", p->getNumber());
                  screen->updateCommentary(9, p);
                  p->getStatList()->addDefensiveRebound();
+                 screen->updateStat();
 
                  swapSides(p->getNumber());
              }
@@ -1239,7 +1251,7 @@ void Match::moveDefenceTight(Player* p, Player *opposition)
 
 void Match::moveTowardBasket(Player* p)
 {
-    int posX = p->getPosX(), basketX = 6, basketY, moveDirection;
+    int posX = p->getPosX(), basketX = 6, basketY;
 
     if(posX < 4)
     {
@@ -1341,7 +1353,7 @@ void Match::moveZoneDefence(Player *p)
         {
             moveDefenceTight(p, ballCarrier);
         }
-        else if((ballX == 1 && (ballY < 6 && ballY > 1)) || (ballX == 2 && (ballY < 6 && ballY > 1)) && defenceSetting == Team::TIGHT)
+        else if(((ballX == 1 && (ballY < 6 && ballY > 1)) || (ballX == 2 && (ballY < 6 && ballY > 1))) && (defenceSetting == Team::TIGHT))
         {
             moveDefenceTight(p, ballCarrier);
         }
@@ -1539,10 +1551,13 @@ bool Match::block(Player *p)
                 printValue("Block", opp->getNumber());
                 screen->updateCommentary(14,opp, p);
                 opp->getStatList()->addBlock();
+                screen->updateStat();
+
                 return true;
             }
         }
     }
+    return false;
 }
 
 void Match::blockedShot(int posX, int posY)
@@ -1613,6 +1628,8 @@ void Match::steal(Player *p)
         //cout << "Steal: " << p->getNumber() << endl;
         printValue("Steal", p->getNumber());
         p->getStatList()->addSteal();
+        screen->updateStat();
+
         swapSides(p->getNumber());
     }
     else if(stealRand <= 25)

@@ -13,6 +13,7 @@
 #include <QGridLayout>
 #include <QComboBox>
 #include <QGraphicsTextItem>
+#include <QTableWidgetItem>
 
 namespace Ui {
 class MatchScreen;
@@ -32,7 +33,8 @@ public:
 
     void initTacticScreen(Team *teamOne);
     void initOppositionPlayers(Team *teamTwo);
-
+    void loadStats();
+    void updateStat();
 
 private slots:
     void on_positionOne_currentIndexChanged(int index);
@@ -118,7 +120,6 @@ private:
     QGraphicsEllipseItem *ballCircle;
     Team *ownTeam, *oppositionTeam;
      std::map<int, std::vector<std::string> > comments;
-
      QComboBox *boxes[5][2], *defenceBoxes[5][2];
 
      void readXML();

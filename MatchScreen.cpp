@@ -156,6 +156,8 @@ void MatchScreen::initPlayers()
         ui->ratingsWidget->setItem(i, 11, speed);
         ui->ratingsWidget->setItem(i, 12, freethrow);
     }
+
+    loadStats();
 }
 
 void MatchScreen::initOppositionPlayers(Team *team)
@@ -208,6 +210,89 @@ void MatchScreen::initOppositionPlayers(Team *team)
         ui->oppPlayerRatings->setItem(i, 11, speed);
         ui->oppPlayerRatings->setItem(i, 12, freethrow);
     }
+}
+
+//========================================
+// Statistics
+//========================================
+
+void MatchScreen::loadStats()
+{
+    vector<QString> header = {"MP", "Pts", "Ast", "Reb", "FGA", "FGM", "FGPC", "Blk", "Stl"};
+    for(int i = 0; i < header.size(); i++)
+    {
+        ui->statsWidget->setItem(0, i, new QTableWidgetItem(header[i]));
+        ui->oppStats->setItem(0, i, new QTableWidgetItem(header[i]));
+    }
+
+    for(int i = 1; i < 11; i++)
+    {
+        StatList *playerStats = ownTeam->getPlayer(i)->getStatList();
+
+        QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
+        QTableWidgetItem *points = new QTableWidgetItem(QString::number(playerStats->getPointsPerGame()));
+        QTableWidgetItem *fga = new QTableWidgetItem(QString::number(playerStats->getShots()));
+        QTableWidgetItem *fgpc = new QTableWidgetItem(QString::number(playerStats->getShootingPercentage()));
+        QTableWidgetItem *ast = new QTableWidgetItem(QString::number(playerStats->getAssists()));
+        QTableWidgetItem *reb = new QTableWidgetItem(QString::number(playerStats->getRebounds()));
+        QTableWidgetItem *fgm = new QTableWidgetItem(QString::number(playerStats->getFieldGoalsMade()));
+        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(playerStats->getSteals()));
+        QTableWidgetItem *block = new QTableWidgetItem(QString::number(playerStats->getBlocks()));
+        ui->statsWidget->setItem(i, 0, minutes);
+        ui->statsWidget->setItem(i, 1, points);
+        ui->statsWidget->setItem(i, 2, ast);
+        ui->statsWidget->setItem(i, 3, reb);
+        ui->statsWidget->setItem(i, 4, fga);
+        ui->statsWidget->setItem(i, 5, fgm);
+        ui->statsWidget->setItem(i, 6, fgpc);
+        ui->statsWidget->setItem(i, 7, block);
+        ui->statsWidget->setItem(i, 8, steal);
+    }
+
+    for(int i = 1; i < 6; i++)
+    {
+        StatList *playerStats = ownTeam->getPlayer(i)->getStatList();
+
+        QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
+        QTableWidgetItem *points = new QTableWidgetItem(QString::number(playerStats->getPointsPerGame()));
+        QTableWidgetItem *fga = new QTableWidgetItem(QString::number(playerStats->getShots()));
+        QTableWidgetItem *fgpc = new QTableWidgetItem(QString::number(playerStats->getShootingPercentage()));
+        QTableWidgetItem *ast = new QTableWidgetItem(QString::number(playerStats->getAssists()));
+        QTableWidgetItem *reb = new QTableWidgetItem(QString::number(playerStats->getRebounds()));
+        QTableWidgetItem *fgm = new QTableWidgetItem(QString::number(playerStats->getFieldGoalsMade()));
+        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(playerStats->getSteals()));
+        QTableWidgetItem *block = new QTableWidgetItem(QString::number(playerStats->getBlocks()));
+        ui->oppStats->setItem(i, 0, minutes);
+        ui->oppStats->setItem(i, 1, points);
+        ui->oppStats->setItem(i, 2, ast);
+        ui->oppStats->setItem(i, 3, reb);
+        ui->oppStats->setItem(i, 4, fga);
+        ui->oppStats->setItem(i, 5, fgm);
+        ui->oppStats->setItem(i, 6, fgpc);
+        ui->oppStats->setItem(i, 7, block);
+        ui->oppStats->setItem(i, 8, steal);
+    }
+}
+
+void MatchScreen::updateStat()
+{
+    /*
+    int newStat;
+    if(stat  == 0)
+    {
+        newStat = ownTeam->getPlayer(player)->getStatList()->getPointsPerGame();
+    }
+    else if(stat == 1)
+    {
+        newStat = ownTeam->getPlayer(player)->getStatList()->getShootingPercentage();
+    }
+    else if(stat == 2)
+    {
+        newStat = ownTeam->getPlayer(player)->getStatList()->getAssists();
+    }
+    statTable[player][stat]->setText(QString::number(newStat));
+    */
+    loadStats();
 }
 
 //=================================
@@ -318,48 +403,6 @@ void MatchScreen::updateCourt(Ball *ball)
             ballCircle->setPos(drawX, drawY + 10);
         }
     }
-    /*
-    for(int i = 0; i < 10; i++)
-    {
-        if(ball->getTeam() == 2)
-        {
-            x = 6 - players[i]->getPosX();
-        }
-        else
-        {
-            x = players[i]->getPosX() + 7;
-        }
-        y = players[i]->getPosY();
-
-        posModX = rand()%20;
-        posModY = rand()%20;
-        drawX = (x * 50) + posModX;
-        drawY = (y * 50) + posModY;
-
-        if(players[i]->getTeam() == 1)
-        {
-            scene->addEllipse(drawX, drawY, 30, 30, *blackPen, *redBrush);
-        }
-        else
-        {
-            scene->addEllipse(drawX, drawY, 30, 30, *blackPen, *blueBrush);
-        }
-        QGraphicsTextItem *number = new QGraphicsTextItem(QString::number(players[i]->getNumber()));
-        number->setDefaultTextColor(Qt::white);
-        number->setPos(drawX + 8, drawY + 3);
-        scene->addItem(number);
-    }
-
-    if(ball->getTeam() == 2)
-    {
-        ballPos = (6 -  ball->getPosX()) * 50;
-    }
-    else
-    {
-        ballPos = (ball->getPosX() + 7) * 50;
-    }
-    scene->addEllipse(ballPos, ball->getPosY() * 50, 10, 10, *blackPen, *yellowBrush);
-    */
 }
 
 void MatchScreen::readXML()
