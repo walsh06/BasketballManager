@@ -15,7 +15,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::run()
 {
-    Team *teamOne = new Team("Spurs");
+    Team *teamOne = new Team("Spurs", true);
     Team *teamTwo = new Team("Pacers");
     receiver = new MatchReceiver(teamOne, ui->MatchWidget);
     match = new Match(ui->MatchWidget, teamOne, teamTwo);

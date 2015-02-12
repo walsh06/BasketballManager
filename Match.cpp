@@ -264,6 +264,7 @@ void Match::setUpOffensiveInbound()
     endOfPossession = true;
     teamOne->swapPlayers();
     teamTwo->swapPlayers();
+    screen->updatePlayers();
     ball.setPlayerPosition(4);
 
     int team = ball.getTeam();
@@ -278,6 +279,8 @@ void Match::setUpOwnSideInbound()
     endOfPossession = true;
     teamOne->swapPlayers();
     teamTwo->swapPlayers();
+    screen->updatePlayers();
+
     ball.setPlayerPosition(4);
 
     int team = ball.getTeam();
@@ -933,6 +936,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
     teamOne->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()));
     teamTwo->swapPlayers();
+    screen->updatePlayers();
 
     teams[p->getTeam() - 1]->setUpFreeThrowOffence(p->getNumber());
     teams[getOtherTeam(p->getTeam())]->setUpFreeThrowDefence();

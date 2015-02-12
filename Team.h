@@ -31,7 +31,7 @@ using namespace std;
 class Team
 {
 public:
-    Team(string teamName);
+    Team(string teamName, bool userControlled = false);
     vector<Player *> getRoster();
     string getName();
     Player* getPlayer(int position);
@@ -82,10 +82,12 @@ private:
     vector<Player *> roster;
     map<int, int> defenceMatchups;
     map<int, int> defenceSettings;
+    vector<int> subsQueue;
     int team;
     string teamName;
     int defence;
     Manager manager;
+    bool userControlled;
 };
 
 #endif // TEAM_H

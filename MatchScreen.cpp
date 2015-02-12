@@ -212,6 +212,12 @@ void MatchScreen::initOppositionPlayers(Team *team)
     }
 }
 
+void MatchScreen::updatePlayers()
+{
+    initPlayers();
+    initOppositionPlayers(oppositionTeam);
+}
+
 //========================================
 // Statistics
 //========================================
@@ -528,11 +534,6 @@ void MatchScreen::on_strategyFive_currentIndexChanged(int index)
 
 }
 
-void MatchScreen::on_playerWidget_currentRowChanged(int currentRow)
-{
-
-}
-
 void MatchScreen::on_quickStrategyOne_currentIndexChanged(int index)
 {
     emit changeStrategy(1, index);
@@ -555,7 +556,6 @@ void MatchScreen::on_quickStrategyFour_currentIndexChanged(int index)
 {
     emit changeStrategy(4, index);
     ui->strategyFour->setCurrentIndex(index);
-
 }
 
 void MatchScreen::on_quickStrategyFive_currentIndexChanged(int index)
@@ -567,7 +567,6 @@ void MatchScreen::on_quickStrategyFive_currentIndexChanged(int index)
 void MatchScreen::on_swapButton_clicked()
 {
     emit swapPlayers(swapIndexOne, swapIndexTwo);
-    initPlayers();
 
     if(swapIndexOne < 6)
     {
@@ -631,7 +630,6 @@ void MatchScreen::on_matchupFive_currentIndexChanged(int index)
 
 void MatchScreen::on_defenceButton_clicked()
 {
-    initOppositionPlayers(oppositionTeam);
     ui->stackedWidget->setCurrentIndex(2);
 }
 

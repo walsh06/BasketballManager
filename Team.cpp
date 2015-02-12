@@ -1,7 +1,8 @@
 #include "Team.h"
 
-Team::Team(string teamName)
+Team::Team(string teamName, bool userControlled)
 {
+    this->userControlled = userControlled;
     this->teamName = teamName;
     readTeam(teamName);
 
@@ -279,26 +280,50 @@ void Team::updateEnergy()
 
 void Team::swapPlayers(int posOne, int posTwo)
 {
-    Player *tempPlayer = players[posOne];
-    players[posOne] = players[posTwo];
-    players[posTwo] = tempPlayer;
+    subsQueue.push_back(posOne);
+    subsQueue.push_back(posTwo);
 }
 
 void Team::swapPlayers()
 {
-    for(int i = 1; i < 6; i++)
+    if(userControlled)
     {
-        manager.subPlayer(i, players);
+        for(int i = 0; i < subsQueue.size(); i+=2)
+        {
+            Player *tempPlayer = players[subsQueue[i]];
+            players[subsQueue[i]] = players[subsQueue[i + 1]];
+            players[subsQueue[i + 1]] = tempPlayer;
+        }
     }
+    else
+    {
+        for(int i = 1; i < 6; i++)
+        {
+            manager.subPlayer(i, players);
+        }
+    }
+
 }
 
 void Team::swapPlayers(int ftShooter)
 {
-    for(int i = 1; i < 6; i++)
+    if(userControlled)
     {
-        if(i != ftShooter)
+        for(int i = 0; i < subsQueue.size(); i+=2)
         {
-            manager.subPlayer(i, players);
+            Player *tempPlayer = players[subsQueue[i]];
+            players[subsQueue[i]] = players[subsQueue[i + 1]];
+            players[subsQueue[i + 1]] = tempPlayer;
+        }
+    }
+    else
+    {
+        for(int i = 1; i < 6; i++)
+        {
+            if(i != ftShooter)
+            {
+                manager.subPlayer(i, players);
+            }
         }
     }
 }

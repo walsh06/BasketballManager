@@ -35,6 +35,7 @@ public:
     void initOppositionPlayers(Team *teamTwo);
     void loadStats();
     void updateStat();
+    void updatePlayers();
 
 private slots:
     void on_positionOne_currentIndexChanged(int index);
@@ -64,8 +65,6 @@ private slots:
     void on_strategyFour_currentIndexChanged(int index);
 
     void on_strategyFive_currentIndexChanged(int index);
-
-    void on_playerWidget_currentRowChanged(int currentRow);
 
     void on_quickStrategyOne_currentIndexChanged(int index);
 
