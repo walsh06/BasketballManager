@@ -1,14 +1,29 @@
 #include <iostream>
 #include "Match.h"
-#include "Tournament.h"
+#include "MainWindow.h"
 #include <time.h>
 #include <stdlib.h>
 
+#include <QApplication>
+#include <QCoreApplication>
+#include <QFile>
+#include "Tournament.h"
 #include "League.h"
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);
+    QFile styleFile("../BasketballManager/darkorange.stylesheet.txt");
+    styleFile.open(QFile::ReadOnly);
+    QByteArray bytes = styleFile.readAll();
+    QApplication *app = (QApplication*)QApplication::instance();
+    app->setStyleSheet(bytes);
+
+
+    MainWindow w;
+    w.show();
+    w.run();
     srand(time(NULL));
     //l.printResults();
 /*
@@ -21,22 +36,25 @@ int main()
 /*
     for(int i = 1; i < 31; i++)
     {
+       //Match m;
+
         Team teamOne("Heat"), teamTwo("Heat");
 
         Match m(&teamOne, &teamTwo);
-
-        m.sim();
-        string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");
-        m.writeMatchStats(filename);
+       //m.sim();
+        //string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");
+       // m.writeMatchStats(filename);
     }
 */
-
+/*
     Team teamOne("Pacers"), teamTwo("Pacers");
     Match m(&teamOne, &teamTwo);
 
     m.sim();
 
-    return 0;
+    //m.writeMatchStats("Game.csv");
+    */
+    return a.exec();
 
 }
 

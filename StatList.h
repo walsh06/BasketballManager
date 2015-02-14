@@ -21,6 +21,7 @@ public:
     void addThreeScore();
     float getPointsPerGame();
     int getShots();
+    int getFieldGoalsMade();
     float getShootingPercentage();
     int getThreeShots();
     float getThreeShootingPercentage();

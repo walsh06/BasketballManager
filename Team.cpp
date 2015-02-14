@@ -1,7 +1,8 @@
 #include "Team.h"
 
-Team::Team(string teamName)
+Team::Team(string teamName, bool userControlled)
 {
+    this->userControlled = userControlled;
     this->teamName = teamName;
     readTeam(teamName);
 
@@ -106,13 +107,9 @@ void Team::changeStrategy(int index, int strategy)
 
     players[index]->setStrategy(newStrategy);
 }
-
-//===============================
-
-string Team::getName()
-{
-    return teamName;
-}
+//================================
+// Defence
+//================================
 
 int Team::getDefence()
 {
@@ -123,6 +120,50 @@ void Team::setDefence(int defence)
 {
     this->defence = defence;
 }
+
+void Team::changeDefenceMatchup(int opp, int pos)
+{
+    int i;
+    for(i = 1; i < 6; i++)
+    {
+        if(defenceMatchups[i] == opp)
+        {
+            break;
+        }
+    }
+    int temp = defenceMatchups[pos];
+    defenceMatchups[pos] = opp;
+    defenceMatchups[i] = temp;
+}
+
+int Team::getMatchup(int position)
+{
+    return defenceMatchups[position];
+}
+
+int Team::getMatchup(Player *p)
+{
+    return getMatchup(getPlayerPosition(p->getNumber()));
+}
+
+int Team::getDefenceSetting(int pos)
+{
+    return defenceSettings[pos];
+}
+
+int Team::setDefenceSetting(int pos, int defence)
+{
+    defenceSettings[pos] = defence;
+}
+
+//===============================
+
+string Team::getName()
+{
+    return teamName;
+}
+
+
 
 vector<Player *> Team::getRoster()
 {
@@ -165,20 +206,7 @@ vector<Player*> Team::getOtherPlayers(int number)
     return otherPlayers;
 }
 
-int Team::getMatchup(int position)
-{
-    return defenceMatchups[position];
-}
 
-int Team::getMatchup(Player *p)
-{
-    return getMatchup(getPlayerPosition(p->getNumber()));
-}
-
-int Team::getDefenceSetting(int pos)
-{
-    return defenceSettings[pos];
-}
 
 void Team::setTeam(int team)
 {
@@ -190,6 +218,25 @@ void Team::setTeam(int team)
             player.second->setTeam(team);
         }
     }
+}
+
+//==========================================
+// Tactics
+//==========================================
+void Team::updatePosition(int index, int position)
+{
+    PlayerPosition *newPosition;
+
+    switch(position)
+    {
+        case PG: newPosition = new PositionPointGuard(); break;
+        case SG: newPosition = new PositionShootingGuard(); break;
+        case SF: newPosition = new PositionSmallForward(); break;
+        case PF: newPosition = new PositionPowerForward(); break;
+        case C: newPosition = new PositionCentre(); break;
+    }
+
+    players[index]->setPlayingPosition(newPosition);
 }
 
 void Team::updateEnergy()
@@ -211,24 +258,56 @@ void Team::updateEnergy()
    }
 }
 
-void Team::swapPlayers()
+void Team::swapPlayers(int posOne, int posTwo)
 {
-    for(int i = 1; i < 6; i++)
-    {
-        manager.subPlayer(i, players);
-    }
+    subsQueue.push_back(posOne);
+    subsQueue.push_back(posTwo);
 }
 
-void Team::swapPlayers(int ftShooter)
+void Team::swapPlayers()
 {
-    for(int i = 1; i < 6; i++)
+    if(userControlled)
     {
-        if(i != ftShooter)
+        for(int i = 0; i < subsQueue.size(); i+=2)
+        {
+            Player *tempPlayer = players[subsQueue[i]];
+            players[subsQueue[i]] = players[subsQueue[i + 1]];
+            players[subsQueue[i + 1]] = tempPlayer;
+        }
+    }
+    else
+    {
+        for(int i = 1; i < 6; i++)
         {
             manager.subPlayer(i, players);
         }
     }
+
 }
+
+void Team::swapPlayers(int ftShooter)
+{
+    if(userControlled)
+    {
+        for(int i = 0; i < subsQueue.size(); i+=2)
+        {
+            Player *tempPlayer = players[subsQueue[i]];
+            players[subsQueue[i]] = players[subsQueue[i + 1]];
+            players[subsQueue[i + 1]] = tempPlayer;
+        }
+    }
+    else
+    {
+        for(int i = 1; i < 6; i++)
+        {
+            if(i != ftShooter)
+            {
+                manager.subPlayer(i, players);
+            }
+        }
+    }
+}
+
 
 //===========================================
 // Team Set up

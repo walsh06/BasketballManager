@@ -214,7 +214,8 @@ int Player::getPosValue()
 void Player::setPlayingPosition(PlayerPosition *pos)
 {
     delete this->position;
-    position = pos;
+    this->position = pos;
+
     updateMap();
 }
 
@@ -240,7 +241,8 @@ void Player::updateMap()
     if(strategy != NULL)
     {
         finalMap = finalMap + strategy->getMap();
-        finalMap.printHeatMap();
+        //cout << getName() << endl;
+        //finalMap.printHeatMap();
     }
 }
 
@@ -473,6 +475,11 @@ int Player::getDefence()
 StatList* Player::getStatList()
 {
     return &playerStats;
+}
+
+string Player::getName()
+{
+    return name;
 }
 
 //======================================

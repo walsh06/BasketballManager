@@ -52,6 +52,7 @@ public:
 
     void setTeam(int team);
     int getTeam();
+    string getName();
 
     int getRange();
 

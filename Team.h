@@ -15,6 +15,8 @@
 #include "PlayerStrategyInsidePlaymaker.h"
 #include "PlayerStrategyBalancedPlaymaker.h"
 #include "PlayerStrategyPostScorer.h"
+#include "PlayerStrategyBalanced.h"
+#include "PlayerStrategyBalancedPlaymaker.h"
 #include "PlayerStrategyScoringForward.h"
 #include "Manager.h"
 
@@ -29,7 +31,7 @@ using namespace std;
 class Team
 {
 public:
-    Team(string teamName);
+    Team(string teamName, bool userControlled = false);
     vector<Player *> getRoster();
     string getName();
     Player* getPlayer(int position);
@@ -43,7 +45,12 @@ public:
     void setDefence(int defence);
     vector<int> getPlayersInPosition(int posX, int posY);
     int getDefenceSetting(int pos);
+    void changeDefenceMatchup(int opp, int pos);
+    int setDefenceSetting(int pos, int defence);
+    void changeDefence(int defence);
 
+
+    void swapPlayers(int posOne, int posTwo);
     void swapPlayers();
     void swapPlayers(int ftShooter);
 
@@ -52,6 +59,7 @@ public:
     void changeStrategy(int index, int strategy);
     void updateEnergy();
     void setTeam(int team);
+    void updatePosition(int index, int strategy);
     void swapSides();
 
     void restartInbound(int team);
@@ -73,10 +81,12 @@ private:
     vector<Player *> roster;
     map<int, int> defenceMatchups;
     map<int, int> defenceSettings;
+    vector<int> subsQueue;
     int team;
     string teamName;
     int defence;
     Manager manager;
+    bool userControlled;
 };
 
 #endif // TEAM_H

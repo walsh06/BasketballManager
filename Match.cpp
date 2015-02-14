@@ -1,11 +1,13 @@
 #include "Match.h"
 
-Match::Match(Team *teamOne, Team *teamTwo)
+int Match::simSpeed = 1000;
+
+Match::Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo)
 {
     this->teamOne = teamOne;
-    teamOne->setTeam(1);
+    this->teamOne->setTeam(1);
     this->teamTwo = teamTwo;
-    teamTwo->setTeam(2);
+    this->teamTwo->setTeam(2);
 
     teams[0] = this->teamOne;
     teams[1] = this->teamTwo;
@@ -13,8 +15,14 @@ Match::Match(Team *teamOne, Team *teamTwo)
     score[0] = 0;
     score[1] = 0;
     assist = make_tuple(new Player(0), 800);
+    screen = newScreen;
+    screen->initTacticScreen(teamOne);
+    screen->initOppositionPlayers(teamTwo);
     teamOne->pickStartingTeam();
     teamTwo->pickStartingTeam();
+
+    setOrderOfPlay();
+
 }
 
 Match::~Match()
@@ -62,6 +70,8 @@ void Match::sim()
                 }
 
                 setOrderOfPlay();
+                screen->updateTime(time, shotClock);
+
                 endOfPossession = false;
                 cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
                 cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
@@ -92,6 +102,13 @@ void Match::sim()
                         break;
                     }
                 }
+                screen->updateCourt(&ball);
+                QTime dieTime= QTime::currentTime().addMSecs(Match::simSpeed);
+                    while( QTime::currentTime() < dieTime )
+                    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+
+
+
                 if(time%60 == 0)
                 {
                     teamOne->updateEnergy();
@@ -101,6 +118,8 @@ void Match::sim()
             }
         }
     }
+
+    screen->updateCourt(&ball);
     cout << "Game Over" << endl;
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
@@ -112,9 +131,15 @@ int* Match::getScore()
     return score;
 }
 
+
 //===============================
 // General Functions
 //===============================
+
+void Match::setSimSpeed(int speed)
+{
+    Match::simSpeed = speed;
+}
 
 void Match::setOrderOfPlay()
 {
@@ -236,6 +261,7 @@ void Match::setUpOffensiveInbound()
     endOfPossession = true;
     teamOne->swapPlayers();
     teamTwo->swapPlayers();
+    screen->updatePlayers();
     ball.setPlayerPosition(4);
 
     int team = ball.getTeam();
@@ -250,6 +276,8 @@ void Match::setUpOwnSideInbound()
     endOfPossession = true;
     teamOne->swapPlayers();
     teamTwo->swapPlayers();
+    screen->updatePlayers();
+
     ball.setPlayerPosition(4);
 
     int team = ball.getTeam();
@@ -264,6 +292,7 @@ void Match::jumpBall()
     Player* playerOne = teamOne->getPlayer(5), *playerTwo = teamTwo->getPlayer(5);
     teamOne->setUpStartGame(); teamTwo->setUpStartGame();
     printCourt();
+
     ProbabilityVector jumpVector(2);
 
     jumpVector.addProbability(playerOne->getDefRebound());
@@ -272,27 +301,39 @@ void Match::jumpBall()
     int jumpWinner = jumpVector.getRandomResult();
 
     ball.setPlayerPosition(1);
+
     firstPossession = jumpWinner + 1;
     if(jumpWinner == 0)
     {
         ball.setTeam(1);
+
         //cout << "Jump Ball: Team 1" << endl;
         printValue("Jump Ball Team", 1);
+        screen->updateCommentary(16, playerOne);
     }
     else if(jumpWinner == 1)
     {
         //cout << "Jump Ball: Team 2" << endl;
         printValue("Jump Ball Team", 2);
+        screen->updateCommentary(16, playerTwo);
 
         teams[0]->swapSides();
         teams[1]->swapSides();
         ball.setTeam(2);
     }
-    gameState = INPLAY;
+    gameState = INPLAY ;
+    screen->updateCourt(&ball);
+
 }
 //================================
 
 
+
+void Match::updateScore(int team, int points)
+{
+    score[team]+=points;
+    screen->updateScore(score[0], score[1]);
+}
 
 //================================
 // Player Offense Actions
@@ -455,7 +496,6 @@ void Match::withBall(Player* p, int shotClock)
             pass(p, otherPlayers[action - 10]);
         }
     }
-
 }
 
 void Match::passInbound(Player *p)
@@ -714,7 +754,6 @@ vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
 void Match::shoot(Player* p, int pressure)
 {
     shotMap.incrementValue(p->getPosX(), p->getPosY());
-
     int range = p->getRange();
     if(range == 1)
     {
@@ -753,10 +792,25 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
 
     if(shotRand < shot)
     {
+       updateScore(p->getTeam() - 1, 2);
+
        //cout << "SCORE " << type << endl;
        printValue("SCORE " + type);
-       score[p->getTeam() - 1]+=2;
+       if(type == "Mid Range")
+       {
+           screen->updateCommentary(2, p);
+       }
+       else if(type == "Close")
+       {
+           screen->updateCommentary(3, p);
+       }
+       else
+       {
+           screen->updateCommentary(4, p);
+       }
+
        p->getStatList()->addTwoPoints();
+       screen->updateStat();
        checkAssist();
 
        if(freeThrows == 0)
@@ -772,7 +826,10 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
     {
         //cout << "MISS " << type << endl;
         printValue("Miss" + type);
+        screen->updateCommentary(12, p);
+
         p->getStatList()->addMiss();
+        screen->updateStat();
 
         if(freeThrows == 0)
         {
@@ -818,8 +875,11 @@ void Match::shootThree(Player *p, int pressure)
     {
        //cout << "SCORE 3" << endl;
         printValue("Score 3");
-       score[p->getTeam() - 1]+=3;
+        screen->updateCommentary(1, p);
+        updateScore(p->getTeam() - 1, 3);
+
        p->getStatList()->addThreePoints();
+       screen->updateStat();
 
        checkAssist();
        if(freeThrows == 0)
@@ -836,6 +896,7 @@ void Match::shootThree(Player *p, int pressure)
         //cout << "MISS 3" << endl;
         printValue("Miss 3");
         p->getStatList()->addThreeMiss();
+        screen->updateStat();
 
         if(freeThrows == 0)
         {
@@ -861,6 +922,7 @@ void Match::checkAssist()
     if(get<1>(assist) <= time + 3)
     {
         get<0>(assist)->getStatList()->addAssist();
+        screen->updateStat();
     }
 }
 
@@ -868,6 +930,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
     teamOne->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()));
     teamTwo->swapPlayers();
+    screen->updatePlayers();
 
     teams[p->getTeam() - 1]->setUpFreeThrowOffence(p->getNumber());
     teams[getOtherTeam(p->getTeam())]->setUpFreeThrowDefence();
@@ -882,9 +945,10 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
             //cout << "Free Throw: " << p->getNumber() << endl;
             printValue("Free Throw", p->getNumber());
             p->getStatList()->addFreeThrowScore();
+            screen->updateStat();
 
-            score[p->getTeam() - 1]++;
-            p->getStatList()->addPoint();
+            updateScore(p->getTeam() - 1, 1);
+            screen->updateStat();
 
             if(numOfFreeThrows == 1)
             {
@@ -896,6 +960,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
             //cout << "Missed Free Throw: " << p->getNumber() << endl;
             printValue("Missed Free Throw", p->getNumber());
             p->getStatList()->addFreeThrow();
+            screen->updateStat();
 
             if(numOfFreeThrows == 1)
             {
@@ -927,6 +992,8 @@ void Match::pass(Player* p, Player* teamMate)
                 steal = true;
                 stolenNumber = defender->getNumber();
                 defender->getStatList()->addSteal();
+                screen->updateStat();
+
             }
         }
     }
@@ -942,6 +1009,7 @@ void Match::pass(Player* p, Player* teamMate)
     {
         //cout << "Pass: " << teamMate->getNumber() << endl;
         printValue("Pass", teamMate->getNumber());
+        screen->updateCommentary(15, p, teamMate);
         assist = make_tuple(p, time);
         ball.setPlayerPosition(teams[teamMate->getTeam() - 1]->getPlayerPosition(teamMate->getNumber()));
     }
@@ -989,18 +1057,24 @@ void Match::rebound()
             pos = teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber());
 
              ball.setPlayerPosition(pos);
+
              if(ball.getTeam() == p->getTeam())
              {
                  //cout << "Offensive Rebound: " << p->getNumber() << endl;
                  printValue("Offensive Rebound", p->getNumber());
+                 screen->updateCommentary(8, p);
                  p->getStatList()->addOffensiveRebound();
+                 screen->updateStat();
+
                  endOfPossession = true;
              }
              else
              {
                  //cout << "Defensive Rebound: " << p->getNumber() << endl;
                  printValue("Defensive Rebound", p->getNumber());
+                 screen->updateCommentary(9, p);
                  p->getStatList()->addDefensiveRebound();
+                 screen->updateStat();
 
                  swapSides(p->getNumber());
              }
@@ -1173,7 +1247,7 @@ void Match::moveDefenceTight(Player* p, Player *opposition)
 
 void Match::moveTowardBasket(Player* p)
 {
-    int posX = p->getPosX(), basketX = 6, basketY, moveDirection;
+    int posX = p->getPosX(), basketX = 6, basketY;
 
     if(posX < 4)
     {
@@ -1275,7 +1349,7 @@ void Match::moveZoneDefence(Player *p)
         {
             moveDefenceTight(p, ballCarrier);
         }
-        else if((ballX == 1 && (ballY < 6 && ballY > 1)) || (ballX == 2 && (ballY < 6 && ballY > 1)) && defenceSetting == Team::TIGHT)
+        else if(((ballX == 1 && (ballY < 6 && ballY > 1)) || (ballX == 2 && (ballY < 6 && ballY > 1))) && (defenceSetting == Team::TIGHT))
         {
             moveDefenceTight(p, ballCarrier);
         }
@@ -1471,11 +1545,15 @@ bool Match::block(Player *p)
             {
                 //cout << "Block: " << opp->getNumber() << endl;
                 printValue("Block", opp->getNumber());
+                screen->updateCommentary(14,opp, p);
                 opp->getStatList()->addBlock();
+                screen->updateStat();
+
                 return true;
             }
         }
     }
+    return false;
 }
 
 void Match::blockedShot(int posX, int posY)
@@ -1546,6 +1624,8 @@ void Match::steal(Player *p)
         //cout << "Steal: " << p->getNumber() << endl;
         printValue("Steal", p->getNumber());
         p->getStatList()->addSteal();
+        screen->updateStat();
+
         swapSides(p->getNumber());
     }
     else if(stealRand <= 25)

@@ -2,8 +2,8 @@
 
 Ball::Ball()
 {
-    team = 0;
-    player = 0;
+    team = 1;
+    player = 5;
 }
 
 int Ball::getPlayerPosition()
@@ -39,4 +39,3 @@ void Ball::changeTeam(int playerTeam)
     if(playerTeam == 1) team = 2;
     else if(playerTeam == 2) team = 1;
 }
-

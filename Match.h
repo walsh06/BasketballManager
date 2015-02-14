@@ -6,6 +6,8 @@
 #include "Ball.h"
 #include "ProbabilityVector.h"
 #include "Heatmap.h"
+#include "MatchScreen.h"
+#include "MatchReceiver.h"
 #include "Fouls.h"
 
 #include <iostream>
@@ -14,20 +16,28 @@
 #include <stdlib.h>
 #include <tuple>
 
+#include <QTime>
+#include <QCoreApplication>
+#include <QEventLoop>
 using namespace std;
 
 class Match
 {
 public:
-    Match(Team *teamOne, Team *teamTwo);
-    ~Match();
+    Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo);
 
+    ~Match();
+    static void setSimSpeed(int speed);
     void sim();
     void writeMatchStats(string filename);
 
+    static int simSpeed;
+
     int* getScore();
 private:
+    MatchScreen *screen;
     Fouls fouls;
+
     int firstPossession;
     Heatmap shotMap;
     int gameState;
@@ -86,6 +96,8 @@ private:
     int getOtherTeam(int team);
     void swapSides(int playerNum);
     void setUpRestartInbound();
+    void updateScore(int team, int points);
+
     void setUpOffensiveInbound();
     void setUpOwnSideInbound();
 

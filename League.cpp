@@ -16,6 +16,7 @@ void League::simRound(int round)
 
     for(auto &match: matches)
     {
+        /*
         Team *homeTeam = teams[get<0>(match)]->getTeam();
         Team *awayTeam = teams[get<1>(match)]->getTeam();
         Match m(homeTeam, awayTeam);
@@ -33,6 +34,7 @@ void League::simRound(int round)
         }
         results.push_back(to_string(get<0>(match)) + " " + to_string(scoreHome) + "-" +
                                     to_string(scoreAway) +" "+to_string(get<1>(match)));
+                                    */
     }
 }
 

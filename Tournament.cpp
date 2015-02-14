@@ -21,6 +21,7 @@ void Tournament::simRound()
         TournamentMatchup *match = matches[i];
         if(match->isMatchOver() == false)
         {
+            /*
             Team *teamOne = match->getTeamOne();
             Team *teamTwo = match->getTeamTwo();
             Match m(teamOne, teamTwo);
@@ -47,6 +48,7 @@ void Tournament::simRound()
                 match->setMatchOver(true);
                 winners.push_back(teamTwo);
             }
+            */
         }
     }
     int i;
