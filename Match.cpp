@@ -43,7 +43,6 @@ void Match::sim()
            int team = getOtherTeam(firstPossession);
            ball.setTeam(team + 1);
            ball.setPlayerPosition(3);
-           ball.setPos(-7, 4);
 
            teamOne->restartInbound(team + 1);
            teamTwo->restartInbound(team + 1);
@@ -54,7 +53,6 @@ void Match::sim()
             int team = firstPossession;
             ball.setTeam(team);
             ball.setPlayerPosition(3);
-            ball.setPos(-7, 4);
 
             teamOne->restartInbound(team);
             teamTwo->restartInbound(team);
@@ -104,12 +102,12 @@ void Match::sim()
                         break;
                     }
                 }
-
+                screen->updateCourt(&ball);
                 QTime dieTime= QTime::currentTime().addMSecs(Match::simSpeed);
                     while( QTime::currentTime() < dieTime )
                     QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 
-                 screen->updateCourt(&ball);
+
 
                 if(time%60 == 0)
                 {
@@ -251,7 +249,6 @@ void Match::setUpRestartInbound()
     teams[1]->swapSides();
     ball.changeTeam();
     ball.setPlayerPosition(3);
-    ball.setPos(-7, 4);
 
     int team = ball.getTeam();
     teamOne->restartInbound(team);
@@ -309,7 +306,6 @@ void Match::jumpBall()
     if(jumpWinner == 0)
     {
         ball.setTeam(1);
-        ball.setPos(teamOne->getPlayer(1)->getPosX(), teamOne->getPlayer(1)->getPosY());
 
         //cout << "Jump Ball: Team 1" << endl;
         printValue("Jump Ball Team", 1);
@@ -317,7 +313,6 @@ void Match::jumpBall()
     }
     else if(jumpWinner == 1)
     {
-        ball.setPos(teamTwo->getPlayer(1)->getPosX(), teamTwo->getPlayer(1)->getPosY());
         //cout << "Jump Ball: Team 2" << endl;
         printValue("Jump Ball Team", 2);
         screen->updateCommentary(16, playerTwo);
@@ -501,7 +496,6 @@ void Match::withBall(Player* p, int shotClock)
             pass(p, otherPlayers[action - 10]);
         }
     }
-    ball.setPos(p->getPosX(), p->getPosY());
 }
 
 void Match::passInbound(Player *p)
@@ -1018,7 +1012,6 @@ void Match::pass(Player* p, Player* teamMate)
         screen->updateCommentary(15, p, teamMate);
         assist = make_tuple(p, time);
         ball.setPlayerPosition(teams[teamMate->getTeam() - 1]->getPlayerPosition(teamMate->getNumber()));
-        ball.setPos(teamMate->getPosX(), teamMate->getPosY());
     }
 }
 
@@ -1064,7 +1057,6 @@ void Match::rebound()
             pos = teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber());
 
              ball.setPlayerPosition(pos);
-             ball.setPos(p->getPosX(), p->getPosY());
 
              if(ball.getTeam() == p->getTeam())
              {

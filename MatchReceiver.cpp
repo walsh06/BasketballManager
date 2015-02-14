@@ -22,7 +22,7 @@ void MatchReceiver::changePlayers(int indexOne, int indexTwo)
 
 void MatchReceiver::changeStrategy(int index, int strategy)
 {
-    team->updateStrategy(index, strategy);
+    team->changeStrategy(index, strategy);
 }
 
 void MatchReceiver::changePosition(int index, int position)

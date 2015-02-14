@@ -48,10 +48,10 @@ void MainWindow::readTeams()
 
 void MainWindow::on_playMatch_clicked()
 {
-    Team teamOne(ui->teamOneBox->currentText().toStdString(), true);
-    Team teamTwo(ui->teamTwoBox->currentText().toStdString());
-    receiver = new MatchReceiver(&teamOne, ui->MatchWidget);
-    match = new Match(ui->MatchWidget, &teamOne, &teamTwo);
+    Team *teamOne = new Team(ui->teamOneBox->currentText().toStdString(), true);
+    Team *teamTwo = new Team(ui->teamTwoBox->currentText().toStdString());
+    receiver = new MatchReceiver(teamOne, ui->MatchWidget);
+    match = new Match(ui->MatchWidget, teamOne, teamTwo);
     connect(ui->MatchWidget, SIGNAL(startGame()), this, SLOT(startGame()));
     ui->stackedWidget->setCurrentIndex(0);
 }

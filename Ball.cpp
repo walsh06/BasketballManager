@@ -4,8 +4,6 @@ Ball::Ball()
 {
     team = 1;
     player = 5;
-    posX = 0;
-    posY = 4;
 }
 
 int Ball::getPlayerPosition()
@@ -41,20 +39,3 @@ void Ball::changeTeam(int playerTeam)
     if(playerTeam == 1) team = 2;
     else if(playerTeam == 2) team = 1;
 }
-
-int Ball::getPosX()
-{
-    return posX;
-}
-
-int Ball::getPosY()
-{
-    return posY;
-}
-
-void Ball::setPos(int x, int y)
-{
-    posX = x;
-    posY = y;
-}
-

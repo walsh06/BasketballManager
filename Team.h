@@ -60,7 +60,6 @@ public:
     void updateEnergy();
     void setTeam(int team);
     void updatePosition(int index, int strategy);
-    void updateStrategy(int index, int position);
     void swapSides();
 
     void restartInbound(int team);

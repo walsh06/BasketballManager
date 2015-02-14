@@ -239,26 +239,6 @@ void Team::updatePosition(int index, int position)
     players[index]->setPlayingPosition(newPosition);
 }
 
-void Team::updateStrategy(int index, int strategy)
-{
-    PlayerStrategy *newStrategy;
-
-    switch(strategy)
-    {
-        case 0: newStrategy = new PlayerStrategyBalanced(); break;
-        case 1: newStrategy = new PlayerStrategyBalancedPlaymaker(); break;
-        case 2: newStrategy = new PlayerStrategyOutsidePlaymaker(); break;
-        case 3: newStrategy = new PlayerStrategyInsidePlaymaker(); break;
-        case 4: newStrategy = new PlayerStrategyInsideOutside(); break;
-        case 5: newStrategy = new PlayerStrategyCrashBoards(); break;
-        case 6: newStrategy = new PlayerStrategyShootThree(); break;
-        case 7: newStrategy = new PlayerStrategyPostScorer(); break;
-        case 8: newStrategy = new PlayerStrategyScoringForward(); break;
-    }
-
-    players[index]->setStrategy(newStrategy);
-}
-
 void Team::updateEnergy()
 {
    bool playing = true;
