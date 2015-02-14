@@ -22,8 +22,14 @@ private:
     Ui::MainWindow *ui;
     Match *match;
     MatchReceiver *receiver;
+    vector<string> teamNames;
+
+    void readTeams();
+
 private slots:
     void startGame();
+    void on_playMatch_clicked();
+    void on_runSims_clicked();
 };
 
 #endif // MAINWINDOW_H

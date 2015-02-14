@@ -24,7 +24,64 @@
      </rect>
     </property>
     <widget class="MatchScreen" name="MatchWidget"/>
-    <widget class="QWidget" name="page_2"/>
+    <widget class="QWidget" name="MainMenu">
+     <widget class="QComboBox" name="teamOneBox">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>140</y>
+        <width>141</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="teamTwoBox">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>140</y>
+        <width>141</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="runSims">
+      <property name="geometry">
+       <rect>
+        <x>348</x>
+        <y>270</y>
+        <width>121</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Run Simulations</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="playMatch">
+      <property name="geometry">
+       <rect>
+        <x>348</x>
+        <y>220</y>
+        <width>121</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Play Match</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="numSims">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>270</y>
+        <width>48</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
