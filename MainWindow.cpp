@@ -59,9 +59,11 @@ void MainWindow::on_playMatch_clicked()
 void MainWindow::on_runSims_clicked()
 {
     int simCount = ui->numSims->value();
+    ui->simProgress->setMaximum(simCount);
 
     for(int i = 0; i < simCount; i++)
     {
+        ui->simProgress->setValue(i);
         Team teamOne(ui->teamOneBox->currentText().toStdString());
         Team teamTwo(ui->teamTwoBox->currentText().toStdString());
         Match match(ui->MatchWidget, &teamOne, &teamTwo);
@@ -70,4 +72,6 @@ void MainWindow::on_runSims_clicked()
         string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");
         match.writeMatchStats(filename);
     }
+    ui->simProgress->setValue(simCount);
+
 }
