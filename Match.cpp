@@ -2,7 +2,7 @@
 
 int Match::simSpeed = 1000;
 
-Match::Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo)
+Match::Match(Team *teamOne, Team *teamTwo, MatchScreen *newScreen)
 {
     this->teamOne = teamOne;
     this->teamOne->setTeam(1);
@@ -16,8 +16,7 @@ Match::Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo)
     score[1] = 0;
     assist = make_tuple(new Player(0), 800);
     screen = newScreen;
-    screen->initTacticScreen(teamOne);
-    screen->initOppositionPlayers(teamTwo);
+    guiInit();
     teamOne->pickStartingTeam();
     teamTwo->pickStartingTeam();
 
@@ -70,7 +69,10 @@ void Match::sim()
                 }
 
                 setOrderOfPlay();
-                screen->updateTime(time, shotClock);
+                if(screen != NULL)
+                {
+                    screen->updateTime(time, shotClock);
+                }
 
                 endOfPossession = false;
                 cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
@@ -102,7 +104,7 @@ void Match::sim()
                         break;
                     }
                 }
-                screen->updateCourt(&ball);
+                guiUpdateCourt();
                 QTime dieTime= QTime::currentTime().addMSecs(Match::simSpeed);
                     while( QTime::currentTime() < dieTime )
                     QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
@@ -119,7 +121,7 @@ void Match::sim()
         }
     }
 
-    screen->updateCourt(&ball);
+    guiUpdateCourt();
     cout << "Game Over" << endl;
     cout << "Score: " << score[0] << "-" << score[1] << endl;
 
@@ -261,7 +263,7 @@ void Match::setUpOffensiveInbound()
     endOfPossession = true;
     teamOne->swapPlayers();
     teamTwo->swapPlayers();
-    screen->updatePlayers();
+    guiUpdatePlayers();
     ball.setPlayerPosition(4);
 
     int team = ball.getTeam();
@@ -276,7 +278,7 @@ void Match::setUpOwnSideInbound()
     endOfPossession = true;
     teamOne->swapPlayers();
     teamTwo->swapPlayers();
-    screen->updatePlayers();
+    guiUpdatePlayers();
 
     ball.setPlayerPosition(4);
 
@@ -309,20 +311,20 @@ void Match::jumpBall()
 
         //cout << "Jump Ball: Team 1" << endl;
         printValue("Jump Ball Team", 1);
-        screen->updateCommentary(16, playerOne);
+        guiUpdateCommentary(16, playerOne);
     }
     else if(jumpWinner == 1)
     {
         //cout << "Jump Ball: Team 2" << endl;
         printValue("Jump Ball Team", 2);
-        screen->updateCommentary(16, playerTwo);
+        guiUpdateCommentary(16, playerTwo);
 
         teams[0]->swapSides();
         teams[1]->swapSides();
         ball.setTeam(2);
     }
     gameState = INPLAY ;
-    screen->updateCourt(&ball);
+    guiUpdateCourt();
 
 }
 //================================
@@ -332,7 +334,55 @@ void Match::jumpBall()
 void Match::updateScore(int team, int points)
 {
     score[team]+=points;
-    screen->updateScore(score[0], score[1]);
+    if(screen != NULL)
+    {
+        screen->updateScore(score[0], score[1]);
+    }
+}
+
+//================================
+// GUI Functions
+//================================
+
+void Match::guiUpdatePlayers()
+{
+    if(screen != NULL)
+    {
+        screen->updatePlayers();
+    }
+}
+
+void Match::guiUpdateCommentary(int type, Player *playerOne, Player *playerTwo)
+{
+    if(screen != NULL)
+    {
+        guiUpdateCommentary(type, playerOne, playerTwo);
+    }
+}
+
+void Match::guiUpdateStat()
+{
+    if(screen != NULL)
+    {
+        screen->updateStat();
+    }
+}
+
+void Match::guiInit()
+{
+    if(screen != NULL)
+    {
+        screen->initTacticScreen(teamOne);
+        screen->initOppositionPlayers(teamTwo);
+    }
+}
+
+void Match::guiUpdateCourt()
+{
+    if(screen != NULL)
+    {
+        screen->updateCourt(&ball);
+    }
 }
 
 //================================
@@ -798,19 +848,19 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
        printValue("SCORE " + type);
        if(type == "Mid Range")
        {
-           screen->updateCommentary(2, p);
+           guiUpdateCommentary(2, p);
        }
        else if(type == "Close")
        {
-           screen->updateCommentary(3, p);
+           guiUpdateCommentary(3, p);
        }
        else
        {
-           screen->updateCommentary(4, p);
+           guiUpdateCommentary(4, p);
        }
 
        p->getStatList()->addTwoPoints();
-       screen->updateStat();
+       guiUpdateStat();
        checkAssist();
 
        if(freeThrows == 0)
@@ -826,10 +876,10 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
     {
         //cout << "MISS " << type << endl;
         printValue("Miss" + type);
-        screen->updateCommentary(12, p);
+        guiUpdateCommentary(12, p);
 
         p->getStatList()->addMiss();
-        screen->updateStat();
+        guiUpdateStat();
 
         if(freeThrows == 0)
         {
@@ -875,11 +925,11 @@ void Match::shootThree(Player *p, int pressure)
     {
        //cout << "SCORE 3" << endl;
         printValue("Score 3");
-        screen->updateCommentary(1, p);
+        guiUpdateCommentary(1, p);
         updateScore(p->getTeam() - 1, 3);
 
        p->getStatList()->addThreePoints();
-       screen->updateStat();
+       guiUpdateStat();
 
        checkAssist();
        if(freeThrows == 0)
@@ -896,7 +946,7 @@ void Match::shootThree(Player *p, int pressure)
         //cout << "MISS 3" << endl;
         printValue("Miss 3");
         p->getStatList()->addThreeMiss();
-        screen->updateStat();
+        guiUpdateStat();
 
         if(freeThrows == 0)
         {
@@ -922,7 +972,7 @@ void Match::checkAssist()
     if(get<1>(assist) <= time + 3)
     {
         get<0>(assist)->getStatList()->addAssist();
-        screen->updateStat();
+        guiUpdateStat();
     }
 }
 
@@ -930,7 +980,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
     teamOne->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()));
     teamTwo->swapPlayers();
-    screen->updatePlayers();
+    guiUpdatePlayers();
 
     teams[p->getTeam() - 1]->setUpFreeThrowOffence(p->getNumber());
     teams[getOtherTeam(p->getTeam())]->setUpFreeThrowDefence();
@@ -945,10 +995,9 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
             //cout << "Free Throw: " << p->getNumber() << endl;
             printValue("Free Throw", p->getNumber());
             p->getStatList()->addFreeThrowScore();
-            screen->updateStat();
+            guiUpdateStat();
 
             updateScore(p->getTeam() - 1, 1);
-            screen->updateStat();
 
             if(numOfFreeThrows == 1)
             {
@@ -960,7 +1009,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
             //cout << "Missed Free Throw: " << p->getNumber() << endl;
             printValue("Missed Free Throw", p->getNumber());
             p->getStatList()->addFreeThrow();
-            screen->updateStat();
+            guiUpdateStat();
 
             if(numOfFreeThrows == 1)
             {
@@ -992,7 +1041,7 @@ void Match::pass(Player* p, Player* teamMate)
                 steal = true;
                 stolenNumber = defender->getNumber();
                 defender->getStatList()->addSteal();
-                screen->updateStat();
+                guiUpdateStat();
 
             }
         }
@@ -1009,7 +1058,7 @@ void Match::pass(Player* p, Player* teamMate)
     {
         //cout << "Pass: " << teamMate->getNumber() << endl;
         printValue("Pass", teamMate->getNumber());
-        screen->updateCommentary(15, p, teamMate);
+        guiUpdateCommentary(15, p, teamMate);
         assist = make_tuple(p, time);
         ball.setPlayerPosition(teams[teamMate->getTeam() - 1]->getPlayerPosition(teamMate->getNumber()));
     }
@@ -1062,9 +1111,9 @@ void Match::rebound()
              {
                  //cout << "Offensive Rebound: " << p->getNumber() << endl;
                  printValue("Offensive Rebound", p->getNumber());
-                 screen->updateCommentary(8, p);
+                 guiUpdateCommentary(8, p);
                  p->getStatList()->addOffensiveRebound();
-                 screen->updateStat();
+                 guiUpdateStat();
 
                  endOfPossession = true;
              }
@@ -1072,9 +1121,9 @@ void Match::rebound()
              {
                  //cout << "Defensive Rebound: " << p->getNumber() << endl;
                  printValue("Defensive Rebound", p->getNumber());
-                 screen->updateCommentary(9, p);
+                 guiUpdateCommentary(9, p);
                  p->getStatList()->addDefensiveRebound();
-                 screen->updateStat();
+                 guiUpdateStat();
 
                  swapSides(p->getNumber());
              }
@@ -1545,9 +1594,9 @@ bool Match::block(Player *p)
             {
                 //cout << "Block: " << opp->getNumber() << endl;
                 printValue("Block", opp->getNumber());
-                screen->updateCommentary(14,opp, p);
+                guiUpdateCommentary(14,opp, p);
                 opp->getStatList()->addBlock();
-                screen->updateStat();
+                guiUpdateStat();
 
                 return true;
             }
@@ -1624,7 +1673,7 @@ void Match::steal(Player *p)
         //cout << "Steal: " << p->getNumber() << endl;
         printValue("Steal", p->getNumber());
         p->getStatList()->addSteal();
-        screen->updateStat();
+        guiUpdateStat();
 
         swapSides(p->getNumber());
     }

@@ -22,7 +22,7 @@ public:
 
     bool isUserControlled();
     tuple<int, int> getUserMatch();
-    void simRound(int round);
+    void simRound();
 
     vector<tuple<int, int>> getNextRound();
     vector<string> getResults();
