@@ -4,10 +4,11 @@
 League::League()
 {
     createSchedule("../schedule.xml");
-    teams[1] = new LeagueTeam("Spurs");
+    teams[1] = new LeagueTeam("Spurs", true);
     teams[2] = new LeagueTeam("Pacers");
-    teams[3] = new LeagueTeam("Spurs");
-    teams[4] = new LeagueTeam("Pacers");
+    teams[3] = new LeagueTeam("Heat");
+    teams[4] = new LeagueTeam("Bobcats");
+    currentRound = 1;
 }
 
 void League::simRound(int round)
@@ -36,6 +37,8 @@ void League::simRound(int round)
                                     to_string(scoreAway) +" "+to_string(get<1>(match)));
                                     */
     }
+
+    currentRound++;
 }
 
 void League::createSchedule(const char* file)
@@ -82,6 +85,38 @@ int League::findWinner()
         }
     }
     return winner;
+}
+
+//=================================
+// GUI
+//=================================
+
+vector<tuple<int, int>> League::getNextRound()
+{
+    return schedule[currentRound];
+}
+
+vector<string> League::getResults()
+{
+     return results;
+}
+
+LeagueTeam* League::getTeam(int index)
+{
+    return teams[index];
+}
+
+tuple<int, int> League::getUserMatch()
+{
+    vector<tuple<int, int>> matches = schedule[currentRound];
+
+    for(auto &match: matches)
+    {
+        if(teams[get<0>(match)]->isUserControlled() || teams[get<1>(match)]->isUserControlled())
+        {
+            return match;
+        }
+    }
 }
 
 //==================================

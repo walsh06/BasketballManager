@@ -20,17 +20,20 @@ public:
     void printResults();
     void printTable();
 
-
+    bool isUserControlled();
+    tuple<int, int> getUserMatch();
     void simRound(int round);
 
+    vector<tuple<int, int>> getNextRound();
+    vector<string> getResults();
+    LeagueTeam* getTeam(int index);
 
 private:
     map<int, LeagueTeam*> teams;
 
     map<int, vector<tuple<int, int>>> schedule;
-    int roundCount, teamCount;
+    int roundCount, teamCount, currentRound;
     vector<string> results;
-
 };
 
 #endif // LEAGUE_H

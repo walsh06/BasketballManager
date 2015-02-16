@@ -1,10 +1,11 @@
 #include "LeagueTeam.h"
 
 
-LeagueTeam::LeagueTeam(string teamName): team(teamName)
+LeagueTeam::LeagueTeam(string teamName, bool userControlled): team(teamName, userControlled)
 {
      games = 0;
      wins = 0;
+     this->userControlled = userControlled;
 }
 
 void LeagueTeam::addGame()
@@ -36,4 +37,9 @@ int LeagueTeam::getLosses()
 Team* LeagueTeam::getTeam()
 {
     return &team;
+}
+
+bool LeagueTeam::isUserControlled()
+{
+    return userControlled;
 }

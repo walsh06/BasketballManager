@@ -48,8 +48,7 @@ void Team::setupTeamTactics()
     for(int i = 1; i <= players.size(); i++)
     {
         int strategy = manager.getBestStrategyForPlayer(i);
-        cout << i << " " << strategy << endl;
-        changeStrategy(i, strategy);
+        changeStrategy(i, 8);
     }
 
     int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
