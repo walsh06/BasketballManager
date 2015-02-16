@@ -51,7 +51,7 @@ void MainWindow::on_playMatch_clicked()
     Team *teamOne = new Team(ui->teamOneBox->currentText().toStdString(), true);
     Team *teamTwo = new Team(ui->teamTwoBox->currentText().toStdString());
     receiver = new MatchReceiver(teamOne, ui->MatchWidget);
-    match = new Match(ui->MatchWidget, teamOne, teamTwo);
+    match = new Match(teamOne, teamTwo, ui->MatchWidget);
     connect(ui->MatchWidget, SIGNAL(startGame()), this, SLOT(startGame()));
     ui->stackedWidget->setCurrentIndex(0);
 }
@@ -66,7 +66,7 @@ void MainWindow::on_runSims_clicked()
         ui->simProgress->setValue(i);
         Team teamOne(ui->teamOneBox->currentText().toStdString());
         Team teamTwo(ui->teamTwoBox->currentText().toStdString());
-        Match match(ui->MatchWidget, &teamOne, &teamTwo);
+        Match match(&teamOne, &teamTwo);
         match.setSimSpeed(0);
         match.sim();
         string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");

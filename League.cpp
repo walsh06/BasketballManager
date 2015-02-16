@@ -11,31 +11,31 @@ League::League()
     currentRound = 1;
 }
 
-void League::simRound(int round)
+void League::simRound()
 {
-    vector<tuple<int, int>> matches = schedule[round];
+    vector<tuple<int, int>> matches = schedule[currentRound];
 
     for(auto &match: matches)
     {
-        /*
-        Team *homeTeam = teams[get<0>(match)]->getTeam();
-        Team *awayTeam = teams[get<1>(match)]->getTeam();
-        Match m(homeTeam, awayTeam);
+
+        LeagueTeam *homeTeam = teams[get<0>(match)];
+        LeagueTeam *awayTeam = teams[get<1>(match)];
+        Match m(homeTeam->getTeam(), awayTeam->getTeam());
+        m.setSimSpeed(0);
         m.sim();
         int scoreHome = m.getScore()[0], scoreAway = m.getScore()[1];
         if(scoreHome > scoreAway)
         {
-            teams[get<0>(match)]->addWin();
-            teams[get<1>(match)]->addGame();
+            homeTeam->addWin();
+            awayTeam->addGame();
         }
         else
         {
-            teams[get<1>(match)]->addWin();
-            teams[get<0>(match)]->addGame();
+            awayTeam->addWin();
+            homeTeam->addGame();
         }
         results.push_back(to_string(get<0>(match)) + " " + to_string(scoreHome) + "-" +
                                     to_string(scoreAway) +" "+to_string(get<1>(match)));
-                                    */
     }
 
     currentRound++;

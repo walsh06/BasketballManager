@@ -35,14 +35,14 @@ void LeagueScreen::displayResults()
 
     for(auto &result: results)
     {
-        resultString = resultString + result;
+        resultString = resultString + result + "\n";
     }
     ui->previousMatches->setText(QString::fromStdString(resultString));
 }
 
 void LeagueScreen::on_simRound_clicked()
 {
-    on_playLeagueMatch_clicked();
+    //on_playLeagueMatch_clicked();
     league.simRound();
     displayResults();
 }
@@ -54,7 +54,7 @@ void LeagueScreen::on_playLeagueMatch_clicked()
     LeagueTeam *teamOne = league.getTeam(get<0>(matchup));
     LeagueTeam *teamTwo = league.getTeam(get<1>(matchup));
     receiver = new MatchReceiver(teamOne->getTeam(), ui->MatchWidget);
-    match = new Match(ui->MatchWidget, teamOne->getTeam(), teamTwo->getTeam());
+    match = new Match(teamOne->getTeam(), teamTwo->getTeam(), ui->MatchWidget);
     connect(ui->MatchWidget, SIGNAL(startGame()), this, SLOT(startGame()));
     ui->stackedWidget->setCurrentIndex(1);
 }
