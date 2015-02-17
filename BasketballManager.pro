@@ -43,7 +43,8 @@ SOURCES += main.cpp \
     unittests/BallTest.cpp \
     unittests/FoulTest.cpp \
     unittests/PlayerTest.cpp \
-    unittests/TeamTest.cpp
+    unittests/TeamTest.cpp \
+    unittests/StatListTest.cpp
 
 HEADERS += \
     Player.h \
