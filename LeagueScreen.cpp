@@ -7,7 +7,9 @@ LeagueScreen::LeagueScreen(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->standings->setRowCount(league.getTeamCount());
     displayNextMatches();
+    displayTable();
 }
 
 LeagueScreen::~LeagueScreen()
@@ -15,6 +17,9 @@ LeagueScreen::~LeagueScreen()
     delete ui;
 }
 
+//======================================
+// Displays
+//======================================
 void LeagueScreen::displayNextMatches()
 {
     vector<tuple<int, int>> matchList = league.getNextRound();
@@ -40,11 +45,25 @@ void LeagueScreen::displayResults()
     ui->previousMatches->setText(QString::fromStdString(resultString));
 }
 
+void LeagueScreen::displayTable()
+{
+    vector<LeagueTeam *> teams = league.getStandings();
+    for(int i =0; i < teams.size(); i++)
+    {
+        ui->standings->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(teams[i]->getTeam()->getName())));
+        ui->standings->setItem(i, 1, new QTableWidgetItem(QString::number(teams[i]->getGames())));
+        ui->standings->setItem(i, 2, new QTableWidgetItem(QString::number(teams[i]->getWins())));
+    }
+}
+
+//=======================================
 void LeagueScreen::on_simRound_clicked()
 {
     //on_playLeagueMatch_clicked();
     league.simRound();
     displayResults();
+    displayNextMatches();
+    displayTable();
 }
 
 void LeagueScreen::on_playLeagueMatch_clicked()
@@ -62,4 +81,91 @@ void LeagueScreen::on_playLeagueMatch_clicked()
 void LeagueScreen::startGame()
 {
     match->sim();
+    int scoreHome = match->getScore()[0], scoreAway = match->getScore()[1];
+    tuple<int, int> matchup = league.getUserMatch();
+    LeagueTeam *teamOne = league.getTeam(get<0>(matchup));
+    LeagueTeam *teamTwo = league.getTeam(get<1>(matchup));
+    if(scoreHome > scoreAway)
+    {
+        teamOne->addWin();
+        teamTwo->addGame();
+    }
+    else
+    {
+        teamTwo->addWin();
+        teamOne->addGame();
+    }
+    ui->previousMatches->setText(QString::fromStdString(to_string(get<0>(matchup)) + " " + to_string(scoreHome) +
+                                                        "-" + to_string(scoreAway) +" "+to_string(get<1>(matchup))));
+
+    loadStatsPostGame(teamOne->getTeam(), teamTwo->getTeam());
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+//=================================
+//Post Game
+//==================================
+
+void LeagueScreen::loadStatsPostGame(Team *teamOne, Team *teamTwo)
+{
+    vector<QString> header = {"MP", "Pts", "Ast", "Reb", "FGA", "FGM", "FGPC", "Blk", "Stl"};
+    for(int i = 0; i < header.size(); i++)
+    {
+        ui->statsOne->setItem(0, i, new QTableWidgetItem(header[i]));
+        ui->statsTwo->setItem(0, i, new QTableWidgetItem(header[i]));
+    }
+
+    for(int i = 1; i < 11; i++)
+    {
+        StatList *playerStats = teamOne->getPlayer(i)->getStatList();
+
+        QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
+        QTableWidgetItem *points = new QTableWidgetItem(QString::number(playerStats->getPointsPerGame()));
+        QTableWidgetItem *fga = new QTableWidgetItem(QString::number(playerStats->getShots()));
+        QTableWidgetItem *fgpc = new QTableWidgetItem(QString::number(playerStats->getShootingPercentage()));
+        QTableWidgetItem *ast = new QTableWidgetItem(QString::number(playerStats->getAssists()));
+        QTableWidgetItem *reb = new QTableWidgetItem(QString::number(playerStats->getRebounds()));
+        QTableWidgetItem *fgm = new QTableWidgetItem(QString::number(playerStats->getFieldGoalsMade()));
+        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(playerStats->getSteals()));
+        QTableWidgetItem *block = new QTableWidgetItem(QString::number(playerStats->getBlocks()));
+        ui->statsOne->setItem(i, 0, minutes);
+        ui->statsOne->setItem(i, 1, points);
+        ui->statsOne->setItem(i, 2, ast);
+        ui->statsOne->setItem(i, 3, reb);
+        ui->statsOne->setItem(i, 4, fga);
+        ui->statsOne->setItem(i, 5, fgm);
+        ui->statsOne->setItem(i, 6, fgpc);
+        ui->statsOne->setItem(i, 7, block);
+        ui->statsOne->setItem(i, 8, steal);
+    }
+
+    for(int i = 1; i < 11; i++)
+    {
+        StatList *playerStats = teamTwo->getPlayer(i)->getStatList();
+
+        QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
+        QTableWidgetItem *points = new QTableWidgetItem(QString::number(playerStats->getPointsPerGame()));
+        QTableWidgetItem *fga = new QTableWidgetItem(QString::number(playerStats->getShots()));
+        QTableWidgetItem *fgpc = new QTableWidgetItem(QString::number(playerStats->getShootingPercentage()));
+        QTableWidgetItem *ast = new QTableWidgetItem(QString::number(playerStats->getAssists()));
+        QTableWidgetItem *reb = new QTableWidgetItem(QString::number(playerStats->getRebounds()));
+        QTableWidgetItem *fgm = new QTableWidgetItem(QString::number(playerStats->getFieldGoalsMade()));
+        QTableWidgetItem *steal = new QTableWidgetItem(QString::number(playerStats->getSteals()));
+        QTableWidgetItem *block = new QTableWidgetItem(QString::number(playerStats->getBlocks()));
+        ui->statsTwo->setItem(i, 0, minutes);
+        ui->statsTwo->setItem(i, 1, points);
+        ui->statsTwo->setItem(i, 2, ast);
+        ui->statsTwo->setItem(i, 3, reb);
+        ui->statsTwo->setItem(i, 4, fga);
+        ui->statsTwo->setItem(i, 5, fgm);
+        ui->statsTwo->setItem(i, 6, fgpc);
+        ui->statsTwo->setItem(i, 7, block);
+        ui->statsTwo->setItem(i, 8, steal);
+    }
+}
+
+void LeagueScreen::on_leaveGame_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+    league.removeUserMatch();
 }

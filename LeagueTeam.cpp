@@ -43,3 +43,8 @@ bool LeagueTeam::isUserControlled()
 {
     return userControlled;
 }
+
+bool LeagueTeam::operator>(LeagueTeam &teamTwo)
+{
+    return wins > teamTwo.getWins();
+}

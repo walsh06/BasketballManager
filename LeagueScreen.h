@@ -20,6 +20,7 @@ public:
 
     void displayNextMatches();
     void displayResults();
+    void displayTable();
 
 
 private slots:
@@ -27,11 +28,16 @@ private slots:
     void on_simRound_clicked();
     void on_playLeagueMatch_clicked();
 
+    void on_leaveGame_clicked();
+
 private:
     Ui::LeagueScreen *ui;
     Match *match;
     League league;
     MatchReceiver *receiver;
+
+    void loadStatsPostGame(Team *teamOne, Team *teamTwo);
+
 };
 
 #endif // LEAGUESCREEN_H

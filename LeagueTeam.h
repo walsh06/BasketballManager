@@ -16,6 +16,8 @@ public:
     int getLosses();
     bool isUserControlled();
     Team* getTeam();
+
+    bool operator >(LeagueTeam &teamTwo);
 private:
     Team team;
     int games, wins;

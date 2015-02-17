@@ -24,9 +24,17 @@ public:
     tuple<int, int> getUserMatch();
     void simRound();
 
+
     vector<tuple<int, int>> getNextRound();
     vector<string> getResults();
     LeagueTeam* getTeam(int index);
+    void removeUserMatch();
+    vector<LeagueTeam *> getAllTeams();
+    int getTeamCount();
+
+    vector<LeagueTeam *> getStandings();
+
+
 
 private:
     map<int, LeagueTeam*> teams;

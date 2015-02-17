@@ -356,7 +356,7 @@ void Match::guiUpdateCommentary(int type, Player *playerOne, Player *playerTwo)
 {
     if(screen != NULL)
     {
-        guiUpdateCommentary(type, playerOne, playerTwo);
+        screen->updateCommentary(type, playerOne, playerTwo);
     }
 }
 

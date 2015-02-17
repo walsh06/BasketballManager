@@ -9,6 +9,7 @@ League::League()
     teams[3] = new LeagueTeam("Heat");
     teams[4] = new LeagueTeam("Bobcats");
     currentRound = 1;
+    teamCount = teams.size();
 }
 
 void League::simRound()
@@ -34,8 +35,8 @@ void League::simRound()
             awayTeam->addWin();
             homeTeam->addGame();
         }
-        results.push_back(to_string(get<0>(match)) + " " + to_string(scoreHome) + "-" +
-                                    to_string(scoreAway) +" "+to_string(get<1>(match)));
+        results.push_back(homeTeam->getTeam()->getName() + " " + to_string(scoreHome) + "-" +
+                                    to_string(scoreAway) +" "+awayTeam->getTeam()->getName());
     }
 
     currentRound++;
@@ -117,6 +118,61 @@ tuple<int, int> League::getUserMatch()
             return match;
         }
     }
+}
+
+void League::removeUserMatch()
+{
+    vector<tuple<int, int>> matches = schedule[currentRound];
+
+    for(int i = 0; i < matches.size(); i++)
+    {
+        tuple<int, int> match = matches[i];
+        if(teams[get<0>(match)]->isUserControlled() || teams[get<1>(match)]->isUserControlled())
+        {
+            matches.erase(matches.begin() + i);
+            break;
+        }
+    }
+}
+
+vector<LeagueTeam *> League::getAllTeams()
+{
+    vector<LeagueTeam *> allTeams;
+
+    for(auto &team: teams)
+    {
+        allTeams.push_back(team.second);
+    }
+
+    return allTeams;
+}
+
+vector<LeagueTeam *> League::getStandings()
+{
+    vector<LeagueTeam *> allTeams = getAllTeams();
+    vector<LeagueTeam *> standings;
+
+    while(allTeams.size() > 0)
+    {
+
+        LeagueTeam *nextTeam = allTeams[allTeams.size() - 1];
+        allTeams.pop_back();
+        int i;
+        for(i = standings.size(); i > 0; i--)
+        {
+            if(*standings[i - 1] > *nextTeam)
+            {
+                break;
+            }
+        }
+        standings.insert(standings.begin() + i, nextTeam);
+    }
+    return standings;
+}
+
+int League::getTeamCount()
+{
+    return teamCount;
 }
 
 //==================================
