@@ -40,7 +40,8 @@ SOURCES += main.cpp \
     pugixml.cpp \
     TournamentMatchup.cpp \
     PlayerGraphic.cpp \
-    BallTest.cpp
+    BallTest.cpp \
+    FoulTest.cpp
 
 HEADERS += \
     Player.h \
