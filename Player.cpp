@@ -1,5 +1,13 @@
 #include "Player.h"
 
+Player::Player()
+{
+    energy = 100;
+    stamina = 15;
+    posX = 0;
+    posY = 0;
+}
+
 Player::Player(int number)
 {
     this->number = number;

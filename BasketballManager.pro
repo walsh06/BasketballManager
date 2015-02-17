@@ -41,7 +41,9 @@ SOURCES += main.cpp \
     TournamentMatchup.cpp \
     PlayerGraphic.cpp \
     unittests/BallTest.cpp \
-    unittests/FoulTest.cpp
+    unittests/FoulTest.cpp \
+    unittests/PlayerTest.cpp \
+    unittests/TeamTest.cpp
 
 HEADERS += \
     Player.h \
