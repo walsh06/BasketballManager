@@ -1,4 +1,8 @@
 #include "Player.h"
+#include "PlayerStrategyBalanced.h"
+#include "PlayerStrategyBalancedPlaymaker.h"
+#include "PositionPointGuard.h"
+#include "PositionCentre.h"
 #include <gtest/gtest.h>
 
 TEST(PlayerTest, PlayerMoveTest)
@@ -68,3 +72,30 @@ TEST(PlayerTest, PlayerEnergyTest)
     player.updateEnergy(false);
     ASSERT_EQ(player.getEnergy(), 100);
 }
+
+TEST(PlayerTest, PlayerStrategyTest)
+{
+    Player player;
+    player.setStrategy(new PlayerStrategyBalanced());
+    int valueOne = player.getPosValue(1, 0);
+    int valueTwo = player.getPosValue(3, 3);
+    int valueThree = player.getPosValue(6,4);
+    player.setStrategy(new PlayerStrategyBalancedPlaymaker());
+    ASSERT_NE(valueOne, player.getPosValue(1, 0));
+    ASSERT_NE(valueTwo, player.getPosValue(3, 3));
+    ASSERT_NE(valueThree, player.getPosValue(6,4));
+}
+
+TEST(PlayerTest, PlayerPositionTest)
+{
+    Player player;
+    player.setPlayingPosition(new PositionPointGuard());
+    int valueOne = player.getPosValue(1, 0);
+    int valueTwo = player.getPosValue(4, 3);
+    int valueThree = player.getPosValue(6,4);
+    player.setPlayingPosition(new PositionCentre());
+    ASSERT_NE(valueOne, player.getPosValue(1, 0));
+    ASSERT_NE(valueTwo, player.getPosValue(4, 3));
+    ASSERT_NE(valueThree, player.getPosValue(6,4));
+}
+

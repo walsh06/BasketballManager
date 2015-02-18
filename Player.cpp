@@ -6,6 +6,8 @@ Player::Player()
     stamina = 15;
     posX = 0;
     posY = 0;
+    position = NULL;
+    strategy = NULL;
 }
 
 Player::Player(int number)
@@ -229,6 +231,7 @@ void Player::setPlayingPosition(PlayerPosition *pos)
 
 void Player::setStrategy(PlayerStrategy *strategy)
 {
+
     delete this->strategy;
     this->strategy = strategy;
     updateMap();
