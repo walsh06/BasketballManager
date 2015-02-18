@@ -62,13 +62,17 @@ public:
 
 
     StatList* getStatList();
+    StatList* getOverAllStatList();
+    void updateOverAllStats();
+    void resetGameStats();
 
     Heatmap moveTrackerMap;
 private:
     Heatmap posValueMap, finalMap ;
     PlayerPosition *position;
     PlayerStrategy *strategy;
-    StatList playerStats;
+    StatList playerStatsGame, playerStatsOverAll;
+
 
     int posX, posY;
     int number;

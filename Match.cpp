@@ -100,7 +100,7 @@ void Match::sim()
     }
 
     cout << "Score: " << score[0] << "-" << score[1] << endl;
-
+    orderOfPlay[0]->updateOverAllStats();
     shotMap.printHeatMap();
 }
 

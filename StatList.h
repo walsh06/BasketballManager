@@ -1,12 +1,16 @@
 #ifndef STATLIST_H
 #define STATLIST_H
 
+#include <vector>
 #include <iostream>
 #include <fstream>
 class StatList
 {
 public:
     StatList();
+    StatList(std::vector<int> stats);
+
+    void resetStats();
     void addGame();
     void addMinute();
     int getMinutes();
@@ -43,6 +47,8 @@ public:
     void addSteal();
     int getBlocks();
     int getSteals();
+
+    StatList operator+(const StatList &list);
 
 private:
     int points, games, minutes;

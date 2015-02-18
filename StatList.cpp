@@ -2,8 +2,38 @@
 
 StatList::StatList()
 {
+    resetStats();
+}
+
+StatList::StatList(std::vector<int> stats)
+{
+    points=stats[0];
+    games=stats[1];
+
+    shots = stats[2];
+    scores = stats[3];
+    threeScores = stats[5];
+    threeShots = stats[4];
+
+
+    offensiveRebounds=stats[6];
+    defensiveRebounds=stats[7];
+
+    assists = stats[8];
+
+    freeThrows = stats[9];
+    freeThrowsScored = stats[10];
+
+    minutes = stats[11];
+
+    blocks = stats[12];
+    steals = stats[13];
+}
+
+void StatList::resetStats()
+{
     points=0;
-    games=1;
+    games=0;
 
     shots = 0;
     scores = 0;
@@ -25,6 +55,47 @@ StatList::StatList()
     steals = 0;
 }
 
+void StatList::writeToFile(std::string filename, int pos)
+{
+    std::ofstream outfile;
+
+      outfile.open(filename, std::ios_base::app);
+      outfile << "pos," << pos << ",points," << points << ",fga," << getShots() << ",fgpc," << getShootingPercentage() ;
+      outfile << ",3pa," << getThreeShots() <<  ",3ppc," << getThreeShootingPercentage();
+      outfile << ",trb," << getRebounds() << ",drb," << defensiveRebounds << ",orb," << offensiveRebounds;
+      outfile << ",fta," << freeThrows << ",ftpc," << getFreeThrowPercentage();
+      outfile << ",stl," << steals << ",blk," << blocks;
+      outfile << ",ast," << getAssists() << ",mp," << minutes << "\n";
+}
+
+StatList StatList::operator+(const StatList &list)
+{
+    std::vector<int> stats;
+
+    stats.push_back(points + list.points);
+    stats.push_back(games + list.games);
+    stats.push_back(shots + list.shots);
+    stats.push_back(scores + list.scores);
+    stats.push_back(threeShots + list.threeShots);
+    stats.push_back(threeScores + list.threeScores);
+    stats.push_back(offensiveRebounds + list.offensiveRebounds);
+    stats.push_back(defensiveRebounds + list.defensiveRebounds);
+    stats.push_back(assists + list.assists);
+    stats.push_back(freeThrows + list.freeThrows);
+    stats.push_back(freeThrowsScored + list.freeThrowsScored);
+    stats.push_back(minutes + list.minutes);
+    stats.push_back(blocks + list.blocks);
+    stats.push_back(steals + list.steals);
+
+    StatList newStatList(stats);
+
+    return newStatList;
+}
+
+//==========================
+// Time
+//==========================
+
 void StatList::addGame()
 {
     games++;
@@ -38,19 +109,6 @@ void StatList::addMinute()
 int StatList::getMinutes()
 {
     return minutes;
-}
-
-void StatList::writeToFile(std::string filename, int pos)
-{
-    std::ofstream outfile;
-
-      outfile.open(filename, std::ios_base::app);
-      outfile << "pos," << pos << ",points," << points << ",fga," << getShots() << ",fgpc," << getShootingPercentage() ;
-      outfile << ",3pa," << getThreeShots() <<  ",3ppc," << getThreeShootingPercentage();
-      outfile << ",trb," << getRebounds() << ",drb," << defensiveRebounds << ",orb," << offensiveRebounds;
-      outfile << ",fta," << freeThrows << ",ftpc," << getFreeThrowPercentage();
-      outfile << ",stl," << steals << ",blk," << blocks;
-      outfile << ",ast," << getAssists() << ",mp," << minutes << "\n";
 }
 
 //==========================
