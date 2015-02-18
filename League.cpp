@@ -176,6 +176,35 @@ int League::getTeamCount()
 }
 
 //==================================
+// Stats
+//==================================
+
+string League::getPointsLeader()
+{
+    string teamName, playerName;
+    int points = -1;
+
+    for(auto &team: teams)
+    {
+        Team *currentTeam = team.second->getTeam();
+
+        for(int i = 0; i < 10; i++)
+        {
+            int currentPoints = currentTeam->getPlayer(i)->getStatListOverAll()->getPoints();
+            if(currentPoints > points)
+            {
+                points = currentPoints;
+                teamName = currentTeam->getName();
+                playerName = currentTeam->getPlayer(i)->getName();
+            }
+        }
+    }
+
+    string resultString = teamName + " : " + playerName + " : " + to_string(points);
+    return resultString;
+}
+
+//==================================
 // Printing
 //==================================
 
