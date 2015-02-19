@@ -18,9 +18,17 @@ void League::simRound()
 
     for(auto &match: matches)
     {
-
         LeagueTeam *homeTeam = teams[get<0>(match)];
         LeagueTeam *awayTeam = teams[get<1>(match)];
+
+        if(homeTeam->isUserControlled())
+        {
+            homeTeam->getTeam()->setUserControlled(false);
+        }
+        else if(awayTeam->isUserControlled())
+        {
+            awayTeam->getTeam()->setUserControlled(false);
+        }
         Match m(homeTeam->getTeam(), awayTeam->getTeam());
         m.setSimSpeed(0);
         m.sim();
@@ -37,6 +45,15 @@ void League::simRound()
         }
         results.push_back(homeTeam->getTeam()->getName() + " " + to_string(scoreHome) + "-" +
                                     to_string(scoreAway) +" "+awayTeam->getTeam()->getName());
+
+        if(homeTeam->isUserControlled())
+        {
+            homeTeam->getTeam()->setUserControlled(true);
+        }
+        else if(awayTeam->isUserControlled())
+        {
+            awayTeam->getTeam()->setUserControlled(true);
+        }
     }
 
     currentRound++;

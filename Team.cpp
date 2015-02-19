@@ -307,6 +307,15 @@ void Team::swapPlayers(int ftShooter)
     }
 }
 
+bool Team::isUserControlled()
+{
+    return userControlled;
+}
+
+void Team::setUserControlled(bool userControlled)
+{
+    this->userControlled = userControlled;
+}
 
 //===========================================
 // Team Set up
