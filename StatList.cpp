@@ -111,6 +111,11 @@ int StatList::getMinutes()
     return minutes;
 }
 
+float StatList::getMinutesPerGame()
+{
+    return minutes/games;
+}
+
 //==========================
 // Points
 //==========================
@@ -155,6 +160,11 @@ void StatList::addThreeScore()
     addScore();
 }
 
+int StatList::getPoints()
+{
+    return points;
+}
+
 float StatList::getPointsPerGame()
 {
     return float(points)/float(games);
@@ -165,9 +175,19 @@ int StatList::getShots()
     return shots;
 }
 
+float StatList::getShotsPerGame()
+{
+    return shots/games;
+}
+
 int StatList::getThreeShots()
 {
     return threeShots;
+}
+
+float StatList::getThreeShotsPerGame()
+{
+    return threeShots/games;
 }
 
 float StatList::getShootingPercentage()
@@ -205,6 +225,31 @@ int StatList::getRebounds()
     return defensiveRebounds + offensiveRebounds;
 }
 
+float StatList::getReboundsPerGame()
+{
+    return getRebounds()/games;
+}
+
+int StatList::getOffensiveRebounds()
+{
+    return offensiveRebounds;
+}
+
+float StatList::getOffensiveReboundsPerGame()
+{
+    return offensiveRebounds/games;
+}
+
+int StatList::getDefensiveRebounds()
+{
+    return defensiveRebounds;
+}
+
+float StatList::getDefensiveReboundsPerGame()
+{
+    return defensiveRebounds/games;
+}
+
 void StatList::printReboundingStats()
 {
     std::cout << "Rebounds: " << getRebounds() << " OR: " << offensiveRebounds << " DR: " << defensiveRebounds << std::endl;
@@ -222,6 +267,11 @@ void StatList::addAssist()
 int StatList::getAssists()
 {
     return assists;
+}
+
+float StatList::getAssistsPerGame()
+{
+    return assists/games;
 }
 
 void StatList::printAssistStats()
@@ -268,7 +318,17 @@ int StatList::getBlocks()
     return blocks;
 }
 
+float StatList::getBlocksPerGame()
+{
+    return blocks/games;
+}
+
 int StatList::getSteals()
 {
     return steals;
+}
+
+float StatList::getStealsPerGame()
+{
+    return steals/games;
 }
