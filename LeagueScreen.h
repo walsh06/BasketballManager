@@ -17,11 +17,7 @@ class LeagueScreen : public QWidget
 public:
     explicit LeagueScreen(QWidget *parent = 0);
     ~LeagueScreen();
-
-    void displayNextMatches();
-    void displayResults();
-    void displayTable();
-
+    void updateDisplays();
 
 private slots:
     void startGame();
@@ -37,7 +33,10 @@ private:
     MatchReceiver *receiver;
 
     void loadStatsPostGame(Team *teamOne, Team *teamTwo);
-
+    void displayNextMatches();
+    void displayResults();
+    void displayTable();
+    void displayLeaderboard();
 };
 
 #endif // LEAGUESCREEN_H

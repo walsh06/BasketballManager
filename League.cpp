@@ -190,7 +190,7 @@ string League::getPointsLeader()
 
         for(int i = 0; i < 10; i++)
         {
-            int currentPoints = currentTeam->getPlayer(i)->getStatListOverAll()->getPoints();
+            int currentPoints = currentTeam->getPlayer(i)->getOverAllStatList()->getPointsPerGame();
             if(currentPoints > points)
             {
                 points = currentPoints;

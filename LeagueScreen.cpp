@@ -8,8 +8,7 @@ LeagueScreen::LeagueScreen(QWidget *parent) :
     ui->setupUi(this);
 
     ui->standings->setRowCount(league.getTeamCount());
-    displayNextMatches();
-    displayTable();
+    updateDisplays();
 }
 
 LeagueScreen::~LeagueScreen()
@@ -20,6 +19,15 @@ LeagueScreen::~LeagueScreen()
 //======================================
 // Displays
 //======================================
+
+void LeagueScreen::updateDisplays()
+{
+   // displayResults();
+    displayNextMatches();
+    displayTable();
+    displayLeaderboard();
+}
+
 void LeagueScreen::displayNextMatches()
 {
     vector<tuple<int, int>> matchList = league.getNextRound();
@@ -56,14 +64,17 @@ void LeagueScreen::displayTable()
     }
 }
 
+void LeagueScreen::displayLeaderboard()
+{
+    ui->ppgLeader->setText(QString::fromStdString(league.getPointsLeader()));
+}
+
 //=======================================
 void LeagueScreen::on_simRound_clicked()
 {
     //on_playLeagueMatch_clicked();
     league.simRound();
-    displayResults();
-    displayNextMatches();
-    displayTable();
+    updateDisplays();
 }
 
 void LeagueScreen::on_playLeagueMatch_clicked()
