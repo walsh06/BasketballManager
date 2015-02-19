@@ -28,6 +28,8 @@ public:
     float getPointsPerGame();
     int getShots();
     float getShotsPerGame();
+    int getFieldGoalsMade();
+    float getFieldGoalsMadePerGame();
     float getShootingPercentage();
     int getThreeShots();
     float getThreeShotsPerGame();

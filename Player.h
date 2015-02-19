@@ -28,7 +28,7 @@ public:
     ProbabilityVector getStrategyVector();
     void updateMap();
 
-
+    int getPlayingPosition();
     int getNumber();
     int getThreeShot();
     int getMediumShot();
@@ -52,6 +52,7 @@ public:
 
     void setTeam(int team);
     int getTeam();
+    string getName();
 
     int getRange();
 
@@ -68,6 +69,7 @@ public:
 
     Heatmap moveTrackerMap;
 private:
+
     Heatmap posValueMap, finalMap ;
     PlayerPosition *position;
     PlayerStrategy *strategy;
@@ -75,7 +77,7 @@ private:
 
 
     int posX, posY;
-    int number;
+    int number, playingPosition;
     int team;
     string name;
     //shooting ratings

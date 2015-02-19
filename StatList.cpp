@@ -170,6 +170,16 @@ float StatList::getPointsPerGame()
     return float(points)/float(games);
 }
 
+int StatList::getFieldGoalsMade()
+{
+    return scores;
+}
+
+float StatList::getFieldGoalsMadePerGame()
+{
+    return scores/games;
+}
+
 int StatList::getShots()
 {
     return shots;
@@ -292,6 +302,7 @@ void StatList::addFreeThrowScore()
 {
     freeThrows++;
     freeThrowsScored++;
+    points++;
 }
 
 float StatList::getFreeThrowPercentage()

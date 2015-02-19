@@ -7,6 +7,7 @@
 #include "PositionPowerForward.h"
 #include "PositionShootingGuard.h"
 #include "PositionSmallForward.h"
+#include "PlayerStrategyBalanced.h"
 #include "PlayerStrategyCrashBoards.h"
 #include "PlayerStrategyShootThree.h"
 #include "PlayerStrategyInsideOutside.h"
@@ -14,7 +15,10 @@
 #include "PlayerStrategyInsidePlaymaker.h"
 #include "PlayerStrategyBalancedPlaymaker.h"
 #include "PlayerStrategyPostScorer.h"
+#include "PlayerStrategyBalanced.h"
+#include "PlayerStrategyBalancedPlaymaker.h"
 #include "PlayerStrategyScoringForward.h"
+#include "Manager.h"
 
 #include "pugixml.hpp"
 
@@ -27,9 +31,9 @@ using namespace std;
 class Team
 {
 public:
-    Team(string teamName);
+    Team(string teamName, bool userControlled = false);
     vector<Player *> getRoster();
-
+    string getName();
     Player* getPlayer(int position);
     vector<Player*> getOtherPlayers(int number);
     int getPlayerPosition(int number);
@@ -41,11 +45,21 @@ public:
     void setDefence(int defence);
     vector<int> getPlayersInPosition(int posX, int posY);
     int getDefenceSetting(int pos);
+    void changeDefenceMatchup(int opp, int pos);
+    int setDefenceSetting(int pos, int defence);
+    void changeDefence(int defence);
 
-    void swapPlayers(int p1, int p2);
 
+    void swapPlayers(int posOne, int posTwo);
+    void swapPlayers();
+    void swapPlayers(int ftShooter);
+
+    void pickStartingTeam();
+    void setupTeamTactics();
+    void changeStrategy(int index, int strategy);
     void updateEnergy();
     void setTeam(int team);
+    void updatePosition(int index, int strategy);
     void swapSides();
 
     void restartInbound(int team);
@@ -67,9 +81,12 @@ private:
     vector<Player *> roster;
     map<int, int> defenceMatchups;
     map<int, int> defenceSettings;
+    vector<int> subsQueue;
     int team;
     string teamName;
     int defence;
+    Manager manager;
+    bool userControlled;
 };
 
 #endif // TEAM_H

@@ -6,6 +6,8 @@
 #include "Ball.h"
 #include "ProbabilityVector.h"
 #include "Heatmap.h"
+#include "MatchScreen.h"
+#include "MatchReceiver.h"
 #include "Fouls.h"
 
 #include <iostream>
@@ -14,18 +16,28 @@
 #include <stdlib.h>
 #include <tuple>
 
+#include <QTime>
+#include <QCoreApplication>
+#include <QEventLoop>
 using namespace std;
 
 class Match
 {
 public:
-    Match();
-    ~Match();
+    Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo);
 
+    ~Match();
+    static void setSimSpeed(int speed);
     void sim();
     void writeMatchStats(string filename);
+
+    static int simSpeed;
+
+    int* getScore();
 private:
+    MatchScreen *screen;
     Fouls fouls;
+
     int firstPossession;
     Heatmap shotMap;
     int gameState;
@@ -37,6 +49,8 @@ private:
     vector<Player*> orderOfPlay;
     tuple<Player *, int> assist;
     int score[2];
+    const bool printing = false;
+    bool endOfPossession;
 
 
     void move(Player* p);
@@ -45,10 +59,11 @@ private:
     vector<int> getDefendersForPass(int team, int x1, int y1, int x2, int y2);
 
     void shoot(Player* p, int pressure);
-    void shootUnderBasket(Player *p, int pressure);
+    void shootTwo(Player *p, int pressure, int shot, int shootRand, int foulRand, string type);
+    //void shootUnderBasket(Player *p, int pressure);
     void shootThree(Player* p, int pressure);
-    void shootMedium(Player* p, int pressure);
-    void shootClose(Player* p, int pressure);
+    //void shootMedium(Player* p, int pressure);
+    //void shootClose(Player* p, int pressure);
     void shootFreeThrow(Player* p, int numOfFreethrows);
 
     void pass(Player* p, Player* teamMate);
@@ -65,10 +80,15 @@ private:
     void moveManDefence(Player *p);
     int flipY(int y);
 
-    void block(Player *p);
+    bool block(Player *p);
+    void blockedShot(int posX, int posY);
     void steal(Player *p);
 
     void printCourt();
+    void printValue(string valueName, int value);
+    void printValue(string valueName, int value, int valueTwo);
+    void printValue(string valueName);
+
 
     int getScoreDifference(int team);
     void jumpBall();
@@ -76,6 +96,8 @@ private:
     int getOtherTeam(int team);
     void swapSides(int playerNum);
     void setUpRestartInbound();
+    void updateScore(int team, int points);
+
     void setUpOffensiveInbound();
     void setUpOwnSideInbound();
 
