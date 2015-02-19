@@ -34,10 +34,9 @@ public:
 
     vector<LeagueTeam *> getStandings();
 
-    string getPointsLeader();
-    string getFieldGoalLeader();
-    string getThreePointLeader();
+    string getScoringLeader(int type);
     string getReboundLeader(int type);
+    string getOtherLeader(int type);
 
 private:
     map<int, LeagueTeam*> teams;

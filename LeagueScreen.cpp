@@ -66,13 +66,15 @@ void LeagueScreen::displayTable()
 
 void LeagueScreen::displayLeaderboard()
 {
-    ui->ppgLeader->setText(QString::fromStdString(league.getPointsLeader()));
-    ui->fgpcLeader->setText(QString::fromStdString(league.getFieldGoalLeader()));
-    ui->tppcLeader->setText(QString::fromStdString(league.getThreePointLeader()));
+    ui->ppgLeader->setText(QString::fromStdString(league.getScoringLeader(1)));
+    ui->fgpcLeader->setText(QString::fromStdString(league.getScoringLeader(2)));
+    ui->tppcLeader->setText(QString::fromStdString(league.getScoringLeader(3)));
     ui->rebLeader->setText(QString::fromStdString(league.getReboundLeader(1)));
     ui->orebLeader->setText(QString::fromStdString(league.getReboundLeader(2)));
     ui->drebLeader->setText(QString::fromStdString(league.getReboundLeader(3)));
-
+    ui->astLeader->setText(QString::fromStdString(league.getOtherLeader(1)));
+    ui->blockLeader->setText(QString::fromStdString(league.getOtherLeader(2)));
+    ui->stealLeader->setText(QString::fromStdString(league.getOtherLeader(3)));
 }
 
 //=======================================

@@ -109,14 +109,16 @@ void Match::sim()
                     while( QTime::currentTime() < dieTime )
                     QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 
-
-
                 if(time%60 == 0)
                 {
                     teamOne->updateEnergy();
                     teamTwo->updateEnergy();
                 }
                 //printCourt();
+            }
+            if(!endOfPossession)
+            {
+                setUpRestartInbound();
             }
         }
     }

@@ -196,10 +196,10 @@ int League::getTeamCount()
 // Stats
 //==================================
 
-string League::getPointsLeader()
+string League::getScoringLeader(int type)
 {
     string teamName, playerName;
-    float points = -1;
+    float best = -1, current;
 
     for(auto &team: teams)
     {
@@ -207,67 +207,28 @@ string League::getPointsLeader()
 
         for(int i = 1; i < 11; i++)
         {
-            float currentPoints = currentTeam->getPlayer(i)->getOverAllStatList()->getPointsPerGame();
-            if(currentPoints > points)
+            if(type == 1)
             {
-                points = currentPoints;
+                current = currentTeam->getPlayer(i)->getOverAllStatList()->getPointsPerGame();
+            }
+            else if(type == 2)
+            {
+                current = currentTeam->getPlayer(i)->getOverAllStatList()->getShootingPercentage();
+            }
+            else if(type == 3)
+            {
+                current = currentTeam->getPlayer(i)->getOverAllStatList()->getThreeShootingPercentage();
+            }
+            if(current > best)
+            {
+                best = current;
                 teamName = currentTeam->getName();
                 playerName = currentTeam->getPlayer(i)->getName();
             }
         }
     }
 
-    string resultString = teamName + " : " + playerName + " : " + to_string(points);
-    return resultString;
-}
-
-string League::getFieldGoalLeader()
-{
-    string teamName, playerName;
-    float fgpc = -1;
-
-    for(auto &team: teams)
-    {
-        Team *currentTeam = team.second->getTeam();
-
-        for(int i = 1; i < 11; i++)
-        {
-            float currentFGPC = currentTeam->getPlayer(i)->getOverAllStatList()->getShootingPercentage();
-            if(currentFGPC > fgpc)
-            {
-                fgpc = currentFGPC;
-                teamName = currentTeam->getName();
-                playerName = currentTeam->getPlayer(i)->getName();
-            }
-        }
-    }
-
-    string resultString = teamName + " : " + playerName + " : " + to_string(fgpc);
-    return resultString;
-}
-
-string League::getThreePointLeader()
-{
-    string teamName, playerName;
-    float tppc = -1;
-
-    for(auto &team: teams)
-    {
-        Team *currentTeam = team.second->getTeam();
-
-        for(int i = 1; i < 11; i++)
-        {
-            float currentTPPC = currentTeam->getPlayer(i)->getOverAllStatList()->getThreeShootingPercentage();
-            if(currentTPPC > tppc)
-            {
-                tppc = currentTPPC;
-                teamName = currentTeam->getName();
-                playerName = currentTeam->getPlayer(i)->getName();
-            }
-        }
-    }
-
-    string resultString = teamName + " : " + playerName + " : " + to_string(tppc);
+    string resultString = teamName + " : " + playerName + " : " + to_string(best);
     return resultString;
 }
 
@@ -307,6 +268,41 @@ string League::getReboundLeader(int type)
     return resultString;
 }
 
+string League::getOtherLeader(int type)
+{
+    string teamName, playerName;
+    float best = -1, current;
+
+    for(auto &team: teams)
+    {
+        Team *currentTeam = team.second->getTeam();
+
+        for(int i = 1; i < 11; i++)
+        {
+            if(type == 1)
+            {
+                current = currentTeam->getPlayer(i)->getOverAllStatList()->getAssistsPerGame();
+            }
+            else if(type == 2)
+            {
+                current = currentTeam->getPlayer(i)->getOverAllStatList()->getBlocksPerGame();
+            }
+            else if(type == 3)
+            {
+                current = currentTeam->getPlayer(i)->getOverAllStatList()->getStealsPerGame();
+            }
+            if(current > best)
+            {
+                best = current;
+                teamName = currentTeam->getName();
+                playerName = currentTeam->getPlayer(i)->getName();
+            }
+        }
+    }
+
+    string resultString = teamName + " : " + playerName + " : " + to_string(best);
+    return resultString;
+}
 //==================================
 // Printing
 //==================================
