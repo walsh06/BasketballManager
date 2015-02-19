@@ -201,7 +201,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -290,57 +290,89 @@
       <attribute name="title">
        <string>Rebounds</string>
       </attribute>
-      <widget class="QTableWidget" name="tableWidget_2">
+      <widget class="QLabel" name="drebLeader">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>300</width>
-         <height>275</height>
+         <x>10</x>
+         <y>220</y>
+         <width>231</width>
+         <height>17</height>
         </rect>
        </property>
-       <property name="verticalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
+       <property name="text">
+        <string/>
        </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
-       <property name="rowCount">
-        <number>5</number>
-       </property>
-       <property name="columnCount">
-        <number>6</number>
-       </property>
-       <attribute name="verticalHeaderVisible">
-        <bool>false</bool>
-       </attribute>
-       <attribute name="verticalHeaderDefaultSectionSize">
-        <number>49</number>
-       </attribute>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <column>
-        <property name="text">
-         <string>Team</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Player</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Rebounds</string>
-        </property>
-       </column>
-       <column/>
-       <column/>
-       <column/>
       </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>141</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Rebounds Per Game</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>151</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Offensive Rebounds</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="orebLeader">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>231</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="rebLeader">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>231</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_8">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>180</y>
+         <width>151</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Defensive Rebounds</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Defence</string>
+      </attribute>
      </widget>
     </widget>
    </widget>

@@ -37,7 +37,7 @@ public:
     string getPointsLeader();
     string getFieldGoalLeader();
     string getThreePointLeader();
-
+    string getReboundLeader(int type);
 
 private:
     map<int, LeagueTeam*> teams;

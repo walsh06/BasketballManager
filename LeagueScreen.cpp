@@ -69,6 +69,9 @@ void LeagueScreen::displayLeaderboard()
     ui->ppgLeader->setText(QString::fromStdString(league.getPointsLeader()));
     ui->fgpcLeader->setText(QString::fromStdString(league.getFieldGoalLeader()));
     ui->tppcLeader->setText(QString::fromStdString(league.getThreePointLeader()));
+    ui->rebLeader->setText(QString::fromStdString(league.getReboundLeader(1)));
+    ui->orebLeader->setText(QString::fromStdString(league.getReboundLeader(2)));
+    ui->drebLeader->setText(QString::fromStdString(league.getReboundLeader(3)));
 
 }
 

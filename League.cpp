@@ -254,6 +254,42 @@ string League::getThreePointLeader()
     return resultString;
 }
 
+string League::getReboundLeader(int type)
+{
+    string teamName, playerName;
+    float best = -1, current;
+
+    for(auto &team: teams)
+    {
+        Team *currentTeam = team.second->getTeam();
+
+        for(int i = 1; i < 11; i++)
+        {
+            if(type == 1)
+            {
+                current = currentTeam->getPlayer(i)->getOverAllStatList()->getReboundsPerGame();
+            }
+            else if(type == 2)
+            {
+                current = currentTeam->getPlayer(i)->getOverAllStatList()->getOffensiveReboundsPerGame();
+            }
+            else if(type == 3)
+            {
+                current = currentTeam->getPlayer(i)->getOverAllStatList()->getDefensiveReboundsPerGame();
+            }
+            if(current > best)
+            {
+                best = current;
+                teamName = currentTeam->getName();
+                playerName = currentTeam->getPlayer(i)->getName();
+            }
+        }
+    }
+
+    string resultString = teamName + " : " + playerName + " : " + to_string(best);
+    return resultString;
+}
+
 //==================================
 // Printing
 //==================================
