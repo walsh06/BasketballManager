@@ -125,7 +125,11 @@ void Match::sim()
     cout << "Game Over" << endl;
     cout << "Score: " << score[0] << "-" << score[1] << endl;
     //shotMap.printHeatMap();
-
+    for(int i = 1; i < 11; i++)
+    {
+        teamOne->getPlayer(i)->updateOverAllStats();
+        teamTwo->getPlayer(i)->updateOverAllStats();
+    }
 }
 
 int* Match::getScore()

@@ -182,15 +182,15 @@ int League::getTeamCount()
 string League::getPointsLeader()
 {
     string teamName, playerName;
-    int points = -1;
+    float points = -1;
 
     for(auto &team: teams)
     {
         Team *currentTeam = team.second->getTeam();
 
-        for(int i = 0; i < 10; i++)
+        for(int i = 1; i < 11; i++)
         {
-            int currentPoints = currentTeam->getPlayer(i)->getOverAllStatList()->getPointsPerGame();
+            float currentPoints = currentTeam->getPlayer(i)->getOverAllStatList()->getPointsPerGame();
             if(currentPoints > points)
             {
                 points = currentPoints;
@@ -201,6 +201,56 @@ string League::getPointsLeader()
     }
 
     string resultString = teamName + " : " + playerName + " : " + to_string(points);
+    return resultString;
+}
+
+string League::getFieldGoalLeader()
+{
+    string teamName, playerName;
+    float fgpc = -1;
+
+    for(auto &team: teams)
+    {
+        Team *currentTeam = team.second->getTeam();
+
+        for(int i = 1; i < 11; i++)
+        {
+            float currentFGPC = currentTeam->getPlayer(i)->getOverAllStatList()->getShootingPercentage();
+            if(currentFGPC > fgpc)
+            {
+                fgpc = currentFGPC;
+                teamName = currentTeam->getName();
+                playerName = currentTeam->getPlayer(i)->getName();
+            }
+        }
+    }
+
+    string resultString = teamName + " : " + playerName + " : " + to_string(fgpc);
+    return resultString;
+}
+
+string League::getThreePointLeader()
+{
+    string teamName, playerName;
+    float tppc = -1;
+
+    for(auto &team: teams)
+    {
+        Team *currentTeam = team.second->getTeam();
+
+        for(int i = 1; i < 11; i++)
+        {
+            float currentTPPC = currentTeam->getPlayer(i)->getOverAllStatList()->getThreeShootingPercentage();
+            if(currentTPPC > tppc)
+            {
+                tppc = currentTPPC;
+                teamName = currentTeam->getName();
+                playerName = currentTeam->getPlayer(i)->getName();
+            }
+        }
+    }
+
+    string resultString = teamName + " : " + playerName + " : " + to_string(tppc);
     return resultString;
 }
 

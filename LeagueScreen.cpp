@@ -22,7 +22,7 @@ LeagueScreen::~LeagueScreen()
 
 void LeagueScreen::updateDisplays()
 {
-   // displayResults();
+    displayResults();
     displayNextMatches();
     displayTable();
     displayLeaderboard();
@@ -67,6 +67,9 @@ void LeagueScreen::displayTable()
 void LeagueScreen::displayLeaderboard()
 {
     ui->ppgLeader->setText(QString::fromStdString(league.getPointsLeader()));
+    ui->fgpcLeader->setText(QString::fromStdString(league.getFieldGoalLeader()));
+    ui->tppcLeader->setText(QString::fromStdString(league.getThreePointLeader()));
+
 }
 
 //=======================================

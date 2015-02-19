@@ -35,6 +35,8 @@ public:
     vector<LeagueTeam *> getStandings();
 
     string getPointsLeader();
+    string getFieldGoalLeader();
+    string getThreePointLeader();
 
 
 private:
