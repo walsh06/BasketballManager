@@ -113,7 +113,10 @@ int StatList::getMinutes()
 
 float StatList::getMinutesPerGame()
 {
-    return minutes/games;
+    if(games == 0)
+        return 0;
+    else
+        return minutes/games;
 }
 
 //==========================
@@ -167,7 +170,10 @@ int StatList::getPoints()
 
 float StatList::getPointsPerGame()
 {
-    return float(points)/float(games);
+    if(games == 0)
+        return 0;
+    else
+        return float(points)/float(games);
 }
 
 int StatList::getFieldGoalsMade()
@@ -177,7 +183,10 @@ int StatList::getFieldGoalsMade()
 
 float StatList::getFieldGoalsMadePerGame()
 {
-    return scores/games;
+    if(games == 0)
+        return 0;
+    else
+        return scores/games;
 }
 
 int StatList::getShots()
@@ -187,7 +196,10 @@ int StatList::getShots()
 
 float StatList::getShotsPerGame()
 {
-    return shots/games;
+    if(games == 0)
+        return 0;
+    else
+        return shots/games;
 }
 
 int StatList::getThreeShots()
@@ -197,17 +209,26 @@ int StatList::getThreeShots()
 
 float StatList::getThreeShotsPerGame()
 {
-    return threeShots/games;
+    if(games == 0)
+        return 0;
+    else
+        return threeShots/games;
 }
 
 float StatList::getShootingPercentage()
 {
-    return float(scores)/float(shots);
+    if(games == 0)
+        return 0;
+    else
+        return float(scores)/float(shots);
 }
 
 float StatList::getThreeShootingPercentage()
 {
-    return float(threeScores)/float(threeShots);
+    if(games == 0)
+        return 0;
+    else
+        return float(threeScores)/float(threeShots);
 }
 
 void StatList::printShootingStats()
@@ -237,7 +258,10 @@ int StatList::getRebounds()
 
 float StatList::getReboundsPerGame()
 {
-    return getRebounds()/games;
+    if(games == 0)
+        return 0;
+    else
+        return getRebounds()/games;
 }
 
 int StatList::getOffensiveRebounds()
@@ -247,7 +271,10 @@ int StatList::getOffensiveRebounds()
 
 float StatList::getOffensiveReboundsPerGame()
 {
-    return offensiveRebounds/games;
+    if(games == 0)
+        return 0;
+    else
+        return offensiveRebounds/games;
 }
 
 int StatList::getDefensiveRebounds()
@@ -257,7 +284,11 @@ int StatList::getDefensiveRebounds()
 
 float StatList::getDefensiveReboundsPerGame()
 {
-    return defensiveRebounds/games;
+
+    if(games == 0)
+        return 0;
+    else
+        return defensiveRebounds/games;
 }
 
 void StatList::printReboundingStats()
@@ -281,7 +312,10 @@ int StatList::getAssists()
 
 float StatList::getAssistsPerGame()
 {
-    return assists/games;
+    if(games == 0)
+        return 0;
+    else
+        return assists/games;
 }
 
 void StatList::printAssistStats()
@@ -307,7 +341,10 @@ void StatList::addFreeThrowScore()
 
 float StatList::getFreeThrowPercentage()
 {
-    return float(freeThrowsScored)/float(freeThrows);
+    if(games == 0)
+        return 0;
+    else
+        return float(freeThrowsScored)/float(freeThrows);
 }
 
 //==============================
@@ -331,7 +368,10 @@ int StatList::getBlocks()
 
 float StatList::getBlocksPerGame()
 {
-    return blocks/games;
+    if(games == 0)
+        return 0;
+    else
+        return blocks/games;
 }
 
 int StatList::getSteals()
@@ -341,5 +381,8 @@ int StatList::getSteals()
 
 float StatList::getStealsPerGame()
 {
-    return steals/games;
+    if(games == 0)
+        return 0;
+    else
+        return steals/games;
 }
