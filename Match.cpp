@@ -122,8 +122,8 @@ void Match::sim()
     screen->updateCourt(&ball);
     cout << "Game Over" << endl;
     cout << "Score: " << score[0] << "-" << score[1] << endl;
-
     //shotMap.printHeatMap();
+
 }
 
 int* Match::getScore()

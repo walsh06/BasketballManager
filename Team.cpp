@@ -408,6 +408,11 @@ void Team::setUpFreeThrowDefence()
 
 void Team::setUpStartGame()
 {
+    for(auto &player: players)
+    {
+        player.second->resetGameStats();
+    }
+
     if(team == 1)
     {
         getPlayer(1)->setPos(-3, 3);

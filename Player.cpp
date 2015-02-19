@@ -272,7 +272,7 @@ void Player::updateEnergy(bool playing)
     if(playing)
     {
         energy -= (2 + (20 - stamina)/2);
-        playerStats.addMinute();
+        playerStatsGame.addMinute();
     }
     else
     {
@@ -474,7 +474,25 @@ int Player::getDefence()
 
 StatList* Player::getStatList()
 {
-    return &playerStats;
+    return &playerStatsGame;
+}
+
+StatList* Player::getOverAllStatList()
+{
+    return &playerStatsOverAll;
+}
+
+void Player::updateOverAllStats()
+{
+    playerStatsOverAll = playerStatsOverAll + playerStatsGame;
+
+    int i = 0;
+}
+
+void Player::resetGameStats()
+{
+    playerStatsGame.resetStats();
+    playerStatsGame.addGame();
 }
 
 string Player::getName()
