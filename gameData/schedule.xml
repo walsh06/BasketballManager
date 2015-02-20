@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='us-ascii'?>
+<schedule rounds="6" teams="4">
+	<game round="1" home="1" away="2"/>
+	<game round="1" home="3" away="4"/>
+	<game round="2" home="4" away="1"/>
+	<game round="2" home="2" away="3"/>
+	<game round="3" home="1" away="3"/>
+	<game round="3" home="4" away="2"/>
+	<game round="4" home="1" away="2"/>
+	<game round="4" home="3" away="4"/>
+	<game round="5" home="4" away="1"/>
+	<game round="5" home="2" away="3"/>
+	<game round="6" home="1" away="3"/>
+	<game round="6" home="4" away="2"/>
+</schedule>
