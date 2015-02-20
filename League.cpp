@@ -3,7 +3,7 @@
 #include <sstream>
 League::League()
 {
-    createSchedule("../schedule.xml");
+    createSchedule("../BasketballManager/gameData/schedule.xml");
     teams[1] = new LeagueTeam("Spurs", true);
     teams[2] = new LeagueTeam("Pacers");
     teams[3] = new LeagueTeam("Heat");

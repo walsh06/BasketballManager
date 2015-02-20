@@ -14,10 +14,11 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
-
+/*
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-    /*
+  */
+
     QApplication a(argc, argv);
     QFile styleFile("../BasketballManager/darkorange.stylesheet.txt");
     styleFile.open(QFile::ReadOnly);
@@ -32,7 +33,6 @@ int main(int argc, char *argv[])
 
     return a.exec();
 
-    */
     //l.printResults();
 /*
     Tournament t(4);

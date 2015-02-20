@@ -111,4 +111,5 @@ OTHER_FILES += \
     schedule.xml \
     gameData/commentary.xml \
     gameData/schedule.xml \
-    gameData/teams.xml
+    gameData/teams.xml \
+    darkorange.stylesheet.txt

@@ -37,7 +37,7 @@ void MainWindow::readTeams()
     int posCount = 1;
     //open the document
     pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file("../teams.xml");
+    pugi::xml_parse_result result = doc.load_file("../BasketballManager/gameData/teams.xml");
 
     //loop through the tree structure created of the xml
     for (pugi::xml_node team: doc.child("teams"))

@@ -443,7 +443,7 @@ void MatchScreen::readXML()
 {
     //open the document
     pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file("../commentary.xml");
+    pugi::xml_parse_result result = doc.load_file("../BasketballManager/gameData/commentary.xml");
 
     //loop through the tree structure created of the xml
     for (pugi::xml_node event: doc.child("commentary"))
