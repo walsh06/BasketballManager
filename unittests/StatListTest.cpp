@@ -4,7 +4,7 @@
 TEST(StatListTest, PointsTest)
 {
     StatList stats;
-    //stats.addGame();
+    stats.addGame();
     ASSERT_EQ(stats.getPointsPerGame(), 0.0);
 
     stats.addPoint();
@@ -23,7 +23,7 @@ TEST(StatListTest, PointsTest)
 TEST(StatListTest, FieldGoalsTest)
 {
     StatList stats;
-    //stats.addGame();
+    stats.addGame();
 
     ASSERT_EQ(stats.getFieldGoalsMade(), 0);
     ASSERT_EQ(stats.getShots(), 0);
@@ -48,9 +48,10 @@ TEST(StatListTest, FieldGoalsTest)
 TEST(StatListTest, ThreePointTest)
 {
     StatList stats;
+    stats.addGame();
 
     ASSERT_EQ(stats.getThreeShots(), 0);
-    ASSERT_EQ(stats.getThreeShootingPercentage(), 0.0);
+    ASSERT_EQ(stats.getThreeShootingPercentage(), 0);
 
     stats.addThreePoints();
 
@@ -66,6 +67,7 @@ TEST(StatListTest, ThreePointTest)
 TEST(StatListTest, ReboundsTest)
 {
     StatList stats;
+    stats.addGame();
 
     ASSERT_EQ(stats.getRebounds(), 0);
 
@@ -79,6 +81,7 @@ TEST(StatListTest, ReboundsTest)
 TEST(StatListTest, AssistTest)
 {
     StatList stats;
+    stats.addGame();
 
     ASSERT_EQ(stats.getAssists(), 0);
 
@@ -89,8 +92,9 @@ TEST(StatListTest, AssistTest)
 TEST(StatListTest, FreeThrowTest)
 {
     StatList stats;
+    stats.addGame();
 
-    ASSERT_EQ(stats.getFreeThrowPercentage(), 0.0);
+    ASSERT_EQ(stats.getFreeThrowPercentage(), 0);
 
     stats.addFreeThrowScore();
     ASSERT_EQ(stats.getFreeThrowPercentage(), 1.0);

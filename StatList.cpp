@@ -217,7 +217,7 @@ float StatList::getThreeShotsPerGame()
 
 float StatList::getShootingPercentage()
 {
-    if(games == 0)
+    if(shots == 0)
         return 0;
     else
         return float(scores)/float(shots);
@@ -225,7 +225,7 @@ float StatList::getShootingPercentage()
 
 float StatList::getThreeShootingPercentage()
 {
-    if(games == 0)
+    if(threeShots == 0)
         return 0;
     else
         return float(threeScores)/float(threeShots);
@@ -341,7 +341,7 @@ void StatList::addFreeThrowScore()
 
 float StatList::getFreeThrowPercentage()
 {
-    if(games == 0)
+    if(freeThrows == 0)
         return 0;
     else
         return float(freeThrowsScored)/float(freeThrows);
