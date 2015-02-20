@@ -40,11 +40,15 @@ SOURCES += main.cpp \
     pugixml.cpp \
     TournamentMatchup.cpp \
     PlayerGraphic.cpp \
+<<<<<<< HEAD
     unittests/BallTest.cpp \
     unittests/FoulTest.cpp \
     unittests/PlayerTest.cpp \
     unittests/TeamTest.cpp \
     unittests/StatListTest.cpp
+=======
+    LeagueScreen.cpp
+>>>>>>> master
 
 HEADERS += \
     Player.h \
@@ -81,11 +85,13 @@ HEADERS += \
     LeagueTeam.h \
     Manager.h \
     TournamentMatchup.h \
-    PlayerGraphic.h
+    PlayerGraphic.h \
+    LeagueScreen.h
 
 FORMS += \
     MainWindow.ui \
-    MatchScreen.ui
+    MatchScreen.ui \
+    LeagueScreen.ui
 
 
 

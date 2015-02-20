@@ -24,7 +24,7 @@ using namespace std;
 class Match
 {
 public:
-    Match(MatchScreen *newScreen, Team *teamOne, Team *teamTwo);
+    Match(Team *teamOne, Team *teamTwo, MatchScreen *newScreen = NULL);
 
     ~Match();
     static void setSimSpeed(int speed);
@@ -52,6 +52,11 @@ private:
     const bool printing = false;
     bool endOfPossession;
 
+    void guiUpdateCommentary(int type, Player *playerOne, Player *playerTwo = NULL);
+    void guiUpdateStat();
+    void guiUpdatePlayers();
+    void guiInit();
+    void guiUpdateCourt();
 
     void move(Player* p);
     void withBall(Player* p, int shotClock);
