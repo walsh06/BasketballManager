@@ -109,6 +109,8 @@ private slots:
 
     void on_defenceSettingFive_currentIndexChanged(int index);
 
+    void on_finishGame_clicked();
+
 private:
     int swapIndexOne, swapIndexTwo;
     Ui::MatchScreen *ui;

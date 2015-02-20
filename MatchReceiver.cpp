@@ -43,6 +43,7 @@ void MatchReceiver::changeSimSpeed(int index)
         case 1: simSpeed = 500; break;
         case 2: simSpeed = 250; break;
         case 3: simSpeed = 100; break;
+        case 4: simSpeed = 0; break;
     }
 
     Match::setSimSpeed(simSpeed);

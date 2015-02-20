@@ -23,7 +23,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1100</width>
+     <width>1150</width>
      <height>700</height>
     </rect>
    </property>
@@ -495,9 +495,9 @@
     <widget class="QTableWidget" name="statsOne">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>130</x>
        <y>100</y>
-       <width>381</width>
+       <width>411</width>
        <height>441</height>
       </rect>
      </property>
@@ -551,28 +551,65 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>100</y>
-       <width>81</width>
-       <height>441</height>
+       <y>140</y>
+       <width>101</width>
+       <height>401</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="gridSize">
+      <size>
+       <width>0</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="modelColumn">
+      <number>0</number>
      </property>
     </widget>
     <widget class="QListWidget" name="playersTwo">
      <property name="geometry">
       <rect>
-       <x>510</x>
-       <y>100</y>
-       <width>81</width>
-       <height>441</height>
+       <x>560</x>
+       <y>140</y>
+       <width>111</width>
+       <height>401</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+      </font>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="gridSize">
+      <size>
+       <width>0</width>
+       <height>40</height>
+      </size>
      </property>
     </widget>
     <widget class="QTableWidget" name="statsTwo">
      <property name="geometry">
       <rect>
-       <x>600</x>
+       <x>680</x>
        <y>100</y>
-       <width>451</width>
+       <width>411</width>
        <height>441</height>
       </rect>
      </property>

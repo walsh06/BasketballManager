@@ -118,7 +118,7 @@ void LeagueScreen::startGame()
     league.addResult(teamOne->getTeam()->getName() + " " + to_string(scoreHome) + "-" +
                      to_string(scoreAway) +" "+teamTwo->getTeam()->getName());
 
-    loadStatsPostGame(teamOne->getTeam(), teamTwo->getTeam());
+    loadStatsPostGame(teamOne->getTeam(), teamTwo->getTeam(), scoreHome, scoreAway);
     ui->stackedWidget->setCurrentIndex(2);
 }
 
@@ -126,8 +126,11 @@ void LeagueScreen::startGame()
 //Post Game
 //==================================
 
-void LeagueScreen::loadStatsPostGame(Team *teamOne, Team *teamTwo)
+void LeagueScreen::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneScore, int teamTwoScore)
 {
+    ui->ScoreOne->display(teamOneScore);
+    ui->ScoreTwo->display(teamTwoScore);
+
     vector<QString> header = {"MP", "Pts", "Ast", "Reb", "FGA", "FGM", "FGPC", "Blk", "Stl"};
     for(int i = 0; i < header.size(); i++)
     {
@@ -137,7 +140,9 @@ void LeagueScreen::loadStatsPostGame(Team *teamOne, Team *teamTwo)
 
     for(int i = 1; i < 11; i++)
     {
-        StatList *playerStats = teamOne->getPlayer(i)->getStatList();
+        Player *player = teamOne->getPlayer(i);
+        StatList *playerStats = player->getStatList();
+        ui->playersOne->addItem(QString::number(player->getNumber()) + QString::fromStdString(" " + player->getName()));
 
         QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
         QTableWidgetItem *points = new QTableWidgetItem(QString::number(playerStats->getPointsPerGame()));
@@ -161,7 +166,9 @@ void LeagueScreen::loadStatsPostGame(Team *teamOne, Team *teamTwo)
 
     for(int i = 1; i < 11; i++)
     {
-        StatList *playerStats = teamTwo->getPlayer(i)->getStatList();
+        Player *player = teamTwo->getPlayer(i);
+        StatList *playerStats = player->getStatList();
+        ui->playersTwo->addItem(QString::number(player->getNumber()) + QString::fromStdString(" " + player->getName()));
 
         QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
         QTableWidgetItem *points = new QTableWidgetItem(QString::number(playerStats->getPointsPerGame()));

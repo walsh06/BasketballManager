@@ -32,7 +32,7 @@ private:
     League league;
     MatchReceiver *receiver;
 
-    void loadStatsPostGame(Team *teamOne, Team *teamTwo);
+    void loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneScore, int teamTwoScore);
     void displayNextMatches();
     void displayResults();
     void displayTable();

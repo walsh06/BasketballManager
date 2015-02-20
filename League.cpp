@@ -151,7 +151,7 @@ void League::removeUserMatch()
         tuple<int, int> match = matches[i];
         if(teams[get<0>(match)]->isUserControlled() || teams[get<1>(match)]->isUserControlled())
         {
-            matches.erase(matches.begin() + i);
+            schedule[currentRound].erase(schedule[currentRound].begin() + i);
             break;
         }
     }

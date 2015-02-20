@@ -685,3 +685,8 @@ void MatchScreen::on_defenceSettingFive_currentIndexChanged(int index)
 {
     emit changeDefenceSetting(5, index + 1);
 }
+
+void MatchScreen::on_finishGame_clicked()
+{
+    emit changeSimSpeed(4);
+}
