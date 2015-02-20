@@ -13,9 +13,11 @@ class Player
 {
 public:
     Player(int number);
+    Player();
+    Player(map<string, string> playerMap);
+
     ~Player();
 
-    Player(map<string, string> playerMap);
 
     int getPosValue(int x, int y);
     int getPosValue();

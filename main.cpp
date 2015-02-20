@@ -3,7 +3,7 @@
 #include "MainWindow.h"
 #include <time.h>
 #include <stdlib.h>
-
+#include <gtest/gtest.h>
 #include <QApplication>
 #include <QCoreApplication>
 #include <QFile>
@@ -13,6 +13,11 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
+
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+    /*
     QApplication a(argc, argv);
     QFile styleFile("../BasketballManager/darkorange.stylesheet.txt");
     styleFile.open(QFile::ReadOnly);
@@ -24,7 +29,10 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     w.run();
-    srand(time(NULL));
+
+    return a.exec();
+
+    */
     //l.printResults();
 /*
     Tournament t(4);
@@ -59,7 +67,6 @@ int main(int argc, char *argv[])
 
     //m.writeMatchStats("Game.csv");
     */
-    return a.exec();
 
 }
 

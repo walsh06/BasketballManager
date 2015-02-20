@@ -6,6 +6,7 @@
 #include <map>
 #include <tuple>
 #include <vector>
+
 using namespace std;
 class League
 {

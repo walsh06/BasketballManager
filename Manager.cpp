@@ -26,7 +26,6 @@ void Manager::evaluatePlayers(map<int, Player *> players)
         player.push_back(((float)p->getDunk() + (float)p->getBlock() + (float)p->getDefRebound() + (float)p->getOffRebound())/4.0); //rebound
         playerRatings.push_back(player);
     }
-    printRatings();
 }
 
 void Manager::pickStartingPosition(int pos, map<int, Player *> &players)

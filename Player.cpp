@@ -1,5 +1,15 @@
 #include "Player.h"
 
+Player::Player()
+{
+    energy = 100;
+    stamina = 15;
+    posX = 0;
+    posY = 0;
+    position = NULL;
+    strategy = NULL;
+}
+
 Player::Player(int number)
 {
     this->number = number;
@@ -221,6 +231,7 @@ void Player::setPlayingPosition(PlayerPosition *pos)
 
 void Player::setStrategy(PlayerStrategy *strategy)
 {
+
     delete this->strategy;
     this->strategy = strategy;
     updateMap();
