@@ -27,6 +27,7 @@ public:
 
     vector<tuple<int, int>> getNextRound();
     vector<string> getResults();
+    void addResult(string newResult);
     LeagueTeam* getTeam(int index);
     void removeUserMatch();
     vector<LeagueTeam *> getAllTeams();

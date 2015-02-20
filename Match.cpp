@@ -16,10 +16,10 @@ Match::Match(Team *teamOne, Team *teamTwo, MatchScreen *newScreen)
     score[1] = 0;
     assist = make_tuple(new Player(0), 800);
     screen = newScreen;
-    guiInit();
+
     teamOne->pickStartingTeam();
     teamTwo->pickStartingTeam();
-
+    guiInit();
     setOrderOfPlay();
 
 }
@@ -378,8 +378,7 @@ void Match::guiInit()
 {
     if(screen != NULL)
     {
-        screen->initTacticScreen(teamOne);
-        screen->initOppositionPlayers(teamTwo);
+        screen->initMatchScreen(teamOne, teamTwo);
     }
 }
 

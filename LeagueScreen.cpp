@@ -93,6 +93,7 @@ void LeagueScreen::on_playLeagueMatch_clicked()
     LeagueTeam *teamTwo = league.getTeam(get<1>(matchup));
     receiver = new MatchReceiver(teamOne->getTeam(), ui->MatchWidget);
     match = new Match(teamOne->getTeam(), teamTwo->getTeam(), ui->MatchWidget);
+    match->setSimSpeed(1000);
     connect(ui->MatchWidget, SIGNAL(startGame()), this, SLOT(startGame()));
     ui->stackedWidget->setCurrentIndex(1);
 }
@@ -114,8 +115,8 @@ void LeagueScreen::startGame()
         teamTwo->addWin();
         teamOne->addGame();
     }
-    ui->previousMatches->setText(QString::fromStdString(to_string(get<0>(matchup)) + " " + to_string(scoreHome) +
-                                                        "-" + to_string(scoreAway) +" "+to_string(get<1>(matchup))));
+    league.addResult(teamOne->getTeam()->getName() + " " + to_string(scoreHome) + "-" +
+                     to_string(scoreAway) +" "+teamTwo->getTeam()->getName());
 
     loadStatsPostGame(teamOne->getTeam(), teamTwo->getTeam());
     ui->stackedWidget->setCurrentIndex(2);

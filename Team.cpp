@@ -419,6 +419,7 @@ void Team::setUpStartGame()
     for(auto &player: players)
     {
         player.second->resetGameStats();
+        player.second->resetEnergy();
     }
 
     if(team == 1)

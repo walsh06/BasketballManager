@@ -31,6 +31,7 @@ public:
     void updateTime(int time, int shotClock);
     void updateCommentary(int eventType, Player *p, Player *p2 = NULL);
 
+    void initMatchScreen(Team *teamOne, Team *teamTwo);
     void initTacticScreen(Team *teamOne);
     void initOppositionPlayers(Team *teamTwo);
     void loadStats();

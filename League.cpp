@@ -119,6 +119,11 @@ vector<string> League::getResults()
      return results;
 }
 
+void League::addResult(string newResult)
+{
+    results.push_back(newResult);
+}
+
 LeagueTeam* League::getTeam(int index)
 {
     return teams[index];

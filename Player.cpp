@@ -296,6 +296,12 @@ int Player::getEnergyModifier()
    }
 }
 
+void Player::resetEnergy()
+{
+    energy = 100;
+}
+
+
 //==================================
 // GETTERS AND SETTERS
 //==================================
