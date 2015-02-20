@@ -30,6 +30,7 @@ private slots:
     void startGame();
     void on_playMatch_clicked();
     void on_runSims_clicked();
+    void on_league_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->stackedWidget->setCurrentIndex(2);
+    ui->stackedWidget->setCurrentIndex(1);
     readTeams();
 
     for(auto &teamName: teamNames)
@@ -74,4 +74,9 @@ void MainWindow::on_runSims_clicked()
     }
     ui->simProgress->setValue(simCount);
 
+}
+
+void MainWindow::on_league_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
 }
