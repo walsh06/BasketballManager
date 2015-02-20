@@ -31,6 +31,7 @@ public:
     void updateTime(int time, int shotClock);
     void updateCommentary(int eventType, Player *p, Player *p2 = NULL);
 
+    void initMatchScreen(Team *teamOne, Team *teamTwo);
     void initTacticScreen(Team *teamOne);
     void initOppositionPlayers(Team *teamTwo);
     void loadStats();
@@ -107,6 +108,8 @@ private slots:
     void on_defenceSettingFour_currentIndexChanged(int index);
 
     void on_defenceSettingFive_currentIndexChanged(int index);
+
+    void on_finishGame_clicked();
 
 private:
     int swapIndexOne, swapIndexTwo;

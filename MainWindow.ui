@@ -97,7 +97,21 @@
        <number>0</number>
       </property>
      </widget>
+     <widget class="QPushButton" name="league">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>340</y>
+        <width>121</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>League Mode</string>
+      </property>
+     </widget>
     </widget>
+    <widget class="LeagueScreen" name="LeagueWidget"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -117,6 +131,12 @@
    <class>MatchScreen</class>
    <extends>QWidget</extends>
    <header>MatchScreen.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LeagueScreen</class>
+   <extends>QWidget</extends>
+   <header>LeagueScreen.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

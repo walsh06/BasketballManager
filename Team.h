@@ -69,6 +69,8 @@ public:
     void setUpFreeThrowDefence();
     void setUpStartGame();
 
+    bool isUserControlled();
+    void setUserControlled(bool userControlled);
 
     static const int PG = 1, SG = 2, SF = 3, PF = 4, C = 5;
     static const int TIGHT = 1, SAG = 2;

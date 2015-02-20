@@ -48,7 +48,6 @@ void Team::setupTeamTactics()
     for(int i = 1; i <= players.size(); i++)
     {
         int strategy = manager.getBestStrategyForPlayer(i);
-        cout << i << " " << strategy << endl;
         changeStrategy(i, strategy);
     }
 
@@ -308,6 +307,15 @@ void Team::swapPlayers(int ftShooter)
     }
 }
 
+bool Team::isUserControlled()
+{
+    return userControlled;
+}
+
+void Team::setUserControlled(bool userControlled)
+{
+    this->userControlled = userControlled;
+}
 
 //===========================================
 // Team Set up
@@ -411,6 +419,7 @@ void Team::setUpStartGame()
     for(auto &player: players)
     {
         player.second->resetGameStats();
+        player.second->resetEnergy();
     }
 
     if(team == 1)

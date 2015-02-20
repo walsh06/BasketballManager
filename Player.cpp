@@ -296,6 +296,12 @@ int Player::getEnergyModifier()
    }
 }
 
+void Player::resetEnergy()
+{
+    energy = 100;
+}
+
+
 //==================================
 // GETTERS AND SETTERS
 //==================================
@@ -485,8 +491,6 @@ StatList* Player::getOverAllStatList()
 void Player::updateOverAllStats()
 {
     playerStatsOverAll = playerStatsOverAll + playerStatsGame;
-
-    int i = 0;
 }
 
 void Player::resetGameStats()

@@ -47,6 +47,7 @@ public:
 
     int getStamina();
     int getEnergy();
+    void resetEnergy();
     void updateEnergy(bool playing);
     int getEnergyModifier();
 

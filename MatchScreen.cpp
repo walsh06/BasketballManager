@@ -34,10 +34,25 @@ MatchScreen::~MatchScreen()
 // Tactics Screen
 //======================================
 
+void MatchScreen::initMatchScreen(Team *teamOne, Team *teamTwo)
+{
+    if(teamTwo->isUserControlled())
+    {
+        this->ownTeam = teamTwo;
+        this->oppositionTeam = teamOne;
+    }
+    else
+    {
+        this->ownTeam = teamOne;
+        this->oppositionTeam = teamTwo;
+    }
+
+    initTacticScreen(ownTeam);
+    initOppositionPlayers(oppositionTeam);
+}
+
 void MatchScreen::initTacticScreen(Team *team)
 {
-    this->ownTeam = team;
-
     boxes[0][0] = ui->positionOne; boxes[0][1] = ui->strategyOne;
     boxes[1][0] = ui->positionTwo; boxes[1][1] = ui->strategyTwo;
     boxes[2][0] = ui->positionThree; boxes[2][1] = ui->strategyThree;
@@ -177,7 +192,6 @@ void MatchScreen::initOppositionPlayers(Team *team)
     ui->oppPlayerRatings->setItem(0, 11, new QTableWidgetItem("Spd"));
     ui->oppPlayerRatings->setItem(0, 12, new QTableWidgetItem("FT"));
 
-    this->oppositionTeam = team;
     for(int i = 1; i < 6; i++)
     {
         Player *player = oppositionTeam->getPlayer(i);
@@ -376,9 +390,16 @@ void MatchScreen::updateCourt(Ball *ball)
         playerGraphic->setNumber(player->getNumber());
         playerGraphic->setPos(drawX, drawY);
         playerGraphic->setColour(redBrush);
-        if(ballTeam == 1 && ballPos == i + 1)
+        if(ballTeam == player->getTeam() && ballPos == i + 1)
         {
-            ballCircle->setPos(drawX + 20, drawY + 10);
+            if(ballTeam == 1)
+            {
+                ballCircle->setPos(drawX + 20, drawY + 10);
+            }
+            else
+            {
+                ballCircle->setPos(drawX, drawY + 10);
+            }
         }
     }
 
@@ -404,9 +425,16 @@ void MatchScreen::updateCourt(Ball *ball)
         playerGraphic->setNumber(player->getNumber());
         playerGraphic->setPos(drawX, drawY);
         playerGraphic->setColour(blueBrush);
-        if(ballTeam == 2 && ballPos == i)
+        if(ballTeam == player->getTeam() && ballPos == i)
         {
-            ballCircle->setPos(drawX, drawY + 10);
+            if(ballTeam == 1)
+            {
+                ballCircle->setPos(drawX + 20, drawY + 10);
+            }
+            else
+            {
+                ballCircle->setPos(drawX, drawY + 10);
+            }
         }
     }
 }
@@ -656,4 +684,9 @@ void MatchScreen::on_defenceSettingFour_currentIndexChanged(int index)
 void MatchScreen::on_defenceSettingFive_currentIndexChanged(int index)
 {
     emit changeDefenceSetting(5, index + 1);
+}
+
+void MatchScreen::on_finishGame_clicked()
+{
+    emit changeSimSpeed(4);
 }
