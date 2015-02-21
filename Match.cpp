@@ -512,7 +512,7 @@ void Match::withBall(Player* p, int shotClock)
         }
         else
         {
-            posValue = p->getPosValue() + (shotClockFactor - shotClock) - pressure - (p->getRange() * 1);
+            posValue = p->getPosValue() + (shotClockFactor - shotClock) - pressure + ((4 - p->getRange()) * 5);
         }
         probs.addProbability(posValue);
 
