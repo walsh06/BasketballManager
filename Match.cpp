@@ -404,6 +404,14 @@ void Match::move(Player* p)
     {
         ProbabilityVector probs(9);
         int x = p->getPosX(), y = p->getPosY();
+        vector<Player*> otherPlayers = teams[p->getTeam() - 1]->getOtherPlayers(p->getNumber());
+        int xSpace = 0, ySpace = 0, spacingModifier = 0, moveModifier = 5;
+
+        for(auto &player: otherPlayers)
+        {
+            xSpace += x - player->getPosX();
+            ySpace += y - player->getPosY();
+        }
 
         for(int i = y - 1; i <= y + 1; i++)
         {
@@ -419,7 +427,25 @@ void Match::move(Player* p)
                 }
                 else
                 {
-                    probs.addProbability(p->getPosValue(j, i));
+                    spacingModifier = 0;
+                    if(j < x && xSpace < 0)
+                    {
+                        spacingModifier += moveModifier;
+                    }
+                    else if(j > x && xSpace > 0)
+                    {
+                        spacingModifier += moveModifier;
+                    }
+
+                    if(i < y && ySpace < 0)
+                    {
+                        spacingModifier += moveModifier;
+                    }
+                    else if(i > y && ySpace > 0)
+                    {
+                        spacingModifier += moveModifier;
+                    }
+                    probs.addProbability(p->getPosValue(j, i) + spacingModifier);
                 }
             }
         }
@@ -503,12 +529,13 @@ void Match::withBall(Player* p, int shotClock)
             if(player->getPosX() >= 0)
             {
                 posValue = player->getPosValue() + (p->getPass() / 4) - abs((x - player->getPosX()) + (y - player->getPosY()));
+                if(defenders.size() > 0)
+                {
+                    posValue -= (defenders.size() * 2);
+                }
             }
 
-            if(defenders.size() > 0)
-            {
-                posValue -= (defenders.size() * 2);
-            }
+
             probs.addProbability(posValue);
         }
 
