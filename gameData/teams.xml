@@ -37,8 +37,8 @@
 	</team>
 
 	<team name="Spurs">
-		<player name="Parker" number="1" pos="PG" shootThree="13" shootMid="18" shootClose="19" dunk="8" layup="19" pass="17" offRebound="5" defRebound="12" defence="16" steal="13" block="12" speed="8" freeThrow="16" stamina="17"/> 
-		<player name="Green" number="2" pos="SG" shootThree="18" shootMid="16" shootClose="14" dunk="12" layup="13" pass="11" offRebound="12" defRebound="14" defence="12" steal="14" block="12" speed="15" freeThrow="16" stamina="16"/>
+		<player name="Parker" number="1" pos="PG" shootThree="13" shootMid="18" shootClose="19" dunk="8" layup="19" pass="17" offRebound="5" defRebound="12" defence="16" steal="13" block="12" speed="8" freeThrow="20" stamina="17"/> 
+		<player name="Green" number="2" pos="SG" shootThree="18" shootMid="16" shootClose="14" dunk="12" layup="13" pass="11" offRebound="12" defRebound="14" defence="12" steal="14" block="12" speed="15" freeThrow="5" stamina="16"/>
 		<player name="Leonard" number="3" pos="SF" shootThree="15" shootMid="19" shootClose="16" dunk="18" layup="18" pass="12" offRebound="11" defRebound="15" defence="18" steal="16" block="12" speed="17" freeThrow="16" stamina="18"/>
 		<player name="Duncan" number="4" pos="PF" shootThree="2" shootMid="16" shootClose="19" dunk="19" layup="17" pass="13" offRebound="15" defRebound="19" defence="16" steal="6" block="19" speed="10" freeThrow="14" stamina="16"/>
 		<player name="Splitter" number="5" pos="C" shootThree="1" shootMid="10" shootClose="16" dunk="18" layup="12" pass="5" offRebound="16" defRebound="17" defence="14" steal="5" block="8" speed="8" freeThrow="14" stamina="15"/>
