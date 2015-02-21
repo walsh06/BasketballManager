@@ -62,6 +62,7 @@ private:
     void withBall(Player* p, int shotClock);
     void driveBasket(Player *p);
     vector<int> getDefendersForPass(int team, int x1, int y1, int x2, int y2);
+    int calculateStatModifier(Player *p);
 
     void shoot(Player* p, int pressure);
     void shootTwo(Player *p, int pressure, int shot, int shootRand, int foulRand, string type);

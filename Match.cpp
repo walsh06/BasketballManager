@@ -114,7 +114,10 @@ void Match::sim()
                     teamOne->updateEnergy();
                     teamTwo->updateEnergy();
                 }
-                //printCourt();
+                if(printing)
+                {
+                    printCourt();
+                }
             }
             if(!endOfPossession)
             {
@@ -126,7 +129,7 @@ void Match::sim()
     guiUpdateCourt();
     cout << "Game Over" << endl;
     cout << "Score: " << score[0] << "-" << score[1] << endl;
-    //shotMap.printHeatMap();
+    shotMap.printHeatMap();
     for(int i = 1; i < 11; i++)
     {
         teamOne->getPlayer(i)->updateOverAllStats();
@@ -404,6 +407,14 @@ void Match::move(Player* p)
     {
         ProbabilityVector probs(9);
         int x = p->getPosX(), y = p->getPosY();
+        vector<Player*> otherPlayers = teams[p->getTeam() - 1]->getOtherPlayers(p->getNumber());
+        int xSpace = 0, ySpace = 0, spacingModifier = 0, moveModifier = 2;
+
+        for(auto &player: otherPlayers)
+        {
+            xSpace += x - player->getPosX();
+            ySpace += y - player->getPosY();
+        }
 
         for(int i = y - 1; i <= y + 1; i++)
         {
@@ -419,7 +430,25 @@ void Match::move(Player* p)
                 }
                 else
                 {
-                    probs.addProbability(p->getPosValue(j, i));
+                    spacingModifier = 0;
+                    if(j < x && xSpace < 0)
+                    {
+                        spacingModifier += moveModifier;
+                    }
+                    else if(j > x && xSpace > 0)
+                    {
+                        spacingModifier += moveModifier;
+                    }
+
+                    if(i < y && ySpace < 0)
+                    {
+                        spacingModifier += moveModifier;
+                    }
+                    else if(i > y && ySpace > 0)
+                    {
+                        spacingModifier += moveModifier;
+                    }
+                    probs.addProbability(p->getPosValue(j, i) + spacingModifier);
                 }
             }
         }
@@ -444,7 +473,8 @@ void Match::withBall(Player* p, int shotClock)
     }
     else
     {
-        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 12;
+        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 8;
+        int playerStatModifier = calculateStatModifier(p);
         //move 0-8, shoot 9, pass 10-13, drive 14
         ProbabilityVector probs(15);
         //=================
@@ -486,7 +516,7 @@ void Match::withBall(Player* p, int shotClock)
         }
         else
         {
-            posValue = p->getPosValue() + (shotClockFactor - shotClock) - pressure - (p->getRange() * 1);
+            posValue = p->getPosValue() + (shotClockFactor - shotClock) - pressure + ((4 - p->getRange()) * 2) + playerStatModifier;
         }
         probs.addProbability(posValue);
 
@@ -502,12 +532,12 @@ void Match::withBall(Player* p, int shotClock)
             vector<int> defenders = getDefendersForPass(getOtherTeam(p->getTeam()), x, y, player->getPosX(), player->getPosY());
             if(player->getPosX() >= 0)
             {
-                posValue = player->getPosValue() + (p->getPass() / 4) - abs((x - player->getPosX()) + (y - player->getPosY()));
-            }
-
-            if(defenders.size() > 0)
-            {
-                posValue -= (defenders.size() * 2);
+                int statModifier = calculateStatModifier(player);
+                posValue = player->getPosValue() + (p->getPass() / 4) + statModifier - abs((x - player->getPosX()) + (y - player->getPosY()));
+                if(defenders.size() > 0)
+                {
+                    posValue -= (defenders.size() * 2);
+                }
             }
             probs.addProbability(posValue);
         }
@@ -525,7 +555,6 @@ void Match::withBall(Player* p, int shotClock)
         probs.addProbability(value);
         //=================
         ProbabilityVector finalProbabilities = probs + p->getStrategyVector();
-
         if(printing) finalProbabilities.printVector();
 
         int action  = finalProbabilities.getRandomResult();
@@ -802,6 +831,21 @@ vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
     return defenders;
 }
 
+int Match::calculateStatModifier(Player *p)
+{
+    int modifier = 0;
+    StatList *stats = p->getStatList();
+    if(p->getRange() == 4)
+    {
+        modifier = (stats->getPoints() * stats->getThreeShootingPercentage());
+    }
+    else
+    {
+        modifier = (stats->getPoints() * stats->getShootingPercentage());
+    }
+    return modifier/2;
+}
+
 //================================
 // Player Offense Actions Results
 //================================
@@ -810,21 +854,18 @@ void Match::shoot(Player* p, int pressure)
 {
     shotMap.incrementValue(p->getPosX(), p->getPosY());
     int range = p->getRange();
+
     if(range == 1)
     {
-        //shootUnderBasket(p, pressure);
         shootTwo(p, pressure, p->getUnderBasketShot(), 30, 5, "Under Basket" );
     }
     else if(range == 2)
     {
-        //shootClose(p, pressure);
-        shootTwo(p, pressure, p->getCloseShot(), 30, 5, "Close" );
-
+        shootTwo(p, pressure, p->getCloseShot(), 32, 5, "Close" );
     }
     else if(range == 3)
     {
-        //shootMedium(p, pressure);
-        shootTwo(p, pressure, p->getMediumShot(), 35, 50, "Mid Range" );
+        shootTwo(p, pressure, p->getMediumShot(), 37, 50, "Mid Range" );
     }
     else
     {
@@ -834,7 +875,13 @@ void Match::shoot(Player* p, int pressure)
 
 void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulRand, string type)
 {
-    int shotRand = rand() % (shootRand + pressure);
+    int catchAndShootMod = 0;
+    if(get<1>(assist) <= time + 1)
+    {
+        catchAndShootMod = 2;
+    }
+
+    int shotRand = rand() % (shootRand + pressure - catchAndShootMod);
     int freeThrows = 0;
 
     int foul = rand() % foulRand;
@@ -849,7 +896,6 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
     {
        updateScore(p->getTeam() - 1, 2);
 
-       //cout << "SCORE " << type << endl;
        printValue("SCORE " + type);
        if(type == "Mid Range")
        {
@@ -907,7 +953,13 @@ void Match::shootTwo(Player *p, int pressure, int shot, int shootRand, int foulR
 
 void Match::shootThree(Player *p, int pressure)
 {
-    int shotRand = rand() % (30 + pressure);
+    int catchAndShootMod = 0;
+    if(get<1>(assist) <= time + 1)
+    {
+        catchAndShootMod = 2;
+    }
+
+    int shotRand = rand() % (29 + pressure - catchAndShootMod);
     int shot, freeThrows = 0;
 
     int foulRand = rand() % 100;
@@ -928,7 +980,6 @@ void Match::shootThree(Player *p, int pressure)
 
     if(shotRand < shot)
     {
-       //cout << "SCORE 3" << endl;
         printValue("Score 3");
         guiUpdateCommentary(1, p);
         updateScore(p->getTeam() - 1, 3);
@@ -948,7 +999,6 @@ void Match::shootThree(Player *p, int pressure)
     }
     else
     {
-        //cout << "MISS 3" << endl;
         printValue("Miss 3");
         p->getStatList()->addThreeMiss();
         guiUpdateStat();
@@ -984,18 +1034,17 @@ void Match::checkAssist()
 void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
     teamOne->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()));
-    teamTwo->swapPlayers();
+    teamTwo->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()));
     guiUpdatePlayers();
 
     teams[p->getTeam() - 1]->setUpFreeThrowOffence(p->getNumber());
     teams[getOtherTeam(p->getTeam())]->setUpFreeThrowDefence();
 
     int ft = p->getFreethrow();
-
     do
     {
-        int ftProb = rand() % 21;
-        if(ftProb < ft)
+        int ftProb = rand() % 20;
+        if(ftProb <= ft)
         {
             //cout << "Free Throw: " << p->getNumber() << endl;
             printValue("Free Throw", p->getNumber());

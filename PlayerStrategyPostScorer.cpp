@@ -1,6 +1,6 @@
 #include "PlayerStrategyPostScorer.h"
 
-PlayerStrategyPostScorer::PlayerStrategyPostScorer():withBallVector({0,0,0,0,0,0,0,0,0,5,0,0,0,0,0})
+PlayerStrategyPostScorer::PlayerStrategyPostScorer():withBallVector({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
 {
     int strategyMap[8][7] = {{1,1,1,1,1,1,1},
                              {1,1,2,5,5,5,5},
