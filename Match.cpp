@@ -858,16 +858,16 @@ void Match::shoot(Player* p, int pressure)
 
     if(range == 1)
     {
-        shootTwo(p, pressure, p->getUnderBasketShot(), 30, 5, "Under Basket" );
+        shootTwo(p, pressure, p->getUnderBasketShot(), 32, 5, "Under Basket" );
     }
     else if(range == 2)
     {
-        shootTwo(p, pressure, p->getCloseShot(), 30, 5, "Close" );
+        shootTwo(p, pressure, p->getCloseShot(), 32, 5, "Close" );
 
     }
     else if(range == 3)
     {
-        shootTwo(p, pressure, p->getMediumShot(), 35, 50, "Mid Range" );
+        shootTwo(p, pressure, p->getMediumShot(), 37, 50, "Mid Range" );
     }
     else
     {
@@ -962,7 +962,7 @@ void Match::shootThree(Player *p, int pressure)
         catchAndShootMod = 2;
     }
 
-    int shotRand = rand() % (30 + pressure - catchAndShootMod);
+    int shotRand = rand() % (32 + pressure - catchAndShootMod);
     int shot, freeThrows = 0;
 
     int foulRand = rand() % 100;

@@ -60,12 +60,34 @@ void StatList::writeToFile(std::string filename, int pos)
     std::ofstream outfile;
 
       outfile.open(filename, std::ios_base::app);
-      outfile << "pos," << pos << ",points," << points << ",fga," << getShots() << ",fgpc," << getShootingPercentage() ;
-      outfile << ",3pa," << getThreeShots() <<  ",3ppc," << getThreeShootingPercentage();
+      outfile << "pos," << pos << ",points," << points << ",fga," << getShots() << ",3pa," << getThreeShots();
       outfile << ",trb," << getRebounds() << ",drb," << defensiveRebounds << ",orb," << offensiveRebounds;
-      outfile << ",fta," << freeThrows << ",ftpc," << getFreeThrowPercentage();
-      outfile << ",stl," << steals << ",blk," << blocks;
-      outfile << ",ast," << getAssists() << ",mp," << minutes << "\n";
+      outfile << ",fta," << freeThrows << ",stl," << steals << ",blk," << blocks;
+      outfile << ",ast," << getAssists() << ",mp," << minutes;
+      if(getShots() == 0)
+      {
+          outfile << ",fgpc," << "nan";
+      }
+      else
+      {
+          outfile << ",fgpc," << getShootingPercentage();
+      }
+      if(threeShots == 0)
+      {
+           outfile <<  ",3ppc," << "nan";
+      }
+      else
+      {
+          outfile <<  ",3ppc," << getThreeShootingPercentage();
+      }
+      if(freeThrows == 0)
+      {
+          outfile <<  ",ftpc," << "nan" << "\n";
+      }
+      else
+      {
+          outfile <<  ",ftpc," << getFreeThrowPercentage() << "\n";
+      }
 }
 
 StatList StatList::operator+(const StatList &list)
