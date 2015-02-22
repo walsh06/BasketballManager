@@ -31,8 +31,6 @@ Match::~Match()
 
 void Match::sim()
 {
-    QTime timer;
-    timer.start();
     for(int i = 0; i < 4; i++)
     {
         if(i==0)
@@ -137,8 +135,6 @@ void Match::sim()
         teamOne->getPlayer(i)->updateOverAllStats();
         teamTwo->getPlayer(i)->updateOverAllStats();
     }
-
-    cout << "RUN TIME: " << timer.elapsed() << endl;
 }
 
 int* Match::getScore()
@@ -772,7 +768,7 @@ vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
     }
     else
     {
-       slope = fabs((y2 - y1)/(x2 - x1));
+       slope = fabs(((float)y2 - (float)y1)/((float)x2 - (float)x1));
     }
 
     if(slope == 1)
@@ -808,16 +804,8 @@ vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
 
         for(int i = x1; i <= x2; i++)
         {
-            if(slope > 1)
-            {
-                passCoordinates.push_back(j);
-                passCoordinates.push_back(i);
-            }
-            else
-            {
-                passCoordinates.push_back(i);
-                passCoordinates.push_back(j);
-            }
+           passCoordinates.push_back(i);
+           passCoordinates.push_back(j);
             diff -= dy;
             if(diff < 0)
             {
