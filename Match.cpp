@@ -31,6 +31,8 @@ Match::~Match()
 
 void Match::sim()
 {
+    QTime timer;
+    timer.start();
     for(int i = 0; i < 4; i++)
     {
         if(i==0)
@@ -135,6 +137,8 @@ void Match::sim()
         teamOne->getPlayer(i)->updateOverAllStats();
         teamTwo->getPlayer(i)->updateOverAllStats();
     }
+
+    cout << "RUN TIME: " << timer.elapsed() << endl;
 }
 
 int* Match::getScore()
@@ -759,6 +763,7 @@ void Match::driveBasket(Player *p)
 vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
 {
     vector<int> defenders;
+    vector<int> passCoordinates;
     Team *defendingTeam = teams[team];
     float slope;
     if((x2 - x1) == 0)
@@ -779,12 +784,8 @@ vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
         }
         for(int i = x1, j = y1; i <= x2 && j <= y2; i++, j++)
         {
-            vector<int> defendersAtPosition = defendingTeam->getPlayersInPosition(i, j);
-
-            if(defendersAtPosition.size() > 0)
-            {
-                defenders.insert(defenders.end(), defendersAtPosition.begin(),defendersAtPosition.end());
-            }
+            passCoordinates.push_back(i);
+            passCoordinates.push_back(j);
         }
     }
     else
@@ -807,18 +808,15 @@ vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
 
         for(int i = x1; i <= x2; i++)
         {
-            vector<int> defendersAtPosition;
             if(slope > 1)
             {
-                defendersAtPosition = defendingTeam->getPlayersInPosition(j, i);
+                passCoordinates.push_back(j);
+                passCoordinates.push_back(i);
             }
             else
             {
-                defendersAtPosition = defendingTeam->getPlayersInPosition(i, j);
-            }
-            if(defendersAtPosition.size() > 0)
-            {
-                defenders.insert(defenders.end(), defendersAtPosition.begin(),defendersAtPosition.end());
+                passCoordinates.push_back(i);
+                passCoordinates.push_back(j);
             }
             diff -= dy;
             if(diff < 0)
@@ -828,6 +826,25 @@ vector<int> Match::getDefendersForPass(int team, int x1, int y1, int x2, int y2)
             }
         }
     }
+
+    for(int i = 1; i < 6; i++)
+    {
+        Player *defender = defendingTeam->getPlayer(i);
+        int passDotProduct = (x2 - x1) * (defender->getPosX() - x1) + (y2 - y1) * (defender->getPosY() - y1);
+
+        if(passDotProduct > 0)
+        {
+            for(int c = 0; c < passCoordinates.size(); c+=2)
+            {
+                if(defender->getPosX() == passCoordinates[c] && defender->getPosY() == passCoordinates[c+1])
+                {
+                    defenders.push_back(i);
+                    break;
+                }
+            }
+        }
+    }
+
     return defenders;
 }
 
