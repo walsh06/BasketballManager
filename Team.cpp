@@ -257,13 +257,13 @@ void Team::updateEnergy()
    }
 }
 
-void Team::swapPlayers(int posOne, int posTwo)
+void Team::queueSubs(int posOne, int posTwo)
 {
     subsQueue.push_back(posOne);
     subsQueue.push_back(posTwo);
 }
 
-void Team::swapPlayers()
+void Team::swapPlayers(int time, int quarter)
 {
     if(userControlled)
     {
@@ -278,13 +278,13 @@ void Team::swapPlayers()
     {
         for(int i = 1; i < 6; i++)
         {
-            manager.subPlayer(i, players);
+            manager.subPlayerAdvanced(i, players, time, quarter);
         }
     }
 
 }
 
-void Team::swapPlayers(int ftShooter)
+void Team::swapPlayers(int ftShooter, int time, int quarter)
 {
     if(userControlled)
     {
@@ -301,7 +301,7 @@ void Team::swapPlayers(int ftShooter)
         {
             if(i != ftShooter)
             {
-                manager.subPlayer(i, players);
+                manager.subPlayerAdvanced(i, players, time, quarter);
             }
         }
     }

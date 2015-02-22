@@ -50,9 +50,9 @@ public:
     void changeDefence(int defence);
 
 
-    void swapPlayers(int posOne, int posTwo);
-    void swapPlayers();
-    void swapPlayers(int ftShooter);
+    void queueSubs(int posOne, int posTwo);
+    void swapPlayers(int time, int quarter);
+    void swapPlayers(int ftShooter, int time, int quarter);
 
     void pickStartingTeam();
     void setupTeamTactics();

@@ -24,7 +24,7 @@ private:
     int energyThresholdSubOut, energyThresholdSubIn, subOutThreshold;
 
     int getBestPlayerForPosition(map<int, Player *> players, int start, int end);
-    int calculateMinutes(int index);
+    float calculateMinutes(int index);
 };
 
 #endif // MANAGER_H

@@ -44,7 +44,7 @@ private:
     const int INPLAY = 0, INBOUND = 1;
     Team * teamOne, *teamTwo;
     Team *teams[2];
-    int shotClock, time;
+    int shotClock, time, quarter;
     Ball ball;
     vector<Player*> orderOfPlay;
     tuple<Player *, int> assist;
