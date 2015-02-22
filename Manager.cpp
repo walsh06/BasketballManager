@@ -4,6 +4,7 @@ Manager::Manager()
 {
     energyThresholdSubIn = 90;
     energyThresholdSubOut = 80;
+    subOutThreshold = 80;
 }
 
 void Manager::evaluatePlayers(map<int, Player *> players)
@@ -25,7 +26,10 @@ void Manager::evaluatePlayers(map<int, Player *> players)
         player.push_back(((float)p->getCloseShot() + (float)p->getDunk() + (float)p->getLayup() + (float)p->getOffRebound())/4.0); //post scorer
         player.push_back(((float)p->getDunk() + (float)p->getBlock() + (float)p->getDefRebound() + (float)p->getOffRebound())/4.0); //rebound
         playerRatings.push_back(player);
+
+        playerRatings[i-1].push_back(calculateMinutes(i));
     }
+    printRatings();
 }
 
 void Manager::pickStartingPosition(int pos, map<int, Player *> &players)
@@ -100,6 +104,58 @@ void Manager::subPlayer(int pos, map<int, Player *> &players)
     }
 }
 
+void Manager::subPlayerAdvanced(int pos, map<int, Player *> &players, int time, int quarter)
+{
+    int timeRatio = ((quarter * (720 - time) / 60) / 48);//calc portion of time elapsed
+    Player *subOut = players[pos];
+    int subOutRating = subOut->getEnergy() + subOut->getStatList()->getGameScore()
+                    + ((playerRatings[pos - 1][9] * timeRatio) - subOut->getStatList()->getMinutes());
+
+    if(subOutRating < subOutThreshold)
+    {
+        int start, end;
+        map<int, Player *> possibleSubs;
+        for(int i=6; i <= players.size(); i++)
+        {
+            Player *player = players[i];
+            int minutes = player->getStatList()->getMinutes();
+            int expectedTime = (playerRatings[i - 1][9] * timeRatio) * 1.25; //get expected current time of player + leeway
+            if(players[i]->getEnergy() > energyThresholdSubIn && minutes < expectedTime)
+            {
+                possibleSubs[i] = player;
+            }
+        }
+        if(pos == 1)
+        {
+            start = 1; end = 3;
+        }
+        else if(pos == 2)
+        {
+            start = 1; end = 5;
+        }
+        else if(pos == 3)
+        {
+            start = 4; end = 6;
+        }
+        else if(pos == 4)
+        {
+            start = 5; end = 8;
+        }
+        else if(pos == 5)
+        {
+            start = 6; end = 8;
+        }
+
+        int bestPlayer = getBestPlayerForPosition(players, start, end);
+
+        Player *temp = players[pos];
+        players[pos] = players[bestPlayer];
+        players[bestPlayer] = temp;
+        players[pos]->setPos(players[bestPlayer]->getPosX(), players[bestPlayer]->getPosY());
+        swap(playerRatings[pos - 1], playerRatings[bestPlayer - 1]);
+    }
+}
+
 int Manager::getBestStrategyForPlayer(int playerPos)
 {
     float best = playerRatings[playerPos - 1][0];
@@ -130,11 +186,35 @@ int Manager::getBestPlayerForStrategy(int strategy)
     return bestIndex;
 }
 
+int Manager::getBestPlayerForPosition(map<int, Player *> players, int start, int end)
+{
+    int bestRating = 0, bestPlayer = 0;
+    for(auto &player: players)
+    {
+        int playerScore = player.second->getStatList()->getGameScore() * 0.5;
+        for(int i = start; i <= end; i++)
+        {
+            if(playerRatings[player.first - 1][i] + playerScore > bestRating)
+            {
+                bestRating = playerRatings[player.first - 1][i] + playerScore;
+                bestPlayer = player.first;
+            }
+        }
+    }
+    return bestPlayer;
+}
+
+int Manager::calculateMinutes(int index)
+{
+    float rating = playerRatings[index - 1][getBestStrategyForPlayer(index)];
+    return rating * (rating / 10.0);
+}
+
 void Manager::printRatings()
 {
     for(int i = 0; i < playerCount; i++)
     {
-        for(int j = 0; j < 9; j++)
+        for(int j = 0; j < 10; j++)
         {
             cout << playerRatings[i][j] << " ";
         }

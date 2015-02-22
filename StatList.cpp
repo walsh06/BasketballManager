@@ -90,6 +90,19 @@ void StatList::writeToFile(std::string filename, int pos)
       }
 }
 
+int StatList::getGameScore()
+{
+    return (points + (0.4 * scores) - (0.7 * shots) - (0.4 * (freeThrows - freeThrowsScored))
+            + (0.7 * offensiveRebounds) + (0.3 * defensiveRebounds)
+            + steals + (0.7 * assists) + (0.7 * blocks));
+
+    /*
+    Points Scored + (0.4 x Field Goals) – (0.7 x Field Goal Attempts)
+    – (0.4 x (Free Throw Attempts – Free Throws)) + (0.7 x Offensive Rebounds)
+    + (0.3 x Defensive Rebounds) + Steals + (0.7 x Assists) + (0.7 x Blocks)
+    – (0.4 x Personal Fouls) – Turnovers*/
+}
+
 StatList StatList::operator+(const StatList &list)
 {
     std::vector<int> stats;
