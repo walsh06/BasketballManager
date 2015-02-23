@@ -34,6 +34,8 @@ public:
     static int simSpeed;
 
     int* getScore();
+    Team *getTeamOne();
+    Team *getTeamTwo();
 private:
     MatchScreen *screen;
     Fouls fouls;

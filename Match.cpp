@@ -125,6 +125,16 @@ int* Match::getScore()
     return score;
 }
 
+Team* Match::getTeamOne()
+{
+    return teamOne;
+}
+
+Team* Match::getTeamTwo()
+{
+    return teamTwo;
+}
+
 void Match::simPlayers()
 {
     setOrderOfPlay();
