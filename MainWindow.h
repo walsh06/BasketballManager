@@ -25,12 +25,14 @@ private:
     vector<string> teamNames;
 
     void readTeams();
+    void loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneScore, int teamTwoScore);
 
 private slots:
     void startGame();
     void on_playMatch_clicked();
     void on_runSims_clicked();
     void on_league_clicked();
+    void on_leaveGame_clicked();
 };
 
 #endif // MAINWINDOW_H

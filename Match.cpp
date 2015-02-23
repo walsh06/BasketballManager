@@ -67,57 +67,14 @@ void Match::sim()
                 {
                     shotClock = time;
                 }
-
-                setOrderOfPlay();
                 if(screen != NULL)
                 {
                     screen->updateTime(time, shotClock);
                 }
-
-                endOfPossession = false;
                 cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
                 cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
-                for(auto &player : orderOfPlay)
-                {
-                    if(player->getTeam() == ball.getTeam())
-                    {
-                        if(teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()) == ball.getPlayerPosition())
-                        {
-                            if(gameState == INPLAY)
-                                withBall(player, shotClock);
-                            else if(gameState == INBOUND)
-                                passInbound(player);
-                        }
-                        else
-                        {
-                            move(player);
-                        }
-                    }
-                    else
-                    {
-                        moveDefence(player);
-                    }
 
-                    if(endOfPossession)
-                    {
-                        shotClock = 0;
-                        break;
-                    }
-                }
-                guiUpdateCourt();
-                QTime dieTime= QTime::currentTime().addMSecs(Match::simSpeed);
-                    while( QTime::currentTime() < dieTime )
-                    QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-
-                if(time%60 == 0)
-                {
-                    teamOne->updateEnergy();
-                    teamTwo->updateEnergy();
-                }
-                if(printing)
-                {
-                    printCourt();
-                }
+                simPlayers();
             }
             if(!endOfPossession)
             {
@@ -126,6 +83,32 @@ void Match::sim()
         }
     }
 
+    while(score[0] == score[1])
+    {
+        for(time = 300; time > 0;)
+        {
+            cout << "Score: " << score[0] << "-" << score[1] << endl;
+            for(shotClock = 24; shotClock >= 0 && time >= 0; shotClock--, time--)
+            {
+                if(time < 24 && shotClock == 24)
+                {
+                    shotClock = time;
+                }
+                if(screen != NULL)
+                {
+                    screen->updateTime(time, shotClock);
+                }
+                cout << "OT" << " TIME: " << time << " Shotclock: " << shotClock << endl;
+                cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
+
+                simPlayers();
+            }
+            if(!endOfPossession)
+            {
+                setUpRestartInbound();
+            }
+        }
+    }
     guiUpdateCourt();
     cout << "Game Over" << endl;
     cout << "Score: " << score[0] << "-" << score[1] << endl;
@@ -140,6 +123,65 @@ void Match::sim()
 int* Match::getScore()
 {
     return score;
+}
+
+Team* Match::getTeamOne()
+{
+    return teamOne;
+}
+
+Team* Match::getTeamTwo()
+{
+    return teamTwo;
+}
+
+void Match::simPlayers()
+{
+    setOrderOfPlay();
+
+    endOfPossession = false;
+
+    for(auto &player : orderOfPlay)
+    {
+        if(player->getTeam() == ball.getTeam())
+        {
+            if(teams[player->getTeam() - 1]->getPlayerPosition(player->getNumber()) == ball.getPlayerPosition())
+            {
+                if(gameState == INPLAY)
+                    withBall(player, shotClock);
+                else if(gameState == INBOUND)
+                    passInbound(player);
+            }
+            else
+            {
+                move(player);
+            }
+        }
+        else
+        {
+            moveDefence(player);
+        }
+
+        if(endOfPossession)
+        {
+            shotClock = 0;
+            break;
+        }
+    }
+    guiUpdateCourt();
+    QTime dieTime= QTime::currentTime().addMSecs(Match::simSpeed);
+        while( QTime::currentTime() < dieTime )
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+
+    if(time%60 == 0)
+    {
+        teamOne->updateEnergy();
+        teamTwo->updateEnergy();
+    }
+    if(printing)
+    {
+        printCourt();
+    }
 }
 
 
