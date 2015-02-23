@@ -54,6 +54,7 @@ void MainWindow::on_playMatch_clicked()
     Team *teamTwo = new Team(ui->teamTwoBox->currentText().toStdString());
     receiver = new MatchReceiver(teamOne, ui->MatchWidget);
     match = new Match(teamOne, teamTwo, ui->MatchWidget);
+    match->setSimSpeed(1000);
     ui->stackedWidget->setCurrentIndex(0);
 }
 
