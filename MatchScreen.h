@@ -112,6 +112,7 @@ private slots:
     void on_finishGame_clicked();
 
 private:
+    bool finished;
     int swapIndexOne, swapIndexTwo;
     Ui::MatchScreen *ui;
     QBrush * redBrush, *yellowBrush, *blueBrush;
@@ -137,6 +138,7 @@ signals:
     void changeDefenceType(int);
     void changeDefenceMatchup(int, int);
     void changeDefenceSetting(int, int);
+    void gameOver();
 };
 
 #endif // MATCHSCREEN_H

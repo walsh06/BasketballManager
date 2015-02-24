@@ -34,6 +34,8 @@ public:
     static int simSpeed;
 
     int* getScore();
+    Team *getTeamOne();
+    Team *getTeamTwo();
 private:
     MatchScreen *screen;
     Fouls fouls;
@@ -58,6 +60,7 @@ private:
     void guiInit();
     void guiUpdateCourt();
 
+    void simPlayers();
     void move(Player* p);
     void withBall(Player* p, int shotClock);
     void driveBasket(Player *p);
