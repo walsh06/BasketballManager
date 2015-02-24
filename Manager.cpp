@@ -127,7 +127,8 @@ void Manager::subPlayerAdvanced(int pos, map<int, Player *> &players, int time, 
                 Player *player = players[i];
                 int minutes = player->getStatList()->getMinutes();
                 int expectedTime = (playerRatings[i - 1][9] * timeRatio) * 1.25; //get expected current time of player + leeway
-                if(players[i]->getEnergy() > energyThresholdSubIn && minutes < expectedTime)
+                if(players[i]->getEnergy() > energyThresholdSubIn && minutes < expectedTime
+                   && player->getPlayingPosition() >= pos - 1 && player->getPlayingPosition() <= pos + 1)
                 {
                     possibleSubs[i] = player;
                 }
@@ -156,13 +157,14 @@ void Manager::subPlayerAdvanced(int pos, map<int, Player *> &players, int time, 
                 }
 
                 int bestPlayer = getBestPlayerForPosition(possibleSubs, start, end);
-
-                Player *temp = players[pos];
-                players[pos] = players[bestPlayer];
-                players[bestPlayer] = temp;
-                players[pos]->setPos(players[bestPlayer]->getPosX(), players[bestPlayer]->getPosY());
-                swap(playerRatings[pos - 1], playerRatings[bestPlayer - 1]);
-
+                if(bestPlayer != 0)
+                {
+                    Player *temp = players[pos];
+                    players[pos] = players[bestPlayer];
+                    players[bestPlayer] = temp;
+                    players[pos]->setPos(players[bestPlayer]->getPosX(), players[bestPlayer]->getPosY());
+                    swap(playerRatings[pos - 1], playerRatings[bestPlayer - 1]);
+                }
             }
         }
     }
