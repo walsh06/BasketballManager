@@ -64,6 +64,9 @@ public:
 
     StatList operator+(const StatList &list);
 
+    int getGameScore();
+
+
 private:
     int points, games, minutes;
     int assists;

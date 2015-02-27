@@ -271,7 +271,7 @@ void MatchScreen::loadStats()
 
     for(int i = 1; i < 6; i++)
     {
-        StatList *playerStats = ownTeam->getPlayer(i)->getStatList();
+        StatList *playerStats = oppositionTeam->getPlayer(i)->getStatList();
 
         QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
         QTableWidgetItem *points = new QTableWidgetItem(QString::number(playerStats->getPointsPerGame()));

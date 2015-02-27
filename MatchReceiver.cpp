@@ -17,7 +17,7 @@ MatchReceiver::MatchReceiver(Team *team, MatchScreen *screen, QObject *parent) :
 
 void MatchReceiver::changePlayers(int indexOne, int indexTwo)
 {
-    team->swapPlayers(indexOne, indexTwo);
+    team->queueSubs(indexOne, indexTwo);
 }
 
 void MatchReceiver::changeStrategy(int index, int strategy)

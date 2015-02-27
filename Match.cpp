@@ -31,13 +31,13 @@ Match::~Match()
 
 void Match::sim()
 {
-    for(int i = 0; i < 4; i++)
+    for(quarter = 0; quarter < 4; quarter++)
     {
-        if(i==0)
+        if(quarter==0)
         {
             jumpBall();
         }
-        else if(i == 2 || i == 1)
+        else if(quarter == 2 || quarter == 1)
         {
            int team = getOtherTeam(firstPossession);
            ball.setTeam(team + 1);
@@ -71,7 +71,9 @@ void Match::sim()
                 {
                     screen->updateTime(time, shotClock);
                 }
-                cout << "Q" << i+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
+                endOfPossession = false;
+                cout << "Q" << quarter+1 << " TIME: " << time << " Shotclock: " << shotClock << endl;
+
                 cout << "Ball: " << ball.getTeam() << " " << ball.getPlayerPosition() << endl;
 
                 simPlayers();
@@ -312,8 +314,8 @@ void Match::setUpRestartInbound()
 void Match::setUpOffensiveInbound()
 {
     endOfPossession = true;
-    teamOne->swapPlayers();
-    teamTwo->swapPlayers();
+    teamOne->swapPlayers(time, quarter);
+    teamTwo->swapPlayers(time, quarter);
     guiUpdatePlayers();
     ball.setPlayerPosition(4);
 
@@ -327,8 +329,8 @@ void Match::setUpOffensiveInbound()
 void Match::setUpOwnSideInbound()
 {
     endOfPossession = true;
-    teamOne->swapPlayers();
-    teamTwo->swapPlayers();
+    teamOne->swapPlayers(time, quarter);
+    teamTwo->swapPlayers(time, quarter);
     guiUpdatePlayers();
 
     ball.setPlayerPosition(4);
@@ -1080,8 +1082,8 @@ void Match::checkAssist()
 
 void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
 {
-    teamOne->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()));
-    teamTwo->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()));
+    teamOne->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()), time, quarter);
+    teamTwo->swapPlayers(teams[p->getTeam() - 1]->getPlayerPosition(p->getNumber()), time, quarter);
     guiUpdatePlayers();
 
     teams[p->getTeam() - 1]->setUpFreeThrowOffence(p->getNumber());
