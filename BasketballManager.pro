@@ -45,7 +45,8 @@ SOURCES += main.cpp \
     unittests/FoulTest.cpp \
     unittests/PlayerTest.cpp \
     unittests/StatListTest.cpp \
-    unittests/TeamTest.cpp
+    unittests/TeamTest.cpp \
+    Commentary.cpp
 
 HEADERS += \
     Player.h \
@@ -83,7 +84,8 @@ HEADERS += \
     Manager.h \
     TournamentMatchup.h \
     PlayerGraphic.h \
-    LeagueScreen.h
+    LeagueScreen.h \
+    Commentary.h
 
 FORMS += \
     MainWindow.ui \
