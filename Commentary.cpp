@@ -2,7 +2,7 @@
 
 Commentary::Commentary()
 {
-
+    readXML();
 }
 
 std::string Commentary::getCommentary(int eventType, Player *p, Player *p2)
@@ -10,16 +10,17 @@ std::string Commentary::getCommentary(int eventType, Player *p, Player *p2)
     int randPos = rand() % comments[eventType].size();
     std::string commentary = comments[eventType][randPos];
 
-    int playerTwoPos = commentary.find("<second_player>");
-    int adjectivePos = commentary.find("<adjective>");
-
     commentary.replace(commentary.find("<player>"), 8, p->getName());
 
-    if(playerTwoPos > 0 && p2 != NULL)
+    int playerTwoPos = commentary.find("<second_player>");
+
+    if(playerTwoPos >= 0 && p2 != NULL)
     {
         commentary.replace(playerTwoPos, 15, p2->getName());
     }
-    if(adjectivePos > 0)
+
+    int adjectivePos = commentary.find("<adjective>");
+    if(adjectivePos >= 0)
     {
         std::string adjective = adjectives[rand() % adjectives.size()];
         commentary.replace(adjectivePos, 11, adjective);

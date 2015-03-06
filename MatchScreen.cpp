@@ -9,9 +9,6 @@ MatchScreen::MatchScreen(QWidget *parent) :
     scene = new QGraphicsScene(this);
     ui->court->setScene(scene);
 
-    readXML();
-
-
     redBrush = new QBrush(Qt::red);
     blueBrush = new QBrush(Qt::blue);
     yellowBrush = new QBrush(Qt::yellow);
@@ -439,44 +436,9 @@ void MatchScreen::updateCourt(Ball *ball)
     }
 }
 
-void MatchScreen::readXML()
-{
-    //open the document
-    pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file("../BasketballManager/gameData/commentary.xml");
-
-    //loop through the tree structure created of the xml
-    for (pugi::xml_node event: doc.child("commentary"))
-    {
-
-        int type = std::stoi(event.first_attribute().value());
-        std::string commentary = event.last_attribute().value();
-
-        if (comments.find(type) == comments.end())
-        {
-            std::vector<std::string> eventCommentary;
-            eventCommentary.push_back(commentary);
-            comments[type] = eventCommentary;
-        }
-        else
-        {
-            comments[type].push_back(commentary);
-        }
-    }
-}
-
 void MatchScreen::updateCommentary(int eventType, Player *p, Player *p2)
 {
-    int randPos = rand() % comments[eventType].size();
-    string commentary = comments[eventType][randPos];
-
-    commentary.replace(commentary.find("<player>"), 8, p->getName());
-
-    if(p2 != NULL)
-    {
-        commentary.replace(commentary.find("<second_player>"), 15, p2->getName());
-    }
-    ui->commentary->setText(QString::fromStdString(commentary));
+    ui->commentary->setText(QString::fromStdString(commentary.getCommentary(eventType, p, p2)));
 }
 
 //==========================
