@@ -11,7 +11,8 @@ public:
     std::string getCommentary(int eventType, Player *p, Player *p2 = NULL );
 private:
     std::map<int, std::vector<std::string> > comments;
-    std::vector<std::string> adjectives;
+    std::vector<std::string> adjectives, analysis;
+
     void readXML();
 };
 

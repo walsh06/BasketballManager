@@ -82,10 +82,17 @@ Commentary Types:
 	<comment type="16" comment="<player> wins the jump ball"/>
 </commentary>
 
+<analysis>
+	<comment comment="<player> has scored <points> today"/>
+	<comment comment="That make <rebounds> for <player>"/>
+	<comment comment="<player> is having a good game scoring <points> points and <rebounds> rebounds"/>
+</analysis>
+
 <adjectives>
 	<adjective word="good"/>
 	<adjective word="tricky"/>
 	<adjective word="nice"/>
 	<adjective word="risky"/>
 	<adjective word="tough"/>
+	<adjective word="smart"/>
 </adjectives>

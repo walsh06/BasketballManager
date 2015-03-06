@@ -37,7 +37,6 @@ void Commentary::readXML()
     //loop through the tree structure created of the xml
     for (pugi::xml_node event: doc.child("commentary"))
     {
-
         int type = std::stoi(event.first_attribute().value());
         std::string commentary = event.last_attribute().value();
 
@@ -55,5 +54,10 @@ void Commentary::readXML()
     for (pugi::xml_node adjective: doc.child("adjectives"))
     {
         adjectives.push_back(adjective.first_attribute().value());
+    }
+
+    for (pugi::xml_node comment: doc.child("analysis"))
+    {
+        analysis.push_back(comment.first_attribute().value());
     }
 }
