@@ -8,7 +8,7 @@ Commentary::Commentary()
 std::string Commentary::getCommentary(int eventType, Player *p, Player *p2)
 {
     std::string commentary = "";
-    if(eventType == 15 && rand() % 25 < 25)
+    if(eventType == 15 && rand() % 25 == 0)
     {
         int randAnalysis = (rand() % 2) +1;
         int randPos = rand() % analysis[randAnalysis].size();
