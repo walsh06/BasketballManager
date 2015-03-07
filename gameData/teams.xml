@@ -75,7 +75,7 @@
 		<player name="TestTen" number="10" pos="C" shootThree="15" shootMid="15" shootClose="15" dunk="15" layup="15" pass="15" offRebound="15" defRebound="15" defence="15" steal="15" block="15" speed="15" freeThrow="15" stamina="12"/>	
 	</team>
 	<team name="Warriors">
-		<player name="Curry" number="1" pos="PG" shootThree="19" shootMid="18" shootClose="16" dunk="2" layup="16" pass="17" offRebound="6" defRebound="10" defence="18" steal="18" block="6" speed="18" freeThrow="19" stamina="18"/>	
+		<player name="Curry" number="1" pos="PG" shootThree="19" shootMid="17" shootClose="16" dunk="2" layup="16" pass="19" offRebound="6" defRebound="10" defence="18" steal="18" block="6" speed="18" freeThrow="19" stamina="18"/>	
 		<player name="Thompson" number="2" pos="SG" shootThree="19" shootMid="18" shootClose="10" dunk="6" layup="18" pass="14" offRebound="4" defRebound="8" defence="16" steal="13" block="10" speed="18" freeThrow="18" stamina="18"/>
 		<player name="Barnes" number="3" pos="SF" shootThree="17" shootMid="16" shootClose="15" dunk="16" layup="12" pass="12" offRebound="14" defRebound="15" defence="15" steal="10" block="6" speed="16" freeThrow="15" stamina="17"/>
 		<player name="Green" number="4" pos="PF" shootThree="15" shootMid="16" shootClose="12" dunk="8" layup="18" pass="10" offRebound="15" defRebound="17" defence="18" steal="12" block="16" speed="18" freeThrow="15" stamina="17"/>

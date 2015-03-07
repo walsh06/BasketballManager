@@ -82,10 +82,17 @@ Commentary Types:
 	<comment type="16" comment="<player> wins the jump ball"/>
 </commentary>
 
+<!--
+Analysis Types:
+1: High scoring
+2: High rebounds
+-->
 <analysis>
-	<comment comment="<player> has scored <points> today"/>
-	<comment comment="That make <rebounds> for <player>"/>
-	<comment comment="<player> is having a good game scoring <points> points and <rebounds> rebounds"/>
+	<comment type="1" threshold="10" comment="<player> has scored <points> today"/>
+	<comment type="1" threshold="8" comment="<player> is having a good game scoring <points> points"/>
+	<comment type="2" threshold="5" comment="<player> has <rebounds> rebounds today"/>
+	<comment type="2" threshold="8" comment="A really good day for <player> with <rebounds> rebounds"/>
+
 </analysis>
 
 <adjectives>

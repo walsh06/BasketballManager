@@ -7,23 +7,45 @@ Commentary::Commentary()
 
 std::string Commentary::getCommentary(int eventType, Player *p, Player *p2)
 {
-    int randPos = rand() % comments[eventType].size();
-    std::string commentary = comments[eventType][randPos];
-
-    commentary.replace(commentary.find("<player>"), 8, p->getName());
-
-    int playerTwoPos = commentary.find("<second_player>");
-
-    if(playerTwoPos >= 0 && p2 != NULL)
+    std::string commentary = "";
+    if(eventType == 15 && rand() % 25 < 25)
     {
-        commentary.replace(playerTwoPos, 15, p2->getName());
+        int randAnalysis = (rand() % 2) +1;
+        int randPos = rand() % analysis[randAnalysis].size();
+        if(randAnalysis == 1 && p->getStatList()->getPoints() >= get<0>(analysis[randAnalysis][randPos]))
+        {
+            commentary = get<1>(analysis[randAnalysis][randPos]);
+            commentary.replace(commentary.find("<player>"), 8, p->getName());
+            commentary.replace(commentary.find("<points>"), 8, to_string(p->getStatList()->getPoints()));
+        }
+        else if(randAnalysis == 2 && p->getStatList()->getRebounds() >= get<0>(analysis[randAnalysis][randPos]))
+        {
+            commentary = get<1>(analysis[randAnalysis][randPos]);
+            commentary.replace(commentary.find("<player>"), 8, p->getName());
+            commentary.replace(commentary.find("<rebounds>"), 10, to_string(p->getStatList()->getRebounds()));
+        }
     }
 
-    int adjectivePos = commentary.find("<adjective>");
-    if(adjectivePos >= 0)
+    if(commentary == "")
     {
-        std::string adjective = adjectives[rand() % adjectives.size()];
-        commentary.replace(adjectivePos, 11, adjective);
+        int randPos = rand() % comments[eventType].size();
+        commentary = comments[eventType][randPos];
+
+        commentary.replace(commentary.find("<player>"), 8, p->getName());
+
+        int playerTwoPos = commentary.find("<second_player>");
+
+        if(playerTwoPos >= 0 && p2 != NULL)
+        {
+            commentary.replace(playerTwoPos, 15, p2->getName());
+        }
+
+        int adjectivePos = commentary.find("<adjective>");
+        if(adjectivePos >= 0)
+        {
+            std::string adjective = adjectives[rand() % adjectives.size()];
+            commentary.replace(adjectivePos, 11, adjective);
+        }
     }
     return commentary;
 }
@@ -57,7 +79,21 @@ void Commentary::readXML()
     }
 
     for (pugi::xml_node comment: doc.child("analysis"))
-    {
-        analysis.push_back(comment.first_attribute().value());
+    {        
+        int type = std::stoi(comment.first_attribute().value());
+        std::string commentary = comment.last_attribute().value();
+        int threshold = std::stoi(comment.attribute("threshold").value());
+        tuple<int, std::string> a = make_tuple(threshold, commentary);
+
+        if (analysis.find(type) == analysis.end())
+        {
+            std::vector<tuple<int, std::string>> analysisCommentary;
+            analysisCommentary.push_back(a);
+            analysis[type] = analysisCommentary;
+        }
+        else
+        {
+            analysis[type].push_back(a);
+        }
     }
 }
