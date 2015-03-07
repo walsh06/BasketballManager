@@ -25,13 +25,12 @@
 	<team name="Pacers">
 		<player name="Hill" number="1" pos="PG" shootThree="16" shootMid="16" shootClose="14" dunk="5" layup="15" pass="14" offRebound="2" defRebound="6" defence="16" steal="12" block="6" speed="18" freeThrow="17" stamina="16"/>
 		<player name="Stephenson" number="2" pos="SG" shootThree="14" shootMid="18" shootClose="15" dunk="12" layup="18" pass="16" offRebound="8" defRebound="14" defence="16" steal="12" block="3" speed="18" freeThrow="14" stamina="17"/>
-				<player name="Granger" number="8" pos="SF" shootThree="16" shootMid="16" shootClose="14" dunk="10" layup="18" pass="17" offRebound="5" defRebound="10" defence="16" steal="17" block="6" speed="18" freeThrow="19" stamina="12"/>
+		<player name="George" number="3" pos="SF" shootThree="18" shootMid="19" shootClose="19" dunk="17" layup="19" pass="15" offRebound="6" defRebound="14" defence="16" steal="15" block="6" speed="18" freeThrow="16" stamina="19"/>
 		<player name="West" number="4" pos="PF" shootThree="2" shootMid="14" shootClose="17" dunk="16" layup="18" pass="8" offRebound="13" defRebound="17" defence="16" steal="10" block="15" speed="13" freeThrow="16" stamina="14"/> 
 		<player name="Hibbert" number="5" pos="C" shootThree="6" shootMid="13" shootClose="14" dunk="19" layup="18" pass="6" offRebound="16" defRebound="18" defence="18" steal="4" block="19" speed="12" freeThrow="15" stamina="14"/>
 		<player name="Watson" number="6" pos="PG" shootThree="15" shootMid="14" shootClose="10" dunk="6" layup="15" pass="15" offRebound="3" defRebound="12" defence="14" steal="16" block="5" speed="18" freeThrow="15" stamina="10"/>
 		<player name="Turner" number="7" pos="SG" shootThree="18" shootMid="14" shootClose="12" dunk="8" layup="15" pass="14" offRebound="6" defRebound="11" defence="13" steal="10" block="3" speed="17" freeThrow="14" stamina="8"/> 
-
-		<player name="George" number="3" pos="SF" shootThree="18" shootMid="19" shootClose="19" dunk="17" layup="19" pass="15" offRebound="6" defRebound="14" defence="16" steal="15" block="6" speed="18" freeThrow="16" stamina="19"/>
+		<player name="Granger" number="8" pos="SF" shootThree="16" shootMid="16" shootClose="14" dunk="10" layup="18" pass="17" offRebound="5" defRebound="10" defence="16" steal="17" block="6" speed="18" freeThrow="19" stamina="12"/>
 		<player name="Scola" number="9" pos="PF" shootThree="6" shootMid="14" shootClose="16" dunk="15" layup="10" pass="8" offRebound="13" defRebound="17" defence="10" steal="10" block="10" speed="13" freeThrow="14" stamina="10"/> 
 		<player name="Mahini" number="10" pos="C" shootThree="3" shootMid="12" shootClose="15" dunk="18" layup="18" pass="5" offRebound="15" defRebound="16" defence="10" steal="7" block="12" speed="8" freeThrow="12" stamina="6"/> 
 	</team>
@@ -40,7 +39,7 @@
 		<player name="Parker" number="1" pos="PG" shootThree="13" shootMid="18" shootClose="19" dunk="8" layup="19" pass="17" offRebound="5" defRebound="12" defence="16" steal="13" block="12" speed="8" freeThrow="16" stamina="17"/> 
 		<player name="Green" number="2" pos="SG" shootThree="18" shootMid="16" shootClose="14" dunk="12" layup="13" pass="11" offRebound="12" defRebound="14" defence="12" steal="14" block="12" speed="15" freeThrow="16" stamina="16"/>
 		<player name="Leonard" number="3" pos="SF" shootThree="15" shootMid="19" shootClose="16" dunk="18" layup="18" pass="12" offRebound="11" defRebound="15" defence="18" steal="16" block="12" speed="17" freeThrow="16" stamina="18"/>
-		<player name="Duncan" number="4" pos="PF" shootThree="2" shootMid="16" shootClose="19" dunk="19" layup="17" pass="13" offRebound="15" defRebound="19" defence="16" steal="6" block="19" speed="10" freeThrow="14" stamina="16"/>
+		<player name="Duncan" number="4" pos="C" shootThree="2" shootMid="16" shootClose="19" dunk="19" layup="17" pass="13" offRebound="15" defRebound="19" defence="16" steal="6" block="19" speed="10" freeThrow="14" stamina="16"/>
 		<player name="Splitter" number="5" pos="C" shootThree="1" shootMid="10" shootClose="16" dunk="18" layup="12" pass="5" offRebound="16" defRebound="17" defence="14" steal="5" block="8" speed="8" freeThrow="14" stamina="15"/>
 		<player name="Mills" number="6" pos="PG" shootThree="17" shootMid="16" shootClose="12" dunk="7" layup="12" pass="12" offRebound="4" defRebound="10" defence="12" steal="8" block="6" speed="15" freeThrow="17" stamina="10"/>
 		<player name="Ginobli" number="7" pos="SG" shootThree="16" shootMid="14" shootClose="15" dunk="11" layup="19" pass="14" offRebound="5" defRebound="13" defence="14" steal="10" block="6" speed="14" freeThrow="17" stamina="14"/>
@@ -75,11 +74,11 @@
 		<player name="TestTen" number="10" pos="C" shootThree="15" shootMid="15" shootClose="15" dunk="15" layup="15" pass="15" offRebound="15" defRebound="15" defence="15" steal="15" block="15" speed="15" freeThrow="15" stamina="12"/>	
 	</team>
 	<team name="Warriors">
-		<player name="Curry" number="1" pos="PG" shootThree="19" shootMid="17" shootClose="16" dunk="2" layup="16" pass="19" offRebound="6" defRebound="10" defence="18" steal="18" block="6" speed="18" freeThrow="19" stamina="18"/>	
-		<player name="Thompson" number="2" pos="SG" shootThree="19" shootMid="18" shootClose="10" dunk="6" layup="18" pass="14" offRebound="4" defRebound="8" defence="16" steal="13" block="10" speed="18" freeThrow="18" stamina="18"/>
-		<player name="Barnes" number="3" pos="SF" shootThree="17" shootMid="16" shootClose="15" dunk="16" layup="12" pass="12" offRebound="14" defRebound="15" defence="15" steal="10" block="6" speed="16" freeThrow="15" stamina="17"/>
-		<player name="Green" number="4" pos="PF" shootThree="15" shootMid="16" shootClose="12" dunk="8" layup="18" pass="10" offRebound="15" defRebound="17" defence="18" steal="12" block="16" speed="18" freeThrow="15" stamina="17"/>
-		<player name="Bogut" number="5" pos="C" shootThree="1" shootMid="2" shootClose="18" dunk="18" layup="15" pass="10" offRebound="18" defRebound="19" defence="18" steal="10" block="18" speed="10" freeThrow="14" stamina="13"/>
+		<player name="Curry" number="1" pos="PG" shootThree="19" shootMid="17" shootClose="16" dunk="2" layup="18" pass="19" offRebound="6" defRebound="10" defence="18" steal="19" block="6" speed="18" freeThrow="19" stamina="18"/>	
+		<player name="Thompson" number="2" pos="SG" shootThree="19" shootMid="18" shootClose="13" dunk="6" layup="18" pass="10" offRebound="4" defRebound="14" defence="16" steal="16" block="15" speed="18" freeThrow="18" stamina="18"/>
+		<player name="Barnes" number="3" pos="SF" shootThree="17" shootMid="16" shootClose="15" dunk="16" layup="12" pass="8" offRebound="14" defRebound="17" defence="15" steal="10" block="6" speed="16" freeThrow="15" stamina="17"/>
+		<player name="Green" number="4" pos="PF" shootThree="15" shootMid="16" shootClose="12" dunk="8" layup="18" pass="10" offRebound="15" defRebound="19" defence="18" steal="12" block="16" speed="18" freeThrow="15" stamina="17"/>
+		<player name="Bogut" number="5" pos="C" shootThree="1" shootMid="2" shootClose="17" dunk="17" layup="15" pass="10" offRebound="16" defRebound="18" defence="18" steal="10" block="18" speed="10" freeThrow="14" stamina="13"/>
 		<player name="Barbosa" number="6" pos="PG" shootThree="15" shootMid="16" shootClose="14" dunk="4" layup="15" pass="15" offRebound="9" defRebound="13" defence="13" steal="16" block="2" speed="17" freeThrow="16" stamina="8"/>
 		<player name="Livingston" number="7" pos="SG" shootThree="2" shootMid="18" shootClose="16" dunk="17" layup="17" pass="16" offRebound="6" defRebound="8" defence="15" steal="14" block="8" speed="18" freeThrow="15" stamina="13"/>
 		<player name="Igoudala" number="8" pos="SF" shootThree="15" shootMid="15" shootClose="15" dunk="16" layup="16" pass="14" offRebound="6" defRebound="12" defence="12" steal="14" block="4" speed="16" freeThrow="12" stamina="16"/>
@@ -87,4 +86,16 @@
 		<player name="Speights" number="10" pos="C" shootThree="2" shootMid="14" shootClose="16" dunk="14" layup="16" pass="8" offRebound="13" defRebound="16" defence="8" steal="2" block="6" speed="8" freeThrow="16" stamina="11"/>
 	</team>
 	
+	<team name="Clippers">
+		<player name="Paul" number="1" pos="PG" shootThree="18" shootMid="19" shootClose="19" dunk="2" layup="20" pass="20" offRebound="8" defRebound="15" defence="19" steal="19" block="2" speed="19" freeThrow="19" stamina="19"/>	
+		<player name="Reddick" number="2" pos="SG" shootThree="18" shootMid="18" shootClose="17" dunk="2" layup="16" pass="12" offRebound="6" defRebound="14" defence="15" steal="16" block="2" speed="17" freeThrow="18" stamina="18"/>	
+		<player name="Barnes" number="3" pos="SF" shootThree="17" shootMid="18" shootClose="12" dunk="8" layup="16" pass="8" offRebound="8" defRebound="14" defence="12" steal="10" block="10" speed="16" freeThrow="17" stamina="17"/>	
+		<player name="Griffin" number="4" pos="PF" shootThree="4" shootMid="16" shootClose="19" dunk="20" layup="17" pass="14" offRebound="16" defRebound="18" defence="18" steal="14" block="10" speed="14" freeThrow="15" stamina="18"/>	
+		<player name="Jordan" number="5" pos="C" shootThree="1" shootMid="5" shootClose="17" dunk="18" layup="8" pass="4" offRebound="20" defRebound="20" defence="19" steal="15" block="19" speed="12" freeThrow="10" stamina="18"/>	
+		<player name="Rivers" number="6" pos="PG" shootThree="11" shootMid="14" shootClose="15" dunk="2" layup="16" pass="16" offRebound="4" defRebound="8" defence="12" steal="14" block="1" speed="18" freeThrow="12" stamina="10"/>	
+		<player name="Crawford" number="7" pos="SG" shootThree="17" shootMid="17" shootClose="17" dunk="1" layup="15" pass="15" offRebound="4" defRebound="10" defence="12" steal="14" block="3" speed="17" freeThrow="19" stamina="12"/>	
+		<player name="Turkoglou" number="8" pos="SF" shootThree="16" shootMid="17" shootClose="15" dunk="5" layup="15" pass="8" offRebound="2" defRebound="8" defence="8" steal="4" block="1" speed="15" freeThrow="16" stamina="11"/>	
+		<player name="Hawes" number="9" pos="PF" shootThree="15" shootMid="17" shootClose="18" dunk="18" layup="14" pass="12" offRebound="6" defRebound="17" defence="13" steal="5" block="16" speed="14" freeThrow="15" stamina="12"/>	
+		<player name="Davis" number="10" pos="C" shootThree="1" shootMid="8" shootClose="16" dunk="15" layup="15" pass="5" offRebound="16" defRebound="17" defence="14" steal="15" block="12" speed="10" freeThrow="13" stamina="11"/>
+	</team>
 </teams>

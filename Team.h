@@ -35,6 +35,7 @@ public:
     vector<Player *> getRoster();
     string getName();
     Player* getPlayer(int position);
+    int getRosterSize();
     vector<Player*> getOtherPlayers(int number);
     int getPlayerPosition(int number);
     int getMatchup(int position);

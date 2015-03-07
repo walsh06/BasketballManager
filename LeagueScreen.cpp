@@ -138,7 +138,7 @@ void LeagueScreen::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneSc
         ui->statsTwo->setItem(0, i, new QTableWidgetItem(header[i]));
     }
 
-    for(int i = 1; i < 11; i++)
+    for(int i = 1; i <= teamOne->getRosterSize(); i++)
     {
         Player *player = teamOne->getPlayer(i);
         StatList *playerStats = player->getStatList();
@@ -164,7 +164,7 @@ void LeagueScreen::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneSc
         ui->statsOne->setItem(i, 8, steal);
     }
 
-    for(int i = 1; i < 11; i++)
+    for(int i = 1; i <= teamTwo->getRosterSize(); i++)
     {
         Player *player = teamTwo->getPlayer(i);
         StatList *playerStats = player->getStatList();
