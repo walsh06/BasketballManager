@@ -133,7 +133,7 @@ void MatchScreen::initPlayers()
     ui->quickPlayerList->clear();
     ui->swapPlayerOne->clear();
     ui->swapPlayerTwo->clear();
-    for(int i = 1; i < 11; i++)
+    for(int i = 1; i <= ownTeam->getRosterSize(); i++)
     {
         ui->playerWidget->addItem(QString::number(ownTeam->getPlayer(i)->getNumber()) + QString::fromStdString(" " +ownTeam->getPlayer(i)->getName()));
         if(i < 6)
@@ -244,7 +244,7 @@ void MatchScreen::loadStats()
         ui->oppStats->setItem(0, i, new QTableWidgetItem(header[i]));
     }
 
-    for(int i = 1; i < 11; i++)
+    for(int i = 1; i <= ownTeam->getRosterSize(); i++)
     {
         StatList *playerStats = ownTeam->getPlayer(i)->getStatList();
 

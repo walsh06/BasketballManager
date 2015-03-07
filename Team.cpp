@@ -59,17 +59,6 @@ void Team::setupTeamTactics()
     defenceMatchups[pf] = PF;
     defenceMatchups[c] = C;
 
-    players[pg]->setPlayingPosition(new PositionPointGuard());
-    players[sg]->setPlayingPosition(new PositionShootingGuard());
-    players[sf]->setPlayingPosition(new PositionSmallForward());
-    players[pf]->setPlayingPosition(new PositionPowerForward());
-    players[c]->setPlayingPosition(new PositionCentre());
-    players[6]->setPlayingPosition(new PositionPointGuard());
-    players[7]->setPlayingPosition(new PositionShootingGuard());
-    players[8]->setPlayingPosition(new PositionSmallForward());
-    players[9]->setPlayingPosition(new PositionPowerForward());
-    players[10]->setPlayingPosition(new PositionCentre());
-
     defenceSettings[pg] = TIGHT;
     defenceSettings[sg] = TIGHT;
     defenceSettings[sf] = TIGHT;
@@ -83,7 +72,7 @@ void Team::pickStartingTeam()
 {
     for(int i = 1; i < 6; i++)
     {
-        manager.pickStartingPosition(i, players);
+        manager.pickStartingPositionAdvanced(i, players);
     }
 }
 
@@ -162,7 +151,10 @@ string Team::getName()
     return teamName;
 }
 
-
+int Team::getRosterSize()
+{
+    return roster.size();
+}
 
 vector<Player *> Team::getRoster()
 {

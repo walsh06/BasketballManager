@@ -5,7 +5,11 @@
 #include "Heatmap.h"
 #include "PlayerPosition.h"
 #include "PlayerStrategy.h"
-
+#include "PositionCentre.h"
+#include "PositionPointGuard.h"
+#include "PositionPowerForward.h"
+#include "PositionShootingGuard.h"
+#include "PositionSmallForward.h"
 #include <map>
 using namespace std;
 
