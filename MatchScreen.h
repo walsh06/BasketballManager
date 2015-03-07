@@ -7,6 +7,7 @@
 #include "Team.h"
 #include "pugixml.hpp"
 #include "PlayerGraphic.h"
+#include "Commentary.h"
 #include <vector>
 #include <map>
 #include <QGraphicsScene>
@@ -122,11 +123,10 @@ private:
     vector<PlayerGraphic*> players;
     QGraphicsEllipseItem *ballCircle;
     Team *ownTeam, *oppositionTeam;
-     std::map<int, std::vector<std::string> > comments;
-     QComboBox *boxes[5][2], *defenceBoxes[5][2];
+    Commentary commentary;
+    QComboBox *boxes[5][2], *defenceBoxes[5][2];
 
-     void readXML();
-     void initPlayers();
+    void initPlayers();
      void initCourt();
 
 signals:

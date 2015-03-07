@@ -2,7 +2,7 @@
 
 PlayerStrategyScoringForward::PlayerStrategyScoringForward():withBallVector({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
 {
-    int strategyMap[9][7] = {{1,3,3,3,3,3,3},
+    int strategyMap[8][7] = {{1,3,3,3,3,3,3},
                              {1,3,3,9,9,9,9},
                              {1,3,3,9,6,6,6},
                              {1,3,9,9,6,6,6},

@@ -12,7 +12,6 @@ public:
 private:
     Heatmap map;
     ProbabilityVector withBallVector;
-
 };
 
 #endif // PLAYERSTRATEGYCRASHBOARDS_H

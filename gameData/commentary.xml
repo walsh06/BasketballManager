@@ -25,21 +25,25 @@ Commentary Types:
 	<comment type="1" comment="Money from the three point range for <player>"/>
 	<comment type="1" comment="Big three point shot from <player>"/>
 	<comment type="1" comment="<player> scores from long range"/>
+	<comment type="1" comment="<player> scores with a <adjective> shot"/>
 
 	<comment type="2" comment="<player> scores the pull up jumper from mid range"/>
 	<comment type="2" comment="<player> hits the jumper from mid range"/>
 	<comment type="2" comment="<player> scores from mid range"/>
 	<comment type="2" comment="<player> score the mid range jump shot"/>
+	<comment type="2" comment="<player> scores with a <adjective> shot"/>
 
 	<comment type="3" comment="<player> scores from close range"/>
 	<comment type="3" comment="<player> gets the score from the post"/>
 	<comment type="3" comment="<player> scores the hook shot"/>
 	<comment type="3" comment="<player> scores the fadeaway from the post"/>
+	<comment type="3" comment="<player> scores with a <adjective> shot"/>
 
 	<comment type="4" comment="<player> slams the dunk home"/>
 	<comment type="4" comment="<player> with a huge dunk"/>
 	<comment type="4" comment="<player> scores the simple layup"/>
 	<comment type="4" comment="<player> with the sweet layup"/>
+	<comment type="4" comment="<player> scores with a <adjective> shot"/>
 
 	<comment type="7" comment="<player> is fouled"/>
 
@@ -73,7 +77,29 @@ Commentary Types:
 	<comment type="15" comment="<second_player> gets the ball from <player>"/>
 	<comment type="15" comment="<second_player> controls the tricky pass from <player>"/>
 	<comment type="15" comment="<player> to <second_player>"/>
+	<comment type="15" comment="<adjective> pass from <player> to <second_player>"/>
 
 	<comment type="16" comment="<player> wins the jump ball"/>
 </commentary>
 
+<!--
+Analysis Types:
+1: High scoring
+2: High rebounds
+-->
+<analysis>
+	<comment type="1" threshold="10" comment="<player> has scored <points> today"/>
+	<comment type="1" threshold="8" comment="<player> is having a good game scoring <points> points"/>
+	<comment type="2" threshold="5" comment="<player> has <rebounds> rebounds today"/>
+	<comment type="2" threshold="8" comment="A really good day for <player> with <rebounds> rebounds"/>
+
+</analysis>
+
+<adjectives>
+	<adjective word="good"/>
+	<adjective word="tricky"/>
+	<adjective word="nice"/>
+	<adjective word="risky"/>
+	<adjective word="tough"/>
+	<adjective word="smart"/>
+</adjectives>
