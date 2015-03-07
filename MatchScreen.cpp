@@ -33,6 +33,8 @@ MatchScreen::~MatchScreen()
 
 void MatchScreen::initMatchScreen(Team *teamOne, Team *teamTwo)
 {
+    ui->scoreOne->display(0);
+    ui->scoreTwo->display(0);
     if(teamTwo->isUserControlled())
     {
         this->ownTeam = teamTwo;

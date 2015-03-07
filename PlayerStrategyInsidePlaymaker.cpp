@@ -2,7 +2,7 @@
 
 PlayerStrategyInsidePlaymaker::PlayerStrategyInsidePlaymaker():withBallVector({0,0,0,0,0,0,0,0,0,4,4,4,4,4,10})
 {
-    int strategyMap[9][7] = {{1,1,1,1,1,1,1},
+    int strategyMap[8][7] = {{1,1,1,1,1,1,1},
                              {1,1,1,9,9,9,9},
                              {1,1,1,9,7,7,7},
                              {1,1,9,9,7,4,4},

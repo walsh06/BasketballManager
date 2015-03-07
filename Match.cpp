@@ -238,6 +238,11 @@ int Match::getScoreDifference(int team)
 
 void Match::writeMatchStats(string filename)
 {
+    std::ofstream outfile;
+
+    outfile.open("../stats/results.txt", std::ios_base::app);
+    outfile << teamOne->getName() << "," << score[0] << "," << teamTwo->getName() << "," << score[1] << endl;
+
     vector<Player *> rosterOne = teamOne->getRoster(), rosterTwo = teamTwo->getRoster();
     for(int i = 0; i < 10; i++)
     {
