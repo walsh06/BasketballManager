@@ -69,15 +69,35 @@ Player::Player(map<string, string> playerMap)
     calcHeatMap();
 
     string pos = playerMap["pos"];
-
-    if(pos == "PG") playingPosition = 1;
-    else if(pos == "SG") playingPosition = 2;
-    else if(pos == "SF") playingPosition = 3;
-    else if(pos == "PF") playingPosition = 4;
-    else if(pos == "C") playingPosition = 5;
-
     position = NULL;
     strategy = NULL;
+
+    if(pos == "PG")
+    {
+        playingPosition = 1;
+        setPlayingPosition(new PositionPointGuard());
+    }
+    else if(pos == "SG")
+    {
+        playingPosition = 2;
+        setPlayingPosition(new PositionShootingGuard());
+    }
+    else if(pos == "SF")
+    {
+        playingPosition = 3;
+        setPlayingPosition(new PositionSmallForward());
+    }
+    else if(pos == "PF")
+    {
+        playingPosition = 4;
+        setPlayingPosition(new PositionPowerForward());
+    }
+    else if(pos == "C")
+    {
+        playingPosition = 5;
+        setPlayingPosition(new PositionCentre());
+    }
+
 }
 
 Player::~Player()
