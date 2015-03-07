@@ -210,7 +210,7 @@ string League::getScoringLeader(int type)
     {
         Team *currentTeam = team.second->getTeam();
 
-        for(int i = 1; i < currentTeam->getRosterSize(); i++)
+        for(int i = 1; i <= currentTeam->getRosterSize(); i++)
         {
             if(type == 1)
             {

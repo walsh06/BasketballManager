@@ -44,9 +44,7 @@
 		<player name="Splitter" number="5" pos="C" shootThree="1" shootMid="10" shootClose="16" dunk="18" layup="12" pass="5" offRebound="16" defRebound="17" defence="14" steal="5" block="8" speed="8" freeThrow="14" stamina="15"/>
 		<player name="Mills" number="6" pos="PG" shootThree="17" shootMid="16" shootClose="12" dunk="7" layup="12" pass="12" offRebound="4" defRebound="10" defence="12" steal="8" block="6" speed="15" freeThrow="17" stamina="10"/>
 		<player name="Ginobli" number="7" pos="SG" shootThree="16" shootMid="14" shootClose="15" dunk="11" layup="19" pass="14" offRebound="5" defRebound="13" defence="14" steal="10" block="6" speed="14" freeThrow="17" stamina="14"/>
-		<player name="Bellineli" number="8" pos="SF" shootThree="15" shootMid="15" shootClose="12" dunk="10" layup="10" pass="12" offRebound="2" defRebound="13" defence="14" steal="8" block="2" speed="14" freeThrow="17" stamina="14"/>
-		<player name="Diaw" number="9" pos="PF" shootThree="13" shootMid="14" shootClose="16" dunk="15" layup="15" pass="10" offRebound="8" defRebound="15" defence="12" steal="8" block="5" speed="10" freeThrow="15" stamina="12"/>
-		<player name="Ayres" number="10" pos="C" shootThree="1" shootMid="5" shootClose="16" dunk="18" layup="12" pass="5" offRebound="14" defRebound="14" defence="14" steal="3" block="2" speed="8" freeThrow="14" stamina="10"/>
+
 	</team>
 
 	<team name="Heat">
