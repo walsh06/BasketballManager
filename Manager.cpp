@@ -66,6 +66,53 @@ void Manager::pickStartingPosition(int pos, map<int, Player *> &players)
     }
 }
 
+void Manager::pickStartingPositionAdvanced(int pos, map<int, Player *> &players)
+{
+    int start, end;
+    map<int, Player *> possibleStarter;
+    for(int i=pos; i <= players.size(); i++)
+    {
+        Player *player = players[i];
+        if(player->getPlayingPosition() >= pos - 1 && player->getPlayingPosition() <= pos + 1)
+        {
+            possibleStarter[i] = player;
+        }
+    }
+    if(possibleStarter.size() > 0)
+    {
+        if(pos == 1)
+        {
+            start = 1; end = 3;
+        }
+        else if(pos == 2)
+        {
+            start = 1; end = 5;
+        }
+        else if(pos == 3)
+        {
+            start = 4; end = 6;
+        }
+        else if(pos == 4)
+        {
+            start = 5; end = 8;
+        }
+        else if(pos == 5)
+        {
+            start = 6; end = 8;
+        }
+
+        int bestPlayer = getBestPlayerForPosition(possibleStarter, start, end);
+        if(bestPlayer != 0)
+        {
+            Player *temp = players[pos];
+            players[pos] = players[bestPlayer];
+            players[bestPlayer] = temp;
+            players[pos]->setPos(players[bestPlayer]->getPosX(), players[bestPlayer]->getPosY());
+            swap(playerRatings[pos - 1], playerRatings[bestPlayer - 1]);
+        }
+    }
+}
+
 void Manager::subPlayer(int pos, map<int, Player *> &players)
 {
     if(players[pos]->getEnergy() < energyThresholdSubOut)
