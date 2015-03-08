@@ -222,7 +222,7 @@ int Manager::getBestStrategyForPlayer(int playerPos)
 {
     float best = playerRatings[playerPos - 1][0];
     int bestIndex = 0;
-    for(int i = 1; i < 9; i++)
+    for(int i = 0; i < 9; i++)
     {
         if(playerRatings[playerPos - 1][i] > best)
         {
@@ -254,6 +254,11 @@ int Manager::getBestPlayerForPosition(map<int, Player *> players, int start, int
     for(auto &player: players)
     {
         int playerScore = player.second->getStatList()->getGameScore() * 0.5;
+        if(playerRatings[player.first - 1][0] + playerScore > bestRating)
+        {
+            bestRating = playerRatings[player.first - 1][0] + playerScore;
+            bestPlayer = player.first;
+        }
         for(int i = start; i <= end; i++)
         {
             if(playerRatings[player.first - 1][i] + playerScore > bestRating)
