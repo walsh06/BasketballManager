@@ -9,6 +9,8 @@
 #include "MatchScreen.h"
 #include "MatchReceiver.h"
 #include "Fouls.h"
+#include "MatchDefenceMan.h"
+#include "MatchDefenceZone.h"
 
 #include <iostream>
 #include <cmath>
@@ -39,7 +41,8 @@ public:
 private:
     MatchScreen *screen;
     Fouls fouls;
-
+    MatchDefenceMan manDefence;
+    MatchDefenceZone zoneDefence;
     int firstPossession;
     Heatmap shotMap;
     int gameState;
