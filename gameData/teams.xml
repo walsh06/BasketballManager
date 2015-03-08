@@ -98,4 +98,18 @@
 		<player name="Hawes" number="9" pos="PF" shootThree="15" shootMid="17" shootClose="18" dunk="18" layup="14" pass="12" offRebound="6" defRebound="17" defence="13" steal="5" block="16" speed="14" freeThrow="15" stamina="12"/>	
 		<player name="Davis" number="10" pos="C" shootThree="1" shootMid="8" shootClose="16" dunk="15" layup="15" pass="5" offRebound="16" defRebound="17" defence="14" steal="15" block="12" speed="10" freeThrow="13" stamina="11"/>
 	</team>
+
+	<team name="Mavericks">
+		<player name="Rondo" number="1" pos="PG" shootThree="14" shootMid="18" shootClose="19" dunk="4" layup="19" pass="19" offRebound="14" defRebound="12" defence="16" steal="16" block="2" speed="19" freeThrow="15" stamina="17"/>
+		<player name="Ellis" number="2" pos="SG" shootThree="15" shootMid="18" shootClose="19" dunk="9" layup="19" pass="15" offRebound="5" defRebound="8" defence="16" steal="19" block="6" speed="18" freeThrow="16" stamina="18"/>
+		<player name="Parsons" number="3" pos="SF" shootThree="18" shootMid="17" shootClose="17" dunk="13" layup="16" pass="8" offRebound="14" defRebound="16" defence="14" steal="15" block="5" speed="17" freeThrow="16" stamina="18"/>
+		<player name="Nowitzki" number="4" pos="PF" shootThree="17" shootMid="20" shootClose="17" dunk="10" layup="17" pass="4" offRebound="5" defRebound="17" defence="10" steal="8" block="8" speed="12" freeThrow="18" stamina="17"/>
+		<player name="Chandler" number="5" pos="C" shootThree="1" shootMid="16" shootClose="18" dunk="19" layup="16" pass="5" offRebound="18" defRebound="19" defence="18" steal="12" block="16" speed="12" freeThrow="15" stamina="17"/>
+		<player name="Barea" number="6" pos="PG" shootThree="16" shootMid="17" shootClose="15" dunk="1" layup="15" pass="18" offRebound="6" defRebound="10" defence="12" steal="12" block="1" speed="17" freeThrow="17" stamina="10"/>
+		<player name="Harris" number="7" pos="SG" shootThree="18" shootMid="15" shootClose="17" dunk="2" layup="16" pass="17" offRebound="3" defRebound="14" defence="16" steal="17" block="4" speed="18" freeThrow="17" stamina="12"/>
+		<player name="Aminu" number="8" pos="SF" shootThree="14" shootMid="16" shootClose="17" dunk="15" layup="16" pass="8" offRebound="13" defRebound="17" defence="17" steal="16" block="16" speed="16" freeThrow="15" stamina="10"/>
+		<player name="Stoudemire" number="9" pos="PF" shootThree="1" shootMid="17" shootClose="18" dunk="18" layup="14" pass="4" offRebound="14" defRebound="18" defence="10" steal="14" block="2" speed="15" freeThrow="18" stamina="11"/>
+		<player name="James" number="10" pos="C" shootThree="1" shootMid="3" shootClose="14" dunk="12" layup="14" pass="5" offRebound="8" defRebound="13" defence="9" steal="2" block="10" speed="8" freeThrow="17" stamina="8"/>
+		<player name="Jefferson" number="11" pos="SF" shootThree="17" shootMid="15" shootClose="16" dunk="12" layup="16" pass="8" offRebound="5" defRebound="13" defence="13" steal="14" block="8" speed="14" freeThrow="15" stamina="10"/>
+	</team>
 </teams>

@@ -72,7 +72,7 @@ void Team::pickStartingTeam()
 {
     for(int i = 1; i < 6; i++)
     {
-        manager.pickStartingPositionAdvanced(i, players);
+        manager.pickStartingPosition(i, players);
     }
 }
 
