@@ -112,4 +112,17 @@
 		<player name="James" number="10" pos="C" shootThree="1" shootMid="3" shootClose="14" dunk="12" layup="14" pass="5" offRebound="8" defRebound="13" defence="9" steal="2" block="10" speed="8" freeThrow="17" stamina="8"/>
 		<player name="Jefferson" number="11" pos="SF" shootThree="17" shootMid="15" shootClose="16" dunk="12" layup="16" pass="8" offRebound="5" defRebound="13" defence="13" steal="14" block="8" speed="14" freeThrow="15" stamina="10"/>
 	</team>
+
+	<team name="Grizzlies">
+		<player name="Conley" number="1" pos="PG" shootThree="17" shootMid="17" shootClose="18" dunk="2" layup="16" pass="16" offRebound="4" defRebound="12" defence="14" steal="16" block="2" speed="18" freeThrow="18" stamina="17"/>	
+		<player name="Lee" number="2" pos="SG" shootThree="16" shootMid="17" shootClose="17" dunk="1" layup="17" pass="12" offRebound="2" defRebound="11" defence="13" steal="15" block="2" speed="17" freeThrow="18" stamina="17"/>	
+		<player name="Green" number="3" pos="SF" shootThree="17" shootMid="17" shootClose="18" dunk="18" layup="13" pass="10" offRebound="14" defRebound="14" defence="8" steal="8" block="6" speed="14" freeThrow="17" stamina="17"/>	
+		<player name="Randolph" number="4" pos="PF" shootThree="5" shootMid="17" shootClose="18" dunk="10" layup="18" pass="5" offRebound="19" defRebound="19" defence="16" steal="12" block="4" speed="12" freeThrow="16" stamina="17"/>	
+		<player name="Gasol" number="5" pos="C" shootThree="4" shootMid="17" shootClose="19" dunk="19" layup="15" pass="12" offRebound="14" defRebound="18" defence="16" steal="12" block="19" speed="10" freeThrow="17" stamina="17"/>	
+		<player name="Udrih" number="6" pos="PG" shootThree="10" shootMid="17" shootClose="14" dunk="1" layup="16" pass="16" offRebound="16" defRebound="2" defence="10" steal="12" block="2" speed="18" freeThrow="18" stamina="10"/>	
+		<player name="Allen" number="7" pos="SG" shootThree="4" shootMid="16" shootClose="16" dunk="6" layup="16" pass="12" offRebound="12" defRebound="8" defence="10" steal="15" block="5" speed="17" freeThrow="16" stamina="11"/>	
+		<player name="Carter" number="8" pos="SF" shootThree="17" shootMid="16" shootClose="16" dunk="2" layup="8" pass="10" offRebound="8" defRebound="14" defence="13" steal="12" block="8" speed="14" freeThrow="17" stamina="11"/>	
+		<player name="Leuer" number="9" pos="PF" shootThree="6" shootMid="14" shootClose="17" dunk="15" layup="16" pass="5" offRebound="13" defRebound="16" defence="10" steal="8" block="8" speed="12" freeThrow="16" stamina="10"/>	
+		<player name="Koufos" number="10" pos="C" shootThree="1" shootMid="3" shootClose="18" dunk="17" layup="15" pass="6" offRebound="15" defRebound="18" defence="14" steal="8" block="16" speed="10" freeThrow="16" stamina="9"/>				
+	</team>
 </teams>
