@@ -125,4 +125,18 @@
 		<player name="Leuer" number="9" pos="PF" shootThree="6" shootMid="14" shootClose="17" dunk="15" layup="16" pass="5" offRebound="13" defRebound="16" defence="10" steal="8" block="8" speed="12" freeThrow="16" stamina="10"/>	
 		<player name="Koufos" number="10" pos="C" shootThree="1" shootMid="3" shootClose="18" dunk="17" layup="15" pass="6" offRebound="15" defRebound="18" defence="14" steal="8" block="16" speed="10" freeThrow="16" stamina="9"/>				
 	</team>
+
+
+	<team name="TestTwo">
+		<player name="TestOne" number="1" pos="PG" shootThree="17" shootMid="16" shootClose="12" dunk="5" layup="14" pass="15" offRebound="4" defRebound="8" defence="16" steal="16" block="6" speed="18" freeThrow="17" stamina="17"/>
+		<player name="TestTwo" number="2" pos="SG" shootThree="17" shootMid="17" shootClose="14" dunk="12" layup="15" pass="10" offRebound="6" defRebound="10" defence="14" steal="14" block="6" speed="17" freeThrow="17" stamina="17"/>
+		<player name="TestThree" number="3" pos="SF" shootThree="16" shootMid="16" shootClose="16" dunk="15" layup="15" pass="10" offRebound="10" defRebound="12" defence="13" steal="13" block="10" speed="16" freeThrow="16" stamina="17"/>
+		<player name="TestFour" number="4" pos="PF" shootThree="8" shootMid="12" shootClose="17" dunk="16" layup="15" pass="8" offRebound="14" defRebound="17" defence="15" steal="12" block="15" speed="13" freeThrow="16" stamina="17"/>
+		<player name="TestFive" number="5" pos="C" shootThree="4" shootMid="10" shootClose="17" dunk="17" layup="14" pass="8" offRebound="16" defRebound="17" defence="15" steal="13" block="16" speed="10" freeThrow="16" stamina="16"/>
+		<player name="TestSix" number="6" pos="PG" shootThree="15" shootMid="14" shootClose="11" dunk="2" layup="12" pass="14" offRebound="2" defRebound="7" defence="13" steal="12" block="2" speed="16" freeThrow="17" stamina="11"/>
+		<player name="TestSeven" number="7" pos="SG" shootThree="15" shootMid="15" shootClose="13" dunk="8" layup="14" pass="10" offRebound="3" defRebound="6" defence="12" steal="10" block="4" speed="16" freeThrow="17" stamina="11"/>
+		<player name="TestEight" number="8" pos="SF" shootThree="14" shootMid="15" shootClose="15" dunk="14" layup="14" pass="10" offRebound="8" defRebound="11" defence="10" steal="8" block="7" speed="16" freeThrow="15" stamina="11"/>
+		<player name="TestNine" number="9" pos="PF" shootThree="2" shootMid="6" shootClose="15" dunk="14" layup="15" pass="7" offRebound="12" defRebound="14" defence="13" steal="7" block="13" speed="12" freeThrow="16" stamina="11"/>
+		<player name="TestTen" number="10" pos="C" shootThree="1" shootMid="3" shootClose="15" dunk="15" layup="10" pass="5" offRebound="14" defRebound="14" defence="15" steal="6" block="15" speed="8" freeThrow="15" stamina="11"/>	
+	</team>
 </teams>
