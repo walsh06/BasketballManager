@@ -14,9 +14,9 @@ PlayerStrategyScoringForward::PlayerStrategyScoringForward():withBallVector({0,0
     map.setMap(strategyMap);
 }
 
-Heatmap PlayerStrategyScoringForward::getMap()
+Heatmap* PlayerStrategyScoringForward::getMap()
 {
-    return map;
+    return &map;
 }
 
 int PlayerStrategyScoringForward::getValue(int x, int y)
@@ -24,7 +24,7 @@ int PlayerStrategyScoringForward::getValue(int x, int y)
     return map.getValue(x, y);
 }
 
-ProbabilityVector PlayerStrategyScoringForward::getWithBallVector()
+ProbabilityVector* PlayerStrategyScoringForward::getWithBallVector()
 {
-    return withBallVector;
+    return &withBallVector;
 }

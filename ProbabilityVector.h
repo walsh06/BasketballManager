@@ -15,6 +15,7 @@ public:
     int getRandomResult();
     void printVector();
     int getProbability(int position);
+    void setProbability(int position, int value);
 
     ProbabilityVector operator+(const ProbabilityVector &vector);
 

@@ -15,9 +15,9 @@ PlayerStrategyCrashBoards::PlayerStrategyCrashBoards():withBallVector({0,0,3,0,0
     map.setMap(strategyMap);
 }
 
-Heatmap PlayerStrategyCrashBoards::getMap()
+Heatmap* PlayerStrategyCrashBoards::getMap()
 {
-    return map;
+    return &map;
 }
 
 int PlayerStrategyCrashBoards::getValue(int x, int y)
@@ -25,7 +25,7 @@ int PlayerStrategyCrashBoards::getValue(int x, int y)
     return map.getValue(x, y);
 }
 
-ProbabilityVector PlayerStrategyCrashBoards::getWithBallVector()
+ProbabilityVector* PlayerStrategyCrashBoards::getWithBallVector()
 {
-    return withBallVector;
+    return &withBallVector;
 }

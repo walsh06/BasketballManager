@@ -257,9 +257,14 @@ void Player::setStrategy(PlayerStrategy *strategy)
     updateMap();
 }
 
-ProbabilityVector Player::getStrategyVector()
+ProbabilityVector* Player::getStrategyVector()
 {
     return strategy->getWithBallVector();
+}
+
+PlayerStrategy* Player::getStrategy()
+{
+    return strategy;
 }
 
 void Player::updateMap()
@@ -271,7 +276,7 @@ void Player::updateMap()
     }
     if(strategy != NULL)
     {
-        finalMap = finalMap + strategy->getMap();
+        finalMap = finalMap + *strategy->getMap();
         //cout << getName() << endl;
         //finalMap.printHeatMap();
     }

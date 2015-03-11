@@ -15,9 +15,9 @@ PlayerStrategyOutsidePlaymaker::PlayerStrategyOutsidePlaymaker():withBallVector(
     map.setMap(strategyMap);
 }
 
-Heatmap PlayerStrategyOutsidePlaymaker::getMap()
+Heatmap* PlayerStrategyOutsidePlaymaker::getMap()
 {
-    return map;
+    return &map;
 }
 
 int PlayerStrategyOutsidePlaymaker::getValue(int x, int y)
@@ -25,7 +25,7 @@ int PlayerStrategyOutsidePlaymaker::getValue(int x, int y)
     return map.getValue(x, y);
 }
 
-ProbabilityVector PlayerStrategyOutsidePlaymaker::getWithBallVector()
+ProbabilityVector* PlayerStrategyOutsidePlaymaker::getWithBallVector()
 {
-    return withBallVector;
+    return &withBallVector;
 }

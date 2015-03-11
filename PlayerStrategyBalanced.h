@@ -7,9 +7,9 @@ class PlayerStrategyBalanced : public PlayerStrategy
 {
 public:
     PlayerStrategyBalanced();
-    Heatmap getMap();
+    Heatmap* getMap();
     int getValue(int x, int y);
-    ProbabilityVector getWithBallVector();
+    ProbabilityVector* getWithBallVector();
 
 private:
     Heatmap map;

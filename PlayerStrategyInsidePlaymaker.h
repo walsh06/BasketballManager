@@ -7,9 +7,9 @@ class PlayerStrategyInsidePlaymaker : public PlayerStrategy
 {
 public:
     PlayerStrategyInsidePlaymaker();
-    Heatmap getMap();
+    Heatmap* getMap();
     int getValue(int x, int y);
-    ProbabilityVector getWithBallVector();
+    ProbabilityVector* getWithBallVector();
 
 private:
     Heatmap map;

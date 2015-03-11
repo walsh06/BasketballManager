@@ -601,7 +601,7 @@ void Match::withBall(Player* p, int shotClock)
 
         probs.addProbability(value);
         //=================
-        ProbabilityVector finalProbabilities = probs + p->getStrategyVector();
+        ProbabilityVector finalProbabilities = probs + *p->getStrategyVector();
         if(printing) finalProbabilities.printVector();
 
         int action  = finalProbabilities.getRandomResult();

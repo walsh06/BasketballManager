@@ -15,9 +15,9 @@ PlayerStrategyBalanced::PlayerStrategyBalanced():withBallVector({0,0,0,0,0,0,0,0
     map.setMap(strategyMap);
 }
 
-Heatmap PlayerStrategyBalanced::getMap()
+Heatmap* PlayerStrategyBalanced::getMap()
 {
-    return map;
+    return &map;
 }
 
 int PlayerStrategyBalanced::getValue(int x, int y)
@@ -25,7 +25,7 @@ int PlayerStrategyBalanced::getValue(int x, int y)
     return map.getValue(x, y);
 }
 
-ProbabilityVector PlayerStrategyBalanced::getWithBallVector()
+ProbabilityVector* PlayerStrategyBalanced::getWithBallVector()
 {
-    return withBallVector;
+    return &withBallVector;
 }

@@ -14,9 +14,9 @@ PlayerStrategyPostScorer::PlayerStrategyPostScorer():withBallVector({0,0,0,0,0,0
     map.setMap(strategyMap);
 }
 
-Heatmap PlayerStrategyPostScorer::getMap()
+Heatmap* PlayerStrategyPostScorer::getMap()
 {
-    return map;
+    return &map;
 }
 
 int PlayerStrategyPostScorer::getValue(int x, int y)
@@ -24,7 +24,7 @@ int PlayerStrategyPostScorer::getValue(int x, int y)
     return map.getValue(x, y);
 }
 
-ProbabilityVector PlayerStrategyPostScorer::getWithBallVector()
+ProbabilityVector* PlayerStrategyPostScorer::getWithBallVector()
 {
-    return withBallVector;
+    return &withBallVector;
 }
