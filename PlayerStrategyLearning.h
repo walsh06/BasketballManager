@@ -4,6 +4,9 @@
 #include "Player.h"
 #include "ProbabilityVector.h"
 #include "Heatmap.h"
+
+#include <iostream>
+#include <fstream>
 class PlayerStrategyLearning
 {
 public:
@@ -17,6 +20,7 @@ private:
     float diffWeight;
 
     void updateMapThree(Heatmap *map, bool increment);
+    void updateMapMid(Heatmap *map, bool incremenet);
     void updateMapClose(Heatmap *map, bool increment);
 };
 

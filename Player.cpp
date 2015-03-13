@@ -251,7 +251,6 @@ void Player::setPlayingPosition(PlayerPosition *pos)
 
 void Player::setStrategy(PlayerStrategy *strategy)
 {
-
     delete this->strategy;
     this->strategy = strategy;
     updateMap();

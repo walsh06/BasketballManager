@@ -1,6 +1,9 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
+#include "PlayerStrategyDynamic.h"
+#include "PlayerStrategyLearning.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -60,6 +63,7 @@ void MainWindow::on_playMatch_clicked()
 
 void MainWindow::on_runSims_clicked()
 {
+    /*
     int simCount = ui->numSims->value();
     ui->simProgress->setMaximum(simCount);
 
@@ -75,6 +79,31 @@ void MainWindow::on_runSims_clicked()
         match.writeMatchStats(filename);
     }
     ui->simProgress->setValue(simCount);
+*/
+    int numMatches = 10;
+    int simCount = ui->numSims->value();
+    ui->simProgress->setMaximum(simCount * numMatches);
+    PlayerStrategy *dynamicStrategy = new PlayerStrategyDynamic();
+    PlayerStrategyLearning learning;
+    for(int i = 0; i < simCount; i++)
+    {
+        Team teamOne(ui->teamOneBox->currentText().toStdString());
+        teamOne.getPlayer(1)->setStrategy(dynamicStrategy);
+        Team teamTwo(ui->teamTwoBox->currentText().toStdString());
+        teamTwo.getPlayer(1)->setStrategy(new PlayerStrategyOutsidePlaymaker());
+
+        for(int j=0; j<numMatches; j++)
+        {
+            ui->simProgress->setValue((i*numMatches) + j);
+
+            Match match(&teamOne, &teamTwo);
+            match.setSimSpeed(0);
+            match.sim();
+        }
+        learning.updateStrategy(teamOne.getRoster()[0]);
+        learning.writeToFile(teamOne.getRoster()[0]);
+    }
+    ui->simProgress->setValue(simCount * numMatches);
 
 }
 
