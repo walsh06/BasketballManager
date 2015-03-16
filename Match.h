@@ -54,6 +54,7 @@ private:
     const bool printing = false;
     bool endOfPossession;
 
+
     void guiUpdateCommentary(int type, Player *playerOne, Player *playerTwo = NULL);
     void guiUpdateStat();
     void guiUpdatePlayers();
