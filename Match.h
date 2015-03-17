@@ -9,6 +9,7 @@
 #include "MatchScreen.h"
 #include "MatchReceiver.h"
 #include "Fouls.h"
+#include "Analyser.h"
 
 #include <iostream>
 #include <cmath>
@@ -37,6 +38,7 @@ public:
     Team *getTeamOne();
     Team *getTeamTwo();
 private:
+    Analyser analyser;
     MatchScreen *screen;
     Fouls fouls;
 

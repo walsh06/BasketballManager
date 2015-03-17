@@ -123,6 +123,7 @@ void Match::sim()
     {
         teamTwo->getPlayer(i)->updateOverAllStats();
     }
+    analyser.writeToFile();
 }
 
 int* Match::getScore()
@@ -568,7 +569,7 @@ void Match::withBall(Player* p, int shotClock)
         }
         else
         {
-            posValue = p->getPosValue() + (shotClockFactor - shotClock) - pressure + ((4 - p->getRange()) * 2) + playerStatModifier;
+            posValue = p->getPosValue() + ((shotClockFactor - shotClock)*2) - pressure + ((4 - p->getRange()) * 2) + playerStatModifier;
         }
         probs.addProbability(posValue);
 
@@ -631,6 +632,8 @@ void Match::withBall(Player* p, int shotClock)
         {
             pass(p, otherPlayers[action - 10]);
         }
+
+        analyser.addDecision(p->getNumber(), action);
     }
 }
 
@@ -911,7 +914,7 @@ void Match::shoot(Player* p, int pressure)
 {
     shotMap.incrementValue(p->getPosX(), p->getPosY());
     int range = p->getRange();
-
+    analyser.addShot(shotClock);
     if(range == 1)
     {
         shootTwo(p, pressure, p->getUnderBasketShot(), 30, 5, "Under Basket" );

@@ -27,10 +27,9 @@ void Analyser::writeToFile()
 {
     std::ofstream outfile;
 
-      outfile.open("Shots.csv", std::ios_base::app);
-      outfile << "pos,";
+      outfile.open("../shots.csv", std::ios_base::app);
 
-      for(int i = 0; i < 25; i++)
+      for(int i = 24; i >= 0; i--)
       {
           outfile << shotMap[i] << ",";
       }
@@ -38,8 +37,7 @@ void Analyser::writeToFile()
 
      outfile.close();
 
-     outfile.open("decisions.csv", std::ios_base::app);
-     outfile << "pos,";
+     outfile.open("../decisions.csv", std::ios_base::app);
 
      for(int i = 1; i < 11; i++)
      {
@@ -51,5 +49,4 @@ void Analyser::writeToFile()
      }
 
     outfile.close();
-
 }
