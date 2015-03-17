@@ -80,7 +80,7 @@ void MainWindow::on_runSims_clicked()
     }
     ui->simProgress->setValue(simCount);
 */
-    int numMatches = 10;
+    int numMatches = 50;
     int simCount = ui->numSims->value();
     ui->simProgress->setMaximum(simCount * numMatches);
     PlayerStrategy *dynamicStrategy = new PlayerStrategyDynamic();
