@@ -13,6 +13,19 @@ Tournament::Tournament(int numTeams)
 
 }
 
+Tournament::~Tournament()
+{
+    for(auto &element:teams)
+    {
+        delete element;
+    }
+
+    for(auto &element:matches)
+    {
+        delete element;
+    }
+}
+
 void Tournament::simRound()
 {
     int numMatches = matches.size();
@@ -69,6 +82,7 @@ void Tournament::simRound()
 
 void Tournament::addTeam(Team *team)
 {
+    teams.push_back(team);
     winners.push_back(team);
 }
 
