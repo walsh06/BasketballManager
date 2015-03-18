@@ -49,7 +49,9 @@ SOURCES += main.cpp \
     Commentary.cpp \
     MatchDefenceMan.cpp \
     MatchDefenceZone.cpp \
-    MatchDefence.cpp
+    MatchDefence.cpp \
+    PlayerStrategyDynamic.cpp \
+    PlayerStrategyLearning.cpp
 
 HEADERS += \
     Player.h \
@@ -91,7 +93,9 @@ HEADERS += \
     Commentary.h \
     MatchDefenceMan.h \
     MatchDefenceZone.h \
-    MatchDefence.h
+    MatchDefence.h \
+    PlayerStrategyDynamic.h \
+    PlayerStrategyLearning.h
 
 FORMS += \
     MainWindow.ui \

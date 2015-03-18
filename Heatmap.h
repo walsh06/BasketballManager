@@ -13,6 +13,7 @@ public:
     void setValue(int value, int x, int y);
     void setMap(int newMap[8][7]);
     void incrementValue(int x, int y);
+    void decrementValue(int x, int y);
 
     void printHeatMap();
 

@@ -21,7 +21,6 @@ Match::Match(Team *teamOne, Team *teamTwo, MatchScreen *newScreen):manDefence(te
     teamTwo->pickStartingTeam();
     guiInit();
     setOrderOfPlay();
-
 }
 
 Match::~Match()
@@ -123,6 +122,7 @@ void Match::sim()
     {
         teamTwo->getPlayer(i)->updateOverAllStats();
     }
+
 }
 
 int* Match::getScore()
@@ -565,6 +565,7 @@ void Match::withBall(Player* p, int shotClock)
         {
             posValue = p->getPosValue() + (shotClockFactor - shotClock) - pressure + ((4 - p->getRange()) * 2) + playerStatModifier;
         }
+
         probs.addProbability(posValue);
 
 
@@ -601,7 +602,7 @@ void Match::withBall(Player* p, int shotClock)
 
         probs.addProbability(value);
         //=================
-        ProbabilityVector finalProbabilities = probs + p->getStrategyVector();
+        ProbabilityVector finalProbabilities = probs + *p->getStrategyVector();
         if(printing) finalProbabilities.printVector();
 
         int action  = finalProbabilities.getRandomResult();

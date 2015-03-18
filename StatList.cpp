@@ -88,6 +88,8 @@ void StatList::writeToFile(std::string filename, int pos)
       {
           outfile <<  ",ftpc," << getFreeThrowPercentage() << "\n";
       }
+      outfile.close();
+
 }
 
 int StatList::getGameScore()
@@ -151,7 +153,7 @@ float StatList::getMinutesPerGame()
     if(games == 0)
         return 0;
     else
-        return minutes/games;
+        return (float)minutes/(float)games;
 }
 
 //==========================
@@ -221,7 +223,7 @@ float StatList::getFieldGoalsMadePerGame()
     if(games == 0)
         return 0;
     else
-        return scores/games;
+        return (float)scores/(float)games;
 }
 
 int StatList::getShots()
@@ -234,7 +236,7 @@ float StatList::getShotsPerGame()
     if(games == 0)
         return 0;
     else
-        return shots/games;
+        return (float)shots/(float)games;
 }
 
 int StatList::getThreeShots()
@@ -247,7 +249,7 @@ float StatList::getThreeShotsPerGame()
     if(games == 0)
         return 0;
     else
-        return threeShots/games;
+        return (float)threeShots/(float)games;
 }
 
 float StatList::getShootingPercentage()
@@ -296,7 +298,7 @@ float StatList::getReboundsPerGame()
     if(games == 0)
         return 0;
     else
-        return getRebounds()/games;
+        return (float)getRebounds()/(float)games;
 }
 
 int StatList::getOffensiveRebounds()
@@ -309,7 +311,7 @@ float StatList::getOffensiveReboundsPerGame()
     if(games == 0)
         return 0;
     else
-        return offensiveRebounds/games;
+        return (float)offensiveRebounds/(float)games;
 }
 
 int StatList::getDefensiveRebounds()
@@ -323,7 +325,7 @@ float StatList::getDefensiveReboundsPerGame()
     if(games == 0)
         return 0;
     else
-        return defensiveRebounds/games;
+        return (float)defensiveRebounds/(float)games;
 }
 
 void StatList::printReboundingStats()
@@ -350,7 +352,7 @@ float StatList::getAssistsPerGame()
     if(games == 0)
         return 0;
     else
-        return assists/games;
+        return (float)assists/(float)games;
 }
 
 void StatList::printAssistStats()
@@ -406,7 +408,7 @@ float StatList::getBlocksPerGame()
     if(games == 0)
         return 0;
     else
-        return blocks/games;
+        return (float)blocks/(float)games;
 }
 
 int StatList::getSteals()
@@ -419,5 +421,5 @@ float StatList::getStealsPerGame()
     if(games == 0)
         return 0;
     else
-        return steals/games;
+        return (float)steals/(float)games;
 }

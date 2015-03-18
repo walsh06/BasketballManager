@@ -15,7 +15,7 @@ MatchScreen::MatchScreen(QWidget *parent) :
     blackPen = new QPen(Qt::black);
 
     positions = {"Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Centre"};
-    strategies = {"Balanced", "Inside Playmaker","Outside Playmaker", "Balanced Playmaker",
+    strategies = {"Balanced", "Outside Playmaker", "Inside Playmaker", "Balanced Playmaker",
                   "Three Point","Inside Outside","Scoring Forward",  "Post Scorer", "Rebounder"};
 
     swapIndexOne = 1;

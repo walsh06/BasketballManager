@@ -1,12 +1,10 @@
-#ifndef PLAYERSTRATEGYPOSTSCORER_H
-#define PLAYERSTRATEGYPOSTSCORER_H
-
+#ifndef PLAYERSTRATEGYDYNAMIC_H
+#define PLAYERSTRATEGYDYNAMIC_H
 #include "PlayerStrategy.h"
-
-class PlayerStrategyPostScorer : public PlayerStrategy
+class PlayerStrategyDynamic: public PlayerStrategy
 {
 public:
-    PlayerStrategyPostScorer();
+    PlayerStrategyDynamic();
     Heatmap* getMap();
     int getValue(int x, int y);
     ProbabilityVector* getWithBallVector();
@@ -16,4 +14,4 @@ private:
     ProbabilityVector withBallVector;
 };
 
-#endif // PLAYERSTRATEGYPOSTSCORER_H
+#endif // PLAYERSTRATEGYDYNAMIC_H

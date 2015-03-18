@@ -59,6 +59,11 @@ int ProbabilityVector::getProbability(int position)
     return probabilities[position];
 }
 
+void ProbabilityVector::setProbability(int position, int value)
+{
+    probabilities[position] = value;
+}
+
 ProbabilityVector ProbabilityVector::operator+(const ProbabilityVector &vector)
 {
     ProbabilityVector addedVector(this->size);

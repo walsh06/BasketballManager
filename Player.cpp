@@ -98,6 +98,7 @@ Player::Player(map<string, string> playerMap)
         setPlayingPosition(new PositionCentre());
     }
 
+    learning = false;
 }
 
 Player::~Player()
@@ -251,15 +252,19 @@ void Player::setPlayingPosition(PlayerPosition *pos)
 
 void Player::setStrategy(PlayerStrategy *strategy)
 {
-
     delete this->strategy;
     this->strategy = strategy;
     updateMap();
 }
 
-ProbabilityVector Player::getStrategyVector()
+ProbabilityVector* Player::getStrategyVector()
 {
     return strategy->getWithBallVector();
+}
+
+PlayerStrategy* Player::getStrategy()
+{
+    return strategy;
 }
 
 void Player::updateMap()
@@ -271,7 +276,7 @@ void Player::updateMap()
     }
     if(strategy != NULL)
     {
-        finalMap = finalMap + strategy->getMap();
+        finalMap = finalMap + *strategy->getMap();
         //cout << getName() << endl;
         //finalMap.printHeatMap();
     }
@@ -533,6 +538,16 @@ void Player::resetGameStats()
 string Player::getName()
 {
     return name;
+}
+
+bool Player::isLearning()
+{
+    return learning;
+}
+
+void Player::setLearning(bool learn)
+{
+    learning = learn;
 }
 
 //======================================

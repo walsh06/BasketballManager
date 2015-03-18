@@ -6,9 +6,9 @@ class PlayerStrategyShootThree : public PlayerStrategy
 {
 public:
     PlayerStrategyShootThree();
-    Heatmap getMap();
+    Heatmap* getMap();
     int getValue(int x, int y);
-    ProbabilityVector getWithBallVector();
+    ProbabilityVector* getWithBallVector();
 
 private:
     Heatmap map;

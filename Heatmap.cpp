@@ -44,6 +44,11 @@ void Heatmap::incrementValue(int x, int y)
     heatMap[y][x]++;
 }
 
+void Heatmap::decrementValue(int x, int y)
+{
+    heatMap[y][x]--;
+}
+
 Heatmap Heatmap::operator+(const Heatmap& map)
 {
     Heatmap newMap;

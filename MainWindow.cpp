@@ -1,12 +1,17 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
+#include "PlayerStrategyDynamic.h"
+#include "PlayerStrategyLearning.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(1);
+    ui->learnWidget->setVisible(false);
+
     readTeams();
     connect(ui->MatchWidget, SIGNAL(startGame()), this, SLOT(startGame()));
 
@@ -74,8 +79,7 @@ void MainWindow::on_runSims_clicked()
         string filename = string("../stats/Game") + string(to_string(i)) + string(".csv");
         match.writeMatchStats(filename);
     }
-    ui->simProgress->setValue(simCount);
-
+    ui->simProgress->setValue(simCount);  
 }
 
 void MainWindow::on_league_clicked()
@@ -151,4 +155,44 @@ void MainWindow::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneScor
 void MainWindow::on_leaveGame_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_closeLearning_clicked()
+{
+    ui->learnWidget->setVisible(false);
+}
+
+void MainWindow::on_runLearning_clicked()
+{
+    int numMatches = 50;
+    int simCount = ui->iterationCount->value();
+    int playerPos = ui->playerPos->value();
+    ui->simProgress->setMaximum(simCount * numMatches);
+    PlayerStrategy *dynamicStrategy = new PlayerStrategyDynamic();
+    PlayerStrategyLearning learning(ui->thrpa->value(), ui->twopa->value(), ui->ast->value(), ui->orb->value(), ui->games->value());
+
+    for(int i = 0; i < simCount; i++)
+    {
+        Team teamOne(ui->teamOneBox->currentText().toStdString());
+        teamOne.getPlayer(playerPos)->setLearning(true);
+        teamOne.getPlayer(playerPos)->setStrategy(dynamicStrategy);
+        Team teamTwo(ui->teamTwoBox->currentText().toStdString());
+
+        for(int j=0; j<numMatches; j++)
+        {
+            ui->simProgress->setValue((i*numMatches) + j);
+
+            Match match(&teamOne, &teamTwo);
+            match.setSimSpeed(0);
+            match.sim();
+        }
+        learning.updateStrategy(teamOne.getRoster()[playerPos - 1]);
+        learning.writeToFile(teamOne.getRoster()[playerPos - 1]);
+    }
+    ui->simProgress->setValue(simCount * numMatches);
+}
+
+void MainWindow::on_openLearning_clicked()
+{
+    ui->learnWidget->setVisible(true);
 }

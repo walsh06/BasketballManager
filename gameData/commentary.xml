@@ -92,7 +92,6 @@ Analysis Types:
 	<comment type="1" threshold="8" comment="<player> is having a good game scoring <points> points"/>
 	<comment type="2" threshold="5" comment="<player> has <rebounds> rebounds today"/>
 	<comment type="2" threshold="8" comment="A really good day for <player> with <rebounds> rebounds"/>
-
 </analysis>
 
 <adjectives>

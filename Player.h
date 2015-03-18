@@ -31,7 +31,8 @@ public:
     void setRandomPos();
     void setPlayingPosition(PlayerPosition *pos);
     void setStrategy(PlayerStrategy *strategy);
-    ProbabilityVector getStrategyVector();
+    ProbabilityVector *getStrategyVector();
+    PlayerStrategy *getStrategy();
     void updateMap();
 
     int getPlayingPosition();
@@ -74,6 +75,9 @@ public:
     void updateOverAllStats();
     void resetGameStats();
 
+    bool isLearning();
+    void setLearning(bool learn);
+
     Heatmap moveTrackerMap;
 private:
 
@@ -98,7 +102,7 @@ private:
     int energy, stamina;
 
     bool dribbleDrive;
-
+    bool learning;
     void calcHeatMap();
 
     const int heatFactor = 3;
