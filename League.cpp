@@ -12,6 +12,14 @@ League::League()
     teamCount = teams.size();
 }
 
+League::~League()
+{
+    for(auto &element: teams)
+    {
+        delete element.second;
+    }
+}
+
 void League::simRound()
 {
     vector<tuple<int, int>> matches = schedule[currentRound];
