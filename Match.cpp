@@ -604,8 +604,7 @@ void Match::withBall(Player* p, int shotClock)
         //=================
         ProbabilityVector finalProbabilities = probs + *p->getStrategyVector();
         if(printing) finalProbabilities.printVector();
-        probs.printVector();
-        finalProbabilities.printVector();
+
         int action  = finalProbabilities.getRandomResult();
 
         if(action < 9)
