@@ -33,6 +33,9 @@ private slots:
     void on_runSims_clicked();
     void on_league_clicked();
     void on_leaveGame_clicked();
+    void on_closeLearning_clicked();
+    void on_runLearning_clicked();
+    void on_openLearning_clicked();
 };
 
 #endif // MAINWINDOW_H

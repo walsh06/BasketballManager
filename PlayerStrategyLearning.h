@@ -10,7 +10,7 @@
 class PlayerStrategyLearning
 {
 public:
-    PlayerStrategyLearning();
+    PlayerStrategyLearning(int threepa, int twopa, int ast, int orb, int games);
 
     void writeToFile(Player *p);
     void updateStrategy(Player *p);

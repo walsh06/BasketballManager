@@ -1,6 +1,7 @@
 #include "PlayerStrategyLearning.h"
 
-PlayerStrategyLearning::PlayerStrategyLearning():statLine({1452, 61, 1032, 501, 490, 207, 43, 226, 471, 269, 243, 2021,15, 132})
+PlayerStrategyLearning::PlayerStrategyLearning(int threepa, int twopa, int ast, int orb, int games)
+    :statLine({0, games, threepa + twopa, 0, threepa, 0, orb, 0, ast, 0, 0, 0, 0, 0})
 {
     diffWeight = 0.5;
 }

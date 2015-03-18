@@ -539,6 +539,16 @@ string Player::getName()
     return name;
 }
 
+bool Player::isLearning()
+{
+    return learning;
+}
+
+void Player::setLearning(bool learn)
+{
+    learning = learn;
+}
+
 //======================================
 // Drive Basket
 //======================================

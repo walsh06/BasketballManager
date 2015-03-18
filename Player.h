@@ -75,6 +75,9 @@ public:
     void updateOverAllStats();
     void resetGameStats();
 
+    bool isLearning();
+    void setLearning(bool learn);
+
     Heatmap moveTrackerMap;
 private:
 
@@ -99,7 +102,7 @@ private:
     int energy, stamina;
 
     bool dribbleDrive;
-
+    bool learning;
     void calcHeatMap();
 
     const int heatFactor = 3;

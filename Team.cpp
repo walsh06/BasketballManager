@@ -45,10 +45,13 @@ void Team::readTeam(string teamName)
 void Team::setupTeamTactics()
 {
     manager.evaluatePlayers(players);
-    for(int i = 2; i <= players.size(); i++)
+    for(int i = 1; i <= players.size(); i++)
     {
-        int strategy = manager.getBestStrategyForPlayer(i);
-        changeStrategy(i, strategy);
+        if(!players[i]->isLearning())
+        {
+            int strategy = manager.getBestStrategyForPlayer(i);
+            changeStrategy(i, strategy);
+        }
     }
 
     int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
