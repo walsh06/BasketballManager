@@ -98,6 +98,7 @@ Player::Player(map<string, string> playerMap)
         setPlayingPosition(new PositionCentre());
     }
 
+    learning = false;
 }
 
 Player::~Player()
