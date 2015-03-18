@@ -14,9 +14,9 @@ PlayerStrategyShootThree::PlayerStrategyShootThree():withBallVector({0,0,0,0,0,0
     map.setMap(strategyMap);
 }
 
-Heatmap PlayerStrategyShootThree::getMap()
+Heatmap* PlayerStrategyShootThree::getMap()
 {
-    return map;
+    return &map;
 }
 
 int PlayerStrategyShootThree::getValue(int x, int y)
@@ -24,7 +24,7 @@ int PlayerStrategyShootThree::getValue(int x, int y)
     return map.getValue(x, y);
 }
 
-ProbabilityVector PlayerStrategyShootThree::getWithBallVector()
+ProbabilityVector* PlayerStrategyShootThree::getWithBallVector()
 {
-    return withBallVector;
+    return &withBallVector;
 }

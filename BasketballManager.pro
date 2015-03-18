@@ -47,7 +47,12 @@ SOURCES += main.cpp \
     unittests/StatListTest.cpp \
     unittests/TeamTest.cpp \
     Commentary.cpp \
-    Analyser.cpp
+    Analyser.cpp \
+    MatchDefenceMan.cpp \
+    MatchDefenceZone.cpp \
+    MatchDefence.cpp \
+    PlayerStrategyDynamic.cpp \
+    PlayerStrategyLearning.cpp
 
 HEADERS += \
     Player.h \
@@ -87,7 +92,13 @@ HEADERS += \
     PlayerGraphic.h \
     LeagueScreen.h \
     Commentary.h \
-    Analyser.h
+    Analyser.h \
+    MatchDefenceMan.h \
+    MatchDefenceZone.h \
+    MatchDefence.h \
+    PlayerStrategyDynamic.h \
+    PlayerStrategyLearning.h
+
 
 FORMS += \
     MainWindow.ui \

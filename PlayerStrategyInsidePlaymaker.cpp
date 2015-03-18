@@ -14,9 +14,9 @@ PlayerStrategyInsidePlaymaker::PlayerStrategyInsidePlaymaker():withBallVector({0
     map.setMap(strategyMap);
 }
 
-Heatmap PlayerStrategyInsidePlaymaker::getMap()
+Heatmap* PlayerStrategyInsidePlaymaker::getMap()
 {
-    return map;
+    return &map;
 }
 
 int PlayerStrategyInsidePlaymaker::getValue(int x, int y)
@@ -24,7 +24,7 @@ int PlayerStrategyInsidePlaymaker::getValue(int x, int y)
     return map.getValue(x, y);
 }
 
-ProbabilityVector PlayerStrategyInsidePlaymaker::getWithBallVector()
+ProbabilityVector* PlayerStrategyInsidePlaymaker::getWithBallVector()
 {
-    return withBallVector;
+    return &withBallVector;
 }
