@@ -9,6 +9,7 @@
 #include "MatchScreen.h"
 #include "MatchReceiver.h"
 #include "Fouls.h"
+#include "Analyser.h"
 #include "MatchDefenceMan.h"
 #include "MatchDefenceZone.h"
 
@@ -39,6 +40,7 @@ public:
     Team *getTeamOne();
     Team *getTeamTwo();
 private:
+    Analyser analyser;
     MatchScreen *screen;
     Fouls fouls;
     MatchDefenceMan manDefence;
@@ -56,6 +58,7 @@ private:
     int score[2];
     const bool printing = false;
     bool endOfPossession;
+
 
     void guiUpdateCommentary(int type, Player *playerOne, Player *playerTwo = NULL);
     void guiUpdateStat();

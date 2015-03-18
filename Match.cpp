@@ -123,6 +123,7 @@ void Match::sim()
         teamTwo->getPlayer(i)->updateOverAllStats();
     }
 
+    analyser.writeToFile();
 }
 
 int* Match::getScore()
@@ -241,6 +242,11 @@ int Match::getScoreDifference(int team)
 
 void Match::writeMatchStats(string filename)
 {
+    std::ofstream outfile;
+
+    outfile.open("../stats/results.txt", std::ios_base::app);
+    outfile << teamOne->getName() << "," << score[0] << "," << teamTwo->getName() << "," << score[1] << endl;
+
     vector<Player *> rosterOne = teamOne->getRoster(), rosterTwo = teamTwo->getRoster();
     for(int i = 0; i < 10; i++)
     {
@@ -563,7 +569,7 @@ void Match::withBall(Player* p, int shotClock)
         }
         else
         {
-            posValue = p->getPosValue() + (shotClockFactor - shotClock) - pressure + ((4 - p->getRange()) * 2) + playerStatModifier;
+            posValue = p->getPosValue() + ((shotClockFactor - shotClock)*2) - pressure + ((4 - p->getRange()) * 2) + playerStatModifier;
         }
 
         probs.addProbability(posValue);
@@ -627,6 +633,8 @@ void Match::withBall(Player* p, int shotClock)
         {
             pass(p, otherPlayers[action - 10]);
         }
+
+        analyser.addDecision(p->getNumber(), action);
     }
 }
 
@@ -907,7 +915,7 @@ void Match::shoot(Player* p, int pressure)
 {
     shotMap.incrementValue(p->getPosX(), p->getPosY());
     int range = p->getRange();
-
+    analyser.addShot(shotClock);
     if(range == 1)
     {
         shootTwo(p, pressure, p->getUnderBasketShot(), 30, 5, "Under Basket" );
