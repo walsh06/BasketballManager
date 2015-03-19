@@ -103,8 +103,8 @@ Player::Player(map<string, string> playerMap)
 
 Player::~Player()
 {
-    //delete strategy;
-    //delete position;
+    delete strategy;
+    delete position;
 }
 
 //=================================

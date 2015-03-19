@@ -32,6 +32,8 @@ class Team
 {
 public:
     Team(string teamName, bool userControlled = false);
+    ~Team();
+
     vector<Player *> getRoster();
     string getName();
     Player* getPlayer(int position);

@@ -12,6 +12,7 @@ class League
 {
 public:
     League();
+    ~League();
 
     void createSchedule(const char* file);
     int findWinner();

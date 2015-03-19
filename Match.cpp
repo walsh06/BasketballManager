@@ -758,15 +758,15 @@ void Match::driveBasket(Player *p)
 
             for(int i = 1; i < 6; i++)
             {
-                Player opp = *teams[getOtherTeam(p->getTeam())]->getPlayer(i);
-                if(opp.getPosX() == posX && opp.getPosY() == posY)
+                Player *opp = teams[getOtherTeam(p->getTeam())]->getPlayer(i);
+                if(opp->getPosX() == posX && opp->getPosY() == posY)
                 {
                     int screenRand = rand() % 50;
 
                     if(screenRand < 25)
                     {
                         //cout << "Drive Stopped: " << p->getNumber() << " " << opp.getNumber() << endl;
-                        printValue("Drive Stopped", p->getNumber(), opp.getNumber());
+                        printValue("Drive Stopped", p->getNumber(), opp->getNumber());
                         move = 4;
                         p->setDribbleDrive(false);
                         break;
@@ -774,7 +774,7 @@ void Match::driveBasket(Player *p)
                     else if(screenRand < 29)
                     {
                         //cout << "Blocking foul: " << opp.getNumber() << " on " << p->getNumber() << endl;
-                        printValue("Blocking foul", opp.getNumber(), p->getNumber());
+                        printValue("Blocking foul", opp->getNumber(), p->getNumber());
 
                         fouls.addFoul(p->getTeam(), time);
                         if(fouls.getTeamBonus(p->getTeam()) == true)
@@ -1188,17 +1188,16 @@ void Match::rebound()
     do{
         for(auto &player: orderOfPlay)
         {
-            Player p = *player;
-            int range = p.getRange();
+            int range = player->getRange();
             if(range <= reboundRange)
             {
-                if(p.getTeam() == ball.getTeam())
+                if(player->getTeam() == ball.getTeam())
                 {
-                    probs.addProbability(p.getOffRebound());
+                    probs.addProbability(player->getOffRebound());
                 }
                 else
                 {
-                    probs.addProbability(p.getDefRebound() * 3);
+                    probs.addProbability(player->getDefRebound() * 3);
                 }
                 players.push_back(player);
                 count++;

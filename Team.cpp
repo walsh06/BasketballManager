@@ -9,6 +9,14 @@ Team::Team(string teamName, bool userControlled)
     setupTeamTactics();
 }
 
+Team::~Team()
+{
+    for(auto &element: roster)
+    {
+        delete element;
+    }
+}
+
 void Team::readTeam(string teamName)
 {
     int posCount = 1;

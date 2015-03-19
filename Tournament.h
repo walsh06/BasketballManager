@@ -14,12 +14,13 @@ class Tournament
 {
 public:
     Tournament(int numTeams);
+    ~Tournament();
     void simRound();
     void addTeam(Team *team);
 
 
 private:
-    map<int, Team*> teams;
+    vector<Team*> teams;
     vector<Team *> winners;
     vector<TournamentMatchup *> matches;
     int round, winsToProgress;
