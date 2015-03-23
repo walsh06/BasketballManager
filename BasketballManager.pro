@@ -52,7 +52,8 @@ SOURCES += main.cpp \
     MatchDefenceZone.cpp \
     MatchDefence.cpp \
     PlayerStrategyDynamic.cpp \
-    PlayerStrategyLearning.cpp
+    PlayerStrategyLearning.cpp \
+    AutomationTesting.cpp
 
 HEADERS += \
     Player.h \
@@ -97,7 +98,8 @@ HEADERS += \
     MatchDefenceZone.h \
     MatchDefence.h \
     PlayerStrategyDynamic.h \
-    PlayerStrategyLearning.h
+    PlayerStrategyLearning.h \
+    AutomationTesting.h
 
 
 FORMS += \
