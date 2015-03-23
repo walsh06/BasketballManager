@@ -3,6 +3,11 @@
 #include <map>
 #include <vector>
 #include <fstream>
+
+/*  This class is used for analysis of simulations. It can be dropped
+ *  into the match class to take note of events such as shot times.
+ *  It can the data to a csv file for later use.
+ */
 class Analyser
 {
 public:
