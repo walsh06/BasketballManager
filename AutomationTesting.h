@@ -13,9 +13,10 @@ class AutomationTesting
 public:
     AutomationTesting();
     void runTests();
-    void readTeams();
 private:
     vector<string> teamNames;
+    void readTeams();
+
 };
 
 #endif // AUTOMATIONTESTING_H

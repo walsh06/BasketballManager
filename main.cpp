@@ -1,5 +1,4 @@
 #include <iostream>
-#include "Match.h"
 #include "MainWindow.h"
 #include <time.h>
 #include <stdlib.h>
@@ -7,8 +6,8 @@
 #include <QApplication>
 #include <QCoreApplication>
 #include <QFile>
-#include "Tournament.h"
-#include "League.h"
+
+#include "AutomationTesting.h"
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -42,7 +41,8 @@ int main(int argc, char *argv[])
         }
         else
         {
-
+            AutomationTesting autoSim;
+            autoSim.runTests();
         }
     }
 }

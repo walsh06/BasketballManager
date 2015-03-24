@@ -7,13 +7,13 @@ AutomationTesting::AutomationTesting()
 
 void AutomationTesting::runTests()
 {
-    for(int i = 0; i < 100; i++)
+    for(int i = 0; i < 10; i++)
     {
         Team teamOne(teamNames[rand() % teamNames.size()]);
         Team teamTwo(teamNames[rand() % teamNames.size()]);
 
         Match m(&teamOne, &teamTwo);
-
+        m.setSimSpeed(0);
         m.sim();
         string filename = string("../stats/Sim") + string(to_string(i)) + string(".csv");
         m.writeMatchStats(filename);
