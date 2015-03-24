@@ -14,7 +14,6 @@ int main(int argc, char *argv[])
 {
     srand(time(NULL));
 
-    cout << argc << endl;
     if(argc == 1)
     {
     QApplication a(argc, argv);
@@ -42,7 +41,7 @@ int main(int argc, char *argv[])
         else
         {
             AutomationTesting autoSim;
-            autoSim.runTests();
+            autoSim.runTests(*argv[1] - '0');
         }
     }
 }

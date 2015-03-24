@@ -5,9 +5,9 @@ AutomationTesting::AutomationTesting()
     readTeams();
 }
 
-void AutomationTesting::runTests()
+void AutomationTesting::runTests(int numSims)
 {
-    for(int i = 0; i < 1; i++)
+    for(int i = 0; i < numSims; i++)
     {
         Team teamOne(teamNames[rand() % teamNames.size()]);
         Team teamTwo(teamNames[rand() % teamNames.size()]);

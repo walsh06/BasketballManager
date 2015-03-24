@@ -12,7 +12,7 @@ class AutomationTesting
 {
 public:
     AutomationTesting();
-    void runTests();
+    void runTests(int numSims);
 private:
     vector<string> teamNames;
     void readTeams();
