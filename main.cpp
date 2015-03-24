@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
 {
     srand(time(NULL));
 
-
-    if(argc == 0)
+    cout << argc << endl;
+    if(argc == 1)
     {
     QApplication a(argc, argv);
     QFile styleFile("../BasketballManager/darkorange.stylesheet.txt");
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     else
     {
 
-        if(*argv[0] == '1')
+        if(*argv[1] == '1')
         {
             testing::InitGoogleTest(&argc, argv);
             return RUN_ALL_TESTS();

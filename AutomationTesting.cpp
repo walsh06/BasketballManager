@@ -7,7 +7,7 @@ AutomationTesting::AutomationTesting()
 
 void AutomationTesting::runTests()
 {
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 1; i++)
     {
         Team teamOne(teamNames[rand() % teamNames.size()]);
         Team teamTwo(teamNames[rand() % teamNames.size()]);
