@@ -10,16 +10,16 @@
 	</team>-->
 
 	<team name="Bobcats">
-		<player name="Walker" number="15" pos="PG" shootThree="16" shootMid="16" shootClose="14" dunk="10" layup="18" pass="17" offRebound="5" defRebound="10" defence="16" steal="17" block="6" speed="18" freeThrow="16" stamina="14"/>	
+		<player name="Walker" number="1" pos="PG" shootThree="16" shootMid="16" shootClose="14" dunk="10" layup="18" pass="17" offRebound="5" defRebound="10" defence="16" steal="17" block="6" speed="18" freeThrow="16" stamina="14"/>	
 		<player name="Leonard" number="2" pos="SG" shootThree="16" shootMid="17" shootClose="15" dunk="18" layup="16" pass="14" offRebound="8" defRebound="14" defence="15" steal="17" block="7" speed="16" freeThrow="17" stamina="16"/>	
-		<player name="Wiggins" number="45" pos="SF" shootThree="17" shootMid="17" shootClose="18" dunk="18" layup="20" pass="15" offRebound="12" defRebound="17" defence="15" steal="10" block="13" speed="18" freeThrow="18" stamina="17"/>	
-		<player name="Okafor" number="33" pos="PF" shootThree="7" shootMid="16" shootClose="18" dunk="17" layup="16" pass="12" offRebound="16" defRebound="18" defence="18" steal="14" block="15" speed="12" freeThrow="17" stamina="15"/>	
-		<player name="Embiid" number="34" pos="C" shootThree="1" shootMid="4" shootClose="13" dunk="15" layup="16" pass="10" offRebound="17" defRebound="19" defence="17" steal="6" block="17" speed="10" freeThrow="17" stamina="14"/>	
-		<player name="Jones" number="1" pos="PG" shootThree="14" shootMid="15" shootClose="13" dunk="10" layup="16" pass="17" offRebound="5" defRebound="6" defence="14" steal="12" block="4" speed="15" freeThrow="18" stamina="13"/>	
-		<player name="Jefferson" number="11" pos="SG" shootThree="6" shootMid="11" shootClose="14" dunk="18" layup="18" pass="10" offRebound="5" defRebound="13" defence="17" steal="15" block="17" speed="17" freeThrow="16" stamina="12"/>	
+		<player name="Wiggins" number="3" pos="SF" shootThree="17" shootMid="17" shootClose="18" dunk="18" layup="20" pass="15" offRebound="12" defRebound="17" defence="15" steal="10" block="13" speed="18" freeThrow="18" stamina="17"/>	
+		<player name="Okafor" number="4" pos="PF" shootThree="7" shootMid="16" shootClose="18" dunk="17" layup="16" pass="12" offRebound="16" defRebound="18" defence="18" steal="14" block="15" speed="12" freeThrow="17" stamina="15"/>	
+		<player name="Embiid" number="5" pos="C" shootThree="1" shootMid="4" shootClose="13" dunk="15" layup="16" pass="10" offRebound="17" defRebound="19" defence="17" steal="6" block="17" speed="10" freeThrow="17" stamina="14"/>	
+		<player name="Jones" number="6" pos="PG" shootThree="14" shootMid="15" shootClose="13" dunk="10" layup="16" pass="17" offRebound="5" defRebound="6" defence="14" steal="12" block="4" speed="15" freeThrow="18" stamina="13"/>	
+		<player name="Jefferson" number="7" pos="SG" shootThree="6" shootMid="11" shootClose="14" dunk="18" layup="18" pass="10" offRebound="5" defRebound="13" defence="17" steal="15" block="17" speed="17" freeThrow="16" stamina="12"/>	
 		<player name="Black" number="8" pos="SF" shootThree="15" shootMid="16" shootClose="17" dunk="13" layup="18" pass="10" offRebound="8" defRebound="14" defence="17" steal="5" block="11" speed="13" freeThrow="16" stamina="13"/>	
 		<player name="Simmons" number="9" pos="PF" shootThree="6" shootMid="14" shootClose="17" dunk="18" layup="18" pass="10" offRebound="10" defRebound="15" defence="14" steal="6" block="12" speed="13" freeThrow="16" stamina="12"/>
-		<player name="McGary" number="20" pos="C" shootThree="4" shootMid="12" shootClose="16" dunk="16" layup="16" pass="6" offRebound="13" defRebound="16" defence="15" steal="6" block="14" speed="10" freeThrow="16" stamina="11"/>
+		<player name="McGary" number="10" pos="C" shootThree="4" shootMid="12" shootClose="16" dunk="16" layup="16" pass="6" offRebound="13" defRebound="16" defence="15" steal="6" block="14" speed="10" freeThrow="16" stamina="11"/>
 	</team> 
 
 	<team name="Pacers">
