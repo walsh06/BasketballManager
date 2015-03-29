@@ -1,5 +1,6 @@
 #include "Heatmap.h"
 
+/** Heatmap Constructor */
 Heatmap::Heatmap()
 {
     for(int i = 0; i < 8; i++)
@@ -10,24 +11,20 @@ Heatmap::Heatmap()
         }
     }
 }
-Heatmap::~Heatmap()
-{
-    /*
-    for (int i = 0; i < 8; i++)
-      delete [] heatMap[i];
-    delete[] heatMap;*/
-}
 
+/** Return the value at position x, y */
 int Heatmap::getValue(int x, int y)
 {
     return heatMap[y][x];
 }
 
+/** Set the value at position x, y */
 void Heatmap::setValue(int value, int x, int y)
 {
     heatMap[y][x] = value;
 }
 
+/** Set the entire map to the map passed in */
 void Heatmap::setMap(int newMap[8][7])
 {
     for(int i = 0; i < 8; i++)
@@ -39,16 +36,19 @@ void Heatmap::setMap(int newMap[8][7])
     }
 }
 
+/** Increment the value at position x, y */
 void Heatmap::incrementValue(int x, int y)
 {
     heatMap[y][x]++;
 }
 
+/** Decrement the value at position x, y */
 void Heatmap::decrementValue(int x, int y)
 {
     heatMap[y][x]--;
 }
 
+/** Overloaded operator to add heatmaps */
 Heatmap Heatmap::operator+(const Heatmap& map)
 {
     Heatmap newMap;
@@ -62,6 +62,7 @@ Heatmap Heatmap::operator+(const Heatmap& map)
     return newMap;
 }
 
+/** Print the heatmap values to console */
 void Heatmap::printHeatMap()
 {
     for(int i = 0; i < 8; i++)
