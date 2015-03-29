@@ -123,7 +123,7 @@ void Match::sim()
         teamTwo->getPlayer(i)->updateOverAllStats();
     }
 
-    analyser.writeToFile();
+    //analyser.writeToFile();
 }
 
 int* Match::getScore()
@@ -634,7 +634,7 @@ void Match::withBall(Player* p, int shotClock)
             pass(p, otherPlayers[action - 10]);
         }
 
-        analyser.addDecision(p->getNumber(), action);
+        //analyser.addDecision(p->getNumber(), action);
     }
 }
 
@@ -915,7 +915,7 @@ void Match::shoot(Player* p, int pressure)
 {
     shotMap.incrementValue(p->getPosX(), p->getPosY());
     int range = p->getRange();
-    analyser.addShot(shotClock);
+    //analyser.addShot(shotClock);
     if(range == 1)
     {
         shootTwo(p, pressure, p->getUnderBasketShot(), 30, 5, "Under Basket" );
