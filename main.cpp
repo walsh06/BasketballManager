@@ -32,8 +32,8 @@ int main(int argc, char *argv[])
     }
     else
     {
-
-        if(*argv[1] == '1')
+        string s = argv[1];
+        if(s == "1")
         {
             testing::InitGoogleTest(&argc, argv);
             return RUN_ALL_TESTS();
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         else
         {
             AutomationTesting autoSim;
-            autoSim.runTests(*argv[1] - '0');
+            autoSim.runTests(stoi(s));
         }
     }
 }
