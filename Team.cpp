@@ -52,9 +52,7 @@ void Team::readTeam(string teamName)
 
 void Team::setupTeamTactics()
 {
-    if(!userControlled)
-    {
-        manager.evaluatePlayers(players);
+    manager.evaluatePlayers(players);
         for(int i = 1; i <= players.size(); i++)
         {
             if(!players[i]->isLearning())
@@ -63,7 +61,6 @@ void Team::setupTeamTactics()
                 changeStrategy(i, strategy);
             }
         }
-    }
 
     int pg = PG, sg = SG, sf = SF, pf = PF, c = C;
 

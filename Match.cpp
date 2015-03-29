@@ -526,7 +526,7 @@ void Match::withBall(Player* p, int shotClock)
     }
     else
     {
-        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 8;
+        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 12;
         int playerStatModifier = calculateStatModifier(p);
         //move 0-8, shoot 9, pass 10-13, drive 14
         ProbabilityVector probs(15);
