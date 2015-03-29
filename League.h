@@ -6,7 +6,13 @@
 #include <map>
 #include <tuple>
 #include <vector>
+#include <sstream>
 
+
+/* The League class contains the functionality to run a league
+ * Rounds can be simulated and the statistics are updated. Provides
+ * methods to get leaderboard information, standings, fixtures and results
+ */
 using namespace std;
 class League
 {

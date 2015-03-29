@@ -6,6 +6,8 @@
 #include "MatchScreen.h"
 #include "MatchReceiver.h"
 
+/* Qt class for displaying the league game mode
+ */
 namespace Ui {
 class LeagueScreen;
 }

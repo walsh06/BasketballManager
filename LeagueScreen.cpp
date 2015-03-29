@@ -1,6 +1,7 @@
 #include "LeagueScreen.h"
 #include "ui_LeagueScreen.h"
 
+/** LeagueScreen constructor */
 LeagueScreen::LeagueScreen(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LeagueScreen)
@@ -11,6 +12,7 @@ LeagueScreen::LeagueScreen(QWidget *parent) :
     updateDisplays();
 }
 
+/** LeagueScreen destructor */
 LeagueScreen::~LeagueScreen()
 {
     delete ui;
@@ -20,6 +22,7 @@ LeagueScreen::~LeagueScreen()
 // Displays
 //======================================
 
+/** Update all displays */
 void LeagueScreen::updateDisplays()
 {
     displayResults();
@@ -28,6 +31,7 @@ void LeagueScreen::updateDisplays()
     displayLeaderboard();
 }
 
+/** Update the widget to display the upcoming fixtures */
 void LeagueScreen::displayNextMatches()
 {
     vector<tuple<int, int>> matchList = league.getNextRound();
@@ -41,6 +45,7 @@ void LeagueScreen::displayNextMatches()
     ui->nextMatches->setText(QString::fromStdString(matchString));
 }
 
+/** Update the widget to display the results */
 void LeagueScreen::displayResults()
 {
     vector<string> results = league.getResults();
@@ -53,6 +58,7 @@ void LeagueScreen::displayResults()
     ui->previousMatches->setText(QString::fromStdString(resultString));
 }
 
+/** Update the widget for the league standings */
 void LeagueScreen::displayTable()
 {
     vector<LeagueTeam *> teams = league.getStandings();
@@ -64,6 +70,7 @@ void LeagueScreen::displayTable()
     }
 }
 
+/** Update the widget to display statistics leaders */
 void LeagueScreen::displayLeaderboard()
 {
     ui->ppgLeader->setText(QString::fromStdString(league.getScoringLeader(1)));
@@ -78,33 +85,50 @@ void LeagueScreen::displayLeaderboard()
 }
 
 //=======================================
+
+/** Slot for sim button */
 void LeagueScreen::on_simRound_clicked()
 {
-    //on_playLeagueMatch_clicked();
+    //sim the round of matches
     league.simRound();
+
+    //update all displays after the round has been played
     updateDisplays();
 }
 
+/** Slot for the user to play their next match */
 void LeagueScreen::on_playLeagueMatch_clicked()
 {
+    //get the users match
     tuple<int, int> matchup = league.getUserMatch();
 
+    //get the two teams
     LeagueTeam *teamOne = league.getTeam(get<0>(matchup));
     LeagueTeam *teamTwo = league.getTeam(get<1>(matchup));
+
+    //set up the match
     receiver = new MatchReceiver(teamOne->getTeam(), ui->MatchWidget);
     match = new Match(teamOne->getTeam(), teamTwo->getTeam(), ui->MatchWidget);
     match->setSimSpeed(1000);
     connect(ui->MatchWidget, SIGNAL(startGame()), this, SLOT(startGame()));
+
+    //change to the match screen
     ui->stackedWidget->setCurrentIndex(1);
 }
 
+/** Start the match */
 void LeagueScreen::startGame()
 {
+    //sim the game
     match->sim();
+
+    //get the final scores
     int scoreHome = match->getScore()[0], scoreAway = match->getScore()[1];
     tuple<int, int> matchup = league.getUserMatch();
     LeagueTeam *teamOne = league.getTeam(get<0>(matchup));
     LeagueTeam *teamTwo = league.getTeam(get<1>(matchup));
+
+    //updates wins,losses and games played
     if(scoreHome > scoreAway)
     {
         teamOne->addWin();
@@ -115,9 +139,11 @@ void LeagueScreen::startGame()
         teamTwo->addWin();
         teamOne->addGame();
     }
+
     league.addResult(teamOne->getTeam()->getName() + " " + to_string(scoreHome) + "-" +
                      to_string(scoreAway) +" "+teamTwo->getTeam()->getName());
 
+    //change to post game screen
     loadStatsPostGame(teamOne->getTeam(), teamTwo->getTeam(), scoreHome, scoreAway);
     ui->stackedWidget->setCurrentIndex(2);
 }
@@ -126,6 +152,7 @@ void LeagueScreen::startGame()
 //Post Game
 //==================================
 
+/** load the stats of the game to the post game screen*/
 void LeagueScreen::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneScore, int teamTwoScore)
 {
     ui->ScoreOne->display(teamOneScore);
@@ -191,6 +218,7 @@ void LeagueScreen::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneSc
     }
 }
 
+/** Slot to leave the match and return to the main menu */
 void LeagueScreen::on_leaveGame_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
