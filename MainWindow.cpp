@@ -30,6 +30,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::run()
+{
+
+}
+
 /** Slot to start a game */
 void MainWindow::startGame()
 {
