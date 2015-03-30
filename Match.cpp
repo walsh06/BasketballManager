@@ -1104,7 +1104,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
     int ft = p->getFreethrow();
     do
     {
-        int ftProb = rand() % 20;
+        int ftProb = rand() % 21;
         if(ftProb <= ft)
         {
             //cout << "Free Throw: " << p->getNumber() << endl;
