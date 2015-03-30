@@ -103,6 +103,7 @@ void MainWindow::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneScor
     {
         Player *player = teamOne->getPlayer(i);
         StatList *playerStats = player->getStatList();
+        ui->playersOne->clear();
         ui->playersOne->addItem(QString::number(player->getNumber()) + QString::fromStdString(" " + player->getName()));
 
         QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
@@ -129,6 +130,7 @@ void MainWindow::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneScor
     {
         Player *player = teamTwo->getPlayer(i);
         StatList *playerStats = player->getStatList();
+        ui->playersTwo->clear();
         ui->playersTwo->addItem(QString::number(player->getNumber()) + QString::fromStdString(" " + player->getName()));
 
         QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
