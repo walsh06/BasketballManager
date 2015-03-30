@@ -4,6 +4,9 @@
 
 #include <iostream>
 
+/* Manager class for AI management of a team
+ * Evaluates players, picks starting teams and makes sub during a match
+ */
 using namespace std;
 class Manager
 {
