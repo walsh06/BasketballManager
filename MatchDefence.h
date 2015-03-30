@@ -3,6 +3,10 @@
 #include "Player.h"
 #include "Team.h"
 #include "Ball.h"
+
+/* Class holding common defence functions.
+ * Other defence classes sub class it.
+ */
 class MatchDefence
 {
 public:

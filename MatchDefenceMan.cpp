@@ -1,10 +1,11 @@
 #include "MatchDefenceMan.h"
 
+/** MatchDefenceMan Constructor */
 MatchDefenceMan::MatchDefenceMan(Team *teamOne, Team *teamTwo):MatchDefence(teamOne, teamTwo)
 {
 }
 
-
+/** Get the position for a defender to move to in man defence*/
 int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
 {
     ProbabilityVector probs(3);
@@ -12,16 +13,18 @@ int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
     int matchup, oppTeam = getOtherTeam(p->getTeam()), posValue, sag = 0, tight = 0, result;
     int defence = p->getDefence(), stealRating = p->getSteal(), defenceSetting;
     //get the defensive matchup of the player
-
     matchup = team->getMatchup(p);
     Player *opposition = teams[oppTeam]->getPlayer(matchup);
+    //if the defenders man has the ball
     if(ball->getPlayerPosition() == matchup)
     {
         posValue = opposition->getPosValue();
         defenceSetting = team->getDefenceSetting(matchup);
 
+        //check the defensive setting for the player
         if(defenceSetting == Team::TIGHT)
         {
+            //calculate the value for tight and sag choices
             tight = 20 + posValue + defence;
             sag = (20 - defence)/2;
         }
@@ -34,11 +37,13 @@ int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
         probs.addProbability(tight);
         probs.addProbability(sag);
 
+        //calculate the weight of an attempted steal
         if(opposition->getPosX() == p->getPosX() && opposition->getPosY() == p->getPosY())
         {
             probs.addProbability(stealRating);
         }
 
+        //get a random result and return the values
         result = probs.getRandomResult();
         if(result == 0)
         {
@@ -57,6 +62,7 @@ int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
     }
     else
     {
+        //else the matchup doesnt have the ball
         posValue = opposition->getPosValue();
         defenceSetting = team->getDefenceSetting(matchup);
 
@@ -76,6 +82,7 @@ int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
 
         vector<Player *> otherPlayers = teams[oppTeam]->getOtherPlayers(matchup);
 
+        //calculate the weight of a player defending the basket
         for(auto &player: otherPlayers)
         {
             if(player->isDribbleDrive())
@@ -85,6 +92,7 @@ int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
             }
         }
 
+        //get a random result and return the values
         result = probs.getRandomResult();
         if(result == 0)
         {
@@ -101,6 +109,7 @@ int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
     }
 }
 
+/** Get the position to move towards the basket */
 int* MatchDefenceMan::moveTowardBasket(Player* p)
 {
     int posX = p->getPosX(), basketX = 6, basketY;
