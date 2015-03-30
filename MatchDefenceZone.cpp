@@ -4,7 +4,7 @@ MatchDefenceZone::MatchDefenceZone(Team *teamOne, Team *teamTwo):MatchDefence(te
 {
 }
 
-int* MatchDefenceZone::moveZoneDefence(Player *p, Ball *ball)
+std::vector<int> MatchDefenceZone::moveZoneDefence(Player *p, Ball *ball)
 {
     Team *team = teams[p->getTeam() - 1], *otherTeam = teams[getOtherTeam(p->getTeam())];
     int pos = team->getPlayerPosition(p->getNumber()), ballPos = ball->getPlayerPosition();
@@ -48,8 +48,7 @@ int* MatchDefenceZone::moveZoneDefence(Player *p, Ball *ball)
                     destX = 3; destY = 4;
                 }
             }
-            int result[2] = {destX, destY};
-            return result;
+            return {destX, destY};
         }
     }
     else if(pos == 2 || pos == 3)
@@ -117,8 +116,7 @@ int* MatchDefenceZone::moveZoneDefence(Player *p, Ball *ball)
         {
             destY = flipY(destY);
         }
-        int result[2] = {destX, destY};
-        return result;
+        return {destX, destY};
     }
     else if(pos == 4 || pos == 5)
     {
@@ -183,8 +181,7 @@ int* MatchDefenceZone::moveZoneDefence(Player *p, Ball *ball)
         {
             destY = flipY(destY);
         }
-        int result[2] = { destX, destY};
-        return result;
+        return { destX, destY};
     }
 }
 
