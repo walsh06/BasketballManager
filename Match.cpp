@@ -1266,7 +1266,7 @@ void Match::moveDefence(Player *p)
     }
     else if(team->getDefence() == Team::ZONE)
     {
-        int *result = zoneDefence.moveZoneDefence(p, &ball);
+        vector<int> result = zoneDefence.moveZoneDefence(p, &ball);
         if(result[0] == -1)
         {
             steal(p);
@@ -1278,7 +1278,7 @@ void Match::moveDefence(Player *p)
     }
     else
     {
-        int *result = manDefence.moveManDefence(p, &ball);
+        vector<int> result = manDefence.moveManDefence(p, &ball);
         if(result[0] == -1)
         {
             steal(p);

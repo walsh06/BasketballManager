@@ -8,10 +8,9 @@ class MatchDefenceZone:public MatchDefence
 {
 public:
     MatchDefenceZone(Team *teamOne, Team *teamTwo);
-    int* moveZoneDefence(Player *p, Ball *ball);
+    std::vector<int> moveZoneDefence(Player *p, Ball *ball);
 private:
-        int* moveTowardBasket(Player* p);
-        int flipY(int y);
+    int flipY(int y);
 };
 
 #endif // MATCHDEFENCEZONE_H

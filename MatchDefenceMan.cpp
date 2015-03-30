@@ -5,7 +5,7 @@ MatchDefenceMan::MatchDefenceMan(Team *teamOne, Team *teamTwo):MatchDefence(team
 }
 
 
-int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
+std::vector<int> MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
 {
     ProbabilityVector probs(3);
     Team *team = teams[p->getTeam() - 1];
@@ -50,8 +50,7 @@ int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
         }
         else
         {
-            int result[2] = {-1,-1};
-            return result;
+            return {-1,-1};
         }
 
     }
@@ -101,7 +100,7 @@ int* MatchDefenceMan::moveManDefence(Player *p, Ball *ball)
     }
 }
 
-int* MatchDefenceMan::moveTowardBasket(Player* p)
+std::vector<int> MatchDefenceMan::moveTowardBasket(Player* p)
 {
     int posX = p->getPosX(), basketX = 6, basketY;
 
@@ -113,6 +112,5 @@ int* MatchDefenceMan::moveTowardBasket(Player* p)
     {
         basketY = 4;
     }
-    int result[2] = {basketX, basketY};
-    return result;
+    return {basketX, basketY};
 }
