@@ -8,7 +8,7 @@ MatchDefence::MatchDefence(Team *teamOne, Team *teamTwo)
 }
 
 /** Get the position a defender wants to move for loose defence */
-int* MatchDefence::moveDefenceLoose(Player *p, Player *opposition)
+std::vector<int> MatchDefence::moveDefenceLoose(Player *p, Player *opposition)
 {
     //get player and opposition positions
     int oppPosX = opposition->getPosX(), oppPosY = opposition->getPosY();
@@ -37,17 +37,31 @@ int* MatchDefence::moveDefenceLoose(Player *p, Player *opposition)
         }
         oppPosX++;
     }
-    //return the result
-    int result[2] = {oppPosX, oppPosY};
-    return result;
+
+    return {oppPosX, oppPosY};
 }
 
 /** Get the position a defender wants to move for tight defence */
-int* MatchDefence::moveDefenceTight(Player* p, Player *opposition)
+std::vector<int> MatchDefence::moveDefenceTight(Player* p, Player *opposition)
 {
     int oppPosX = opposition->getPosX(), oppPosY = opposition->getPosY();
-    int result[2] = {oppPosX, oppPosY};
-    return result;
+    return {oppPosX, oppPosY};
+}
+
+/** Get the position to move towards the basket */
+std::vector<int> MatchDefence::moveTowardBasket(Player* p)
+{
+    int posX = p->getPosX(), basketX = 6, basketY;
+
+    if(posX < 4)
+    {
+        basketY = 3;
+    }
+    else
+    {
+        basketY = 4;
+    }
+    return {basketX, basketY};
 }
 
 /** Function to return the other team value */

@@ -12,9 +12,9 @@ class MatchDefence
 public:
     MatchDefence(Team *teamOne, Team *teamTwo);
 protected:
-    int* moveDefenceLoose(Player *p, Player *opposition);
-    int* moveDefenceTight(Player* p, Player *opposition);
-    int* moveTowardBasket(Player* p);
+    std::vector<int> moveDefenceLoose(Player *p, Player *opposition);
+    std::vector<int> moveDefenceTight(Player* p, Player *opposition);
+    std::vector<int> moveTowardBasket(Player* p);
     int getOtherTeam(int team);
 
     Team *teams[2];

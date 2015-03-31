@@ -123,7 +123,7 @@ void Match::sim()
         teamTwo->getPlayer(i)->updateOverAllStats();
     }
 
-    analyser.writeToFile();
+    //analyser.writeToFile();
 }
 
 int* Match::getScore()
@@ -526,7 +526,7 @@ void Match::withBall(Player* p, int shotClock)
     }
     else
     {
-        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 8;
+        int x = p->getPosX(), y = p->getPosY(), shotClockFactor = 12;
         int playerStatModifier = calculateStatModifier(p);
         //move 0-8, shoot 9, pass 10-13, drive 14
         ProbabilityVector probs(15);
@@ -634,7 +634,7 @@ void Match::withBall(Player* p, int shotClock)
             pass(p, otherPlayers[action - 10]);
         }
 
-        analyser.addDecision(p->getNumber(), action);
+        //analyser.addDecision(p->getNumber(), action);
     }
 }
 
@@ -915,7 +915,7 @@ void Match::shoot(Player* p, int pressure)
 {
     shotMap.incrementValue(p->getPosX(), p->getPosY());
     int range = p->getRange();
-    analyser.addShot(shotClock);
+    //analyser.addShot(shotClock);
     if(range == 1)
     {
         shootTwo(p, pressure, p->getUnderBasketShot(), 30, 5, "Under Basket" );
@@ -1104,7 +1104,7 @@ void Match::shootFreeThrow(Player *p, int numOfFreeThrows)
     int ft = p->getFreethrow();
     do
     {
-        int ftProb = rand() % 20;
+        int ftProb = rand() % 21;
         if(ftProb <= ft)
         {
             //cout << "Free Throw: " << p->getNumber() << endl;
@@ -1266,7 +1266,7 @@ void Match::moveDefence(Player *p)
     }
     else if(team->getDefence() == Team::ZONE)
     {
-        int *result = zoneDefence.moveZoneDefence(p, &ball);
+        vector<int> result = zoneDefence.moveZoneDefence(p, &ball);
         if(result[0] == -1)
         {
             steal(p);
@@ -1278,7 +1278,7 @@ void Match::moveDefence(Player *p)
     }
     else
     {
-        int *result = manDefence.moveManDefence(p, &ball);
+        vector<int> result = manDefence.moveManDefence(p, &ball);
         if(result[0] == -1)
         {
             steal(p);

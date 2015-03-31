@@ -16,19 +16,19 @@ PlayerStrategyDynamic::PlayerStrategyDynamic():withBallVector({0,0,0,0,0,0,0,0,0
 }
 
 /** Return the heatmap */
-Heatmap* PlayerStrategyBalanced::getMap()
+Heatmap* PlayerStrategyDynamic::getMap()
 {
     return &map;
 }
 
 /** Return the influence value at position x, y */
-int PlayerStrategyBalanced::getValue(int x, int y)
+int PlayerStrategyDynamic::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
 
 /** Return the probability vector of the strategy */
-ProbabilityVector* PlayerStrategyBalanced::getWithBallVector()
+ProbabilityVector* PlayerStrategyDynamic::getWithBallVector()
 {
     return &withBallVector;
 }

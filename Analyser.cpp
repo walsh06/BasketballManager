@@ -9,7 +9,7 @@ Analyser::Analyser()
         shotMap[i] = 0;
     }
 
-    for(int i = 1; i < 11; i++)
+    for(int i = 1; i < 12; i++)
     {
         decisionMap[i] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     }

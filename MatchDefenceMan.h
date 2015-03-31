@@ -11,10 +11,10 @@ class MatchDefenceMan:public MatchDefence
 {
 public:
     MatchDefenceMan(Team *teamOne, Team *teamTwo);
-    int* moveManDefence(Player *p, Ball *ball);
+    std::vector<int> moveManDefence(Player *p, Ball *ball);
 
 private:
-    int* moveTowardBasket(Player* p);
+    std::vector<int> moveTowardBasket(Player* p);
 };
 
 #endif // MATCHDEFENCEMAN_H

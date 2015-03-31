@@ -16,19 +16,19 @@ PlayerStrategyBalancedPlaymaker::PlayerStrategyBalancedPlaymaker():withBallVecto
 }
 
 /** Return the heatmap */
-Heatmap* PlayerStrategyBalanced::getMap()
+Heatmap* PlayerStrategyBalancedPlaymaker::getMap()
 {
     return &map;
 }
 
 /** Return the influence value at position x, y */
-int PlayerStrategyBalanced::getValue(int x, int y)
+int PlayerStrategyBalancedPlaymaker::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
 
 /** Return the probability vector of the strategy */
-ProbabilityVector* PlayerStrategyBalanced::getWithBallVector()
+ProbabilityVector* PlayerStrategyBalancedPlaymaker::getWithBallVector()
 {
     return &withBallVector;
 }

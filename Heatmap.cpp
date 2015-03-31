@@ -12,6 +12,12 @@ Heatmap::Heatmap()
     }
 }
 
+/** Heatmap Destructor */
+Heatmap::~Heatmap()
+{
+
+}
+
 /** Return the value at position x, y */
 int Heatmap::getValue(int x, int y)
 {
