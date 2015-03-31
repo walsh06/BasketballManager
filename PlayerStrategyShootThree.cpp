@@ -1,5 +1,6 @@
 #include "PlayerStrategyShootThree.h"
 
+/** PlayerStrategyShootThree Constructor */
 PlayerStrategyShootThree::PlayerStrategyShootThree():withBallVector({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
 {
     int strategyMap[8][7] = {{1,7,7,7,7,7,7},
@@ -14,17 +15,20 @@ PlayerStrategyShootThree::PlayerStrategyShootThree():withBallVector({0,0,0,0,0,0
     map.setMap(strategyMap);
 }
 
-Heatmap* PlayerStrategyShootThree::getMap()
+/** Return the heatmap */
+Heatmap* PlayerStrategyBalanced::getMap()
 {
     return &map;
 }
 
-int PlayerStrategyShootThree::getValue(int x, int y)
+/** Return the influence value at position x, y */
+int PlayerStrategyBalanced::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
 
-ProbabilityVector* PlayerStrategyShootThree::getWithBallVector()
+/** Return the probability vector of the strategy */
+ProbabilityVector* PlayerStrategyBalanced::getWithBallVector()
 {
     return &withBallVector;
 }

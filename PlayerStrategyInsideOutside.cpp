@@ -1,5 +1,6 @@
 #include "PlayerStrategyInsideOutside.h"
 
+/** PlayerStrategyInsideOutside Constructor */
 PlayerStrategyInsideOutside::PlayerStrategyInsideOutside():withBallVector({0,0,0,0,0,0,0,0,0,3,0,0,0,0,5})
 {
     int strategyMap[8][7] = {{1,8,8,8,8,8,8},
@@ -14,17 +15,20 @@ PlayerStrategyInsideOutside::PlayerStrategyInsideOutside():withBallVector({0,0,0
     map.setMap(strategyMap);
 }
 
-Heatmap* PlayerStrategyInsideOutside::getMap()
+/** Return the heatmap */
+Heatmap* PlayerStrategyBalanced::getMap()
 {
     return &map;
 }
 
-int PlayerStrategyInsideOutside::getValue(int x, int y)
+/** Return the influence value at position x, y */
+int PlayerStrategyBalanced::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
 
-ProbabilityVector* PlayerStrategyInsideOutside::getWithBallVector()
+/** Return the probability vector of the strategy */
+ProbabilityVector* PlayerStrategyBalanced::getWithBallVector()
 {
     return &withBallVector;
 }

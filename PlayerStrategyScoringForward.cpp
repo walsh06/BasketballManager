@@ -1,5 +1,6 @@
 #include "PlayerStrategyScoringForward.h"
 
+/** PlayerStrategyScoringForward Constructor */
 PlayerStrategyScoringForward::PlayerStrategyScoringForward():withBallVector({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
 {
     int strategyMap[8][7] = {{1,3,3,3,3,3,3},
@@ -14,17 +15,20 @@ PlayerStrategyScoringForward::PlayerStrategyScoringForward():withBallVector({0,0
     map.setMap(strategyMap);
 }
 
-Heatmap* PlayerStrategyScoringForward::getMap()
+/** Return the heatmap */
+Heatmap* PlayerStrategyBalanced::getMap()
 {
     return &map;
 }
 
-int PlayerStrategyScoringForward::getValue(int x, int y)
+/** Return the influence value at position x, y */
+int PlayerStrategyBalanced::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
 
-ProbabilityVector* PlayerStrategyScoringForward::getWithBallVector()
+/** Return the probability vector of the strategy */
+ProbabilityVector* PlayerStrategyBalanced::getWithBallVector()
 {
     return &withBallVector;
 }

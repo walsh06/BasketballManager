@@ -3,6 +3,9 @@
 
 #include <Heatmap.h>
 #include "ProbabilityVector.h"
+
+/* Interface implemented by player strategies
+ */
 class PlayerStrategy
 {
 public:

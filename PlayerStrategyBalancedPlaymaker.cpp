@@ -1,5 +1,6 @@
 #include "PlayerStrategyBalancedPlaymaker.h"
 
+/** PlayerStrategyBalancedPlaymaker Constructor */
 PlayerStrategyBalancedPlaymaker::PlayerStrategyBalancedPlaymaker():withBallVector({0,0,0,0,0,0,0,0,0,0,8,8,8,8,0})
 {
     int strategyMap[8][7] = {{1,6,6,6,6,6,6},
@@ -14,17 +15,20 @@ PlayerStrategyBalancedPlaymaker::PlayerStrategyBalancedPlaymaker():withBallVecto
     map.setMap(strategyMap);
 }
 
-Heatmap* PlayerStrategyBalancedPlaymaker::getMap()
+/** Return the heatmap */
+Heatmap* PlayerStrategyBalanced::getMap()
 {
     return &map;
 }
 
-int PlayerStrategyBalancedPlaymaker::getValue(int x, int y)
+/** Return the influence value at position x, y */
+int PlayerStrategyBalanced::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
 
-ProbabilityVector* PlayerStrategyBalancedPlaymaker::getWithBallVector()
+/** Return the probability vector of the strategy */
+ProbabilityVector* PlayerStrategyBalanced::getWithBallVector()
 {
     return &withBallVector;
 }

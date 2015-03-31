@@ -1,6 +1,8 @@
 #ifndef PLAYERSTRATEGYSCORINGFORWARD_H
 #define PLAYERSTRATEGYSCORINGFORWARD_H
 #include "PlayerStrategy.h"
+
+/* Strategy for a forward who shoots more two point shots */
 class PlayerStrategyScoringForward : public PlayerStrategy
 {
 public:

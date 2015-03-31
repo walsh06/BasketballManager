@@ -1,6 +1,8 @@
 #ifndef PLAYERPOSITION_H
 #define PLAYERPOSITION_H
 
+/* Interface implemented by player position classes
+ */
 #include "Heatmap.h"
 class PlayerPosition
 {

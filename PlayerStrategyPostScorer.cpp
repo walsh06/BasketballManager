@@ -1,5 +1,6 @@
 #include "PlayerStrategyPostScorer.h"
 
+/** PlayerStrategyPostScorer Constructor */
 PlayerStrategyPostScorer::PlayerStrategyPostScorer():withBallVector({0,0,0,0,0,0,0,0,0,0,0,0,0,0,0})
 {
     int strategyMap[8][7] = {{1,1,1,1,1,1,1},
@@ -14,17 +15,20 @@ PlayerStrategyPostScorer::PlayerStrategyPostScorer():withBallVector({0,0,0,0,0,0
     map.setMap(strategyMap);
 }
 
-Heatmap* PlayerStrategyPostScorer::getMap()
+/** Return the heatmap */
+Heatmap* PlayerStrategyBalanced::getMap()
 {
     return &map;
 }
 
-int PlayerStrategyPostScorer::getValue(int x, int y)
+/** Return the influence value at position x, y */
+int PlayerStrategyBalanced::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
 
-ProbabilityVector* PlayerStrategyPostScorer::getWithBallVector()
+/** Return the probability vector of the strategy */
+ProbabilityVector* PlayerStrategyBalanced::getWithBallVector()
 {
     return &withBallVector;
 }

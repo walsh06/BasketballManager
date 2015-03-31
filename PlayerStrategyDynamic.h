@@ -1,6 +1,8 @@
 #ifndef PLAYERSTRATEGYDYNAMIC_H
 #define PLAYERSTRATEGYDYNAMIC_H
 #include "PlayerStrategy.h"
+
+/* Dynamic strategy used in learning */
 class PlayerStrategyDynamic: public PlayerStrategy
 {
 public:

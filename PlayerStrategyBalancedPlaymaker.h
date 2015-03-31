@@ -3,6 +3,7 @@
 
 #include "PlayerStrategy.h"
 
+/* Strategy for a playmaker who takes even outside/inside shots */
 class PlayerStrategyBalancedPlaymaker : public PlayerStrategy
 {
 public:
