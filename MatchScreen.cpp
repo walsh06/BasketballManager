@@ -1,14 +1,17 @@
 #include "MatchScreen.h"
 #include "ui_MatchScreen.h"
 
+/** MatchScreen Constructor */
 MatchScreen::MatchScreen(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MatchScreen)
 {
     ui->setupUi(this);
+    //set the court scene
     scene = new QGraphicsScene(this);
     ui->court->setScene(scene);
 
+    //init brushes for colouring
     redBrush = new QBrush(Qt::red);
     blueBrush = new QBrush(Qt::blue);
     yellowBrush = new QBrush(Qt::yellow);
@@ -23,6 +26,7 @@ MatchScreen::MatchScreen(QWidget *parent) :
     initCourt();
 }
 
+/** MatchScreen Destructor */
 MatchScreen::~MatchScreen()
 {
     delete ui;
@@ -31,10 +35,14 @@ MatchScreen::~MatchScreen()
 // Tactics Screen
 //======================================
 
+/** Used to initialize aspects of the MatchScreen */
 void MatchScreen::initMatchScreen(Team *teamOne, Team *teamTwo)
 {
+    //set the score
     ui->scoreOne->display(0);
     ui->scoreTwo->display(0);
+
+    //set the user team
     if(teamTwo->isUserControlled())
     {
         this->ownTeam = teamTwo;
@@ -50,14 +58,17 @@ void MatchScreen::initMatchScreen(Team *teamOne, Team *teamTwo)
     initOppositionPlayers(oppositionTeam);
 }
 
+/** Initialize Player offensive tactics screen */
 void MatchScreen::initTacticScreen(Team *team)
 {
+    //store tactic combo boxes
     boxes[0][0] = ui->positionOne; boxes[0][1] = ui->strategyOne;
     boxes[1][0] = ui->positionTwo; boxes[1][1] = ui->strategyTwo;
     boxes[2][0] = ui->positionThree; boxes[2][1] = ui->strategyThree;
     boxes[3][0] = ui->positionFour; boxes[3][1] = ui->strategyFour;
     boxes[4][0] = ui->positionFive; boxes[4][1] = ui->strategyFive;
 
+    //load position combo boxes
     for(auto position: positions)
     {
         ui->positionOne->addItem(position);
@@ -72,6 +83,7 @@ void MatchScreen::initTacticScreen(Team *team)
     ui->positionFour->setCurrentIndex(3);
     ui->positionFive->setCurrentIndex(4);
 
+    //load strategy combo boxes
     for(auto strategy: strategies)
     {
         ui->strategyOne->addItem(strategy);
@@ -86,6 +98,7 @@ void MatchScreen::initTacticScreen(Team *team)
         ui->quickStrategyFive->addItem(strategy);
     }
 
+    //load the ratings headings
     ui->ratingsWidget->setItem(0, 0, new QTableWidgetItem("3pt"));
     ui->ratingsWidget->setItem(0, 1, new QTableWidgetItem("Mid"));
     ui->ratingsWidget->setItem(0, 2, new QTableWidgetItem("Cls"));
@@ -127,21 +140,30 @@ void MatchScreen::initTacticScreen(Team *team)
 
 }
 
+/** Initialize the players on the users team */
 void MatchScreen::initPlayers()
 {
+    //clear current values
     ui->playerWidget->clear();
     ui->quickPlayerList->clear();
     ui->swapPlayerOne->clear();
     ui->swapPlayerTwo->clear();
+
+    //loop through all players and add them to the screen
     for(int i = 1; i <= ownTeam->getRosterSize(); i++)
     {
+        //load the player name and number
         ui->playerWidget->addItem(QString::number(ownTeam->getPlayer(i)->getNumber()) + QString::fromStdString(" " +ownTeam->getPlayer(i)->getName()));
+        //load the players on the court to the quick tab
         if(i < 6)
         {
             ui->quickPlayerList->addItem(QString::number(ownTeam->getPlayer(i)->getNumber()) + QString::fromStdString(" " + ownTeam->getPlayer(i)->getName()));
         }
+        //load the subs combo boxes
         ui->swapPlayerOne->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
         ui->swapPlayerTwo->addItem(QString::fromStdString(ownTeam->getPlayer(i)->getName()));
+
+        //load the players ratings
         QTableWidgetItem *three = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getThreeShot()));
         QTableWidgetItem *mid = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getMediumShot()));
         QTableWidgetItem *close = new QTableWidgetItem(QString::number(ownTeam->getPlayer(i)->getCloseShot()));
@@ -174,9 +196,12 @@ void MatchScreen::initPlayers()
     loadStats();
 }
 
+/** Initialize the opposition team on the GUI */
 void MatchScreen::initOppositionPlayers(Team *team)
 {
+    //clear the names
     ui->oppPlayerNames->clear();
+    //load ratings headings
     ui->oppPlayerRatings->setItem(0, 0, new QTableWidgetItem("3pt"));
     ui->oppPlayerRatings->setItem(0, 1, new QTableWidgetItem("Mid"));
     ui->oppPlayerRatings->setItem(0, 2, new QTableWidgetItem("Cls"));
@@ -191,10 +216,13 @@ void MatchScreen::initOppositionPlayers(Team *team)
     ui->oppPlayerRatings->setItem(0, 11, new QTableWidgetItem("Spd"));
     ui->oppPlayerRatings->setItem(0, 12, new QTableWidgetItem("FT"));
 
+    //loop through the players on the court
     for(int i = 1; i < 6; i++)
     {
         Player *player = oppositionTeam->getPlayer(i);
+        //load the player name and number
         ui->oppPlayerNames->addItem(QString::number(player->getNumber()) + QString::fromStdString(" " + player->getName()));
+        //load the players ratings
         QTableWidgetItem *three = new QTableWidgetItem(QString::number(player->getThreeShot()));
         QTableWidgetItem *mid = new QTableWidgetItem(QString::number(player->getMediumShot()));
         QTableWidgetItem *close = new QTableWidgetItem(QString::number(player->getCloseShot()));
@@ -225,6 +253,7 @@ void MatchScreen::initOppositionPlayers(Team *team)
     }
 }
 
+/** Updates the players loaded in the GUI */
 void MatchScreen::updatePlayers()
 {
     initPlayers();
@@ -235,19 +264,24 @@ void MatchScreen::updatePlayers()
 // Statistics
 //========================================
 
+/** Loads the stats of each players in the GUI */
 void MatchScreen::loadStats()
 {
     vector<QString> header = {"MP", "Pts", "Ast", "Reb", "FGA", "FGM", "FGPC", "Blk", "Stl"};
+    //add the headings to the top of the table
     for(int i = 0; i < header.size(); i++)
     {
         ui->statsWidget->setItem(0, i, new QTableWidgetItem(header[i]));
         ui->oppStats->setItem(0, i, new QTableWidgetItem(header[i]));
     }
 
+    //loop through the players on the users team
     for(int i = 1; i <= ownTeam->getRosterSize(); i++)
     {
+        //get each players statlist
         StatList *playerStats = ownTeam->getPlayer(i)->getStatList();
 
+        //load the stats into the table
         QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
         QTableWidgetItem *points = new QTableWidgetItem(QString::number(playerStats->getPointsPerGame()));
         QTableWidgetItem *fga = new QTableWidgetItem(QString::number(playerStats->getShots()));
@@ -267,11 +301,13 @@ void MatchScreen::loadStats()
         ui->statsWidget->setItem(i, 7, block);
         ui->statsWidget->setItem(i, 8, steal);
     }
-
+    //loop through all opposition players on the court
     for(int i = 1; i < 6; i++)
     {
+        //get the players statlist
         StatList *playerStats = oppositionTeam->getPlayer(i)->getStatList();
 
+        //load the stats into the table
         QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
         QTableWidgetItem *points = new QTableWidgetItem(QString::number(playerStats->getPointsPerGame()));
         QTableWidgetItem *fga = new QTableWidgetItem(QString::number(playerStats->getShots()));
@@ -293,6 +329,7 @@ void MatchScreen::loadStats()
     }
 }
 
+/** Used to update the stats in the GUI */
 void MatchScreen::updateStat()
 {
     /*
@@ -318,26 +355,32 @@ void MatchScreen::updateStat()
 // Match Updates
 //====================================
 
+/** Updates the clock on the scoreboard */
 void MatchScreen::updateTime(int time, int shotClock)
 {
     ui->clockShot->display(shotClock);
-
+    //calculate minutes and seconds of the time
     ui->clockMinutes->display(time/60);
     ui->clockSeconds->display(time%60);
 }
 
+/** Update the score on the scoreboard */
 void MatchScreen::updateScore(int scoreOne, int scoreTwo)
 {
     ui->scoreOne->display(scoreOne);
     ui->scoreTwo->display(scoreTwo);
 }
 
+/** Initializes the graphical court in the GUI*/
 void MatchScreen::initCourt()
 {
+    //clear the scene
     scene->clear();
+    //load the court image
     QPixmap courtImage("../court.png");
     scene->addPixmap(courtImage.scaled(700,400, Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
 
+    //add the grid lines horizontally and vertically to represent the grid
     for(int i =0; i < 14; i++)
     {
         int x = i * 50;
@@ -349,14 +392,17 @@ void MatchScreen::initCourt()
         scene->addLine(0, x, 700, x, *blackPen);
     }
 
+    //Add player graphics for 10 players on the court
     for(int i = 0; i < 10; i++)
     {
         players.push_back(new PlayerGraphic());
         players[i]->setColour(redBrush);
+        //load the ellipse and text item from the graphic class
         scene->addItem(players[i]->getPlayer());
         scene->addItem(players[i]->getNumber());
     }
 
+    //load the ball into the scene
     ballCircle = new QGraphicsEllipseItem(0, 0, 10, 10);
     ballCircle->setBrush(*yellowBrush);
     ballCircle->setPen(*blackPen);
@@ -367,10 +413,13 @@ void MatchScreen::updateCourt(Ball *ball)
 {
     int x, y, drawX, drawY, posModX, posModY;
     int ballTeam = ball->getTeam(), ballPos = ball->getPlayerPosition();
+    //loop through team one
     for(int i = 0; i < 5; i++)
     {
+        //get the player graphic
         PlayerGraphic *playerGraphic= players[i];
         Player *player = ownTeam->getPlayer(i + 1);
+
         if(ball->getTeam() == 2)
         {
             x = 6 - player->getPosX();
@@ -381,14 +430,19 @@ void MatchScreen::updateCourt(Ball *ball)
         }
         y = player->getPosY();
 
+        //random position in each grid space is calculated so its not all uniform
         posModX = rand()%20;
         posModY = rand()%20;
+        //calculate the x and y position in the court
         drawX = (x * 50) + posModX;
         drawY = (y * 50) + posModY;
 
+        //set the number, position and colour
         playerGraphic->setNumber(player->getNumber());
         playerGraphic->setPos(drawX, drawY);
         playerGraphic->setColour(redBrush);
+
+        //draw the ball on the player if they are in possession
         if(ballTeam == player->getTeam() && ballPos == i + 1)
         {
             if(ballTeam == 1)
@@ -402,8 +456,10 @@ void MatchScreen::updateCourt(Ball *ball)
         }
     }
 
+    //loop through team two
     for(int i = 1; i < 6; i++)
     {
+        //get the player graphic
         PlayerGraphic *playerGraphic= players[i + 4];
         Player *player = oppositionTeam->getPlayer(i);
         if(ball->getTeam() == 2)
@@ -416,14 +472,19 @@ void MatchScreen::updateCourt(Ball *ball)
         }
         y = player->getPosY();
 
+        //random position in each grid space is calculated so its not all uniform
         posModX = rand()%20;
         posModY = rand()%20;
+        //calculate the x and y position in the court
         drawX = (x * 50) + posModX;
         drawY = (y * 50) + posModY;
 
+        //set the number, position and colour
         playerGraphic->setNumber(player->getNumber());
         playerGraphic->setPos(drawX, drawY);
         playerGraphic->setColour(blueBrush);
+
+        //draw the ball on the player if they are in possession
         if(ballTeam == player->getTeam() && ballPos == i)
         {
             if(ballTeam == 1)
@@ -438,14 +499,20 @@ void MatchScreen::updateCourt(Ball *ball)
     }
 }
 
+/** Update the commentary on the screen */
 void MatchScreen::updateCommentary(int eventType, Player *p, Player *p2)
 {
+    //call the commentary class and get a new commentary phrase
     ui->commentary->setText(QString::fromStdString(commentary.getCommentary(eventType, p, p2)));
 }
 
 //==========================
 // Tactic Slots
 //==========================
+/*  There a number of Qt slots below. These handle various events in the
+ * match screen such as subbing, changing position, strategies. Each element
+ * has its own slot.
+ */
 void MatchScreen::on_positionOne_currentIndexChanged(int index)
 {
     emit changePosition(1, index+ 1);

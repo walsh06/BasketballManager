@@ -11,6 +11,12 @@
 #include "PositionShootingGuard.h"
 #include "PositionSmallForward.h"
 #include <map>
+
+/* Player class used to represent a player in the simulation
+ * A player holds values associated with them such as ability ratings
+ * statistics and strategies. Provides methods to get the state of a player
+ * and alter it appropriately
+ */
 using namespace std;
 
 class Player
