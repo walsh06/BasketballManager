@@ -4,6 +4,11 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+
+/* Class for tracking stats of a player.
+ * Provides methods for getting stat totals and per games.
+ * Also can write the stats to a file
+ */
 class StatList
 {
 public:
