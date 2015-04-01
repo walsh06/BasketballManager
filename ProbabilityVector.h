@@ -5,6 +5,13 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
+
+/* Class used for calculating probabilities.
+ * Takes in weights for probabilities and can return
+ * a result. Also used for storing weights for later use
+ * Provides an overloaded operator for easy combination of
+ * vectors.
+ */
 using namespace std;
 class ProbabilityVector
 {
