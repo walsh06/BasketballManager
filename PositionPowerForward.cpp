@@ -1,5 +1,6 @@
 #include "PositionPowerForward.h"
 
+/** PositionCentre Constructor*/
 PositionPowerForward::PositionPowerForward()
 {
     int posMap[8][7] = {{1,2,2,2,2,2,2},
@@ -13,11 +14,13 @@ PositionPowerForward::PositionPowerForward()
     map.setMap(posMap);
 }
 
+/** Return the position Heatmap */
 Heatmap PositionPowerForward::getMap()
 {
     return map;
 }
 
+/** Return influence value of position x, y */
 int PositionPowerForward::getValue(int x, int y)
 {
     return map.getValue(x, y);

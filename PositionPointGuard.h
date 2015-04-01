@@ -3,6 +3,7 @@
 
 #include "PlayerPosition.h"
 
+/* Position Class for a Point Guard */
 class PositionPointGuard : public PlayerPosition
 {
 public:
