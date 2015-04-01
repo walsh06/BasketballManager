@@ -1,5 +1,6 @@
 #include "Tournament.h"
 
+/** Tournament Constructor */
 Tournament::Tournament(int numTeams)
 {
     round = 1;
@@ -13,6 +14,7 @@ Tournament::Tournament(int numTeams)
 
 }
 
+/** Tournament Destructor */
 Tournament::~Tournament()
 {
     for(auto &element:teams)
@@ -26,19 +28,23 @@ Tournament::~Tournament()
     }
 }
 
+/** Simulate a round of matches */
 void Tournament::simRound()
 {
     int numMatches = matches.size();
+    //loop through all matches
     for(int i = 0; i < numMatches; i++)
     {
         TournamentMatchup *match = matches[i];
+        //simulate match if the round isnt over
         if(match->isMatchOver() == false)
         {
-            /*
+            //get the two teams for the match and sim the match
             Team *teamOne = match->getTeamOne();
             Team *teamTwo = match->getTeamTwo();
-            Match m(teamOne, teamTwo);
 
+            Match m(teamOne, teamTwo);
+            m.setSimSpeed(0);
             m.sim();
             int* score = m.getScore();
 
@@ -51,6 +57,7 @@ void Tournament::simRound()
                 match->addWinTwo();
             }
 
+            //check if either team has enough wins to finish the round
             if(match->getWinsOne() == winsToProgress)
             {
                 match->setMatchOver(true);
@@ -61,7 +68,7 @@ void Tournament::simRound()
                 match->setMatchOver(true);
                 winners.push_back(teamTwo);
             }
-            */
+
         }
     }
     int i;
@@ -80,12 +87,14 @@ void Tournament::simRound()
     }
 }
 
+/** Add a team to the tournament */
 void Tournament::addTeam(Team *team)
 {
     teams.push_back(team);
     winners.push_back(team);
 }
 
+/** Create the next round of matches */
 void Tournament::createMatches(vector<Team *> teams)
 {
     for(auto &match: matches)
