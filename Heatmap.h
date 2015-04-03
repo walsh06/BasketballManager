@@ -3,6 +3,11 @@
 
 #include <iostream>
 
+/* Heatmap is used for storing influence values on the court
+ * The half court is represented in the 7x8 array. Each element
+ * stores the influence value at that position. This class is
+ * used by players, strategies and positions.
+ */
 class Heatmap
 {
 public:

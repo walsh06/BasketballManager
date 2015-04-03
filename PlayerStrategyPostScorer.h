@@ -3,6 +3,7 @@
 
 #include "PlayerStrategy.h"
 
+/*Strategy for a player who shoots a lot in the post and gets rebounds */
 class PlayerStrategyPostScorer : public PlayerStrategy
 {
 public:

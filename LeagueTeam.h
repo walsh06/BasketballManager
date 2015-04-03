@@ -3,6 +3,9 @@
 
 #include "Team.h"
 
+/* LeagueTeam is used to store a team in league mode
+ * Tracks the wins, losses and games of the team
+ */
 using namespace std;
 class LeagueTeam
 {

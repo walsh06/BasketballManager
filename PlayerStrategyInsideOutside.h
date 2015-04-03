@@ -2,6 +2,7 @@
 #define PLAYERSTRATEGYINSIDEOUTSIDE_H
 #include "PlayerStrategy.h"
 
+/* Strategy for a player who takes even inside and outside shots */
 class PlayerStrategyInsideOutside : public PlayerStrategy
 {
 public:

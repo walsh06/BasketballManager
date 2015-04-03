@@ -4,6 +4,9 @@
 #include "Team.h"
 #include "Ball.h"
 #include "MatchDefence.h"
+
+/* Defence class used for man to man defence
+ */
 class MatchDefenceMan:public MatchDefence
 {
 public:

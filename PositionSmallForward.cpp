@@ -1,5 +1,6 @@
 #include "PositionSmallForward.h"
 
+/** PositionCentre Constructor*/
 PositionSmallForward::PositionSmallForward()
 {
     int posMap[8][7] = {{1,2,2,2,2,2,2},
@@ -14,12 +15,15 @@ PositionSmallForward::PositionSmallForward()
     map.setMap(posMap);
 }
 
+/** Return the position Heatmap */
 Heatmap PositionSmallForward::getMap()
 {
     return map;
 }
 
+/** Return influence value of position x, y */
 int PositionSmallForward::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
+

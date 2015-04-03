@@ -1,31 +1,38 @@
 #include "PlayerStrategyLearning.h"
 
+/** PLayerStrategyLearning Constructor */
 PlayerStrategyLearning::PlayerStrategyLearning(int threepa, int twopa, int ast, int orb, int games)
     :statLine({0, games, threepa + twopa, 0, threepa, 0, orb, 0, ast, 0, 0, 0, 0, 0})
 {
+    //load the state line to be used for learning
+    //init how much a stat can be away from the real player
     diffWeight = 0.5;
 }
 
+/** Write the strategy and stats to a file */
 void PlayerStrategyLearning::writeToFile(Player *p)
 {
     ProbabilityVector *currentVector = p->getStrategyVector();
     Heatmap *currentMap = p->getStrategy()->getMap();
     std::ofstream outfile;
     StatList *currentStats = p->getOverAllStatList();
+    //write the stats to a file
     currentStats->writeToFile("../strategyLearning.csv", 1);
 
+    //open the file
     outfile.open("../strategyLearning.csv", std::ios_base::app);
     outfile << p->getName() << endl;
     outfile << currentStats->getThreeShotsPerGame() << "," << currentStats->getShotsPerGame() - currentStats->getThreeShotsPerGame()<<",";
     outfile << currentStats->getAssistsPerGame() << "," << currentStats->getReboundsPerGame() << endl;
 
+    //write the strategy influence values of the vector
     for(int i = 0; i < 15; i++)
     {
         outfile << currentVector->getProbability(i) << ",";
     }
     outfile << endl;
 
-
+    //write the strategy influence values of the heatmap
     for(int i =0; i < 8; i++)
     {
         for(int j = 0; j < 7; j++)
@@ -37,12 +44,15 @@ void PlayerStrategyLearning::writeToFile(Player *p)
     outfile.close();
 }
 
+/** Update the strategy of a player */
 void PlayerStrategyLearning::updateStrategy(Player *p)
 {
+    //get the stats and the current strategy  influences
     StatList *currentStats = p->getOverAllStatList();
     ProbabilityVector *currentVector = p->getStrategyVector();
     Heatmap *currentMap = p->getStrategy()->getMap();
 
+    //increase/decrease outside shots
     if(currentStats->getThreeShotsPerGame() < statLine.getThreeShotsPerGame() - diffWeight)
     {
         updateMapThree(currentMap, true);
@@ -52,6 +62,7 @@ void PlayerStrategyLearning::updateStrategy(Player *p)
         updateMapThree(currentMap, false);
     }
 
+    //increase/decrease inside shots
     if(currentStats->getShotsPerGame() - currentStats->getThreeShotsPerGame() <
       (statLine.getShotsPerGame() - statLine.getThreeShotsPerGame()) - diffWeight)
     {
@@ -65,6 +76,7 @@ void PlayerStrategyLearning::updateStrategy(Player *p)
         updateMapClose(currentMap, false);
     }
 
+    //increase/decrease rebounds
     if(currentStats->getOffensiveReboundsPerGame() < statLine.getOffensiveReboundsPerGame() - diffWeight)
     {
         updateMapClose(currentMap, true);
@@ -74,6 +86,7 @@ void PlayerStrategyLearning::updateStrategy(Player *p)
         updateMapClose(currentMap, false);
     }
 
+    //increase/decrease assists/passing in the strategy vector
     if(currentStats->getAssistsPerGame() < statLine.getAssistsPerGame() - diffWeight)
     {
         currentVector->setProbability(10, currentVector->getProbability(10) + 1);
@@ -89,6 +102,7 @@ void PlayerStrategyLearning::updateStrategy(Player *p)
         currentVector->setProbability(13, currentVector->getProbability(13) - 1);
     }
 
+    // increase/decrease shots per game in the strategy vector
     if(currentStats->getShotsPerGame() < statLine.getShotsPerGame() - diffWeight)
     {
         currentVector->setProbability(9, currentVector->getProbability(9) + 1);
@@ -99,8 +113,11 @@ void PlayerStrategyLearning::updateStrategy(Player *p)
     }
 }
 
+/** Update the strategy map to for three point attempts */
 void PlayerStrategyLearning::updateMapThree(Heatmap *map, bool increment)
 {
+    //loop through the positions of the heatmap representing three point shots
+    //increment or decrement the value at each position
     for(int i = 3; i < 7; i++)
     {
         if(increment)
@@ -138,8 +155,10 @@ void PlayerStrategyLearning::updateMapThree(Heatmap *map, bool increment)
     }
 }
 
+/** Update the strategy map close to the basket */
 void PlayerStrategyLearning::updateMapClose(Heatmap *map, bool increment)
 {
+    //loop through the positions of the heatmap near the basket
     for(int i = 2; i < 6; i++)
     {
         for(int j = 4; j < 7; j++)
@@ -156,8 +175,10 @@ void PlayerStrategyLearning::updateMapClose(Heatmap *map, bool increment)
     }
 }
 
+/** Update the heatmap in the mid range of the court */
 void PlayerStrategyLearning::updateMapMid(Heatmap *map, bool increment)
 {
+    //Loop through values in the mid range of the court and update
     for(int i = 3; i < 7; i++)
     {
         if(increment)

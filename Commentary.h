@@ -4,6 +4,11 @@
 #include <vector>
 #include "Player.h"
 #include "pugixml.hpp"
+
+/* Commentary takes care of commentary generation during a simulation. The MatchScreen will
+ * have an instance of commentary and make calls to get updated commentary phrases. These get
+ * displayed on screen then
+ */
 class Commentary
 {
 public:

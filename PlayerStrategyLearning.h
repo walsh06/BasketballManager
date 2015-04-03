@@ -7,6 +7,10 @@
 
 #include <iostream>
 #include <fstream>
+
+/* Class that handles strategy learning.
+ * Manages the comparison of stats and
+ * updating of the strategy in use */
 class PlayerStrategyLearning
 {
 public:

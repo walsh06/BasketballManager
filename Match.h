@@ -22,6 +22,11 @@
 #include <QTime>
 #include <QCoreApplication>
 #include <QEventLoop>
+
+/* Main class used for simulating matches. Holds
+ * methods used for decision making and simulating
+ * various aspects of a match.
+ */
 using namespace std;
 
 class Match

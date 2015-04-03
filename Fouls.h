@@ -1,6 +1,9 @@
 #ifndef FOULS_H
 #define FOULS_H
 
+/*Fouls is used to track fouls for the match. The rules can be changed in
+ * here for how the bonus free throws occur in a game.
+ */
 class Fouls
 {
 public:

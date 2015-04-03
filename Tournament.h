@@ -8,6 +8,9 @@
 #include <map>
 #include <vector>
 
+/* Simple tournament class for running a knockout
+ * tournament
+ */
 using namespace std;
 
 class Tournament

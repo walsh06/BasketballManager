@@ -2,6 +2,7 @@
 #define PLAYERSTRATEGYSHOOTTHREE_H
 #include "PlayerStrategy.h"
 
+/* Strategy for a player who takes a lot of three point shots */
 class PlayerStrategyShootThree : public PlayerStrategy
 {
 public:

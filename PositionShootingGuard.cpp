@@ -1,5 +1,6 @@
 #include "PositionShootingGuard.h"
 
+/** PositionCentre Constructor*/
 PositionShootingGuard::PositionShootingGuard()
 {
     int posMap[8][7] = {{2,3,3,3,3,3,3},
@@ -14,12 +15,15 @@ PositionShootingGuard::PositionShootingGuard()
     map.setMap(posMap);
 }
 
+/** Return the position Heatmap */
 Heatmap PositionShootingGuard::getMap()
 {
     return map;
 }
 
+/** Return influence value of position x, y */
 int PositionShootingGuard::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
+

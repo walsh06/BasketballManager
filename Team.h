@@ -26,6 +26,11 @@
 #include <map>
 #include <iostream>
 
+/* Class for storing a team used in the game.
+ * Holds a list of players on the team and provides
+ * methods for changing these Players. Also provides
+ * methods for team set up.
+ */
 using namespace std;
 
 class Team

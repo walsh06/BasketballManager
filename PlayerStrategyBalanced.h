@@ -3,6 +3,8 @@
 
 #include "PlayerStrategy.h"
 
+/* Balanced strategy without strong influences
+ */
 class PlayerStrategyBalanced : public PlayerStrategy
 {
 public:

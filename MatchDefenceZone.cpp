@@ -1,11 +1,14 @@
 #include "MatchDefenceZone.h"
 
+/** MatchDefenceZone Constructor */
 MatchDefenceZone::MatchDefenceZone(Team *teamOne, Team *teamTwo):MatchDefence(teamOne, teamTwo)
 {
 }
 
+/** Get the position for a defender to move to in zone defence*/
 std::vector<int> MatchDefenceZone::moveZoneDefence(Player *p, Ball *ball)
 {
+    //get starting values for calculation
     Team *team = teams[p->getTeam() - 1], *otherTeam = teams[getOtherTeam(p->getTeam())];
     int pos = team->getPlayerPosition(p->getNumber()), ballPos = ball->getPlayerPosition();
     Player *ballCarrier = otherTeam->getPlayer(ballPos);
@@ -14,6 +17,9 @@ std::vector<int> MatchDefenceZone::moveZoneDefence(Player *p, Ball *ball)
 
     int destX, destY;
 
+    //check which position the defender is
+    //different calculations for each position
+    //uses the ball position to decide the desired court position to move to
     if(pos == 1)
     {
         if((ballX == 2 || ballX == 3) && (ballY == 3 || ballY == 4))
@@ -185,6 +191,7 @@ std::vector<int> MatchDefenceZone::moveZoneDefence(Player *p, Ball *ball)
     }
 }
 
+/** Invert the y position value across the centre of the court */
 int MatchDefenceZone::flipY(int y)
 {
     int newY;

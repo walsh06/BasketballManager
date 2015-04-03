@@ -16,6 +16,10 @@
 #include <QGraphicsTextItem>
 #include <QTableWidgetItem>
 
+/* Qt class used to display matches as they simulate
+ * Contains methods for updating the screen
+ * Also contains logic for event handling
+ */
 namespace Ui {
 class MatchScreen;
 }

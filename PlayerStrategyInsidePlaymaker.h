@@ -3,6 +3,7 @@
 
 #include "PlayerStrategy.h"
 
+/* Strategy for a playmaker who takes shots closer to the basket */
 class PlayerStrategyInsidePlaymaker : public PlayerStrategy
 {
 public:

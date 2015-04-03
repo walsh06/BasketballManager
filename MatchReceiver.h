@@ -6,6 +6,8 @@
 #include "MatchScreen.h"
 #include "Match.h"
 
+/* Class used by the GUI to send information to the simulation
+*/
 class MatchReceiver : public QObject
 {
     Q_OBJECT

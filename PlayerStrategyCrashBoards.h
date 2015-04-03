@@ -1,6 +1,8 @@
 #ifndef PLAYERSTRATEGYCRASHBOARDS_H
 #define PLAYERSTRATEGYCRASHBOARDS_H
 #include "PlayerStrategy.h"
+
+/* Strategy for a player who gets a lot of rebounds */
 class PlayerStrategyCrashBoards :  public PlayerStrategy
 {
 public:

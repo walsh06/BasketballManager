@@ -4,6 +4,11 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsEllipseItem>
 #include <QPen>
+
+/* Class used to represent a graphical player in the match screen
+ * Stores elements such as graphical ellipse, number, name and
+ * position
+ */
 class PlayerGraphic
 {
 public:

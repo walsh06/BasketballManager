@@ -1,5 +1,6 @@
 #include "PlayerStrategyInsidePlaymaker.h"
 
+/** PlayerStrategyInsidePlaymaker Constructor */
 PlayerStrategyInsidePlaymaker::PlayerStrategyInsidePlaymaker():withBallVector({0,0,0,0,0,0,0,0,0,4,4,4,4,4,10})
 {
     int strategyMap[8][7] = {{1,1,1,1,1,1,1},
@@ -14,16 +15,19 @@ PlayerStrategyInsidePlaymaker::PlayerStrategyInsidePlaymaker():withBallVector({0
     map.setMap(strategyMap);
 }
 
+/** Return the heatmap */
 Heatmap* PlayerStrategyInsidePlaymaker::getMap()
 {
     return &map;
 }
 
+/** Return the influence value at position x, y */
 int PlayerStrategyInsidePlaymaker::getValue(int x, int y)
 {
     return map.getValue(x, y);
 }
 
+/** Return the probability vector of the strategy */
 ProbabilityVector* PlayerStrategyInsidePlaymaker::getWithBallVector()
 {
     return &withBallVector;

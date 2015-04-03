@@ -5,6 +5,10 @@
 #include "Match.h"
 #include "MatchReceiver.h"
 
+/* Qt class for the main graphical window
+ * Manages the main menu of the game and start up
+ * game
+ */
 namespace Ui {
 class MainWindow;
 }
