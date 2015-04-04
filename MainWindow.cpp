@@ -117,12 +117,12 @@ void MainWindow::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneScor
         ui->statsTwo->setItem(0, i, new QTableWidgetItem(header[i]));
     }
 
+    ui->playersOne->clear();
     //Display team one stats
     for(int i = 1; i <= teamOne->getRosterSize(); i++)
     {
         Player *player = teamOne->getPlayer(i);
         StatList *playerStats = player->getStatList();
-        ui->playersOne->clear();
         ui->playersOne->addItem(QString::number(player->getNumber()) + QString::fromStdString(" " + player->getName()));
 
         QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));
@@ -145,12 +145,13 @@ void MainWindow::loadStatsPostGame(Team *teamOne, Team *teamTwo, int teamOneScor
         ui->statsOne->setItem(i, 8, steal);
     }
 
+    ui->playersTwo->clear();
+
     //Display team two stats
     for(int i = 1; i <= teamTwo->getRosterSize(); i++)
     {
         Player *player = teamTwo->getPlayer(i);
         StatList *playerStats = player->getStatList();
-        ui->playersTwo->clear();
         ui->playersTwo->addItem(QString::number(player->getNumber()) + QString::fromStdString(" " + player->getName()));
 
         QTableWidgetItem *minutes = new QTableWidgetItem(QString::number(playerStats->getMinutes()));

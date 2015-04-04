@@ -24,11 +24,11 @@ std::vector<int> MatchDefenceZone::moveZoneDefence(Player *p, Ball *ball)
     {
         if((ballX == 2 || ballX == 3) && (ballY == 3 || ballY == 4))
         {
-            moveDefenceTight(p, ballCarrier);
+            return moveDefenceTight(p, ballCarrier);
         }
         else if(((ballX == 1 && (ballY < 6 && ballY > 1)) || (ballX == 2 && (ballY < 6 && ballY > 1))) && (defenceSetting == Team::TIGHT))
         {
-            moveDefenceTight(p, ballCarrier);
+            return moveDefenceTight(p, ballCarrier);
         }
         else
         {
