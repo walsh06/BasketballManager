@@ -224,3 +224,10 @@ void LeagueScreen::on_leaveGame_clicked()
     ui->stackedWidget->setCurrentIndex(0);
     league.removeUserMatch();
 }
+
+void LeagueScreen::on_quitLeague_clicked()
+{
+    league.initLeague();
+    updateDisplays();
+    emit quitLeague();
+}

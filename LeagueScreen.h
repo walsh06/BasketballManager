@@ -28,6 +28,8 @@ private slots:
 
     void on_leaveGame_clicked();
 
+    void on_quitLeague_clicked();
+
 private:
     Ui::LeagueScreen *ui;
     Match *match;
@@ -39,6 +41,8 @@ private:
     void displayResults();
     void displayTable();
     void displayLeaderboard();
+signals:
+    void quitLeague();
 };
 
 #endif // LEAGUESCREEN_H

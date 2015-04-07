@@ -19,7 +19,7 @@ class League
 public:
     League();
     ~League();
-
+    void initLeague();
     void createSchedule(const char* file);
     int findWinner();
 

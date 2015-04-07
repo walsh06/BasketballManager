@@ -40,6 +40,7 @@ private slots:
     void on_closeLearning_clicked();
     void on_runLearning_clicked();
     void on_openLearning_clicked();
+    void quitLeague();
 };
 
 #endif // MAINWINDOW_H
