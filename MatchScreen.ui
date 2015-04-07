@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="CourtScreen">
     <widget class="QGraphicsView" name="court">
@@ -343,6 +343,42 @@
       <string>:</string>
      </property>
     </widget>
+    <widget class="QLabel" name="teamOneName">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="teamTwoName">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>20</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
     <zorder>court</zorder>
     <zorder>commentary</zorder>
     <zorder>scoreOne</zorder>
@@ -352,6 +388,8 @@
     <zorder>quickTab</zorder>
     <zorder>label</zorder>
     <zorder>clockSeconds</zorder>
+    <zorder>teamOneName</zorder>
+    <zorder>teamTwoName</zorder>
    </widget>
    <widget class="QWidget" name="TacticScreen">
     <widget class="QComboBox" name="positionOne">

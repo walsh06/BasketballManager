@@ -42,6 +42,9 @@ void MatchScreen::initMatchScreen(Team *teamOne, Team *teamTwo)
     ui->scoreOne->display(0);
     ui->scoreTwo->display(0);
 
+    ui->teamOneName->setText(QString::fromStdString(teamOne->getName()));
+    ui->teamTwoName->setText(QString::fromStdString(teamTwo->getName()));
+
     //set the user team
     if(teamTwo->isUserControlled())
     {
