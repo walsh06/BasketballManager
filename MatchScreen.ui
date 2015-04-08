@@ -186,16 +186,11 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideNone</enum>
      </property>
-     <widget class="QWidget" name="Stats">
-      <attribute name="title">
-       <string>Stats</string>
-      </attribute>
-     </widget>
      <widget class="QWidget" name="Tactics">
       <attribute name="title">
        <string>Tactics</string>

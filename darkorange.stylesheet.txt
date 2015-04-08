@@ -1,3 +1,5 @@
+/* Qt stylesheet taken from http://www.yasinduludag.com/darkorange.stylesheet */
+
 QToolTip
 {
      border: 1px solid black;
