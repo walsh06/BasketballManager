@@ -4,13 +4,7 @@
 /** League constructor */
 League::League()
 {
-    createSchedule("../BasketballManager/gameData/schedule.xml");
-    teams[1] = new LeagueTeam("Spurs", true);
-    teams[2] = new LeagueTeam("Pacers");
-    teams[3] = new LeagueTeam("Heat");
-    teams[4] = new LeagueTeam("Bobcats");
-    currentRound = 1;
-    teamCount = teams.size();
+    initLeague();
 }
 
 /** League Destructor */
@@ -20,6 +14,18 @@ League::~League()
     {
         delete element.second;
     }
+}
+
+void League::initLeague()
+{
+    createSchedule("../BasketballManager/gameData/schedule.xml");
+    teams[1] = new LeagueTeam("Spurs", true);
+    teams[2] = new LeagueTeam("Pacers");
+    teams[3] = new LeagueTeam("Heat");
+    teams[4] = new LeagueTeam("Bobcats");
+    currentRound = 1;
+    teamCount = teams.size();
+    results.clear();
 }
 
 /** Simulate a round of matches */
@@ -85,6 +91,7 @@ void League::simRound()
 /** Create the schedule by reading a file */
 void League::createSchedule(const char* file)
 {
+    schedule.clear();
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(file);
 

@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     readTeams();
     connect(ui->MatchWidget, SIGNAL(startGame()), this, SLOT(startGame()));
+    connect(ui->LeagueWidget, SIGNAL(quitLeague()), this, SLOT(quitLeague()));
 
     //load the team names into the combo boxes
     for(auto &teamName: teamNames)
@@ -231,4 +232,10 @@ void MainWindow::on_runLearning_clicked()
 void MainWindow::on_openLearning_clicked()
 {
     ui->learnWidget->setVisible(true);
+}
+
+/** Return to main menu from the league screen */
+void MainWindow::quitLeague()
+{
+    ui->stackedWidget->setCurrentIndex(1);
 }
