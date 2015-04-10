@@ -21,6 +21,57 @@ MatchScreen::MatchScreen(QWidget *parent) :
     strategies = {"Balanced", "Outside Playmaker", "Inside Playmaker", "Balanced Playmaker",
                   "Three Point","Inside Outside","Scoring Forward",  "Post Scorer", "Rebounder"};
 
+    //load position combo boxes
+    for(auto position: positions)
+    {
+        ui->positionOne->addItem(position);
+        ui->positionTwo->addItem(position);
+        ui->positionThree->addItem(position);
+        ui->positionFour->addItem(position);
+        ui->positionFive->addItem(position);
+    }
+
+    //load strategy combo boxes
+    for(auto strategy: strategies)
+    {
+        ui->strategyOne->addItem(strategy);
+        ui->strategyTwo->addItem(strategy);
+        ui->strategyThree->addItem(strategy);
+        ui->strategyFour->addItem(strategy);
+        ui->strategyFive->addItem(strategy);
+        ui->quickStrategyOne->addItem(strategy);
+        ui->quickStrategyTwo->addItem(strategy);
+        ui->quickStrategyThree->addItem(strategy);
+        ui->quickStrategyFour->addItem(strategy);
+        ui->quickStrategyFive->addItem(strategy);
+    }
+
+    //load defence tactic boxes
+    defenceBoxes[0][0] = ui->matchupOne;
+    defenceBoxes[0][1] = ui->defenceSettingOne;
+    defenceBoxes[1][0] = ui->matchupTwo;
+    defenceBoxes[1][1] = ui->defenceSettingTwo;
+    defenceBoxes[2][0] = ui->matchupThree;
+    defenceBoxes[2][1] = ui->defenceSettingThree;
+    defenceBoxes[3][0] = ui->matchupFour;
+    defenceBoxes[3][1] = ui->defenceSettingFour;
+    defenceBoxes[4][0] = ui->matchupFive;
+    defenceBoxes[4][1] = ui->defenceSettingFive;
+
+    for(int i = 0; i < 5; i++)
+    {
+        defenceBoxes[i][1]->addItem("Tight");
+        defenceBoxes[i][1]->addItem("Sag");
+        defenceBoxes[i][0]->addItem("PG");
+        defenceBoxes[i][0]->addItem("SG");
+        defenceBoxes[i][0]->addItem("SF");
+        defenceBoxes[i][0]->addItem("PF");
+        defenceBoxes[i][0]->addItem("C");
+
+        defenceBoxes[i][0]->setCurrentIndex(i);
+    }
+
+
     swapIndexOne = 1;
     swapIndexTwo = 1;
     initCourt();
@@ -71,35 +122,12 @@ void MatchScreen::initTacticScreen(Team *team)
     boxes[3][0] = ui->positionFour; boxes[3][1] = ui->strategyFour;
     boxes[4][0] = ui->positionFive; boxes[4][1] = ui->strategyFive;
 
-    //load position combo boxes
-    for(auto position: positions)
-    {
-        ui->positionOne->addItem(position);
-        ui->positionTwo->addItem(position);
-        ui->positionThree->addItem(position);
-        ui->positionFour->addItem(position);
-        ui->positionFive->addItem(position);
-    }
+
     ui->positionOne->setCurrentIndex(0);
     ui->positionTwo->setCurrentIndex(1);
     ui->positionThree->setCurrentIndex(2);
     ui->positionFour->setCurrentIndex(3);
     ui->positionFive->setCurrentIndex(4);
-
-    //load strategy combo boxes
-    for(auto strategy: strategies)
-    {
-        ui->strategyOne->addItem(strategy);
-        ui->strategyTwo->addItem(strategy);
-        ui->strategyThree->addItem(strategy);
-        ui->strategyFour->addItem(strategy);
-        ui->strategyFive->addItem(strategy);
-        ui->quickStrategyOne->addItem(strategy);
-        ui->quickStrategyTwo->addItem(strategy);
-        ui->quickStrategyThree->addItem(strategy);
-        ui->quickStrategyFour->addItem(strategy);
-        ui->quickStrategyFive->addItem(strategy);
-    }
 
     //load the ratings headings
     ui->ratingsWidget->setItem(0, 0, new QTableWidgetItem("3pt"));
@@ -117,29 +145,6 @@ void MatchScreen::initTacticScreen(Team *team)
     ui->ratingsWidget->setItem(0, 12, new QTableWidgetItem("FT"));
     initPlayers();
 
-    defenceBoxes[0][0] = ui->matchupOne;
-    defenceBoxes[0][1] = ui->defenceSettingOne;
-    defenceBoxes[1][0] = ui->matchupTwo;
-    defenceBoxes[1][1] = ui->defenceSettingTwo;
-    defenceBoxes[2][0] = ui->matchupThree;
-    defenceBoxes[2][1] = ui->defenceSettingThree;
-    defenceBoxes[3][0] = ui->matchupFour;
-    defenceBoxes[3][1] = ui->defenceSettingFour;
-    defenceBoxes[4][0] = ui->matchupFive;
-    defenceBoxes[4][1] = ui->defenceSettingFive;
-
-    for(int i = 0; i < 5; i++)
-    {
-        defenceBoxes[i][1]->addItem("Tight");
-        defenceBoxes[i][1]->addItem("Sag");
-        defenceBoxes[i][0]->addItem("PG");
-        defenceBoxes[i][0]->addItem("SG");
-        defenceBoxes[i][0]->addItem("SF");
-        defenceBoxes[i][0]->addItem("PF");
-        defenceBoxes[i][0]->addItem("C");
-
-        defenceBoxes[i][0]->setCurrentIndex(i);
-    }
 
 }
 
