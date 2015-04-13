@@ -385,6 +385,7 @@ void MatchScreen::initCourt()
     //clear the scene
     scene->clear();
     //load the court image
+    //downloaded from http://www.conceptdraw.com/How-To-Guide/basketball-court-dimensions
     QPixmap courtImage("../court.png");
     scene->addPixmap(courtImage.scaled(700,400, Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
 
